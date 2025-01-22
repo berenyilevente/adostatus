@@ -2,7 +2,7 @@ export const routes = {
   landing: "/",
   home: "/dashboard",
   auth: {
-    signin: "/api/auth/signin",
+    login: "/api/auth/login",
     emailSent: "/api/auth/verify-request",
   },
   dashboard: {
