@@ -32,6 +32,9 @@ import wand2Icon from "@iconify/icons-lucide/wand-2";
 import chevronLeftIcon from "@iconify/icons-lucide/chevron-left";
 import chevronRightIcon from "@iconify/icons-lucide/chevron-right";
 import shoppingCartIcon from "@iconify/icons-lucide/shopping-cart";
+import CloudArrowUpIcon from "@iconify/icons-lucide/upload-cloud";
+import LockClosedIcon from "@iconify/icons-lucide/lock";
+import ServerIcon from "@iconify/icons-lucide/server";
 
 export const iconMap = {
   mail: mailIcon,
@@ -68,4 +71,7 @@ export const iconMap = {
   chevronLeft: chevronLeftIcon,
   chevronRight: chevronRightIcon,
   shoppingCart: shoppingCartIcon,
+  uploadCloud: CloudArrowUpIcon,
+  lock: LockClosedIcon,
+  server: ServerIcon,
 };

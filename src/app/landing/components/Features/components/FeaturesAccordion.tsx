@@ -6,7 +6,7 @@ import {
   AccordionTitle,
   Icon,
 } from "@/components";
-import { features } from "./features.helper";
+import { features } from "../features.helper";
 import { FeaturesHeader } from "./FeaturesHeader";
 
 export const FeaturesAccordion = () => {

@@ -5,14 +5,11 @@ import {
   Problem,
   FAQ,
   Pricing,
-  FeaturesGrid,
-  FeaturesCarousel,
-  FeaturesAccordion,
+  Features,
   ContactForm,
   Compare,
   Footer,
 } from "./components";
-import { Autocomplete, TextInput } from "@/components";
 
 export const metadata: Metadata = {
   title: "Landing - Landing page",
@@ -23,7 +20,7 @@ const LandingPage = () => {
       <Topbar />
       <Hero />
       <Problem />
-      <FeaturesCarousel />
+      <Features />
       <Pricing />
       <FAQ />
       <Compare />

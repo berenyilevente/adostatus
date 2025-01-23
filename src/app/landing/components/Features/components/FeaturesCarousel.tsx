@@ -1,7 +1,7 @@
 "use client";
 
 import { Icon } from "@/components";
-import { useFeatures } from "./use-features";
+import { useFeatures } from "../use-features";
 import { FeaturesHeader } from "./FeaturesHeader";
 
 export const FeaturesCarousel = () => {

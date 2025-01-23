@@ -12,19 +12,17 @@ import {
   Navbar,
 } from "@/components";
 
-import { routes } from "@/lib/routes";
 import { cn } from "@/utils";
 import { config } from "@/config/main.config";
 import { useToggle } from "@/hooks/use-toggle";
-import { NavbarEnd } from "@/components/Navbar";
-import { NavbarStart } from "@/components/Navbar";
+import { NavbarEnd, NavbarStart } from "@/components";
 
-export const Topbar = () => {
+export const Navigation = () => {
   const { isOpen: drawerOpened, toggle: toggleDrawer } = useToggle();
 
   const menuItems = [
     { label: "Home", href: "" },
-    { label: "Features", href: "ui.components.accordion" },
+    { label: "Features", href: "#features" },
     { label: "Pricing", href: "#pricing" },
   ];
 
