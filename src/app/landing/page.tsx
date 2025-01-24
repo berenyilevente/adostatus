@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import {
-  Topbar,
+  Navigation,
   Hero,
   Problem,
   FAQ,
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 const LandingPage = () => {
   return (
     <>
-      <Topbar />
+      <Navigation />
       <Hero />
       <Problem />
       <Features />

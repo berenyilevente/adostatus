@@ -1,4 +1,6 @@
-import { cn } from "@/utils/cn";
+"use client";
+
+import { cn } from "@/utils/combineClassNames";
 import { ReactElement, ReactNode } from "react";
 
 export const Accordion = ({

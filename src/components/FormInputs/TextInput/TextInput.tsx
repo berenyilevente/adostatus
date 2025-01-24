@@ -8,7 +8,7 @@ import {
   FieldValues,
 } from "react-hook-form";
 
-import { cn } from "@/utils/cn";
+import { cn } from "@/utils/combineClassNames";
 import { Input, InputProps } from "./Input";
 import { Icon, IconType, Label } from "@/components";
 

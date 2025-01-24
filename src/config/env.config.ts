@@ -13,3 +13,6 @@ export const MONGODB_URI = assertEnvVar("MONGODB_URI", "");
 
 // NODE_ENV
 export const NODE_ENV = assertEnvVar("NODE_ENV", "development");
+
+// BASE_URL
+export const BASE_URL = assertEnvVar("BASE_URL", "");

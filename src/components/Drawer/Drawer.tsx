@@ -1,5 +1,7 @@
+"use client";
+
 import React, { ReactNode } from "react";
-import { Icon } from "../Icon/Icon";
+
 import { cn } from "@/utils";
 
 interface IDrawerProps {

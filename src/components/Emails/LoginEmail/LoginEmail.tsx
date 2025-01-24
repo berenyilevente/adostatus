@@ -11,11 +11,9 @@ import {
   Text,
 } from "@react-email/components";
 
-import { config } from "@/config";
-import logo from "@/assets/images/logo/logo.png";
+import { BASE_URL, config } from "@/config";
 
 export const LoginEmail = ({ url, host }: { url: string; host: string }) => {
-  console.log(logo.src);
   return (
     <Html>
       <Head />
@@ -46,7 +44,13 @@ export const LoginEmail = ({ url, host }: { url: string; host: string }) => {
           >
             If you didn&apos;t try to login, you can safely ignore this email.
           </Text>
-          <Img className="rounded-full" src={logo.src} width="24" height="24" />
+          <Img
+            className="rounded-full"
+            src={`${BASE_URL}/public/logo.png`}
+            width="24"
+            height="24"
+            alt="logo"
+          />
           <Text style={footer}>
             <Link
               href="https://hamedbahram.io"

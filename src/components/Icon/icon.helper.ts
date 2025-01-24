@@ -35,6 +35,8 @@ import shoppingCartIcon from "@iconify/icons-lucide/shopping-cart";
 import CloudArrowUpIcon from "@iconify/icons-lucide/upload-cloud";
 import LockClosedIcon from "@iconify/icons-lucide/lock";
 import ServerIcon from "@iconify/icons-lucide/server";
+import bellIcon from "@iconify/icons-lucide/bell";
+import usersIcon from "@iconify/icons-lucide/users";
 
 export const iconMap = {
   mail: mailIcon,
@@ -74,4 +76,6 @@ export const iconMap = {
   uploadCloud: CloudArrowUpIcon,
   lock: LockClosedIcon,
   server: ServerIcon,
+  bell: bellIcon,
+  users: usersIcon,
 };

@@ -1,5 +1,6 @@
 import { cn } from "@/utils";
 import { MenuProps } from "./Menu";
+import { IconType } from "..";
 
 export const sizeClasses = {
   lg: "menu-lg",
@@ -17,7 +18,7 @@ export const menuClasses = {
 export const getClassNames = (props: MenuProps) => {
   const { size, vertical, className } = props;
 
-  const sizeClass = sizeClasses[size];
+  const sizeClass = sizeClasses[size ?? "md"];
   const menuClass = menuClasses[vertical ? "vertical" : "horizontal"];
 
   return cn("menu", sizeClass, menuClass, className);

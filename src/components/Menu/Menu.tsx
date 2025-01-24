@@ -1,11 +1,11 @@
-import { HTMLAttributes, forwardRef } from "react";
+"use client";
 
-import { cn } from "@/utils";
+import { HTMLAttributes, forwardRef } from "react";
 
 import { getClassNames } from "./menu.helper";
 
 export type MenuProps = HTMLAttributes<HTMLUListElement> & {
-  size: "lg" | "md" | "sm" | "xs";
+  size?: "lg" | "md" | "sm" | "xs";
   vertical?: boolean;
   horizontal?: boolean;
   responsive?: boolean;

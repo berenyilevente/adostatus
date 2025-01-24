@@ -1,10 +1,12 @@
+"use client";
+
 import { LiHTMLAttributes, forwardRef } from "react";
 
 import { cn } from "@/utils";
 
-export type MenuItemProps = LiHTMLAttributes<HTMLLIElement> & {
+export interface MenuItemProps extends LiHTMLAttributes<HTMLLIElement> {
   disabled?: boolean;
-};
+}
 
 export const MenuItem = forwardRef<HTMLLIElement, MenuItemProps>(
   ({ className, disabled, ...props }, ref) => {

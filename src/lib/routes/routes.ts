@@ -1,6 +1,9 @@
 export const routes = {
   landing: "/",
-  home: "/dashboard",
+  admin: {
+    dashboard: "/dashboard",
+    users: "/users",
+  },
   auth: {
     login: "/api/auth/login",
     emailSent: "/api/auth/verify-request",

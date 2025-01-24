@@ -22,3 +22,6 @@ export * from "./Accordion/Accordion";
 export * from "./Accordion/AccordionContent";
 export * from "./Accordion/AccordionTitle";
 export * from "./FormInputs/Autocomplete/Autocomplete";
+export * from "./Dropdown/Dropdown";
+export * from "./Dropdown/DropdownToggle";
+export * from "./Avatar/Avatar";

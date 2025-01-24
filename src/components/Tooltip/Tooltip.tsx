@@ -1,10 +1,20 @@
-import { ReactElement } from "react";
+"use client";
+
+import { HTMLAttributes, ReactElement } from "react";
 
 import { ComponentPosition } from "@/types/components.type";
 import { ComponentColor } from "@/types/components.type";
 import { cn } from "@/utils";
 
 import { colorMap, positionMap } from "./tooltip.helper";
+
+interface TooltipProps extends HTMLAttributes<HTMLDivElement> {
+  message: string;
+  children: ReactElement;
+  position?: ComponentPosition;
+  color?: ComponentColor;
+  open?: boolean;
+}
 
 export const Tooltip = ({
   message,
@@ -13,14 +23,7 @@ export const Tooltip = ({
   color = "primary",
   className,
   open = false,
-}: {
-  message: string;
-  children: ReactElement;
-  position?: ComponentPosition;
-  color?: ComponentColor;
-  className?: string;
-  open?: boolean;
-}) => {
+}: TooltipProps) => {
   return (
     <div
       className={cn(
