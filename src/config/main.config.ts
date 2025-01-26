@@ -4,7 +4,7 @@ import { Config } from "../types/config.type";
 export const config: Config = {
   app: {
     name: "SwiftBlocks",
-    description: "The best saas template for your next project.",
+    description: "The best nextjs template for your next project.",
     domain: "localhost:3000",
   },
   resend: {

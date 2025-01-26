@@ -15,10 +15,10 @@ export const SidebarItem = ({ menuItem }: { menuItem: IMenuItem }) => {
 
   if (!children) {
     return (
-      <MenuItem className="mb-0.5">
-        <Link href={url ?? ""}>
+      <MenuItem className="mb-0.5 w-full">
+        <Link href={url ?? "/"} className="w-full">
           <div className="flex items-center gap-2">
-            {icon && <Icon icon={icon} fontSize={18} />}
+            {icon && <Icon icon={icon} fontSize={18} size="sm" />}
             {label}
           </div>
         </Link>
@@ -31,7 +31,7 @@ export const SidebarItem = ({ menuItem }: { menuItem: IMenuItem }) => {
       <details>
         <summary>
           <div className="flex items-center gap-2">
-            {icon && <Icon icon={icon} fontSize={18} />}
+            {icon && <Icon icon={icon} fontSize={18} size="sm" />}
             {label}
           </div>
         </summary>

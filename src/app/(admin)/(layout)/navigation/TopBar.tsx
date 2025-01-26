@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react"; // Add this import
+import { signOut } from "next-auth/react";
 
 import {
   Navbar,
@@ -13,18 +14,15 @@ import {
   DropdownToggle,
   Avatar,
   Dropdown,
+  Loading,
 } from "@/components";
 import logoLight from "@/assets/images/logo/logo.png";
-
 import { routes } from "@/lib/routes";
-
-import Link from "next/link";
-import { signOut } from "next-auth/react";
-import { Loading } from "@/components/Loading/Loading";
 
 export const Topbar = () => {
   const navigate = useRouter();
   const { data: session, status } = useSession();
+
   const user = session?.user;
 
   const onLogout = async () => {
@@ -41,8 +39,8 @@ export const Topbar = () => {
       </NavbarStart>
       <NavbarCenter />
       <NavbarEnd className="gap-1.5">
-        <details className="dropdown">
-          <summary className="btn btn-ghost m-1">
+        <Dropdown>
+          <DropdownToggle>
             {status === "loading" ? (
               <Loading />
             ) : (
@@ -53,17 +51,22 @@ export const Topbar = () => {
                 </div>
               </div>
             )}
-          </summary>
+          </DropdownToggle>
           <div className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-            <Button variant="ghost" startIcon="user">
+            <Button variant="ghost" size="sm" startIcon="user">
               My Profile
             </Button>
             <hr className="-mx-2 my-1 border-base-content/10" />
-            <Button variant="ghost" onClick={onLogout} startIcon="logout">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onLogout}
+              startIcon="logout"
+            >
               Logout
             </Button>
           </div>
-        </details>
+        </Dropdown>
       </NavbarEnd>
     </Navbar>
   );

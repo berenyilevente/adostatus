@@ -8,18 +8,18 @@ import {
   useState,
 } from "react";
 
-interface UseOutsideClickHandler {
+interface UseOutsideClickHandler<T> {
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
-  ref: RefObject<HTMLDivElement>;
+  ref: RefObject<T>;
   handleClickOutside: (event: any) => void;
 }
 
-export function useOutsideClickHandler(
-  initialValue: boolean
-): UseOutsideClickHandler {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(initialValue);
+export function useOutsideClickHandler<T extends HTMLElement>(
+  initialValue?: boolean
+): UseOutsideClickHandler<T> {
+  const ref = useRef<T>(null);
+  const [visible, setVisible] = useState(initialValue ?? false);
 
   const handleClickOutside = useCallback(
     (event: any) => {

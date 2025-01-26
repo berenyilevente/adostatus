@@ -1,33 +1,19 @@
 "use client";
 
-import { LabelHTMLAttributes } from "react";
+import { ReactNode } from "react";
 
-import { Button } from "@/components";
-import { ComponentColor, ComponentSize } from "@/types/components.type";
+import { cn } from "@/utils/combineClassNames";
 
-interface DropdownToggleProps extends LabelHTMLAttributes<HTMLLabelElement> {
-  color?: ComponentColor;
-  size?: ComponentSize;
-  button?: boolean;
-  disabled?: boolean;
+interface DropdownToggleProps {
+  children: ReactNode;
+  className?: string;
 }
 
 export const DropdownToggle = ({
   children,
-  color,
-  size,
-  button = true,
   className,
-  disabled,
-  ...props
 }: DropdownToggleProps) => {
   return (
-    <label tabIndex={0} className={className} {...props}>
-      {button ? (
-        <summary className="btn btn-ghost m-1">{children}</summary>
-      ) : (
-        children
-      )}
-    </label>
+    <summary className={cn("btn btn-ghost m-1", className)}>{children}</summary>
   );
 };

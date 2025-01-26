@@ -25,3 +25,4 @@ export * from "./FormInputs/Autocomplete/Autocomplete";
 export * from "./Dropdown/Dropdown";
 export * from "./Dropdown/DropdownToggle";
 export * from "./Avatar/Avatar";
+export * from "./Loading/Loading";
