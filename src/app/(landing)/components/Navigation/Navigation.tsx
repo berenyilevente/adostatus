@@ -21,9 +21,9 @@ export const Navigation = () => {
   const { isOpen: drawerOpened, toggle: toggleDrawer } = useToggle();
 
   const menuItems = [
-    { label: "Home", href: "" },
-    { label: "Features", href: "#features" },
-    { label: "Pricing", href: "#pricing" },
+    { label: "Home", href: "", highlight: false },
+    { label: "Features", href: "#features", highlight: false },
+    { label: "Join waitlist", href: "/leads", highlight: true },
   ];
 
   return (
@@ -71,19 +71,26 @@ export const Navigation = () => {
               <Menu
                 horizontal
                 size="sm"
-                className="hidden gap-2 px-1 lg:inline-flex"
+                className="hidden gap-2 px-1 lg:inline-flex items-center"
               >
                 {menuItems.map((item) => (
                   <MenuItem className="font-medium" key={item.label}>
-                    <Link href={item.href}>{item.label}</Link>
+                    <Link href={item.href}>
+                      {item.highlight ? (
+                        <Button
+                          size={"sm"}
+                          color="primary"
+                          onClick={toggleDrawer}
+                        >
+                          {item.label}
+                        </Button>
+                      ) : (
+                        item.label
+                      )}
+                    </Link>
                   </MenuItem>
                 ))}
               </Menu>
-              <Link href={"#"} target="_blank">
-                <Button size={"sm"} color="primary" onClick={toggleDrawer}>
-                  Purchase Now
-                </Button>
-              </Link>
             </NavbarEnd>
           </Navbar>
         </div>

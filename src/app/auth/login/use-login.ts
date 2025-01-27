@@ -7,12 +7,11 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { signIn } from "next-auth/react";
 
-import { useToast } from "@/hooks/use-toast";
 import { routes } from "@/lib/routes";
+import { toast } from "sonner";
 
 export const useLogin = () => {
   const router = useRouter();
-  const toaster = useToast();
   const [isLoading, setIsLoading] = useState(false);
 
   const loginSchema = z.object({
@@ -39,7 +38,7 @@ export const useLogin = () => {
         callbackUrl: routes.landing,
       });
 
-      toaster.success("Logged in successfully");
+      toast.success("Logged in successfully");
       // router.push(routes.dashboard.index);
     } catch (e: any) {
     } finally {

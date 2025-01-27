@@ -18,7 +18,7 @@ interface TextInputProps<
 > extends InputProps {
   control: Control<TField, object>;
   name: TName;
-  placeholder: string;
+  placeholder?: string;
   startIcon?: IconType;
   endIcon?: IconType;
   label?: string;
@@ -37,15 +37,16 @@ export const TextInput = <
   label,
   ...props
 }: TextInputProps<TField, TName>) => {
-  const getErrorClassName = (fieldState: ControllerFieldState) =>
+  const getClassName = (fieldState: ControllerFieldState) =>
     cn(
-      "form-control flex flex-row items-center rounded-box border border-base-content/20",
+      "form-control flex input input-bordered flex-row items-center outline-none focus:outline-none",
       {
-        "border-error/60": fieldState.invalid,
+        "border border-error/60": fieldState.invalid,
         "ps-3": startIcon,
         "pe-3": endIcon,
         "bg-base-content/10": props.disabled,
-      }
+      },
+      className
     );
 
   return (
@@ -55,8 +56,8 @@ export const TextInput = <
         control={control}
         render={({ field, fieldState }) => (
           <>
-            <div className={getErrorClassName(fieldState)}>
-              {startIcon && <Icon icon={startIcon} size="xs" />}
+            <div className={getClassName(fieldState)}>
+              {startIcon ? <Icon icon={startIcon} size="xs" /> : null}
               <Input
                 {...field}
                 {...props}
@@ -69,16 +70,13 @@ export const TextInput = <
                       : event.target.value
                   );
                 }}
-                placeholder={fieldState.invalid ? " " : placeholder}
-                className={cn(className, "transition-all", {
-                  "focus:!-outline-offset-1 focus:outline-red-500":
-                    fieldState.invalid,
-                })}
+                placeholder={placeholder}
+                className={cn("transition-all")}
               />
-              {endIcon && <Icon icon={endIcon} size="xs" />}
+              {endIcon ? <Icon icon={endIcon} size="xs" /> : null}
             </div>
             {fieldState.invalid && (
-              <span className="mt-1 text-sm text-error">
+              <span className="text-sm text-error text-start">
                 {fieldState.error?.message}
               </span>
             )}

@@ -2,8 +2,8 @@
 
 import { HTMLAttributes, ReactElement } from "react";
 
-import { ComponentPosition } from "@/types/components.type";
-import { ComponentColor } from "@/types/components.type";
+import { ComponentPosition } from "@/types/component.types";
+import { ComponentColor } from "@/types/component.types";
 import { cn } from "@/utils";
 
 import { colorMap, positionMap } from "./tooltip.helper";

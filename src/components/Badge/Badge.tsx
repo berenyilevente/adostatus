@@ -1,6 +1,6 @@
 "use client";
 
-import { ComponentColor, ComponentSize } from "@/types/components.type";
+import { ComponentColor, ComponentSize } from "@/types/component.types";
 import { cn } from "@/utils/combineClassNames";
 import { ReactElement, ReactNode } from "react";
 import { colorMap } from "../Tooltip/tooltip.helper";
