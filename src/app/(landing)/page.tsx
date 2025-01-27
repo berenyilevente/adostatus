@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 const LandingPage = () => {
   return (
     <>
-      {/* <Navigation />
+      <Navigation />
       <Hero />
       <Problem />
       <Features />
@@ -25,8 +25,7 @@ const LandingPage = () => {
       <FAQ />
       <Compare />
       <ContactForm />
-      <Footer /> */}
-      Coming soon
+      <Footer />
     </>
   );
 };
