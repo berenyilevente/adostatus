@@ -35,55 +35,61 @@ export const PriceCard = ({
     <Card
       className={`w-full sm:w-96 ${isFeatured ? "border border-primary" : ""}`}
     >
-      <CardBody className="flex flex-col gap-2 justify-between">
-        <div>
-          <CardTitle>
-            <div className="flex flex-col">
-              <div className="flex flex-col w-full">
-                <Price title={name} price={price} priceAnchor={priceAnchor} />
+      <CardBody>
+        <div className="flex flex-col gap-2">
+          <div>
+            <CardTitle>
+              <div className="flex flex-col">
+                <div className="flex flex-col w-full">
+                  <Price title={name} price={price} priceAnchor={priceAnchor} />
+                </div>
+                <p className="mt-2 text-sm font-normal text-base-content/90">
+                  {description}
+                </p>
               </div>
-              <p className="mt-2 text-sm font-normal text-base-content/90">
-                {description}
-              </p>
-            </div>
-          </CardTitle>
-          <div className="grid gap-2">
-            <p className="mt-4 text-sm text-base-content/70">Included:</p>
-            {included.map((item, index) => (
-              <div
-                key={`included-${item}-${index}`}
-                className="grid grid-cols-9 items-center"
-              >
-                <Icon icon="check" fontSize={16} className="text-green-500" />
-                <p className="col-span-8">{item.name}</p>
-              </div>
-            ))}
-            <div>
+            </CardTitle>
+            <div className="grid gap-2">
+              <p className="mt-4 text-sm text-base-content/70">Included:</p>
+              {included.map((item, index) => (
+                <div
+                  key={`included-${item}-${index}`}
+                  className="grid grid-cols-9 items-center"
+                >
+                  <Icon icon="check" fontSize={16} className="text-green-500" />
+                  <p className="col-span-8">{item.name}</p>
+                </div>
+              ))}
               <div className="my-3 block border border-dashed border-base-content/10" />
-            </div>
-            {excluded.map((item, index) => (
-              <div
-                key={`excluded-${item}-${index}`}
-                className="grid grid-cols-9 items-center"
-              >
-                <Icon icon="xCircle" fontSize={16} className="text-gray-500" />
-                <p className="col-span-8">{item.name}</p>
+              <div className="min-h-32 flex flex-col gap-2">
+                {excluded.map((item, index) => (
+                  <div
+                    key={`excluded-${item}-${index}`}
+                    className="grid grid-cols-9 items-center"
+                  >
+                    <Icon
+                      icon="xCircle"
+                      fontSize={16}
+                      className="text-gray-500"
+                    />
+                    <p className="col-span-8">{item.name}</p>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+          </div>
+          <div>
+            <CardActions className="h-full">
+              {/* <Link className="w-full" href="/leads">
+                <Button variant={isFeatured ? "active" : "outline"}>
+                  Buy now!
+                </Button>
+              </Link> */}
+              <div className="text-sm text-base-content/70 mt-2">
+                Pay once, access forever!
+              </div>
+            </CardActions>
           </div>
         </div>
-        <CardActions>
-          <Link
-            className="w-full"
-            href={`https://buy.stripe.com/${priceId}`}
-            target={"_blank"}
-          >
-            <Button variant={isFeatured ? "active" : "ghost"}>Buy Now</Button>
-          </Link>
-          <div className="text-sm text-base-content/70 mt-2">
-            Pay once, access forever!
-          </div>
-        </CardActions>
       </CardBody>
     </Card>
   );

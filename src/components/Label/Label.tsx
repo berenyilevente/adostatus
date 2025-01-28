@@ -14,7 +14,7 @@ export const Label = forwardRef<HTMLLabelElement, LabelProps>(
 
     return (
       <label {...props} className={classNames}>
-        <span className="label-text cursor-pointer" ref={ref}>
+        <span className="label-text text-start" ref={ref}>
           {title}
         </span>
         {children}

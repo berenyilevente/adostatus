@@ -1,7 +1,10 @@
-import { config } from "@/config";
+"use client";
+
 import Link from "next/link";
-import { Image } from "@/components";
-import hero from "@/assets/images/landing/hero.png";
+
+import { config } from "@/config";
+import { Button, Image } from "@/components";
+import hero from "@/assets/images/landing/hero.svg";
 
 export const Hero = () => {
   return (
@@ -14,21 +17,14 @@ export const Hero = () => {
           Build fast and deliver high-quality applications with SwiftBlocks - a
           deployment-ready component library based on Tailwind and Daisy UI.
         </p>
-        <Link
-          href="/#pricing"
-          className="link link-hover btn btn-primary btn-wide"
-        >
-          Get {config.app.name}
+        <Link href="#footer">
+          <Button variant="active" size="lg">
+            Join the {config.app.name} waitlist!
+          </Button>
         </Link>
       </div>
       <div className="lg:w-full">
-        <Image
-          src={hero}
-          alt="Product Demo"
-          priority={true}
-          width={485}
-          height={357}
-        />
+        <Image src={hero} alt="Product Demo" priority={true} />
       </div>
     </section>
   );

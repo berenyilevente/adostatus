@@ -9,6 +9,34 @@ const Step = ({ emoji, text }: { emoji: string; text: string }) => {
   );
 };
 
+const ProblemDesktop = () => {
+  return (
+    <div className="hidden sm:flex flex-col items-center gap-16 relative w-min mx-auto">
+      <Step emoji="🧑‍💻" text="Pick up a project" />
+      <Icon icon="moveRight" className="rotate-45 absolute top-24 right-28" />
+      <div className="flex items-center">
+        <div className="flex flex-col justify-center">
+          <Icon icon="moveUp" className="rotate-45 absolute top-24 left-28" />
+          <Step emoji="😔" text="Quit project" />
+        </div>
+        <Icon icon="moveRight" className="rotate-180" />
+        <Step emoji="😮‍💨" text="Loose the oversight" />
+      </div>
+    </div>
+  );
+};
+const ProblemMobile = () => {
+  return (
+    <div className="flex sm:hidden flex-row items-center w-full">
+      <Step emoji="🧑‍💻" text="Pick up a project" />
+      <Icon icon="moveRight" size="xl" />
+      <Step emoji="😮‍💨" text="Loose the oversight" />
+      <Icon icon="moveRight" size="xl" />
+      <Step emoji="😔" text="Quit project" />
+    </div>
+  );
+};
+
 // todo: rephrase and move to documentation
 // Problem Agitation: A crucial, yet overlooked, component for a landing page that sells.
 // It goes under your Hero section, and above your Features section.
@@ -31,25 +59,8 @@ export const Problem = () => {
           Without it, you end up with a complex code that&apos;s hard to
           maintain.
         </p>
-
-        <div className="flex flex-col items-center gap-16 relative w-min mx-auto">
-          <Step emoji="🧑‍💻" text="Pick up a project" />
-          <Icon
-            icon="moveRight"
-            className="rotate-45 absolute top-24 right-28"
-          />
-          <div className="flex items-center">
-            <div className="flex flex-col justify-center">
-              <Icon
-                icon="moveUp"
-                className="rotate-45 absolute top-24 left-28"
-              />
-              <Step emoji="😔" text="Quit project" />
-            </div>
-            <Icon icon="moveRight" className="rotate-180" />
-            <Step emoji="😮‍💨" text="Loose the oversight" />
-          </div>
-        </div>
+        <ProblemDesktop />
+        <ProblemMobile />
       </div>
     </section>
   );

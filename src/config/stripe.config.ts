@@ -48,8 +48,8 @@ const basic: Plan = {
     { name: "Tabs" },
     { name: "Drawer" },
   ],
-  price: 49,
-  priceAnchor: 79,
+  price: 179,
+  priceAnchor: 299,
   isFeatured: false,
 };
 
@@ -65,8 +65,8 @@ const advanced: Plan = {
     { name: "lifetime updates" },
   ],
   excluded: [{ name: "Modal" }],
-  price: 109,
-  priceAnchor: 179,
+  price: 210,
+  priceAnchor: 349,
   isFeatured: true,
 };
 

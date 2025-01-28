@@ -6,9 +6,10 @@ import {
   FAQ,
   Pricing,
   Features,
-  ContactForm,
   Compare,
   Footer,
+  Motion,
+  Leads,
 } from "./components";
 
 export const metadata: Metadata = {
@@ -17,16 +18,28 @@ export const metadata: Metadata = {
 const LandingPage = () => {
   return (
     <>
-      {/* <Navigation />
-      <Hero />
-      <Problem />
-      <Features />
-      <Pricing />
-      <FAQ />
-      <Compare />
-      <ContactForm />
-      <Footer /> */}
-      <div>Coming soon</div>
+      <Navigation />
+      <Motion id="hero">
+        <Hero />
+      </Motion>
+      <Motion id="problem">
+        <Problem />
+      </Motion>
+      <Motion id="features">
+        <Features />
+      </Motion>
+      <Motion id="compare">
+        <Compare />
+      </Motion>
+      <Motion id="pricing">
+        <Pricing />
+      </Motion>
+      <Motion id="faq">
+        <FAQ />
+      </Motion>
+      <Motion id="footer">
+        <Footer />
+      </Motion>
     </>
   );
 };

@@ -14,4 +14,4 @@ export type Response<T> =
       errors: string;
     };
 
-export type RenderToast = Record<ResponseStatus, () => void>;
+export type RenderToast = Record<ResponseStatus, (message?: string) => void>;

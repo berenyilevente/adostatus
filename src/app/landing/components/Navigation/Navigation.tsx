@@ -21,9 +21,10 @@ export const Navigation = () => {
   const { isOpen: drawerOpened, toggle: toggleDrawer } = useToggle();
 
   const menuItems = [
-    { label: "Home", href: "", highlight: false },
-    { label: "Features", href: "#features", highlight: false },
-    { label: "Join waitlist", href: "/leads", highlight: true },
+    { label: "Home", href: "" },
+    { label: "Features", href: "#features" },
+    { label: "Pricing", href: "#pricing" },
+    { label: "Join waitlist", href: "#footer", highlight: true },
   ];
 
   return (
@@ -64,7 +65,9 @@ export const Navigation = () => {
                   </Button>
                 </Drawer>
               </div>
-              <Logo size={38} text={config.app.name} textPosition="right" />
+              <Link href="/">
+                <Logo size={38} text={config.app.name} textPosition="right" />
+              </Link>
             </NavbarStart>
 
             <NavbarEnd className="gap-3">

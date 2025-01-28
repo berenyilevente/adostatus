@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 export const ContactForm: React.FC = () => {
   const { control, handleSubmit } = useForm();
   return (
-    <form className="container">
+    <form className="container pt-24">
       <div className="text-center text-2xl font-bold mb-4">Get in touch!</div>
       <div className="w-1/2 mx-auto space-y-4">
         <TextInput

@@ -16,7 +16,7 @@ import {
   Dropdown,
   Loading,
 } from "@/components";
-import logoLight from "@/assets/images/logo/logo.png";
+import avatar from "@/assets/images/avatar/avatar.png";
 import { routes } from "@/lib/routes";
 
 export const Topbar = () => {
@@ -45,7 +45,7 @@ export const Topbar = () => {
               <Loading />
             ) : (
               <div className="flex items-center gap-2">
-                <Avatar src={user?.image || logoLight.src} alt="avatar" />
+                <Avatar src={user?.image || avatar.src} alt="avatar" />
                 <div className="flex flex-col items-start">
                   <p className="text-sm/none">{`${user?.email}`}</p>
                 </div>

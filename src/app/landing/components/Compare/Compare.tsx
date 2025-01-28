@@ -23,8 +23,8 @@ export const Compare = () => {
   ];
 
   return (
-    <section className="bg-base-100">
-      <div className="max-w-5xl mx-auto px-8 py-16 md:py-32 ">
+    <section className="bg-base-100 pt-32">
+      <div className="max-w-5xl mx-auto px-8">
         <h2 className="text-center font-extrabold text-3xl md:text-5xl tracking-tight mb-12 md:mb-20">
           Tired of copy and pasting blocks of code?
         </h2>

@@ -39,7 +39,7 @@ export const TextInput = <
 }: TextInputProps<TField, TName>) => {
   const getClassName = (fieldState: ControllerFieldState) =>
     cn(
-      "form-control flex input input-bordered flex-row items-center outline-none focus:outline-none",
+      "form-control flex rounded-box border bg-white border-base-content/20 flex-row items-center",
       {
         "border border-error/60": fieldState.invalid,
         "ps-3": startIcon,
@@ -51,7 +51,6 @@ export const TextInput = <
 
   return (
     <>
-      {label && <Label htmlFor={name} title={label} />}
       <Controller<TField, TName>
         control={control}
         render={({ field, fieldState }) => (
@@ -71,14 +70,14 @@ export const TextInput = <
                   );
                 }}
                 placeholder={placeholder}
-                className={cn("transition-all")}
+                className={className}
               />
               {endIcon ? <Icon icon={endIcon} size="xs" /> : null}
             </div>
             {fieldState.invalid && (
-              <span className="text-sm text-error text-start">
+              <div className="text-sm text-error mt-1 text-start">
                 {fieldState.error?.message}
-              </span>
+              </div>
             )}
           </>
         )}

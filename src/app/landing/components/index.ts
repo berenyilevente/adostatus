@@ -7,3 +7,5 @@ export * from "./Features/Features";
 export * from "./ContactForm/ContactForm";
 export * from "./Compare/Compare";
 export * from "./Footer/Footer";
+export * from "./Motion/Motion";
+export * from "./Leads/Leads";

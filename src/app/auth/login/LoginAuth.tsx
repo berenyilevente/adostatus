@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { Button, TextInput } from "@/components";
+import { Button, Label, TextInput } from "@/components";
 import { useLogin } from "./use-login";
 
 export const LoginAuth = () => {
@@ -11,6 +11,7 @@ export const LoginAuth = () => {
   return (
     <form className="flex flex-col gap-4 items-center w-full">
       <div className="form-control w-3/4">
+        <Label title="Email Address" htmlFor="email" />
         <TextInput
           label="Email Address"
           startIcon="mail"
