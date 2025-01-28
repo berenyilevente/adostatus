@@ -2,6 +2,7 @@ import { config } from "@/config";
 import { Button, Icon } from "@/components";
 
 import { PriceCard } from "./components/PriceCard";
+import Link from "next/link";
 
 // todo: rephrase and move to documentation
 // <Pricing/> displays the pricing plans for your app
@@ -16,8 +17,12 @@ export const Pricing = () => {
         </div>
         <p className="mt-1 text-3xl font-semibold">Pricing</p>
         <p className="mt-3 inline-block max-w-sm text-base-content/70">
-          Be among the first 100 on the waitlist and ensure 40% off at launch!
+          Limited-Time Offer: Join the waitlist today and get an exclusive
+          discount at launch!
         </p>
+        <Link href="#footer">
+          <Button className="mx-auto mt-4">Join the waitlist</Button>
+        </Link>
       </div>
       <div className="mt-8 flex sm:flex-row flex-col justify-center gap-6">
         {config.stripe.plans.map((plan) => (

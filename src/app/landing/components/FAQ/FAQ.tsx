@@ -25,13 +25,13 @@ export const FAQ = () => {
             </div>
             <p className="mt-3 text-3xl font-semibold">Any Question in Mind?</p>
           </div>
-          <p className="mt-3 text-base-content/70">
+          {/* <p className="mt-3 text-base-content/70">
             If you have still question, don&apos;t worry. Just contact us with
             your queries.
           </p>
           <Link className="btn btn-sm mt-4" href={"#"}>
             Contact Us
-          </Link>
+          </Link> */}
         </div>
         <div className="col-span-4">
           <div className="space-y-4">

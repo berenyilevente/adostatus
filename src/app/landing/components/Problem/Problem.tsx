@@ -2,37 +2,22 @@ import { Card, CardBody, Icon } from "@/components";
 
 const Step = ({ emoji, text }: { emoji: string; text: string }) => {
   return (
-    <div className="w-full md:w-48 flex flex-col gap-2 items-center justify-center">
+    <div className="w-full md:w-60 flex flex-col gap-2 items-center justify-center">
       <span className="text-4xl">{emoji}</span>
       <h3 className="font-bold">{text}</h3>
     </div>
   );
 };
 
-const ProblemDesktop = () => {
-  return (
-    <div className="hidden sm:flex flex-col items-center gap-16 relative w-min mx-auto">
-      <Step emoji="🧑‍💻" text="Pick up a project" />
-      <Icon icon="moveRight" className="rotate-45 absolute top-24 right-28" />
-      <div className="flex items-center">
-        <div className="flex flex-col justify-center">
-          <Icon icon="moveUp" className="rotate-45 absolute top-24 left-28" />
-          <Step emoji="😔" text="Quit project" />
-        </div>
-        <Icon icon="moveRight" className="rotate-180" />
-        <Step emoji="😮‍💨" text="Loose the oversight" />
-      </div>
-    </div>
-  );
-};
 const ProblemMobile = () => {
   return (
-    <div className="flex sm:hidden flex-row items-center w-full">
-      <Step emoji="🧑‍💻" text="Pick up a project" />
-      <Icon icon="moveRight" size="xl" />
-      <Step emoji="😮‍💨" text="Loose the oversight" />
-      <Icon icon="moveRight" size="xl" />
-      <Step emoji="😔" text="Quit project" />
+    <div className="mx-auto w-min flex flex-row items-center gap-16">
+      <Step
+        emoji="🧑‍💻"
+        text="Spending hours configuring basic features like auth, payments, etc."
+      />
+      <Step emoji="😮‍💨" text="Reinventing the wheel for every project" />
+      <Step emoji="😔" text="Struggling to maintain consistency" />
     </div>
   );
 };
@@ -51,16 +36,16 @@ export const Problem = () => {
   return (
     <section className="bg-base-200">
       <div className="max-w-7xl mx-auto px-8 py-16 md:py-32 text-center">
-        <h2 className="max-w-3xl mx-auto font-extrabold text-4xl md:text-5xl tracking-tight mb-6 md:mb-8">
-          The solution to complex code
+        <h2 className="max-w-4xl mx-auto font-extrabold text-4xl md:text-5xl tracking-tight mb-6 md:mb-8">
+          Building Software Shouldn’t Be Hard!
         </h2>
-        <p className="max-w-xl mx-auto text-lg opacity-90 leading-relaxed mb-12 md:mb-20">
-          Developing reusable components is hard. It takes time and effort.
-          Without it, you end up with a complex code that&apos;s hard to
-          maintain.
+        <div className="py-4">
+          <ProblemMobile />
+        </div>
+        <p className="max-w-xl mx-auto text-lg text-center opacity-90 leading-relaxed mt-12">
+          What if you could skip the tedious parts and jump straight to the fun
+          part: <strong>building your app</strong>?
         </p>
-        <ProblemDesktop />
-        <ProblemMobile />
       </div>
     </section>
   );

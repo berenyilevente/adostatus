@@ -1,31 +1,32 @@
 export const faqs = [
   {
-    title: "How can i give a feedback?",
-    content: "You can provide feedback by filling out our Google Form",
+    title: "Who is SwiftBlocks for?",
+    content:
+      "SwiftBlocks is designed for freelancers and hobbyists who want to save time and streamline their workflow. Whether you’re building a side project or a client app, SwiftBlocks gives you the tools to launch faster and with less hassle.",
   },
   {
-    title: "Can i get full source code?",
+    title: "Is SwiftBlocks a subscription?",
     content:
-      "Certainly, we offer the complete source code depending on the package you've purchased. You might look into depth: Packages",
+      "No! SwiftBlocks is a one-time purchase. You pay once and own the code forever - no recurring fees or hidden costs.",
   },
   {
-    title: "Will there be any future payments required?",
+    title: "Can I customize SwiftBlocks for my project?",
     content:
-      "Absolutely not. It's a one-time purchase, with no hidden charges or future payments to worry about.",
+      "Absolutely! SwiftBlocks is designed to be fully customizable. Use the pre-built components and modules as a starting point, then tailor them to fit your project’s unique needs.",
   },
   {
-    title: "Are there plans for future updates, and will they incur any costs?",
+    title: "What if I’m not an expert developer?",
     content:
-      "All future updates are completely free. No payment is required for any upcoming updates. Yes, there are many plans for future updates. You can checkout future roadmap",
+      "The clear documentation and step-by-step guidelines make it accessible for developers at every level. If you’re comfortable with React and Next.js, you’ll find SwiftBlocks easy to use.",
   },
   {
-    title: "Do I need a backend for this?",
+    title: "What if I need help or support?",
     content:
-      "No backend is required to run this UI template. However, you can integrate any type of backend as needed.",
+      "We’ve got you covered! The Pro version includes priority support, so you can get your questions answered quickly. For Essentials users, we offer community support and detailed documentation to help you get started.",
   },
   {
-    title: "Is there any updates in the future?",
+    title: "Can I use SwiftBlocks for commercial projects?",
     content:
-      "Yes, Our team constantly improves the admin template based on user feedback and industry trends. You can see product Roadmap",
+      "Absolutely! Once you purchase SwiftBlocks, you own the code and can use it for personal or commercial projects. Build as many apps as you want—no limits.",
   },
 ];

@@ -21,7 +21,7 @@ export const Footer = () => {
             <Image
               src={mobileHeroLandingImg}
               alt="mobile-landing"
-              className="inline dark:hidden py-4 w-64"
+              className="inline dark:hidden py-4 w-3/4"
             />
           </div>
         </div>

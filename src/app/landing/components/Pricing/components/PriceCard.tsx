@@ -39,7 +39,7 @@ export const PriceCard = ({
         <div className="flex flex-col gap-2">
           <div>
             <CardTitle>
-              <div className="flex flex-col">
+              <div className="flex flex-col w-full">
                 <div className="flex flex-col w-full">
                   <Price title={name} price={price} priceAnchor={priceAnchor} />
                 </div>
@@ -48,8 +48,8 @@ export const PriceCard = ({
                 </p>
               </div>
             </CardTitle>
-            <div className="grid gap-2">
-              <p className="mt-4 text-sm text-base-content/70">Included:</p>
+            <div className="grid gap-2 h-80">
+              <p className="mt-4 text-sm text-base-content/70">Includes:</p>
               {included.map((item, index) => (
                 <div
                   key={`included-${item}-${index}`}
@@ -59,8 +59,7 @@ export const PriceCard = ({
                   <p className="col-span-8">{item.name}</p>
                 </div>
               ))}
-              <div className="my-3 block border border-dashed border-base-content/10" />
-              <div className="min-h-32 flex flex-col gap-2">
+              <div className="flex flex-col gap-2">
                 {excluded.map((item, index) => (
                   <div
                     key={`excluded-${item}-${index}`}

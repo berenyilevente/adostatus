@@ -27,44 +27,49 @@ const pirceId: Record<string, Record<string, string>> = {
 };
 
 const basic: Plan = {
-  name: "Basic",
-  description: "Includes basic components to get you started",
+  name: "SwiftBlocks Essentials",
+  description:
+    "Perfect for solo developers and freelancers who want to launch faster without breaking the bank.",
   priceId: pirceId.basic[NODE_ENV],
   included: [
     {
-      name: "TextInput, TextArea",
+      name: "Pre-configured components: Tailwind, Daisy UI, React, and Next.js.",
     },
     {
-      name: "Dropdown",
+      name: "Core integrations: User auth, emails, and backend setup.",
     },
-    { name: "Button, Icon" },
-    { name: "Checkbox, Radio, Swap" },
+    { name: "Basic modules: User management, task management, and more" },
+    { name: "Clear development guidelines: Speed and consistency, built-in." },
   ],
-  excluded: [
-    {
-      name: "Modal",
-    },
-    { name: "Table" },
-    { name: "Tabs" },
-    { name: "Drawer" },
-  ],
+  excluded: [],
   price: 179,
   priceAnchor: 299,
   isFeatured: false,
 };
 
 const advanced: Plan = {
-  name: "Advanced",
-  description: "Includes everything from the documentation",
+  name: " SwiftBlocks Pro",
+  description:
+    "For developers who want everything Essentials offers - plus advanced features to scale faster.",
   priceId: pirceId.advanced[NODE_ENV],
   included: [
     {
-      name: "Everithing from the Documentation",
+      name: "Everything from Essentials",
     },
-    { name: "Modal, Table, Tabs, Drawer and many more, check out the docs" },
-    { name: "lifetime updates" },
+    {
+      name: "Advanced integrations: Stripe payments, calendar modules, and more.",
+    },
+    {
+      name: "Premium modules: Advanced user dashboards, analytics, and reporting.",
+    },
+    {
+      name: "Priority support: Get your questions answered faster.",
+    },
+    {
+      name: "Exclusive templates: Additional landing page and UI templates.",
+    },
   ],
-  excluded: [{ name: "Modal" }],
+  excluded: [],
   price: 210,
   priceAnchor: 349,
   isFeatured: true,

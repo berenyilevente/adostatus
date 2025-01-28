@@ -24,8 +24,8 @@ export const Leads = (): ReactElement => {
         {!isSubmitSuccessful ? (
           <>
             <h3 className="text-center text-sm text-base-content/70 min-w-3/4 mx-auto">
-              Sign up to get notified when {config.app.name} is ready with a 40%
-              discount at launch.
+              Sign up to get notified when {config.app.name} is ready with and
+              secure your discount at launch.
             </h3>
 
             <div className="mt-1">

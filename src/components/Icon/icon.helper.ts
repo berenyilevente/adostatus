@@ -37,6 +37,8 @@ import LockClosedIcon from "@iconify/icons-lucide/lock";
 import ServerIcon from "@iconify/icons-lucide/server";
 import bellIcon from "@iconify/icons-lucide/bell";
 import usersIcon from "@iconify/icons-lucide/users";
+import calendarIcon from "@iconify/icons-lucide/calendar";
+import copyIcon from "@iconify/icons-lucide/copy";
 
 export const iconMap = {
   mail: mailIcon,
@@ -78,4 +80,6 @@ export const iconMap = {
   server: ServerIcon,
   bell: bellIcon,
   users: usersIcon,
+  calendar: calendarIcon,
+  copy: copyIcon,
 };

@@ -1,6 +1,7 @@
 "use client";
 
 import { Card, CardBody, CardTitle, Icon } from "@/components";
+import { config } from "@/config";
 
 // todo rephrase and move to docs
 // A useful component when your product is challenging the status quo.
@@ -8,36 +9,43 @@ import { Card, CardBody, CardTitle, Icon } from "@/components";
 // Try to match the lines from left to right, so the user can easily compare the two columns
 export const Compare = () => {
   const withoutProduct = [
-    "Increased complexity and inconsistency in your codebase.",
-    "Building components from scratch.",
-    "Poorly validated forms and components",
-    "Fragmented and unprofessional appearance.",
+    "Hours wasted configuring basic features like user auth, payments, and emails.",
+    "Inconsistent codebase",
+    "Prolonged launch of projects",
+    "Frustration from getting stuck on repetitive tasks",
+    "Not being able to focus on the core product",
+    "Debugging issues with basic features like Stripe, Auth, Emails, and more.",
   ];
 
   const withProduct = [
-    "Pre-built, customizable components that save you time.",
-    `Easy to maintain codebase`,
-    "Compatible with popular frameworks and libraries, React Hook Form, and Zod",
-    "High-quality components",
-    "Consistent look and feel across your application",
+    "Hours saved with pre-configured, ready-to-use components and integrations.",
+    "Consistent codebase from pre-built modules.",
+    "App launches in days, not months",
+    "Maximized speed and consistency.",
+    "Focus on the core product",
+    "No more repetitive coding",
+    "Everything in one place - Stripe, Auth, Emails, and more.",
   ];
 
   return (
     <section className="bg-base-100 pt-32">
       <div className="max-w-5xl mx-auto px-8">
-        <h2 className="text-center font-extrabold text-3xl md:text-5xl tracking-tight mb-12 md:mb-20">
-          Tired of copy and pasting blocks of code?
+        <h2 className="text-center text-pretty text-4xl font-semibold tracking-tight mb-8">
+          Tired of spending hours configuring basic features?
         </h2>
         <div className="flex flex-col md:flex-row justify-center items-center md:items-stretch gap-8 md:gap-12">
           <Card className="w-full ">
             <CardBody>
-              <CardTitle>Apps without SwiftBlocks</CardTitle>
-              <ul className="list-disc list-inside space-y-1.5">
+              <CardTitle>
+                Apps <span className="text-red-500">without </span>
+                {config.app.name}
+              </CardTitle>
+              <ul className="list-disc list-inside space-y-2">
                 {withoutProduct.map((item, index) => (
                   <li key={index} className="flex gap-2 items-center text-base">
                     <Icon
                       icon="xCircle"
-                      className="w-4 h-4 shrink-0 opacity-75 text-red-500"
+                      className="shrink-0 opacity-75 text-red-500"
                       size="xs"
                     />
                     {item}
@@ -46,11 +54,14 @@ export const Compare = () => {
               </ul>
             </CardBody>
           </Card>
-
           <Card className="w-full ">
             <CardBody className="">
-              <CardTitle>Apps + SwiftBlocks</CardTitle>
-              <ul className="list-disc list-inside space-y-1.5">
+              <CardTitle>
+                Apps
+                <span className="text-green-500">with </span>
+                {config.app.name}
+              </CardTitle>
+              <ul className="list-disc list-inside space-y-2">
                 {withProduct.map((item, index) => (
                   <li key={index} className="flex gap-2 items-center text-base">
                     <Icon
