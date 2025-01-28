@@ -6,7 +6,7 @@ import settingsIcon from "@iconify/icons-lucide/settings";
 import logoutIcon from "@iconify/icons-lucide/log-out";
 import loginIcon from "@iconify/icons-lucide/log-in";
 import menuIcon from "@iconify/icons-lucide/menu";
-import dashboardIcon from "@iconify/icons-lucide/square-kanban";
+import dashboardIcon from "@iconify/icons-lucide/layout-dashboard";
 import databaseIcon from "@iconify/icons-lucide/database";
 import infoIcon from "@iconify/icons-lucide/info";
 import successIcon from "@iconify/icons-lucide/check-circle";

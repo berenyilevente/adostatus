@@ -16,7 +16,13 @@ export const Avatar = ({ src, className, alt }: AvatarProps): ReactElement => {
 
   return (
     <div className={classNames}>
-      <Image src={src} alt={alt} width={100} height={100} />
+      <Image
+        src={src}
+        alt={alt}
+        width={100}
+        height={100}
+        className="rounded-full"
+      />
     </div>
   );
 };
