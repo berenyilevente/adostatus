@@ -1,5 +1,3 @@
-import { Card, CardBody, Icon } from "@/components";
-
 const Step = ({ emoji, text }: { emoji: string; text: string }) => {
   return (
     <div className="w-full md:w-60 flex flex-col gap-2 items-center justify-center">
@@ -11,10 +9,10 @@ const Step = ({ emoji, text }: { emoji: string; text: string }) => {
 
 const ProblemMobile = () => {
   return (
-    <div className="mx-auto w-min flex flex-row items-center gap-16">
+    <div className="mx-auto w-min flex flex-col sm:flex-row items-center gap-16">
       <Step
         emoji="🧑‍💻"
-        text="Spending hours configuring basic features like auth, payments, etc."
+        text="Configuring basic features like auth, payments, etc."
       />
       <Step emoji="😮‍💨" text="Reinventing the wheel for every project" />
       <Step emoji="😔" text="Struggling to maintain consistency" />
@@ -37,7 +35,7 @@ export const Problem = () => {
     <section className="bg-base-200">
       <div className="max-w-7xl mx-auto px-8 py-16 md:py-32 text-center">
         <h2 className="max-w-4xl mx-auto font-extrabold text-4xl md:text-5xl tracking-tight mb-6 md:mb-8">
-          Building Software Shouldn’t Be Hard!
+          Building Software Shouldn&apos;t Take Forever!
         </h2>
         <div className="py-4">
           <ProblemMobile />

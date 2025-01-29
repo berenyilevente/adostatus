@@ -17,15 +17,15 @@ export const Hero = () => {
           Pre-configured, full-stack code blocks to build, deploy, and scale -
           in record time!
         </p>
-        <div className="space-y-4">
+        <div className="space-y-2">
           <Link href="#footer">
-            <Button variant="active" size="lg" endIcon="moveRight">
+            <Button variant="active" size="lg" endIcon="moveRight" fullWidth>
               Join the waitlist!
             </Button>
           </Link>
           <div className="text-sm text-base-content/70">
-            Be the first to access SwiftBlocks at launch and get an exclusive
-            discount.
+            * Be the first to access SwiftBlocks at launch and secure an
+            exclusive discount.
           </div>
         </div>
       </div>
