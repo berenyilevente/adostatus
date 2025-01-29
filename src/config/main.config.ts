@@ -1,18 +1,14 @@
 import { stripe } from "./stripe.config";
 import { Config } from "../types/config.type";
+import { resend } from "./resend.config";
 
 export const config: Config = {
   app: {
     name: "SwiftBlocks",
-    description: "The best nextjs template for your next project.",
+    description: "The best fullstack nextjs template for your next project.",
     domain: "localhost:3000",
   },
-  resend: {
-    fromNoReply: `SwiftBlocks <noreply@swiftblocks.net>`,
-    fromAdmin: `SwiftBlocks - Admin <admin@swiftblocks.net>`,
-    supportEmail: "support@swiftblocks.net",
-    forwardRepliesTo: "berenyi.lev@gmail.com",
-  },
+  resend,
   db: {
     name: "swiftblocksdb",
   },

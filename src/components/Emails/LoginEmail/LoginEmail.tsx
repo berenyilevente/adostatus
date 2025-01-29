@@ -46,14 +46,14 @@ export const LoginEmail = ({ url, host }: { url: string; host: string }) => {
           </Text>
           <Img
             className="rounded-full"
-            src={`${BASE_URL}/public/logo.png`}
+            src={`${BASE_URL}/logo.png`}
             width="24"
             height="24"
             alt="logo"
           />
           <Text style={footer}>
             <Link
-              href="https://hamedbahram.io"
+              href="https://swiftblocks.net"
               target="_blank"
               style={{ ...link, color: "#898989" }}
             >

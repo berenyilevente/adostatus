@@ -9,8 +9,8 @@ import { Leads } from "../Leads/Leads";
 export const Footer = () => {
   return (
     <div>
-      <div className="container py-16">
-        <div className="relative grid items-center overflow-hidden rounded-xl bg-primary/5 lg:grid-cols-3">
+      <div className="container py-4 my-12 bg-primary/5">
+        <div className="relative grid items-center overflow-hidden rounded-xl lg:grid-cols-3">
           <div className="col-span-2 p-4 text-center md:p-8">
             <div className="text-xl font-medium md:text-3xl">
               Get started with {config.app.name}
@@ -24,6 +24,9 @@ export const Footer = () => {
               className="inline dark:hidden py-4 w-3/4"
             />
           </div>
+        </div>
+        <div className="text-center">
+          <Link href="/landing/privacy-policy">Privacy Policy</Link>
         </div>
       </div>
     </div>
