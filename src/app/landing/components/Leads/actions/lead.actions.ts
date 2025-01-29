@@ -5,6 +5,10 @@ import { Response } from "@/types/action.types";
 
 import { Lead } from "../models/lead.model";
 import { ILead } from "../types/lead.types";
+import { config } from "@/config";
+import { resend } from "@/lib/email/resend";
+import { WelcomeEmail } from "@/components/Emails/WelcomeEmail/WelcomeEmail";
+import { NewLeadEmail } from "@/components/Emails/NewLeadEmail/NewLeadEmail";
 
 export const saveLead = async (email: string): Promise<Response<ILead>> => {
   await connectMongo();
@@ -31,13 +35,28 @@ export const saveLead = async (email: string): Promise<Response<ILead>> => {
 
   const data = await Lead.create({ email });
 
-  if (data)
+  if (data) {
+    await resend.emails.send({
+      from: config.resend.fromNoReply,
+      to: [email],
+      subject: "Welcome to SwiftBlocks!",
+      text: "We will be in touch soon",
+      react: WelcomeEmail(),
+    });
+
+    await resend.emails.send({
+      from: config.resend.fromNoReply,
+      to: [config.resend.forwardRepliesTo],
+      subject: "New lead has joined the SwiftBlocks waitlist!",
+      react: NewLeadEmail({ email }),
+    });
     return {
       status: "success",
       data,
       code: 200,
       errors: undefined,
     };
+  }
 
   return {
     status: "error",

@@ -9,8 +9,8 @@ export type Config = {
   resend: {
     fromNoReply: string;
     fromAdmin: string;
-    supportEmail?: string;
-    forwardRepliesTo?: string;
+    supportEmail: string;
+    forwardRepliesTo: string;
   };
   db: {
     name: string;
