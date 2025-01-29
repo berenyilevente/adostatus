@@ -16,12 +16,12 @@ import { config } from "@/config";
 import { useLeads } from "./use-leads";
 
 export const Leads = (): ReactElement => {
-  const { control, onSubmit, isSubmitSuccessful } = useLeads();
+  const { control, onSubmit, submitted } = useLeads();
 
   return (
     <div className="min-w-1/3 max-w-lg mx-auto">
       <CardBody>
-        {!isSubmitSuccessful ? (
+        {!submitted ? (
           <>
             <h3 className="text-center text-sm text-base-content/70 min-w-3/4 mx-auto">
               Sign up to get notified when {config.app.name} is ready with and

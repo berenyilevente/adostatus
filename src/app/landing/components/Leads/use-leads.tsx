@@ -5,12 +5,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { saveLead } from "./actions/lead.actions";
 import { leadsSchema, LeadsSchemaType } from "./schemas/lead.schemas";
+import { useState } from "react";
 
 export const useLeads = () => {
   const {
     control,
     handleSubmit,
-    setError,
     formState: { isValid, isSubmitSuccessful, errors },
   } = useForm<LeadsSchemaType>({
     defaultValues: {
@@ -19,9 +19,12 @@ export const useLeads = () => {
     resolver: zodResolver(leadsSchema),
   });
 
+  const [submitted, setSubmitted] = useState<boolean>(false);
+
   const onSubmit = handleSubmit(async (data: any) => {
     await saveLead(data.email);
+    setSubmitted(true);
   });
 
-  return { control, onSubmit, isValid, isSubmitSuccessful };
+  return { control, onSubmit, isValid, submitted };
 };
