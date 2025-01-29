@@ -9,7 +9,7 @@ const Step = ({ emoji, text }: { emoji: string; text: string }) => {
 
 const ProblemMobile = () => {
   return (
-    <div className="mx-auto w-min flex flex-col sm:flex-row items-center gap-16">
+    <div className="mx-auto w-full sm:w-min flex flex-col sm:flex-row items-center sm:gap-16 gap-8">
       <Step
         emoji="🧑‍💻"
         text="Configuring basic features like auth, payments, etc."
