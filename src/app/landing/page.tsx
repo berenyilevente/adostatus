@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import {
   Navigation,
   Hero,
@@ -9,12 +8,8 @@ import {
   Compare,
   Footer,
   Motion,
-  Leads,
 } from "./components";
 
-export const metadata: Metadata = {
-  title: "Landing - Landing page",
-};
 const LandingPage = () => {
   return (
     <>
