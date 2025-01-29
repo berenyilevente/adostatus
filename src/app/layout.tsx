@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import { getSEOTags } from "@/lib/seo/seo";
+import { Analytics } from "@vercel/analytics/react";
 
 import MainProvider from "./MainProvider";
 import "./globals.css";
@@ -20,6 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <MainProvider>{children}</MainProvider>
+        <Analytics />
       </body>
     </html>
   );

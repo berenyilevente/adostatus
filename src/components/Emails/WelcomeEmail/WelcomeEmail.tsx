@@ -26,7 +26,7 @@ export const WelcomeEmail = () => (
           </Text>
           <Text style={paragraph}>You have secured your discount! 🤑</Text>
           <Text style={paragraph}>
-            We will notify you about the launch date.
+            We will notify you about the launch date, can&apos;t wait!
           </Text>
           <Hr style={hr} />
           <Text style={paragraph}>— The {config.app.name} team</Text>
