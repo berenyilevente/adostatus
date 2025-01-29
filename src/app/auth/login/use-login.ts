@@ -33,13 +33,11 @@ export const useLogin = () => {
   const onSubmit = handleSubmit(async (data: LoginSchemaType) => {
     setIsLoading(true);
     try {
-      signIn("email", {
+      await signIn("email", {
         email: data.email,
-        callbackUrl: routes.landing,
+        callbackUrl: routes.dashboard.index,
       });
-
-      toast.success("Logged in successfully");
-      // router.push(routes.dashboard.index);
+      setIsLoading(false);
     } catch (e: any) {
     } finally {
       setIsLoading(false);
