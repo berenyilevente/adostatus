@@ -29,7 +29,7 @@ export const Hero = () => {
           </div>
         </div>
       </div>
-      <div className="lg:w-full">
+      <div className="lg:w-full sm:block hidden">
         <Image src={hero} alt="Product Demo" priority={true} />
       </div>
     </section>

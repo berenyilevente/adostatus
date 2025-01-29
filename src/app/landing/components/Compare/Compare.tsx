@@ -29,7 +29,7 @@ export const Compare = () => {
 
   return (
     <section className="bg-base-100 pt-32">
-      <div className="max-w-5xl mx-auto px-8">
+      <div className="max-w-5xl mx-auto px-4 sm:px-0">
         <h2 className="text-center text-pretty text-4xl font-semibold tracking-tight mb-8">
           Tired of spending hours configuring basic features?
         </h2>

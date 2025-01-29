@@ -12,7 +12,7 @@ import { faqs } from "./faq.helper";
 
 export const FAQ = () => {
   return (
-    <div className="container pt-24">
+    <div className="container pt-24 px-4 sm:px-0">
       <div className="grid gap-12 lg:grid-cols-7 lg:gap-24">
         <div className="col-span-3">
           <div className="flex items-center gap-3">
@@ -23,7 +23,9 @@ export const FAQ = () => {
                 className="text-primary"
               />
             </div>
-            <p className="mt-3 text-3xl font-semibold">Any Question in Mind?</p>
+            <p className="mt-3 text-3xl font-semibold">
+              Any Questions in Mind?
+            </p>
           </div>
           {/* <p className="mt-3 text-base-content/70">
             If you have still question, don&apos;t worry. Just contact us with

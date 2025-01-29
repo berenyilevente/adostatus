@@ -2,7 +2,7 @@ const Step = ({ emoji, text }: { emoji: string; text: string }) => {
   return (
     <div className="w-full md:w-60 flex flex-col gap-2 items-center justify-center">
       <span className="text-4xl">{emoji}</span>
-      <h3 className="font-bold">{text}</h3>
+      <h3 className="font-bold max-w-64">{text}</h3>
     </div>
   );
 };

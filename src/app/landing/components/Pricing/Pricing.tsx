@@ -24,7 +24,7 @@ export const Pricing = () => {
           <Button className="mx-auto mt-4">Join the waitlist</Button>
         </Link>
       </div>
-      <div className="mt-8 flex sm:flex-row flex-col justify-center gap-6">
+      <div className="mt-8 flex sm:flex-row flex-col justify-center gap-6 px-4 sm:px-0">
         {config.stripe.plans.map((plan) => (
           <PriceCard key={plan.priceId} {...plan} />
         ))}
