@@ -29,13 +29,7 @@ export const saveLead = async (email: string): Promise<Response<ILead>> => {
     };
   }
 
-  let data;
-
-  try {
-    data = await Lead.create({ email });
-  } catch (error) {
-    console.log(error);
-  }
+  const data = await Lead.create({ email });
 
   if (data)
     return {
