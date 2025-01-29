@@ -19,6 +19,8 @@ export const WelcomeEmail = () => (
     <Body style={main}>
       <Container style={container}>
         <Section style={box}>
+          <Img src={`${BASE_URL}/logo.png`} width="49" height="49" alt="logo" />
+          <Hr style={hr} />
           <Text style={paragraph}>
             Thanks for joining the {config.app.name} waitlist!
           </Text>
@@ -27,15 +29,7 @@ export const WelcomeEmail = () => (
             We will notify you about the launch date.
           </Text>
           <Hr style={hr} />
-          <Text style={paragraph}>
-            <Img
-              src={`${BASE_URL}/logo.png`}
-              width="49"
-              height="49"
-              alt="logo"
-            />
-            — The {config.app.name} team
-          </Text>
+          <Text style={paragraph}>— The {config.app.name} team</Text>
         </Section>
       </Container>
     </Body>

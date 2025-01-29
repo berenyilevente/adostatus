@@ -18,20 +18,14 @@ export const NewLeadEmail = ({ email }: { email: string }) => (
     <Body style={main}>
       <Container style={container}>
         <Section style={box}>
+          <Img src={`${BASE_URL}/logo.png`} width="49" height="49" alt="logo" />
+          <Hr style={hr} />
           <Text style={paragraph}>
             New lead has joined the {config.app.name} waitlist!
           </Text>
           <Text style={paragraph}>Email: {email}</Text>
           <Hr style={hr} />
-          <Text style={paragraph}>
-            <Img
-              src={`${BASE_URL}/logo.png`}
-              width="49"
-              height="49"
-              alt="logo"
-            />
-            — The {config.app.name} team
-          </Text>
+          <Text style={paragraph}>— The {config.app.name} team</Text>
         </Section>
       </Container>
     </Body>
