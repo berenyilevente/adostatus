@@ -9,6 +9,8 @@ import {
   Link,
   Preview,
   Text,
+  Row,
+  Column,
 } from "@react-email/components";
 
 import { BASE_URL, config } from "@/config";
@@ -44,16 +46,18 @@ export const LoginEmail = ({ url, host }: { url: string; host: string }) => {
           >
             If you didn&apos;t try to login, you can safely ignore this email.
           </Text>
+
           <Img
             className="rounded-full"
             src={`${BASE_URL}/logo.png`}
-            width="24"
-            height="24"
+            width="48"
+            height="48"
             alt="logo"
           />
+
           <Text style={footer}>
             <Link
-              href="https://swiftblocks.net"
+              href={BASE_URL}
               target="_blank"
               style={{ ...link, color: "#898989" }}
             >
