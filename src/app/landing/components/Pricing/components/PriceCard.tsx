@@ -43,9 +43,9 @@ export const PriceCard = ({
                 <div className="flex flex-col w-full">
                   <Price title={name} price={price} priceAnchor={priceAnchor} />
                 </div>
-                <p className="mt-2 text-sm font-normal text-base-content/90">
+                <div className="mt-2 text-sm font-normal text-base-content/90">
                   {description}
-                </p>
+                </div>
               </div>
             </CardTitle>
             <div className="grid gap-2 h-80">

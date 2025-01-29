@@ -22,8 +22,8 @@ export const useLeads = () => {
   const [submitted, setSubmitted] = useState<boolean>(false);
 
   const onSubmit = handleSubmit(async (data: any) => {
-    await saveLead(data.email);
     setSubmitted(true);
+    await saveLead(data.email);
   });
 
   return { control, onSubmit, isValid, submitted };

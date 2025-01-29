@@ -19,7 +19,7 @@ export const Compare = () => {
 
   const withProduct = [
     "Hours saved with pre-configured, ready-to-use components and integrations.",
-    "Consistent codebase from pre-built modules.",
+    "Consistent codebase thanks to pre-built modules.",
     "App launches in days, not months",
     "Maximized speed and consistency.",
     "Focus on the core product",

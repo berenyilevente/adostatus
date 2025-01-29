@@ -41,7 +41,7 @@ export const FeaturesWithImage = (): ReactElement => {
               </p>
               <p className="mt-6 text-lg/8 text-gray-600">
                 SwiftBlocks is a deployment-ready, full-stack template built on
-                Tailwind, Daisy UI, React, and Next.js.
+                Tailwind, Daisy UI, mongodb, React, and Next.js.
               </p>
               <dl className="mt-10 max-w-xl space-y-8 text-base/7 text-gray-600 lg:max-w-none">
                 {features.map((feature) => (
