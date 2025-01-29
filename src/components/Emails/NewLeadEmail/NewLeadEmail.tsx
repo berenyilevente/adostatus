@@ -25,7 +25,9 @@ export const NewLeadEmail = ({ email }: { email: string }) => (
           </Text>
           <Text style={paragraph}>Email: {email}</Text>
           <Hr style={hr} />
-          <Text style={paragraph}>— The {config.app.name} team</Text>
+          <Text style={paragraph}>
+            The {config.app.name} team - {config.app.domain}
+          </Text>
         </Section>
       </Container>
     </Body>

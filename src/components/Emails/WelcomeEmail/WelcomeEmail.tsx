@@ -29,7 +29,9 @@ export const WelcomeEmail = () => (
             We will notify you about the launch date, can&apos;t wait!
           </Text>
           <Hr style={hr} />
-          <Text style={paragraph}>— The {config.app.name} team</Text>
+          <Text style={paragraph}>
+            The {config.app.name} team - {config.app.domain}
+          </Text>
         </Section>
       </Container>
     </Body>
