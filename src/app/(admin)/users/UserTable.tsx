@@ -31,6 +31,7 @@ export const UserTable = () => {
               <Button
                 endIcon="trash"
                 size="xs"
+                iconSize="xs"
                 variant="ghost"
                 color="secondary"
               />
@@ -38,6 +39,7 @@ export const UserTable = () => {
             <Button
               startIcon="plus"
               size="sm"
+              iconSize="xs"
               variant="active"
               color="primary"
               onClick={() => router.push("/users/create")}
@@ -47,6 +49,7 @@ export const UserTable = () => {
             <Button
               startIcon="filter"
               size="xs"
+              iconSize="xs"
               variant="ghost"
               color="secondary"
               className="mr-4"

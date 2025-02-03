@@ -27,8 +27,14 @@ const useHook = ({ users: usersData }: HookProp) => {
   const router = useRouter();
   const [users, setUsers] = useState<IUser[]>(usersData);
 
-  const { control: filterControl } = useForm({
-    defaultValues: {},
+  const {
+    control: filterControl,
+    watch,
+    setValue,
+  } = useForm({
+    defaultValues: {
+      search: "",
+    },
   });
 
   const columns: ColumnDef<IUser, any>[] = [
@@ -48,11 +54,12 @@ const useHook = ({ users: usersData }: HookProp) => {
         <div className="flex">
           <Button
             size="xs"
+            iconSize="xs"
             variant="ghost"
             startIcon="pencil"
             onClick={() => router.push(`/users/${row.original.id}`)}
           />
-          <Button size="xs" variant="ghost" startIcon="trash" />
+          <Button size="xs" iconSize="xs" variant="ghost" startIcon="trash" />
         </div>
       ),
     },
@@ -65,11 +72,13 @@ const useHook = ({ users: usersData }: HookProp) => {
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState<Record<string, boolean>>({});
+  const search = watch("search");
 
   const tableState = {
     pagination,
     sorting,
     rowSelection,
+    globalFilter: search,
   };
 
   const tableOptions = {
@@ -81,6 +90,7 @@ const useHook = ({ users: usersData }: HookProp) => {
     onSortingChange: setSorting,
     onPaginationChange: setPagination,
     onRowSelectionChange: setRowSelection,
+    onGlobalFilterChange: (value: string) => setValue("search", value),
   };
 
   const table = useReactTable({
@@ -91,8 +101,9 @@ const useHook = ({ users: usersData }: HookProp) => {
   });
 
   return {
-    filterControl,
     table,
+    search,
+    filterControl,
   };
 };
 

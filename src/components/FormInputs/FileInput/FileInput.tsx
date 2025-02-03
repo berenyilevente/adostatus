@@ -13,5 +13,5 @@ import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
 export const FileInput = ({ ...props }: FilePondProps): ReactElement => {
-  return <FilePond {...props} />;
+  return <FilePond credits={false} {...props} />;
 };
