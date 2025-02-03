@@ -10,7 +10,7 @@ export const SidebarItem = ({ menuItem }: { menuItem: IMenuItem }) => {
   const { icon, isTitle, label, children, url } = menuItem;
 
   if (isTitle) {
-    return <li className="menu-title font-semibold">{label}</li>;
+    return <li className="font-semibold">{label}</li>;
   }
 
   if (!children) {
@@ -18,7 +18,7 @@ export const SidebarItem = ({ menuItem }: { menuItem: IMenuItem }) => {
       <MenuItem className="mb-0.5 w-full">
         <Link href={url ?? "/"} className="w-full">
           <div className="flex items-center gap-2">
-            {icon && <Icon icon={icon} fontSize={18} size="sm" />}
+            {icon && <Icon icon={icon} className="!w-5 !h-5" />}
             {label}
           </div>
         </Link>
@@ -31,7 +31,7 @@ export const SidebarItem = ({ menuItem }: { menuItem: IMenuItem }) => {
       <details>
         <summary>
           <div className="flex items-center gap-2">
-            {icon && <Icon icon={icon} fontSize={18} size="sm" />}
+            {icon && <Icon icon={icon} className="!w-5 !h-5" />}
             {label}
           </div>
         </summary>

@@ -26,3 +26,5 @@ export * from "./Dropdown/Dropdown";
 export * from "./Dropdown/DropdownToggle";
 export * from "./Avatar/Avatar";
 export * from "./Loading/Loading";
+export * from "./Table/Table";
+export * from "./Table/components";

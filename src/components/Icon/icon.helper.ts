@@ -39,6 +39,12 @@ import bellIcon from "@iconify/icons-lucide/bell";
 import usersIcon from "@iconify/icons-lucide/users";
 import calendarIcon from "@iconify/icons-lucide/calendar";
 import copyIcon from "@iconify/icons-lucide/copy";
+import trashIcon from "@iconify/icons-lucide/trash";
+import ChevronUpIcon from "@iconify/icons-lucide/chevron-up";
+import ChevronDownIcon from "@iconify/icons-lucide/chevron-down";
+import SearchIcon from "@iconify/icons-lucide/search";
+import PencilIcon from "@iconify/icons-lucide/pencil";
+import FilterIcon from "@iconify/icons-lucide/settings-2";
 
 export const iconMap = {
   mail: mailIcon,
@@ -82,4 +88,10 @@ export const iconMap = {
   users: usersIcon,
   calendar: calendarIcon,
   copy: copyIcon,
+  trash: trashIcon,
+  chevronUp: ChevronUpIcon,
+  chevronDown: ChevronDownIcon,
+  search: SearchIcon,
+  pencil: PencilIcon,
+  filter: FilterIcon,
 };

@@ -8,7 +8,6 @@ import { z } from "zod";
 import { signIn } from "next-auth/react";
 
 import { routes } from "@/lib/routes";
-import { toast } from "sonner";
 
 export const useLogin = () => {
   const router = useRouter();

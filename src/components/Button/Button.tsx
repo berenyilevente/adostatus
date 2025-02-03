@@ -23,44 +23,44 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   fullWidth?: boolean;
 }
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({
+export const Button = ({
+  className,
+  children,
+  disabled,
+  iconColor,
+  isLoading,
+  variant = "active",
+  color = "primary",
+  type = "button",
+  size = "md",
+  startIcon,
+  endIcon,
+  fullWidth,
+  ...props
+}: ButtonProps) => {
+  const classNames = cn(
     className,
-    children,
-    disabled,
-    iconColor,
-    isLoading,
-    variant = "active",
-    color = "primary",
-    type = "button",
-    size = "md",
-    startIcon,
-    endIcon,
-    fullWidth,
-    ...props
-  }) => {
-    const classNames = cn(
-      className,
-      "btn",
-      variantMap[variant],
-      sizeMap[size],
-      colorMap[color],
-      "flex flex-nowrap items-center",
-      fullWidth && "w-full"
-    );
+    "btn",
+    variantMap[variant],
+    sizeMap[size],
+    colorMap[color],
+    "flex flex-nowrap items-center",
+    fullWidth && "w-full"
+  );
 
-    return (
-      <button {...props} className={classNames} type={type} disabled={disabled}>
-        {isLoading ? (
-          <span className="loading loading-spinner loading-md" />
-        ) : (
-          <>
-            {startIcon && <Icon className={iconColor} icon={startIcon} />}
-            <>{children}</>
-            {endIcon && <Icon className={iconColor} icon={endIcon} />}
-          </>
-        )}
-      </button>
-    );
-  }
-);
+  return (
+    <button {...props} className={classNames} type={type} disabled={disabled}>
+      {isLoading ? (
+        <span className="loading loading-spinner loading-md" />
+      ) : (
+        <>
+          {startIcon && (
+            <Icon className={iconColor} icon={startIcon} size={size} />
+          )}
+          <>{children}</>
+          {endIcon && <Icon className={iconColor} icon={endIcon} size={size} />}
+        </>
+      )}
+    </button>
+  );
+};
