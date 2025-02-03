@@ -1,17 +1,12 @@
-"use-client";
+"use client";
 
-import React, { ReactElement } from "react";
-
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css";
+import "filepond/dist/filepond.css";
 import { FilePond, FilePondProps, registerPlugin } from "react-filepond";
 
-import "filepond/dist/filepond.min.css";
+registerPlugin(FilePondPluginImagePreview);
 
-import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
-import FilePondPluginImagePreview from "filepond-plugin-image-preview";
-import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
-
-registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
-
-export const FileInput = ({ ...props }: FilePondProps): ReactElement => {
-  return <FilePond credits={false} {...props} />;
+export const FileInput = ({ credits, ...props }: FilePondProps) => {
+  return <FilePond credits={credits || false} {...props} />;
 };

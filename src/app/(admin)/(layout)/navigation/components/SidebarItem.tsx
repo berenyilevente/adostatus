@@ -6,7 +6,13 @@ import { MenuItem, Icon } from "@/components";
 
 import { IMenuItem } from "../../types/menu.types";
 
-export const SidebarItem = ({ menuItem }: { menuItem: IMenuItem }) => {
+export const SidebarItem = ({
+  menuItem,
+  isOpen,
+}: {
+  menuItem: IMenuItem;
+  isOpen?: boolean;
+}) => {
   const { icon, isTitle, label, children, url } = menuItem;
 
   if (isTitle) {
@@ -18,8 +24,8 @@ export const SidebarItem = ({ menuItem }: { menuItem: IMenuItem }) => {
       <MenuItem className="mb-0.5 w-full">
         <Link href={url ?? "/"} className="w-full">
           <div className="flex items-center gap-2">
-            {icon && <Icon icon={icon} className="!w-5 !h-5" />}
-            {label}
+            {icon && <Icon icon={icon} size="xs" />}
+            {isOpen ? label : null}
           </div>
         </Link>
       </MenuItem>
@@ -31,8 +37,8 @@ export const SidebarItem = ({ menuItem }: { menuItem: IMenuItem }) => {
       <details>
         <summary>
           <div className="flex items-center gap-2">
-            {icon && <Icon icon={icon} className="!w-5 !h-5" />}
-            {label}
+            {icon && <Icon icon={icon} size="xs" />}
+            {isOpen ? label : null}
           </div>
         </summary>
         <ul>

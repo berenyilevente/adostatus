@@ -15,11 +15,18 @@ import {
   Avatar,
   Dropdown,
   Loading,
+  Logo,
 } from "@/components";
 import avatar from "@/assets/images/avatar/avatar.png";
 import { routes } from "@/lib/routes";
+import { Link } from "@react-email/components";
+import { config } from "@/config";
+import { useLocalStorage } from "@/hooks/use-local-storage";
+import { useNavigation } from "./use-navigation";
 
 export const Topbar = () => {
+  const { isNavbarOpen, setIsNavbarOpen } = useNavigation();
+
   const navigate = useRouter();
   const { data: session, status } = useSession();
 
@@ -31,9 +38,14 @@ export const Topbar = () => {
   };
 
   return (
-    <Navbar className="topbar-wrapper z-10 border-b border-base-200 px-3">
+    <Navbar className="topbar z-10 border-b border-base-200 px-3">
       <NavbarStart className="gap-3">
-        <Button variant="ghost" size="sm" aria-label="Leftmenu toggle">
+        <Button
+          variant="ghost"
+          size="sm"
+          aria-label="Leftmenu toggle"
+          onClick={() => setIsNavbarOpen(!isNavbarOpen)}
+        >
           <Icon icon="menu" className="inline-block" />
         </Button>
       </NavbarStart>

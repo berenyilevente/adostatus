@@ -15,7 +15,7 @@ const useHook = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const { control, handleSubmit, setValue, setError, formState } =
+  const { control, handleSubmit, setValue, setError, formState, watch } =
     useForm<CreateUserSchemaType>({
       resolver: zodResolver(createUserSchema),
       defaultValues: {
@@ -23,9 +23,10 @@ const useHook = () => {
         confirmPassword: "",
         email: "",
         mobileNumber: "",
-        status: "verified",
       },
     });
+
+  const image = watch("image");
 
   const setErrors = (errors: Record<string, any>) => {
     Object.entries(errors).forEach(([key, value]: any[]) =>
@@ -33,16 +34,18 @@ const useHook = () => {
     );
   };
 
-  const handleChangeImage = (fileItems: FilePondFile[]) => {
-    const image = convertImage(fileItems);
-    if (image) {
-      setValue("image", image);
-    } else {
-      setValue("image", undefined);
-    }
+  const handleChangeImage = async (fileItems: FilePondFile[]) => {
+    // const image = await convertImage(fileItems);
+    // console.log(image);
+    // if (image) {
+    //   setValue("image", image);
+    // } else {
+    //   setValue("image", undefined);
+    // }
   };
 
   const onSubmit = handleSubmit(async (data) => {
+    console.log(data);
     setIsLoading(true);
 
     setIsLoading(false);

@@ -3,10 +3,11 @@
 import { adminMenuItems } from "./navigation/menu";
 import { Sidebar } from "./navigation/Sidebar";
 import { Topbar } from "./navigation/TopBar";
+import { NavigationProvider } from "./navigation/use-navigation";
 
 const AdminLayout = ({ children }: { children: any }) => {
   return (
-    <>
+    <NavigationProvider>
       <div className="size-full">
         <div className="flex overflow-hidden">
           <Sidebar menuItems={adminMenuItems} />
@@ -17,9 +18,8 @@ const AdminLayout = ({ children }: { children: any }) => {
             </div>
           </div>
         </div>
-        <div className="leftbar-backdrop"></div>
       </div>
-    </>
+    </NavigationProvider>
   );
 };
 export default AdminLayout;
