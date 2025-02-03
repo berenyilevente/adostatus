@@ -34,7 +34,7 @@ export const Topbar = () => {
     <Navbar className="topbar-wrapper z-10 border-b border-base-200 px-3">
       <NavbarStart className="gap-3">
         <Button variant="ghost" size="sm" aria-label="Leftmenu toggle">
-          <Icon icon="menu" className="inline-block" fontSize={20} />
+          <Icon icon="menu" className="inline-block" />
         </Button>
       </NavbarStart>
       <NavbarCenter />

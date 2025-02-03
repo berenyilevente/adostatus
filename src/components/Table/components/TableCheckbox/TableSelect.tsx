@@ -1,19 +1,21 @@
+"use client";
+
 import React, { HTMLProps, useRef } from "react";
 import { Row, Table } from "@tanstack/react-table";
 
 import { cn } from "@/utils/combineClassNames";
 
-export const select = <T,>(id: string) => ({
+export const checkbox = <T,>(id: string) => ({
   id,
   header: ({ table }: { table: Table<T> }) => (
-    <TableSelect
+    <TableCheckbox
       checked={table.getIsAllRowsSelected()}
       indeterminate={table.getIsSomeRowsSelected()}
       onChange={table.getToggleAllRowsSelectedHandler()}
     />
   ),
   cell: ({ row }: { row: Row<T> }) => (
-    <TableSelect
+    <TableCheckbox
       checked={row.getIsSelected()}
       disabled={!row.getCanSelect()}
       onChange={row.getToggleSelectedHandler()}
@@ -26,7 +28,7 @@ interface TableCheckboxProps extends HTMLProps<HTMLInputElement> {
   className?: string;
 }
 
-export const TableSelect = ({
+export const TableCheckbox = ({
   indeterminate,
   className,
   ...props

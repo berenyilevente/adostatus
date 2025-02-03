@@ -1,4 +1,5 @@
 import { cn } from "@/utils/combineClassNames";
+
 import { InputProps } from "./Input";
 
 export const sizeClass = {

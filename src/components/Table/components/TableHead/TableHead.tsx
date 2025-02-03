@@ -1,3 +1,5 @@
+"use client";
+
 import { ReactElement } from "react";
 import { flexRender, Table } from "@tanstack/react-table";
 

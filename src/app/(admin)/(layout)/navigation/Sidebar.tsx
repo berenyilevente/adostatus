@@ -23,7 +23,7 @@ export const Sidebar = ({
   return (
     <div className="w-[240px]">
       <Link
-        href={routes.admin.dashboard}
+        href={routes.admin.dashboard.index}
         className="flex h-16 items-center justify-center"
       >
         <Logo text={config.app.name} />

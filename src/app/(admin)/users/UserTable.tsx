@@ -14,8 +14,10 @@ import {
 } from "@/components";
 
 import { useUsers } from "./use-users";
+import { useRouter } from "next/navigation";
 
 export const UserTable = () => {
+  const router = useRouter();
   const { table, filterControl } = useUsers();
 
   return (
@@ -23,7 +25,8 @@ export const UserTable = () => {
       <CardBody className="p-0">
         <div className="flex justify-between items-center">
           <TableSearch filterControl={filterControl} />
-          <div className="flex items-center">
+
+          <div className="flex items-center gap-1">
             {table.getSelectedRowModel().rows.length > 0 && (
               <Button
                 endIcon="trash"
@@ -33,7 +36,16 @@ export const UserTable = () => {
               />
             )}
             <Button
-              endIcon="filter"
+              startIcon="plus"
+              size="sm"
+              variant="active"
+              color="primary"
+              onClick={() => router.push("/users/create")}
+            >
+              Create User
+            </Button>
+            <Button
+              startIcon="filter"
               size="xs"
               variant="ghost"
               color="secondary"

@@ -21,6 +21,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
   size?: "xs" | "sm" | "md" | "lg";
   fullWidth?: boolean;
+  iconSize?: "xs" | "sm" | "md" | "lg";
 }
 
 export const Button = ({
@@ -33,6 +34,7 @@ export const Button = ({
   color = "primary",
   type = "button",
   size = "md",
+  iconSize,
   startIcon,
   endIcon,
   fullWidth,
@@ -55,10 +57,12 @@ export const Button = ({
       ) : (
         <>
           {startIcon && (
-            <Icon className={iconColor} icon={startIcon} size={size} />
+            <Icon className={iconColor} icon={startIcon} size={iconSize} />
           )}
           <>{children}</>
-          {endIcon && <Icon className={iconColor} icon={endIcon} size={size} />}
+          {endIcon && (
+            <Icon className={iconColor} icon={endIcon} size={iconSize} />
+          )}
         </>
       )}
     </button>

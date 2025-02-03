@@ -14,7 +14,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import { Button, select } from "@/components";
+import { Button, checkbox } from "@/components";
 import { createAppContext } from "@/hooks/use-create-app-context";
 
 import { IUser } from "./models/user.model";
@@ -32,7 +32,7 @@ const useHook = ({ users: usersData }: HookProp) => {
   });
 
   const columns: ColumnDef<IUser, any>[] = [
-    select("select"),
+    checkbox("select"),
     {
       header: "Email",
       accessorKey: "email",

@@ -45,6 +45,9 @@ import ChevronDownIcon from "@iconify/icons-lucide/chevron-down";
 import SearchIcon from "@iconify/icons-lucide/search";
 import PencilIcon from "@iconify/icons-lucide/pencil";
 import FilterIcon from "@iconify/icons-lucide/settings-2";
+import eyeIcon from "@iconify/icons-lucide/eye";
+import eyeOffIcon from "@iconify/icons-lucide/eye-off";
+import plusIcon from "@iconify/icons-lucide/plus";
 
 export const iconMap = {
   mail: mailIcon,
@@ -94,4 +97,7 @@ export const iconMap = {
   search: SearchIcon,
   pencil: PencilIcon,
   filter: FilterIcon,
+  eye: eyeIcon,
+  eyeOff: eyeOffIcon,
+  plus: plusIcon,
 };

@@ -6,12 +6,12 @@ export const adminMenuItems: IMenuItem[] = [
     key: "dashboard",
     icon: "dashboard",
     label: "Dashboard",
-    url: routes.admin.dashboard,
+    url: routes.admin.dashboard.index,
   },
   {
     key: "users",
     icon: "users",
     label: "Users",
-    url: routes.admin.users,
+    url: routes.admin.users.index,
   },
 ];

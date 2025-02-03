@@ -11,6 +11,7 @@ import {
 import { cn } from "@/utils/combineClassNames";
 import { Input, InputProps } from "./Input";
 import { Icon, IconType, Label } from "@/components";
+import { ReactNode } from "react";
 
 interface TextInputProps<
   TField extends FieldValues = FieldValues,
@@ -21,6 +22,7 @@ interface TextInputProps<
   placeholder?: string;
   startIcon?: IconType;
   endIcon?: IconType;
+  endIconComponent?: ReactNode;
   label?: string;
 }
 
@@ -34,6 +36,7 @@ export const TextInput = <
   className,
   startIcon,
   endIcon,
+  endIconComponent,
   label,
   ...props
 }: TextInputProps<TField, TName>) => {
@@ -72,7 +75,7 @@ export const TextInput = <
                 placeholder={placeholder}
                 className={className}
               />
-              {endIcon ? <Icon icon={endIcon} size="xs" /> : null}
+              {endIcon ? <Icon icon={endIcon} size="xs" /> : endIconComponent}
             </div>
             {fieldState.invalid && (
               <div className="text-sm text-error mt-1 text-start">

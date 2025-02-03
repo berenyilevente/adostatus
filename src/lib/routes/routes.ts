@@ -1,8 +1,8 @@
 export const routes = {
   landing: "/",
   admin: {
-    dashboard: "/dashboard",
-    users: "/users",
+    dashboard: { index: "/dashboard" },
+    users: { index: "/users", create: "/users/create" },
   },
   auth: {
     login: "/api/auth/login",
