@@ -7,26 +7,32 @@ import {
   Card,
   CardBody,
   CardTitle,
+  Label,
   FileInput,
   TextInput,
-  Label,
 } from "@/components";
 
-import { useCreateUser } from "./use-create-user";
+import { useEditUser } from "./use-edit-user";
 
-const CreateUser = () => {
-  const { control, handleChangeImage, handleCancel, onSubmit, isLoading } =
-    useCreateUser();
+const EditUser = () => {
+  const {
+    control,
+    userImage,
+    onSubmit,
+    isLoading,
+    handleChangeImage,
+    handleCancel,
+  } = useEditUser();
 
   return (
-    <form>
+    <div>
       <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
         <Card className="bg-base-100">
           <CardBody className="gap-0">
             <CardTitle>Basic Information</CardTitle>
             <div className="mt-1 grid grid-cols-1 gap-5 gap-y-3 md:grid-cols-2">
-              <div className="form-control w-3/4">
-                <Label title="Email" htmlFor="email" />
+              <div>
+                <Label title={"Email"} htmlFor="email" />
                 <TextInput
                   control={control}
                   size="sm"
@@ -35,13 +41,13 @@ const CreateUser = () => {
                   placeholder="Email"
                 />
               </div>
-              <div className="form-control w-3/4">
-                <Label title="Mobile" htmlFor="mobile" />
+              <div>
+                <Label title={"Mobile"} htmlFor="mobile" />
                 <TextInput
                   control={control}
                   size="sm"
                   id="mobile"
-                  name={"mobileNumber"}
+                  name="mobileNumber"
                   placeholder="Mobile"
                 />
               </div>
@@ -54,6 +60,7 @@ const CreateUser = () => {
             <div className="mt-1">
               <div className="filepond-file-upload">
                 <FileInput
+                  files={[...(userImage ? [userImage] : [])]}
                   onupdatefiles={handleChangeImage}
                   labelIdle={`<div>Drag and Drop your files or <span style="text-decoration: underline">Browse</span></div>`}
                 />
@@ -62,7 +69,6 @@ const CreateUser = () => {
           </CardBody>
         </Card>
       </div>
-
       <div className="mt-6 flex justify-end gap-6">
         <Button
           variant="ghost"
@@ -77,14 +83,14 @@ const CreateUser = () => {
           color="primary"
           size="sm"
           onClick={onSubmit}
-          startIcon="check"
+          startIcon="plus"
           isLoading={isLoading}
         >
           Save
         </Button>
       </div>
-    </form>
+    </div>
   );
 };
 
-export { CreateUser };
+export { EditUser };

@@ -1,18 +1,24 @@
 import { FilePondFile } from "filepond";
+import { UseFormSetValue } from "react-hook-form";
 
-export const convertImage = (fileItems: FilePondFile[]): string | undefined => {
-  let image;
-
+export const setImage = (
+  fileItems: FilePondFile[],
+  setValue: UseFormSetValue<any>
+) => {
   if (fileItems.length > 0) {
     const fileItem = fileItems[0];
     const reader = new FileReader();
     reader.onloadend = () => {
       if (reader.result) {
-        image = reader.result as string;
-        return image;
+        setValue("image", reader.result as string);
+        return reader.result as string;
       }
     };
+    if (fileItem.file.type.match("image.*")) {
+      reader.readAsDataURL(fileItem.file);
+    }
+  } else {
+    setValue("image", undefined);
+    return undefined;
   }
-  console.log(image);
-  return image;
 };

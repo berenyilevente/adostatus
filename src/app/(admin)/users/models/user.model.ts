@@ -4,9 +4,11 @@ import mongoose from "mongoose";
 export interface IUser {
   email: string;
   emailVerified: Date;
+  mobileNumber: string;
   id: string;
   createdAt: Date;
   updatedAt: Date;
+  image: string;
 }
 
 const userSchema = new mongoose.Schema(
@@ -19,6 +21,14 @@ const userSchema = new mongoose.Schema(
     },
     emailVerified: {
       type: Date,
+      default: null,
+    },
+    mobileNumber: {
+      type: String,
+      trim: true,
+    },
+    image: {
+      type: String,
       default: null,
     },
   },

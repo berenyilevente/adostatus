@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { createAppContext } from "@/hooks/use-create-app-context";
-import { convertImage } from "@/utils/image";
+import { setImage } from "@/utils/image";
 
 import { CreateUserSchemaType, createUserSchema } from "../users.helper";
 
@@ -19,14 +19,11 @@ const useHook = () => {
     useForm<CreateUserSchemaType>({
       resolver: zodResolver(createUserSchema),
       defaultValues: {
-        password: "",
-        confirmPassword: "",
         email: "",
         mobileNumber: "",
+        image: "",
       },
     });
-
-  const image = watch("image");
 
   const setErrors = (errors: Record<string, any>) => {
     Object.entries(errors).forEach(([key, value]: any[]) =>
@@ -35,13 +32,7 @@ const useHook = () => {
   };
 
   const handleChangeImage = async (fileItems: FilePondFile[]) => {
-    // const image = await convertImage(fileItems);
-    // console.log(image);
-    // if (image) {
-    //   setValue("image", image);
-    // } else {
-    //   setValue("image", undefined);
-    // }
+    setImage(fileItems, setValue);
   };
 
   const onSubmit = handleSubmit(async (data) => {

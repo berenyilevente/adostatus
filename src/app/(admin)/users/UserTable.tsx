@@ -11,6 +11,8 @@ import {
   TableBody,
   TablePagination,
   TableSearch,
+  Modal,
+  ModalActions,
 } from "@/components";
 
 import { useUsers } from "./use-users";
@@ -18,7 +20,7 @@ import { useRouter } from "next/navigation";
 
 export const UserTable = () => {
   const router = useRouter();
-  const { table, filterControl } = useUsers();
+  const { table, filterControl, usersToBeDeleted, onDeleteUsers } = useUsers();
 
   return (
     <Card className="bg-base-100">
@@ -26,7 +28,7 @@ export const UserTable = () => {
         <div className="flex justify-between items-center">
           <TableSearch filterControl={filterControl} />
 
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 mx-4">
             {table.getSelectedRowModel().rows.length > 0 && (
               <Button
                 endIcon="trash"
@@ -46,25 +48,26 @@ export const UserTable = () => {
             >
               Create User
             </Button>
-            <Button
-              startIcon="filter"
-              size="xs"
-              iconSize="xs"
-              variant="ghost"
-              color="secondary"
-              className="mr-4"
-            />
           </div>
         </div>
 
         <Table>
-          <>
-            <TableHead table={table} />
-            <TableBody table={table} />
-          </>
+          <TableHead table={table} />
+          <TableBody table={table} />
         </Table>
         <TablePagination table={table} />
       </CardBody>
+      <Modal id="delete-user-modal" title="Delete User">
+        <div>
+          Are you sure you want to delete user {usersToBeDeleted[0]?.email}?
+        </div>
+        <ModalActions>
+          <Button variant="ghost">Cancel</Button>
+          <Button color="error" className="text-white" onClick={onDeleteUsers}>
+            Yes, delete user
+          </Button>
+        </ModalActions>
+      </Modal>
     </Card>
   );
 };

@@ -15,13 +15,10 @@ import {
   Avatar,
   Dropdown,
   Loading,
-  Logo,
 } from "@/components";
 import avatar from "@/assets/images/avatar/avatar.png";
 import { routes } from "@/lib/routes";
-import { Link } from "@react-email/components";
-import { config } from "@/config";
-import { useLocalStorage } from "@/hooks/use-local-storage";
+
 import { useNavigation } from "./use-navigation";
 
 export const Topbar = () => {

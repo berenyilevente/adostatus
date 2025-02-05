@@ -35,3 +35,6 @@ export * from "./Radio/Radio";
 export * from "./FormInputs/RadioInput/RadioInput";
 export * from "./Toggle/Toggle";
 export * from "./FormInputs/ToggleInput/ToggleInput";
+export * from "./Modal/Modal";
+export * from "./Modal/ModalToggle";
+export * from "./Modal/ModalActions";
