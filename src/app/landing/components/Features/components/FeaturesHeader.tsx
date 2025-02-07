@@ -6,7 +6,7 @@ export const FeaturesHeader = (): ReactElement => {
   return (
     <div className="text-center">
       <div className="inline-block rounded border border-indigo-500/5 bg-indigo-500/5 p-2.5">
-        <Icon icon="wand2" fontSize={20} className="text-secondary" />
+        <Icon icon="wand2" fontSize={20} className="text-primary" />
       </div>
       <p className="mt-2 text-3xl font-semibold">
         {/* 💡 COPY TIP: Remind visitors about the value of your product. Why do they need it? */}

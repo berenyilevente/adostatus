@@ -27,7 +27,7 @@ const features: {
   },
 ];
 
-export const FeaturesWithImage = (): ReactElement => {
+export const FeaturesList = (): ReactElement => {
   return (
     <div className="overflow-hidden bg-white pt-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -41,8 +41,8 @@ export const FeaturesWithImage = (): ReactElement => {
                 Your All-in-One Code Library
               </p>
               <p className="mt-6 text-lg/8 text-gray-600">
-                SwiftBlocks is a deployment-ready, full-stack template built on
-                Tailwind, Daisy UI, mongodb, React, and Next.js.
+                {config.app.name} is a deployment-ready, full-stack template
+                built on Tailwind, Daisy UI, mongodb, React, and Next.js.
               </p>
               <dl className="mt-10 max-w-xl space-y-8 text-base/7 text-gray-600 lg:max-w-none">
                 {features.map((feature) => (
@@ -60,13 +60,6 @@ export const FeaturesWithImage = (): ReactElement => {
               </dl>
             </div>
           </div>
-          <img
-            alt="Product screenshot"
-            src="https://tailwindui.com/plus/img/component-images/dark-project-app-screenshot.png"
-            width={2432}
-            height={1442}
-            className="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
-          />
         </div>
       </div>
     </div>

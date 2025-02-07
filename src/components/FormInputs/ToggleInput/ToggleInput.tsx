@@ -1,3 +1,5 @@
+"use client";
+
 import { Control, Controller, FieldPath, FieldValues } from "react-hook-form";
 
 import { Toggle, ToggleProps } from "@/components";

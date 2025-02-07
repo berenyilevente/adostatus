@@ -37,7 +37,7 @@ export const Compare = () => {
           <Card className="w-full ">
             <CardBody>
               <CardTitle>
-                Apps <span className="text-red-500">without </span>
+                <span className="text-red-500">Without </span>
                 {config.app.name}
               </CardTitle>
               <ul className="list-disc list-inside space-y-2">
@@ -57,7 +57,6 @@ export const Compare = () => {
           <Card className="w-full ">
             <CardBody className="">
               <CardTitle>
-                Apps
                 <span className="text-green-500">with </span>
                 {config.app.name}
               </CardTitle>
