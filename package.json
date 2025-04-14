@@ -14,9 +14,11 @@
     "@hookform/resolvers": "^3.10.0",
     "@iconify/icons-lucide": "^1.2.135",
     "@iconify/react": "^5.2.0",
+    "@radix-ui/react-slot": "^1.2.0",
     "@react-email/components": "^0.0.32",
     "@tanstack/react-table": "^8.20.6",
     "@vercel/analytics": "^1.4.1",
+    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.13",
     "filepond": "^4.32.7",
@@ -24,6 +26,7 @@
     "filepond-plugin-image-preview": "^4.6.12",
     "framer-motion": "^12.0.0",
     "iconify-icon": "^2.3.0",
+    "lucide-react": "^0.488.0",
     "mongodb": "^6.12.0",
     "mongoose": "^8.9.3",
     "next": "14.2.4",
@@ -39,6 +42,7 @@
     "simplebar-react": "^3.3.0",
     "sonner": "^1.7.1",
     "tailwind-merge": "^2.6.0",
+    "tailwindcss-animate": "^1.0.7",
     "zod": "^3.24.1"
   },
   "devDependencies": {
