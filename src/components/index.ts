@@ -25,7 +25,7 @@ export * from "./Dropdown/Dropdown";
 export * from "./Dropdown/DropdownToggle";
 export * from "./Avatar/Avatar";
 export * from "./Loading/Loading";
-export { TableSearch, TablePagination } from "./Table/components";
+export * from "./Table/components";
 export * from "./FormInputs/SelectInput/SelectInput";
 export * from "./FormInputs/FileInput/FileInput";
 export * from "./FormInputs/PasswordInput/PasswordInput";
