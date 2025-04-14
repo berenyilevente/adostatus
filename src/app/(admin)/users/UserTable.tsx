@@ -13,6 +13,7 @@ import {
   TableSearch,
   Modal,
   ModalActions,
+  TableHeader,
 } from "@/components";
 
 import { useUsers } from "./use-users";
@@ -52,7 +53,7 @@ export const UserTable = () => {
         </div>
 
         <Table>
-          <TableHead table={table} />
+          <TableHeader table={table} />
           <TableBody table={table} />
         </Table>
         <TablePagination table={table} />

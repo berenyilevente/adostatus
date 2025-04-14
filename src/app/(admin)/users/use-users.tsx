@@ -15,7 +15,13 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import { Button, TableCheckbox, ModalToggle, Image } from "@/components";
+import {
+  Button,
+  ModalToggle,
+  Image,
+  Checkbox,
+  TableCheckbox,
+} from "@/components";
 import { createAppContext } from "@/hooks/use-create-app-context";
 
 import { IUser } from "./models/user.model";
