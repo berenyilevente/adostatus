@@ -231,7 +231,6 @@ const TableSearch = ({
         startIcon="search"
         control={filterControl}
         name="search"
-        size="sm"
         placeholder="Search all columns..."
       />
     </div>

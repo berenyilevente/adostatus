@@ -29,9 +29,7 @@ export const Hero2 = () => {
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Link href="#footer">
-                <Button variant="active" size="md">
-                  Join the waitlist
-                </Button>
+                <Button variant="default">Join the waitlist</Button>
               </Link>
               <Link
                 href="#features"

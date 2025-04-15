@@ -19,7 +19,7 @@ export const Hero1 = () => {
         </p>
         <div className="space-y-2">
           <Link href="#footer">
-            <Button variant="active" size="lg" endIcon="moveRight" fullWidth>
+            <Button variant="default" size="lg" endIcon="moveRight">
               Join the waitlist!
             </Button>
           </Link>

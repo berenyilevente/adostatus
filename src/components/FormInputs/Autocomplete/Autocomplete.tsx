@@ -61,7 +61,6 @@ const AutocompleteComponent = (
                 <span className="label-text">{label}</span>
               </label>
             )}
-
             <label
               className={`input ${variant} ${className} flex items-center gap-2 ${
                 error ? "input-error" : ""
@@ -124,5 +123,4 @@ const AutocompleteComponent = (
     />
   );
 };
-
 export const Autocomplete = forwardRef(AutocompleteComponent);
