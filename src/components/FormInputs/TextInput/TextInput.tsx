@@ -9,14 +9,14 @@ import {
 } from "react-hook-form";
 
 import { cn } from "@/utils/combineClassNames";
-import { Input, InputProps } from "./Input";
 import { Icon, IconType, Label } from "@/components";
 import { ReactNode } from "react";
+import { Input } from "@/components/ui/input";
 
 interface TextInputProps<
   TField extends FieldValues = FieldValues,
   TName extends FieldPath<TField> = FieldPath<TField>,
-> extends InputProps {
+> extends React.ComponentProps<"input"> {
   control: Control<TField, object>;
   name: TName;
   placeholder?: string;
@@ -42,7 +42,7 @@ export const TextInput = <
 }: TextInputProps<TField, TName>) => {
   const getClassName = (fieldState: ControllerFieldState) =>
     cn(
-      "form-control flex rounded-box border bg-white border-base-content/20 flex-row items-center",
+      "form-control relative flex flex-row items-center",
       {
         "border border-error/60": fieldState.invalid,
         "ps-3": startIcon,
@@ -59,7 +59,13 @@ export const TextInput = <
         render={({ field, fieldState }) => (
           <>
             <div className={getClassName(fieldState)}>
-              {startIcon ? <Icon icon={startIcon} size="xs" /> : null}
+              {startIcon ? (
+                <Icon
+                  icon={startIcon}
+                  className="absolute top-1/2 left-6 -translate-y-1/2 h-4 w-4 text-gray-400"
+                  size="xs"
+                />
+              ) : null}
               <Input
                 {...field}
                 {...props}
@@ -73,9 +79,21 @@ export const TextInput = <
                   );
                 }}
                 placeholder={placeholder}
-                className={className}
+                className={cn(
+                  className,
+                  startIcon && "pl-10",
+                  endIcon && "pr-10"
+                )}
               />
-              {endIcon ? <Icon icon={endIcon} size="xs" /> : endIconComponent}
+              {endIcon ? (
+                <Icon
+                  icon={endIcon}
+                  size="xs"
+                  className="absolute top-1/2 right-6 -translate-y-1/2 h-4 w-4 text-gray-400"
+                />
+              ) : (
+                endIconComponent
+              )}
             </div>
             {fieldState.invalid && (
               <div className="text-sm text-error mt-1 text-start">
@@ -89,5 +107,4 @@ export const TextInput = <
     </>
   );
 };
-
 TextInput.displayName = "TextInput";

@@ -2,9 +2,9 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 import { flexRender, Row, Table as TTable } from "@tanstack/react-table";
-import { Icon } from "../Icon/Icon";
 import { Checkbox } from "./checkbox";
-import { ReactNode } from "react";
+import { Control } from "react-hook-form";
+import { TextInput } from "../FormInputs/TextInput/TextInput";
 
 const Table = React.forwardRef<
   HTMLTableElement,
@@ -173,6 +173,72 @@ const TableCheckbox = <T,>() => ({
 });
 TableCheckbox.displayName = "TableCheckbox";
 
+const TablePagination = <T,>({
+  table,
+}: {
+  table: TTable<T>;
+}): React.ReactElement => {
+  return (
+    <div className="flex items-center justify-between w-full p-4">
+      <div className="join border">
+        <button
+          className={`join-item outline-none btn btn-ghost btn-sm ${
+            !table.getCanPreviousPage() ? "pointer-events-none" : ""
+          }`}
+          onClick={() => table.previousPage()}
+        >
+          {"<"}
+        </button>
+        <button className="join-item outline-none btn btn-ghost font-normal btn-sm pointer-events-none text-xs">
+          {table.getState().pagination.pageIndex + 1} of{" "}
+          {table.getPageCount().toLocaleString()}
+        </button>
+        <button
+          className={`join-item outline-none btn btn-ghost btn-sm ${
+            !table.getCanNextPage() ? "pointer-events-none" : ""
+          }`}
+          onClick={() => table.nextPage()}
+        >
+          {">"}
+        </button>
+      </div>
+      <select
+        className="select select-bordered select-sm"
+        value={table.getState().pagination.pageSize}
+        onChange={(e) => {
+          table.setPageSize(Number(e.target.value));
+        }}
+      >
+        {[10, 20, 30, 40, 50, 100].map((pageSize) => (
+          <option className="btn m-1" key={pageSize} value={pageSize}>
+            Show {pageSize}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+};
+TablePagination.displayName = "TablePagination";
+
+const TableSearch = ({
+  filterControl,
+}: {
+  filterControl: Control<any>;
+}): React.ReactElement => {
+  return (
+    <div className="flex m-4">
+      <TextInput
+        startIcon="search"
+        control={filterControl}
+        name="search"
+        size="sm"
+        placeholder="Search all columns..."
+      />
+    </div>
+  );
+};
+TableSearch.displayName = "TableSearch";
+
 export {
   Table,
   TableHeader,
@@ -183,4 +249,6 @@ export {
   TableCell,
   TableCaption,
   TableCheckbox,
+  TablePagination,
+  TableSearch,
 };

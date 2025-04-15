@@ -2,12 +2,13 @@
 
 import { Control, Controller, FieldPath, FieldValues } from "react-hook-form";
 
-import { Radio, RadioProps } from "@/components";
+import { RadioGroupItem } from "@/components";
+import { RadioGroupItemProps } from "@radix-ui/react-radio-group";
 
 type RadioInputProps<
   TField extends FieldValues = FieldValues,
   TName extends FieldPath<TField> = FieldPath<TField>,
-> = Omit<RadioProps, "name"> & {
+> = Omit<RadioGroupItemProps, "name"> & {
   control: Control<TField>;
   name: TName;
 };
@@ -26,7 +27,7 @@ export const RadioInput = <
     <Controller<TField, TName>
       control={control}
       render={({ field }) => (
-        <Radio
+        <RadioGroupItem
           {...field}
           {...other}
           className={className}
