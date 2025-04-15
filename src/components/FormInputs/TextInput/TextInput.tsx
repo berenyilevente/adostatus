@@ -9,7 +9,7 @@ import {
 } from "react-hook-form";
 
 import { cn } from "@/utils/combineClassNames";
-import { Icon, IconType, Label } from "@/components";
+import { Icon, IconType } from "@/components";
 import { ReactNode } from "react";
 import { Input } from "@/components/ui/input";
 

@@ -32,7 +32,7 @@ const EditUser = () => {
             <CardTitle>Basic Information</CardTitle>
             <div className="mt-1 grid grid-cols-1 gap-5 gap-y-3 md:grid-cols-2">
               <div>
-                <Label title={"Email"} htmlFor="email" />
+                <Label htmlFor="email">Email</Label>
                 <TextInput
                   control={control}
                   id="email"
@@ -41,7 +41,7 @@ const EditUser = () => {
                 />
               </div>
               <div>
-                <Label title={"Mobile"} htmlFor="mobile" />
+                <Label htmlFor="mobile">Mobile</Label>
                 <TextInput
                   control={control}
                   id="mobile"

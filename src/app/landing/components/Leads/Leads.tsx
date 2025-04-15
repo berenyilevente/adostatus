@@ -33,9 +33,8 @@ export const Leads = (): ReactElement => {
                 onSubmit={onSubmit}
               >
                 <div className="w-full">
-                  <Label title="Email Address" htmlFor="email" />
+                  <Label htmlFor="email">Email Address</Label>
                   <TextInput
-                    label="Email Address"
                     placeholder="Email Address"
                     startIcon="mail"
                     control={control}

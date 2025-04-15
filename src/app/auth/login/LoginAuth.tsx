@@ -11,9 +11,8 @@ export const LoginAuth = () => {
   return (
     <form className="flex flex-col gap-4 items-center w-full">
       <div className="form-control w-3/4">
-        <Label title="Email Address" htmlFor="email" />
+        <Label htmlFor="email">Email Address</Label>
         <TextInput
-          label="Email Address"
           startIcon="mail"
           control={control}
           name="email"

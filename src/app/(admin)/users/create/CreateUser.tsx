@@ -30,7 +30,7 @@ const CreateUser = () => {
           <CardContent className="gap-0">
             <div className="mt-1 grid grid-cols-1 gap-5 gap-y-3 md:grid-cols-2">
               <div className="form-control w-3/4">
-                <Label title="Email" htmlFor="email" />
+                <Label htmlFor="email">Email</Label>
                 <TextInput
                   control={control}
                   id="email"
@@ -39,7 +39,7 @@ const CreateUser = () => {
                 />
               </div>
               <div className="form-control w-3/4">
-                <Label title="Mobile" htmlFor="mobile" />
+                <Label htmlFor="mobile">Mobile</Label>
                 <TextInput
                   control={control}
                   id="mobile"
@@ -48,7 +48,7 @@ const CreateUser = () => {
                 />
               </div>
               <div className="form-control w-3/4">
-                <Label title="Role" htmlFor="role" />
+                <Label htmlFor="role">Role</Label>
                 <SelectInput
                   control={control}
                   name="role"
