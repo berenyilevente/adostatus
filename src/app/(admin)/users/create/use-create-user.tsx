@@ -15,13 +15,14 @@ const useHook = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const { control, handleSubmit, setValue, setError, formState, watch } =
+  const { control, handleSubmit, setValue, setError } =
     useForm<CreateUserSchemaType>({
       resolver: zodResolver(createUserSchema),
       defaultValues: {
         email: "",
         mobileNumber: "",
         image: "",
+        role: "",
       },
     });
 
