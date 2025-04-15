@@ -5,12 +5,11 @@ import { Button } from "@/components/Button/Button";
 import { ReactElement, useState } from "react";
 import { TextInput } from "../TextInput/TextInput";
 import { Control, FieldPath, FieldValues } from "react-hook-form";
-import { InputProps } from "../TextInput/Input";
 
 interface PasswordInputProps<
   TField extends FieldValues = FieldValues,
   TName extends FieldPath<TField> = FieldPath<TField>,
-> extends Omit<InputProps, "startIcon" | "endIcon"> {
+> extends React.ComponentProps<"input"> {
   control: Control<TField>;
   name: TName;
 }
