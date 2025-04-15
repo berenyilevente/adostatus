@@ -11,10 +11,12 @@ import {
   NavbarStart,
   Icon,
   Button,
-  DropdownToggle,
   Avatar,
-  Dropdown,
   Loading,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  Spinner,
 } from "@/components";
 import avatar from "@/assets/images/avatar/avatar.png";
 import { routes } from "@/lib/routes";
@@ -48,10 +50,10 @@ export const Topbar = () => {
       </NavbarStart>
       <NavbarCenter />
       <NavbarEnd className="gap-1.5">
-        <Dropdown>
-          <DropdownToggle>
+        <DropdownMenu>
+          <DropdownMenuTrigger>
             {status === "loading" ? (
-              <Loading />
+              <Spinner />
             ) : (
               <div className="flex items-center gap-2">
                 <Avatar src={user?.image || avatar.src} alt="avatar" />
@@ -60,9 +62,9 @@ export const Topbar = () => {
                 </div>
               </div>
             )}
-          </DropdownToggle>
-          <div className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-            <Button variant="ghost" size="sm" startIcon="user">
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <Button variant="ghost" size="sm" startIcon="user" fullWidth>
               My Profile
             </Button>
             <hr className="-mx-2 my-1 border-base-content/10" />
@@ -71,11 +73,12 @@ export const Topbar = () => {
               size="sm"
               onClick={onLogout}
               startIcon="logout"
+              fullWidth
             >
               Logout
             </Button>
-          </div>
-        </Dropdown>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </NavbarEnd>
     </Navbar>
   );
