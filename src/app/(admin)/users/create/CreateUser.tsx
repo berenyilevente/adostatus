@@ -5,7 +5,7 @@ import React from "react";
 import {
   Button,
   Card,
-  CardBody,
+  CardContent,
   CardTitle,
   FileInput,
   TextInput,
@@ -22,14 +22,13 @@ const CreateUser = () => {
     <form>
       <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
         <Card className="bg-base-100">
-          <CardBody className="gap-0">
+          <CardContent className="gap-0">
             <CardTitle>Basic Information</CardTitle>
             <div className="mt-1 grid grid-cols-1 gap-5 gap-y-3 md:grid-cols-2">
               <div className="form-control w-3/4">
                 <Label title="Email" htmlFor="email" />
                 <TextInput
                   control={control}
-                  size="sm"
                   id="email"
                   name="email"
                   placeholder="Email"
@@ -39,17 +38,16 @@ const CreateUser = () => {
                 <Label title="Mobile" htmlFor="mobile" />
                 <TextInput
                   control={control}
-                  size="sm"
                   id="mobile"
                   name={"mobileNumber"}
                   placeholder="Mobile"
                 />
               </div>
             </div>
-          </CardBody>
+          </CardContent>
         </Card>
         <Card className="bg-base-100">
-          <CardBody>
+          <CardContent>
             <CardTitle>Upload Profile Image</CardTitle>
             <div className="mt-1">
               <div className="filepond-file-upload">
@@ -59,7 +57,7 @@ const CreateUser = () => {
                 />
               </div>
             </div>
-          </CardBody>
+          </CardContent>
         </Card>
       </div>
 

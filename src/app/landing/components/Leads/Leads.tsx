@@ -5,10 +5,9 @@ import { ReactElement } from "react";
 import {
   Button,
   Card,
-  CardBody,
+  CardContent,
   Icon,
   Label,
-  Logo,
   TextInput,
 } from "@/components";
 import { config } from "@/config";
@@ -20,7 +19,7 @@ export const Leads = (): ReactElement => {
 
   return (
     <div className="min-w-1/3 max-w-lg mx-auto">
-      <CardBody>
+      <CardContent>
         {!submitted ? (
           <>
             <h3 className="text-center text-sm text-base-content/70 min-w-3/4 mx-auto">
@@ -66,7 +65,7 @@ export const Leads = (): ReactElement => {
             <div>We&apos;ll be in touch when we launch.</div>
           </div>
         )}
-      </CardBody>
+      </CardContent>
     </div>
   );
 };

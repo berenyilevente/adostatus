@@ -1,10 +1,15 @@
-import { CardActions, Icon } from "@/components";
-
 import { ReactElement } from "react";
 
-import { Card, CardTitle, CardBody, Button } from "@/components";
+import {
+  Card,
+  CardTitle,
+  CardContent,
+  Icon,
+  CardFooter,
+  CardHeader,
+  CardDescription,
+} from "@/components";
 import { Price } from "./Price";
-import Link from "next/link";
 
 interface PriceCardProps {
   priceId: string;
@@ -35,19 +40,19 @@ export const PriceCard = ({
     <Card
       className={`w-full sm:w-96 ${isFeatured ? "border border-primary" : ""}`}
     >
-      <CardBody>
+      <CardContent>
+        <CardHeader>
+          <CardTitle>
+            <div className="flex flex-col w-full">
+              <div className="flex flex-col w-full">
+                <Price title={name} price={price} priceAnchor={priceAnchor} />
+              </div>
+            </div>
+          </CardTitle>
+          <CardDescription>{description}</CardDescription>
+        </CardHeader>
         <div className="flex flex-col gap-2">
           <div>
-            <CardTitle>
-              <div className="flex flex-col w-full">
-                <div className="flex flex-col w-full">
-                  <Price title={name} price={price} priceAnchor={priceAnchor} />
-                </div>
-                <div className="mt-2 text-sm font-normal text-base-content/90">
-                  {description}
-                </div>
-              </div>
-            </CardTitle>
             <div className="grid gap-2 h-80">
               <p className="mt-4 text-sm text-base-content/70">Includes:</p>
               {included.map((item, index) => (
@@ -77,7 +82,7 @@ export const PriceCard = ({
             </div>
           </div>
           <div>
-            <CardActions className="h-full">
+            <CardFooter className="h-full">
               {/* <Link className="w-full" href="/leads">
                 <Button variant={isFeatured ? "active" : "outline"}>
                   Buy now!
@@ -86,10 +91,10 @@ export const PriceCard = ({
               <div className="text-sm text-base-content/70 mt-2">
                 Pay once, access forever!
               </div>
-            </CardActions>
+            </CardFooter>
           </div>
         </div>
-      </CardBody>
+      </CardContent>
     </Card>
   );
 };

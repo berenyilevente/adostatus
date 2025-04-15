@@ -1,7 +1,6 @@
 "use client";
 
-import { Icon } from "@/components/Icon/Icon";
-import { Button } from "@/components/Button/Button";
+import { Icon, Button } from "@/components";
 import { ReactElement, useState } from "react";
 import { TextInput } from "../TextInput/TextInput";
 import { Control, FieldPath, FieldValues } from "react-hook-form";
@@ -32,7 +31,7 @@ export const PasswordInput = <
         <Button
           onClick={() => setShowPassword(!showPassword)}
           type="button"
-          size="xs"
+          size="sm"
           aria-label="Show/Hide password"
           variant="ghost"
           className="hover:bg-base-content/10"

@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardBody, CardTitle, Icon } from "@/components";
+import { Card, CardContent, CardHeader, CardTitle, Icon } from "@/components";
 import { config } from "@/config";
 
 // todo rephrase and move to docs
@@ -35,11 +35,13 @@ export const Compare = () => {
         </h2>
         <div className="flex flex-col md:flex-row justify-center items-center md:items-stretch gap-8 md:gap-12">
           <Card className="w-full ">
-            <CardBody>
+            <CardHeader>
               <CardTitle>
                 <span className="text-red-500">Without </span>
                 {config.app.name}
               </CardTitle>
+            </CardHeader>
+            <CardContent>
               <ul className="list-disc list-inside space-y-2">
                 {withoutProduct.map((item, index) => (
                   <li key={index} className="flex gap-2 items-center text-base">
@@ -52,14 +54,16 @@ export const Compare = () => {
                   </li>
                 ))}
               </ul>
-            </CardBody>
+            </CardContent>
           </Card>
           <Card className="w-full ">
-            <CardBody className="">
+            <CardHeader>
               <CardTitle>
-                <span className="text-green-500">with </span>
+                <span className="text-green-500">With </span>
                 {config.app.name}
               </CardTitle>
+            </CardHeader>
+            <CardContent>
               <ul className="list-disc list-inside space-y-2">
                 {withProduct.map((item, index) => (
                   <li key={index} className="flex gap-2 items-center text-base">
@@ -72,7 +76,7 @@ export const Compare = () => {
                   </li>
                 ))}
               </ul>
-            </CardBody>
+            </CardContent>
           </Card>
         </div>
       </div>

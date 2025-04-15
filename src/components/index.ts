@@ -11,10 +11,7 @@ export * from "./Navbar/components/NavbarStart";
 export * from "./Navbar/components/NavbarCenter";
 export * from "./Navbar/components/NavbarEnd";
 export * from "./Image/Image";
-export * from "./Card/Card";
-export * from "./Card/CardTitle";
-export * from "./Card/CardBody";
-export * from "./Card/CardActions";
+
 export * from "./Tooltip/Tooltip";
 export * from "./Accordion/Accordion";
 export * from "./Accordion/AccordionContent";
@@ -42,3 +39,4 @@ export * from "./ui/checkbox";
 export * from "./ui/radio-group";
 export * from "./ui/input";
 export * from "./ui/button";
+export * from "./ui/card";

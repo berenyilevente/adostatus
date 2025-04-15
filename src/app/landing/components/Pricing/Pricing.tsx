@@ -20,8 +20,10 @@ export const Pricing = () => {
           Limited-Time Offer: Join the waitlist today and get an exclusive
           discount at launch!
         </p>
+      </div>
+      <div className="flex flex-col items-center justify-center mt-4">
         <Link href="#footer">
-          <Button className="mx-auto mt-4">Join the waitlist</Button>
+          <Button>Join the waitlist</Button>
         </Link>
       </div>
       <div className="mt-8 flex sm:flex-row flex-col justify-center gap-6 px-4 sm:px-0">

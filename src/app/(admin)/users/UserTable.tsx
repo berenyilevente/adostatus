@@ -5,7 +5,7 @@ import React from "react";
 import {
   Button,
   Card,
-  CardBody,
+  CardContent,
   Table,
   TableHead,
   TableBody,
@@ -25,7 +25,7 @@ export const UserTable = () => {
 
   return (
     <Card className="bg-base-100">
-      <CardBody className="p-0">
+      <CardContent className="p-0">
         <div className="flex justify-between items-center">
           <TableSearch filterControl={filterControl} />
 
@@ -33,7 +33,7 @@ export const UserTable = () => {
             {table.getSelectedRowModel().rows.length > 0 && (
               <Button
                 endIcon="trash"
-                size="xs"
+                size="sm"
                 iconSize="xs"
                 variant="ghost"
                 color="secondary"
@@ -43,7 +43,7 @@ export const UserTable = () => {
               startIcon="plus"
               size="sm"
               iconSize="xs"
-              variant="active"
+              variant="default"
               color="primary"
               onClick={() => router.push("/users/create")}
             >
@@ -57,7 +57,7 @@ export const UserTable = () => {
           <TableBody table={table} />
         </Table>
         <TablePagination table={table} />
-      </CardBody>
+      </CardContent>
       <Modal id="delete-user-modal" title="Delete User">
         <div>
           Are you sure you want to delete user {usersToBeDeleted[0]?.email}?
