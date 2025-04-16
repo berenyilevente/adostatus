@@ -6,10 +6,16 @@ import {
   Icon,
   Logo,
   Button,
-  Drawer,
   Menu,
   MenuItem,
   Navbar,
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTrigger,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
 } from "@/components";
 
 import { cn } from "@/utils";
@@ -38,32 +44,37 @@ export const Navigation = () => {
           <Navbar className="px-0">
             <NavbarStart className="gap-2">
               <div className="flex-none lg:hidden">
-                <Drawer
-                  position="left"
-                  isOpen={drawerOpened}
-                  onClose={toggleDrawer}
-                  content={
-                    <Menu
-                      size="sm"
-                      className="min-h-full w-80 gap-2 bg-base-100 p-4 text-base-content"
-                    >
-                      <MenuItem className="font-medium">
-                        <Logo />
-                      </MenuItem>
-                      <div className="flex flex-col gap-2">
-                        {menuItems.map((item) => (
-                          <MenuItem className="font-medium" key={item.label}>
-                            <Link href={item.href}>{item.label}</Link>
-                          </MenuItem>
-                        ))}
-                      </div>
-                    </Menu>
-                  }
-                >
-                  <Button variant="ghost" onClick={toggleDrawer}>
-                    <Icon icon="menu" className="inline-block text-xl" />
-                  </Button>
-                </Drawer>
+                <Sheet>
+                  <SheetTrigger asChild>
+                    <Button variant="ghost">
+                      <Icon icon="menu" className="inline-block text-xl" />
+                    </Button>
+                  </SheetTrigger>
+                  <SheetContent className="z-[70] w-full h-min" side="top">
+                    <SheetHeader>
+                      <SheetTitle>
+                        <Link href="/">
+                          <Logo
+                            size={38}
+                            text={config.app.name}
+                            textPosition="right"
+                          />
+                        </Link>
+                      </SheetTitle>
+                      <SheetDescription>
+                        <div className="flex flex-col gap-2">
+                          {menuItems.map((item) => (
+                            <div className="font-medium" key={item.label}>
+                              <SheetClose asChild>
+                                <Link href={item.href}>{item.label}</Link>
+                              </SheetClose>
+                            </div>
+                          ))}
+                        </div>
+                      </SheetDescription>
+                    </SheetHeader>
+                  </SheetContent>
+                </Sheet>
               </div>
               <Link href="/">
                 <Logo size={38} text={config.app.name} textPosition="right" />
