@@ -2,8 +2,25 @@ import * as React from "react";
 import { Control } from "react-hook-form";
 import { flexRender, Row, Table as TTable } from "@tanstack/react-table";
 
-import { Checkbox, TextInput } from "@/components";
+import {
+  Checkbox,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  TextInput,
+} from "@/components";
 import { cn } from "@/lib/utils";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationPrevious,
+  PaginationLink,
+  PaginationEllipsis,
+  PaginationNext,
+} from "./pagination";
 
 const Table = React.forwardRef<
   HTMLTableElement,
@@ -179,41 +196,76 @@ const TablePagination = <T,>({
 }): React.ReactElement => {
   return (
     <div className="flex items-center justify-between w-full p-4">
-      <div className="join border">
-        <button
-          className={`join-item outline-none btn btn-ghost btn-sm ${
-            !table.getCanPreviousPage() ? "pointer-events-none" : ""
-          }`}
-          onClick={() => table.previousPage()}
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious
+              onClick={() => table.previousPage()}
+              className={cn(
+                "cursor-pointer select-none",
+                !table.getCanPreviousPage()
+                  ? "pointer-events-none opacity-50"
+                  : ""
+              )}
+            />
+          </PaginationItem>
+
+          {table.getCanPreviousPage() && (
+            <PaginationItem>
+              <PaginationLink
+                onClick={() => table.previousPage()}
+                className="cursor-pointer"
+              >
+                {table.getState().pagination.pageIndex}
+              </PaginationLink>
+            </PaginationItem>
+          )}
+          <PaginationItem>
+            <PaginationLink isActive className="cursor-pointer">
+              {table.getState().pagination.pageIndex + 1}
+            </PaginationLink>
+          </PaginationItem>
+          {table.getCanNextPage() && (
+            <PaginationItem>
+              <PaginationLink
+                onClick={() => table.nextPage()}
+                className="cursor-pointer"
+              >
+                {table.getState().pagination.pageIndex + 2}
+              </PaginationLink>
+            </PaginationItem>
+          )}
+          <PaginationItem>
+            <PaginationNext
+              onClick={() => table.nextPage()}
+              className={cn(
+                "cursor-pointer select-none",
+                !table.getCanNextPage() ? "pointer-events-none opacity-50" : ""
+              )}
+            />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+      <div>
+        <Select
+          onValueChange={(value) => {
+            table.setPageSize(Number(value));
+          }}
         >
-          {"<"}
-        </button>
-        <button className="join-item outline-none btn btn-ghost font-normal btn-sm pointer-events-none text-xs">
-          {table.getState().pagination.pageIndex + 1} of{" "}
-          {table.getPageCount().toLocaleString()}
-        </button>
-        <button
-          className={`join-item outline-none btn btn-ghost btn-sm ${
-            !table.getCanNextPage() ? "pointer-events-none" : ""
-          }`}
-          onClick={() => table.nextPage()}
-        >
-          {">"}
-        </button>
+          <SelectTrigger>
+            <SelectValue
+              placeholder={`Show ${table.getState().pagination.pageSize}`}
+            />
+          </SelectTrigger>
+          <SelectContent>
+            {[10, 20, 30, 40, 50, 100].map((pageSize) => (
+              <SelectItem key={pageSize} value={String(pageSize)}>
+                Show {pageSize}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
-      <select
-        className="select select-bordered select-sm"
-        value={table.getState().pagination.pageSize}
-        onChange={(e) => {
-          table.setPageSize(Number(e.target.value));
-        }}
-      >
-        {[10, 20, 30, 40, 50, 100].map((pageSize) => (
-          <option className="btn m-1" key={pageSize} value={pageSize}>
-            Show {pageSize}
-          </option>
-        ))}
-      </select>
     </div>
   );
 };
