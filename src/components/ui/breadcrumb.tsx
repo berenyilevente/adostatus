@@ -3,8 +3,7 @@ import { Slot } from "@radix-ui/react-slot";
 import { ChevronRight, Link, MoreHorizontal } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { ReactElement } from "react";
-import { IconType, Icon } from "../Icon/Icon";
+import { IconType, Icon } from "@/components";
 
 const Breadcrumb = React.forwardRef<
   HTMLElement,
@@ -118,7 +117,10 @@ interface BreadcrumbsProps {
   className?: string;
 }
 
-const Breadcrumbs = ({ items, className }: BreadcrumbsProps): ReactElement => {
+const Breadcrumbs = ({
+  items,
+  className,
+}: BreadcrumbsProps): React.ReactElement => {
   return (
     <div className={cn("breadcrumbs text-sm", className)}>
       <ul>

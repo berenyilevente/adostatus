@@ -1,8 +1,5 @@
 export * from "./Menu/Menu";
 export * from "./Menu/MenuItem";
-export * from "./Modal/Modal";
-export * from "./Modal/ModalToggle";
-export * from "./Modal/ModalActions";
 
 export * from "./email/login.email";
 export * from "./email/new-lead.email";
@@ -40,3 +37,4 @@ export * from "./ui/logo";
 export * from "./ui/loading";
 export * from "./ui/skeleton";
 export * from "./ui/tooltip";
+export * from "./ui/dialog";

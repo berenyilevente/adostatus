@@ -11,9 +11,8 @@ import {
   TableBody,
   TablePagination,
   TableSearch,
-  Modal,
-  ModalActions,
   TableHeader,
+  Dialog,
 } from "@/components";
 
 import { useUsers } from "./use-users";
@@ -58,17 +57,6 @@ export const UserTable = () => {
         </Table>
         <TablePagination table={table} />
       </CardContent>
-      <Modal id="delete-user-modal" title="Delete User">
-        <div>
-          Are you sure you want to delete user {usersToBeDeleted[0]?.email}?
-        </div>
-        <ModalActions>
-          <Button variant="ghost">Cancel</Button>
-          <Button color="error" className="text-white" onClick={onDeleteUsers}>
-            Yes, delete user
-          </Button>
-        </ModalActions>
-      </Modal>
     </Card>
   );
 };

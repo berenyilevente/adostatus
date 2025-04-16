@@ -17,10 +17,14 @@ import {
 
 import {
   Button,
-  ModalToggle,
   Image,
-  Checkbox,
   TableCheckbox,
+  Dialog,
+  DialogTrigger,
+  DialogHeader,
+  DialogTitle,
+  DialogContent,
+  DialogFooter,
 } from "@/components";
 import { createAppContext } from "@/hooks/use-create-app-context";
 
@@ -88,27 +92,47 @@ const useHook = ({ users: usersData }: HookProp) => {
     },
   ];
 
+  const DeleteUserDialog = ({ row }: { row: Row<IUser> }) => (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button
+          size="sm"
+          iconSize="xs"
+          variant="ghost"
+          startIcon="trash"
+          onClick={() => setUsersToBeDeleted([row.original])}
+        />
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>
+            Are you sure you want to delete user
+            {usersToBeDeleted[0]?.email}?
+          </DialogTitle>
+        </DialogHeader>
+        <DialogFooter>
+          <Button variant="ghost">Cancel</Button>
+          <Button color="error" className="text-white" onClick={onDeleteUsers}>
+            Yes, delete user
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+
   const TableActions = () => ({
     header: "Actions",
     accessorKey: "actions",
     cell: ({ row }: { row: Row<IUser> }) => (
       <div className="flex">
         <Button
-          size="xs"
+          size="sm"
           iconSize="xs"
           variant="ghost"
           startIcon="pencil"
           onClick={() => router.push(`/users/${row.original.id}`)}
         />
-        <ModalToggle modalId="delete-user-modal">
-          <Button
-            size="xs"
-            iconSize="xs"
-            variant="ghost"
-            startIcon="trash"
-            onClick={() => setUsersToBeDeleted([row.original])}
-          />
-        </ModalToggle>
+        <DeleteUserDialog row={row} />
       </div>
     ),
   });

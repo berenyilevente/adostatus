@@ -18,7 +18,7 @@ import {
   MenubarMenu,
   Menubar,
   MenubarSeparator,
-  NavBar,
+  Navbar,
   NavbarStart,
   NavbarEnd,
 } from "@/components";
@@ -73,7 +73,7 @@ export const Navigation = () => {
         )}
       >
         <div className="container">
-          <NavBar>
+          <Navbar>
             <NavbarStart>
               <div className="flex-none lg:hidden">
                 <MobileMenu />
@@ -102,7 +102,7 @@ export const Navigation = () => {
                 </Link>
               </Menubar>
             </NavbarEnd>
-          </NavBar>
+          </Navbar>
         </div>
       </div>
     </>
