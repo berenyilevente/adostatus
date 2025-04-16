@@ -3,7 +3,8 @@
 import {
   Accordion,
   AccordionContent,
-  AccordionTitle,
+  AccordionItem,
+  AccordionTrigger,
   Icon,
 } from "@/components";
 import { features } from "../features.helper";
@@ -15,12 +16,21 @@ export const FeaturesAccordion = () => {
       <FeaturesHeader />
       <div className="grid sm:grid-cols-2 gap-6 mt-8 max-w-5xl mx-auto">
         {features.map((feature, i) => (
-          <Accordion key={feature.title} className="h-min">
-            <AccordionTitle className="flex items-center gap-2">
-              <Icon icon={feature.icon} />
-              {feature.title}
-            </AccordionTitle>
-            <AccordionContent>{feature.description}</AccordionContent>
+          <Accordion
+            key={feature.title}
+            type="single"
+            collapsible
+            className="h-min"
+          >
+            <AccordionItem value={feature.title}>
+              <AccordionTrigger className="text-xl font-medium hover:no-underline">
+                <div className="flex items-center gap-6">
+                  <Icon icon={feature.icon} />
+                  {feature.title}
+                </div>
+              </AccordionTrigger>
+              <AccordionContent>{feature.description}</AccordionContent>
+            </AccordionItem>
           </Accordion>
         ))}
       </div>

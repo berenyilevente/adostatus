@@ -1,12 +1,10 @@
-import Link from "next/link";
-
 import {
   Icon,
   Accordion,
   AccordionContent,
-  AccordionTitle,
+  AccordionItem,
+  AccordionTrigger,
 } from "@/components";
-import { routes } from "@/lib/routes";
 
 import { faqs } from "./faq.helper";
 
@@ -39,15 +37,18 @@ export const FAQ = () => {
           <div className="space-y-4">
             {faqs.map((faq, index) => (
               <Accordion
-                className="border border-base-content/10"
                 key={`${faq.title}-${index}`}
+                type="single"
+                collapsible
               >
-                <AccordionTitle className="text-xl font-medium">
-                  {faq.title}
-                </AccordionTitle>
-                <AccordionContent>
-                  <p className="text-base">{faq.content}</p>
-                </AccordionContent>
+                <AccordionItem value={faq.title}>
+                  <AccordionTrigger className="text-xl font-medium hover:no-underline">
+                    {faq.title}
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <p className="text-base">{faq.content}</p>
+                  </AccordionContent>
+                </AccordionItem>
               </Accordion>
             ))}
           </div>

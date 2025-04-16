@@ -1,3 +1,5 @@
+"use client";
+
 import { Icon, IconType } from "@/components";
 import { config } from "@/config";
 import { ReactElement } from "react";
