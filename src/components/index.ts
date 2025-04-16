@@ -39,3 +39,4 @@ export * from "./ui/label";
 export * from "./ui/accordion";
 export * from "./ui/alert";
 export * from "./ui/avatar";
+export * from "./ui/breadcrumb";
