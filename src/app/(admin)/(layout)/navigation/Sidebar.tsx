@@ -1,12 +1,12 @@
 "use client";
 
-import { ReactElement, useRef, useState } from "react";
+import { ReactElement, useRef } from "react";
 import SimpleBarCore from "simplebar-core";
 import SimpleBar from "simplebar-react";
 import { Link } from "@react-email/components";
 import "simplebar-react/dist/simplebar.min.css";
 
-import { Button, Icon, Logo, Menu } from "@/components";
+import { Button, Logo, Menu } from "@/components";
 import { routes } from "@/lib/routes";
 import { config } from "@/config";
 

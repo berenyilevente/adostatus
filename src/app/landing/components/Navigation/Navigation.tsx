@@ -1,14 +1,12 @@
 "use client";
 
+import { FC } from "react";
 import Link from "next/link";
 
 import {
   Icon,
   Logo,
   Button,
-  Menu,
-  MenuItem,
-  Navbar,
   Sheet,
   SheetClose,
   SheetContent,
@@ -16,23 +14,57 @@ import {
   SheetHeader,
   SheetTitle,
   SheetDescription,
+  MenubarTrigger,
+  MenubarMenu,
+  Menubar,
+  MenubarSeparator,
+  NavBar,
+  NavbarStart,
+  NavbarEnd,
 } from "@/components";
 
 import { cn } from "@/utils";
 import { config } from "@/config/main.config";
-import { useToggle } from "@/hooks/use-toggle";
-import { NavbarEnd, NavbarStart } from "@/components";
+
+const menuItems = [
+  { label: "Home", href: "" },
+  { label: "Features", href: "#features" },
+  { label: "Pricing", href: "#pricing" },
+];
+
+const MobileMenu = () => {
+  return (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="ghost">
+          <Icon icon="menu" className="inline-block text-xl" />
+        </Button>
+      </SheetTrigger>
+      <SheetContent className="z-[70] w-full h-min" side="top">
+        <SheetHeader>
+          <SheetTitle>
+            <Link href="/">
+              <Logo size={38} text={config.app.name} textPosition="right" />
+            </Link>
+          </SheetTitle>
+          <SheetDescription>
+            <div className="flex flex-col gap-2">
+              {menuItems.map((item) => (
+                <div className="font-medium" key={item.label}>
+                  <SheetClose asChild>
+                    <Link href={item.href}>{item.label}</Link>
+                  </SheetClose>
+                </div>
+              ))}
+            </div>
+          </SheetDescription>
+        </SheetHeader>
+      </SheetContent>
+    </Sheet>
+  );
+};
 
 export const Navigation = () => {
-  const { isOpen: drawerOpened, toggle: toggleDrawer } = useToggle();
-
-  const menuItems = [
-    { label: "Home", href: "" },
-    { label: "Features", href: "#features" },
-    { label: "Pricing", href: "#pricing" },
-    { label: "Join waitlist", href: "#footer", highlight: true },
-  ];
-
   return (
     <>
       <div
@@ -41,72 +73,36 @@ export const Navigation = () => {
         )}
       >
         <div className="container">
-          <Navbar className="px-0">
-            <NavbarStart className="gap-2">
+          <NavBar>
+            <NavbarStart>
               <div className="flex-none lg:hidden">
-                <Sheet>
-                  <SheetTrigger asChild>
-                    <Button variant="ghost">
-                      <Icon icon="menu" className="inline-block text-xl" />
-                    </Button>
-                  </SheetTrigger>
-                  <SheetContent className="z-[70] w-full h-min" side="top">
-                    <SheetHeader>
-                      <SheetTitle>
-                        <Link href="/">
-                          <Logo
-                            size={38}
-                            text={config.app.name}
-                            textPosition="right"
-                          />
-                        </Link>
-                      </SheetTitle>
-                      <SheetDescription>
-                        <div className="flex flex-col gap-2">
-                          {menuItems.map((item) => (
-                            <div className="font-medium" key={item.label}>
-                              <SheetClose asChild>
-                                <Link href={item.href}>{item.label}</Link>
-                              </SheetClose>
-                            </div>
-                          ))}
-                        </div>
-                      </SheetDescription>
-                    </SheetHeader>
-                  </SheetContent>
-                </Sheet>
+                <MobileMenu />
               </div>
               <Link href="/">
                 <Logo size={38} text={config.app.name} textPosition="right" />
               </Link>
             </NavbarStart>
 
-            <NavbarEnd className="gap-3">
-              <Menu
-                horizontal
-                size="sm"
-                className="hidden gap-2 px-1 lg:inline-flex items-center"
-              >
+            <NavbarEnd>
+              <Menubar className="border-none bg-transparent shadow-none">
                 {menuItems.map((item) => (
-                  <MenuItem className="font-medium" key={item.label}>
-                    <Link href={item.href}>
-                      {item.highlight ? (
-                        <Button
-                          size={"sm"}
-                          color="primary"
-                          onClick={toggleDrawer}
-                        >
-                          {item.label}
-                        </Button>
-                      ) : (
-                        item.label
-                      )}
-                    </Link>
-                  </MenuItem>
+                  <>
+                    <MenubarMenu>
+                      <MenubarTrigger className="font-medium" key={item.label}>
+                        <Link href={item.href}>{item.label}</Link>
+                      </MenubarTrigger>
+                    </MenubarMenu>
+                    <MenubarSeparator />
+                  </>
                 ))}
-              </Menu>
+                <Link href="#footer">
+                  <Button size="sm" color="primary">
+                    Join waitlist
+                  </Button>
+                </Link>
+              </Menubar>
             </NavbarEnd>
-          </Navbar>
+          </NavBar>
         </div>
       </div>
     </>
