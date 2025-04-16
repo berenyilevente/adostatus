@@ -17,6 +17,8 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   Spinner,
+  AvatarImage,
+  AvatarFallback,
 } from "@/components";
 import avatar from "@/assets/images/avatar/avatar.png";
 import { routes } from "@/lib/routes";
@@ -56,7 +58,12 @@ export const Topbar = () => {
               <Spinner />
             ) : (
               <div className="flex items-center gap-2">
-                <Avatar src={user?.image || avatar.src} alt="avatar" />
+                <Avatar>
+                  <AvatarImage src={user?.image || avatar.src} alt="avatar" />
+                  <AvatarFallback>
+                    <Icon icon="user" />
+                  </AvatarFallback>
+                </Avatar>
                 <div className="flex flex-col items-start">
                   <p className="text-sm/none">{`${user?.email}`}</p>
                 </div>
