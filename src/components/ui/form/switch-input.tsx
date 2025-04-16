@@ -1,7 +1,8 @@
 "use client";
 
-import { Switch } from "@/components";
 import { Control, Controller, FieldPath, FieldValues } from "react-hook-form";
+
+import { Switch } from "@/components";
 
 type SwitchInputProps<
   TFieldValues extends FieldValues = FieldValues,

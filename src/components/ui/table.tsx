@@ -1,10 +1,9 @@
 import * as React from "react";
-
-import { cn } from "@/lib/utils";
-import { flexRender, Row, Table as TTable } from "@tanstack/react-table";
-import { Checkbox } from "./checkbox";
 import { Control } from "react-hook-form";
-import { TextInput } from "../FormInputs/TextInput/TextInput";
+import { flexRender, Row, Table as TTable } from "@tanstack/react-table";
+
+import { Checkbox, TextInput } from "@/components";
+import { cn } from "@/lib/utils";
 
 const Table = React.forwardRef<
   HTMLTableElement,

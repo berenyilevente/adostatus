@@ -1,9 +1,9 @@
 "use client";
 
 import { Control, Controller, FieldPath, FieldValues } from "react-hook-form";
+import { RadioGroupItemProps } from "@radix-ui/react-radio-group";
 
 import { RadioGroupItem } from "@/components";
-import { RadioGroupItemProps } from "@radix-ui/react-radio-group";
 
 type RadioInputProps<
   TField extends FieldValues = FieldValues,

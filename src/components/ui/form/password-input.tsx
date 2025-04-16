@@ -1,9 +1,9 @@
 "use client";
 
-import { Icon, Button } from "@/components";
 import { ReactElement, useState } from "react";
-import { TextInput } from "../TextInput/TextInput";
 import { Control, FieldPath, FieldValues } from "react-hook-form";
+
+import { Icon, Button, TextInput } from "@/components";
 
 interface PasswordInputProps<
   TField extends FieldValues = FieldValues,

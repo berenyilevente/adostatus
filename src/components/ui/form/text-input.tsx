@@ -1,5 +1,6 @@
 "use client";
 
+import { ReactNode } from "react";
 import {
   Control,
   Controller,
@@ -9,9 +10,7 @@ import {
 } from "react-hook-form";
 
 import { cn } from "@/utils/combineClassNames";
-import { Icon, IconType } from "@/components";
-import { ReactNode } from "react";
-import { Input } from "@/components/ui/input";
+import { Icon, IconType, Input } from "@/components";
 
 interface TextInputProps<
   TField extends FieldValues = FieldValues,

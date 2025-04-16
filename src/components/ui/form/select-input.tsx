@@ -1,11 +1,8 @@
 "use client";
 
-import React, { Ref, forwardRef } from "react";
+import React, { forwardRef } from "react";
 import { Control, Controller } from "react-hook-form";
 
-import { useOutsideClickHandler } from "@/hooks/use-outside-click-handler";
-import { IconType } from "@/components";
-import { cn } from "@/utils/combineClassNames";
 import {
   Select,
   SelectItem,
@@ -14,7 +11,7 @@ import {
   SelectValue,
   SelectGroup,
   SelectLabel,
-} from "@/components/ui/select";
+} from "@/components";
 
 export interface SelectInputProps extends React.HTMLAttributes<HTMLDivElement> {
   options: string[];

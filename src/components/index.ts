@@ -1,22 +1,14 @@
 export * from "./Emails/LoginEmail/LoginEmail";
 export * from "./Logo/Logo";
 export * from "./Icon/Icon";
-export * from "./FormInputs/TextInput/TextInput";
 export * from "./Menu/Menu";
 export * from "./Menu/MenuItem";
 export * from "./Image/Image";
 export * from "./Tooltip/Tooltip";
-export * from "./FormInputs/Autocomplete/Autocomplete";
 export * from "./Loading/Loading";
 export * from "./Modal/Modal";
 export * from "./Modal/ModalToggle";
 export * from "./Modal/ModalActions";
-
-export * from "./FormInputs/SelectInput/SelectInput";
-export * from "./FormInputs/FileInput/FileInput";
-export * from "./FormInputs/PasswordInput/PasswordInput";
-export * from "./FormInputs/RadioInput/RadioInput";
-export * from "./FormInputs/SwitchInput/SwitchInput";
 
 export * from "./ui/badge";
 export * from "./ui/table";
@@ -39,3 +31,9 @@ export * from "./ui/menubar";
 export * from "./ui/navigation-menu";
 export * from "./ui/navbar";
 export * from "./ui/switch";
+export * from "./ui/form/text-input";
+export * from "./ui/form/password-input";
+export * from "./ui/form/radio-input";
+export * from "./ui/form/select-input";
+export * from "./ui/form/switch-input";
+export * from "./ui/form/file-input";
