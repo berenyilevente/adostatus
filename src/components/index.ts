@@ -38,3 +38,4 @@ export * from "./ui/spinner";
 export * from "./ui/select";
 export * from "./ui/label";
 export * from "./ui/accordion";
+export * from "./ui/alert";
