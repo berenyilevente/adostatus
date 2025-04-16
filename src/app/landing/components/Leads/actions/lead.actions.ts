@@ -7,8 +7,8 @@ import { Lead } from "../models/lead.model";
 import { ILead } from "../types/lead.types";
 import { config } from "@/config";
 import { resend } from "@/lib/email/resend";
-import { WelcomeEmail } from "@/components/Emails/WelcomeEmail/WelcomeEmail";
-import { NewLeadEmail } from "@/components/Emails/NewLeadEmail/NewLeadEmail";
+import { WelcomeEmail } from "@/components/email/welcome.email";
+import { NewLeadEmail } from "@/components/email/new-lead.email";
 
 export const saveLead = async (email: string): Promise<Response<ILead>> => {
   await connectMongo();

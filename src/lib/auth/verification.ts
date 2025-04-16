@@ -1,6 +1,6 @@
 import { config } from "@/config";
 import { resend } from "@/lib/email/resend";
-import { LoginEmail } from "../../components/Emails/LoginEmail/LoginEmail";
+import { LoginEmail } from "../../components/email/login.email";
 
 type SendVerificationRequestParams = {
   identifier: string;

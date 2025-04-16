@@ -2,14 +2,7 @@
 
 import { ReactElement } from "react";
 
-import {
-  Button,
-  Card,
-  CardContent,
-  Icon,
-  Label,
-  TextInput,
-} from "@/components";
+import { Button, CardContent, Icon, Label, TextInput } from "@/components";
 import { config } from "@/config";
 
 import { useLeads } from "./use-leads";

@@ -5,20 +5,19 @@ import { useSession } from "next-auth/react"; // Add this import
 import { signOut } from "next-auth/react";
 
 import {
-  Navbar,
-  NavbarCenter,
   NavbarEnd,
   NavbarStart,
   Icon,
   Button,
   Avatar,
-  Loading,
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   Spinner,
   AvatarImage,
   AvatarFallback,
+  Navbar,
+  NavbarCenter,
 } from "@/components";
 import avatar from "@/assets/images/avatar/avatar.png";
 import { routes } from "@/lib/routes";

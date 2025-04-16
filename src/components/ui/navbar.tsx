@@ -2,7 +2,7 @@ import { FC, forwardRef } from "react";
 
 interface NavItemProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-interface NavBarProps
+interface NavbarProps
   extends React.DetailedHTMLProps<
     React.HTMLAttributes<HTMLElement>,
     HTMLElement
@@ -17,14 +17,14 @@ const NavbarStart = forwardRef<HTMLDivElement, NavItemProps>(
 );
 NavbarStart.displayName = "NavbarStart";
 
-const NavBarCenter = forwardRef<HTMLDivElement, NavItemProps>(
+const NavbarCenter = forwardRef<HTMLDivElement, NavItemProps>(
   ({ children, ...props }, ref) => (
     <div ref={ref} className="justify-self-center" {...props}>
       {children}
     </div>
   )
 );
-NavBarCenter.displayName = "NavBarCenter";
+NavbarCenter.displayName = "NavbarCenter";
 
 const NavbarEnd = forwardRef<HTMLDivElement, NavItemProps>(
   ({ children, ...props }, ref) => (
@@ -35,7 +35,7 @@ const NavbarEnd = forwardRef<HTMLDivElement, NavItemProps>(
 );
 NavbarEnd.displayName = "NavbarEnd";
 
-const NavBar = forwardRef<HTMLElement, NavBarProps>(
+const Navbar = forwardRef<HTMLElement, NavbarProps>(
   ({ children, ...props }, ref) => (
     <nav
       ref={ref}
@@ -46,6 +46,6 @@ const NavBar = forwardRef<HTMLElement, NavBarProps>(
     </nav>
   )
 );
-NavBar.displayName = "NavBar";
+Navbar.displayName = "Navbar";
 
-export { NavbarStart, NavBarCenter, NavbarEnd, NavBar };
+export { NavbarStart, NavbarCenter, NavbarEnd, Navbar };
