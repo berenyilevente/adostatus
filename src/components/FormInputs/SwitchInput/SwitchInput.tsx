@@ -1,18 +1,18 @@
 "use client";
 
+import { Switch } from "@/components";
 import { Control, Controller, FieldPath, FieldValues } from "react-hook-form";
 
-import { Toggle, ToggleProps } from "@/components";
-
-type ToggleInputProps<
+type SwitchInputProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-> = Omit<ToggleProps, "name"> & {
+> = {
   control: Control<TFieldValues>;
   name: TName;
+  className?: string;
 };
 
-export const ToggleInput = <
+export const SwitchInput = <
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({
@@ -20,12 +20,12 @@ export const ToggleInput = <
   name,
   className,
   ...props
-}: ToggleInputProps<TFieldValues, TName>) => {
+}: SwitchInputProps<TFieldValues, TName>) => {
   return (
     <Controller<TFieldValues, TName>
       control={control}
       render={({ field }) => (
-        <Toggle
+        <Switch
           {...field}
           {...props}
           className={className}
