@@ -38,3 +38,4 @@ export * from "./ui/loading";
 export * from "./ui/skeleton";
 export * from "./ui/tooltip";
 export * from "./ui/dialog";
+export * from "./ui/sidebar";

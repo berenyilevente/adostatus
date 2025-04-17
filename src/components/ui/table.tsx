@@ -176,6 +176,7 @@ const TableCheckbox = <T,>() => ({
       }
       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
       aria-label="Select all"
+      className="ml-4"
     />
   ),
   cell: ({ row }: { row: Row<T> }) => (
@@ -184,6 +185,7 @@ const TableCheckbox = <T,>() => ({
       onCheckedChange={(value) => row.toggleSelected(!!value)}
       aria-label="Select row"
       disabled={!row.getCanSelect()}
+      className="ml-4"
     />
   ),
 });
