@@ -21,10 +21,10 @@ export const Price = ({
             {currency}
           </p>
         </div>
-        <div className="flex flex-col justify-end  text-lg">
+        <div className="flex flex-col justify-end text-lg">
           <p className="relative">
-            <span className="absolute bg-base-content h-[1.5px] inset-x-0 top-[50%]"></span>
-            <span className="text-base-content/80">
+            <span className="absolute bg-black h-[1.5px] inset-x-0 top-[50%]"></span>
+            <span className="text-black/80">
               {currency}
               {priceAnchor}
             </span>

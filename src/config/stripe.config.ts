@@ -33,7 +33,7 @@ const basic: Plan = {
   priceId: pirceId.basic[NODE_ENV],
   included: [
     {
-      name: "Pre-configured components: Tailwind, Daisy UI, React, and Next.js.",
+      name: "Pre-configured components: Tailwind, shadcn/ui, React, and Next.js.",
     },
     {
       name: "Core integrations: User auth, emails, and backend setup.",

@@ -42,7 +42,7 @@ export const FeaturesList = (): ReactElement => {
               </p>
               <p className="mt-6 text-lg/8 text-gray-600">
                 {config.app.name} is a deployment-ready, full-stack template
-                built on Tailwind, Daisy UI, mongodb, React, and Next.js.
+                built on Tailwind, shadcn/ui, postgres, React, and Next.js.
               </p>
               <dl className="mt-10 max-w-xl space-y-8 text-base/7 text-gray-600 lg:max-w-none">
                 {features.map((feature) => (
