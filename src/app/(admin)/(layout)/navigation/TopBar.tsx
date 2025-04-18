@@ -80,7 +80,6 @@ export const Topbar = () => {
 
   const onLogout = async () => {
     await signOut();
-    navigate.push(routes.auth.login);
   };
 
   return (
