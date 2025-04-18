@@ -1,4 +1,4 @@
-import { IconType } from "@/components/Icon/Icon";
+import { IconType } from "@/components";
 
 export const features: {
   icon: IconType;
