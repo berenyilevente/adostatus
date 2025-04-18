@@ -27,7 +27,7 @@ const Users = async () => {
         breadcrumbs={[{ label: "Users", active: true }]}
       />
       <div className="mt-5">
-        <UsersProvider users={users}>
+        <UsersProvider users={users ?? []}>
           <UserTable />
         </UsersProvider>
       </div>

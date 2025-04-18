@@ -14,7 +14,8 @@ export const metadata: Metadata = {
   title: "Edit User",
 };
 
-const EditUserPage = async ({ params }: { params: { id: string } }) => {
+const EditUserPage = async (props: { params: Promise<{ id: string }> }) => {
+  const params = await props.params;
   let user: IUser | null = null;
   const rUser = await getUser(params.id);
 

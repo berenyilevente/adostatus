@@ -277,7 +277,7 @@ const TableSearch = ({
   filterControl,
 }: {
   filterControl: Control<any>;
-}): React.ReactElement => {
+}): React.ReactElement<any> => {
   return (
     <div className="flex m-4">
       <TextInput

@@ -86,14 +86,11 @@ export const Navigation = () => {
             <NavbarEnd>
               <Menubar className="border-none bg-transparent shadow-none">
                 {menuItems.map((item) => (
-                  <>
-                    <MenubarMenu>
-                      <MenubarTrigger className="font-medium" key={item.label}>
-                        <Link href={item.href}>{item.label}</Link>
-                      </MenubarTrigger>
-                    </MenubarMenu>
-                    <MenubarSeparator />
-                  </>
+                  <MenubarMenu key={item.label}>
+                    <MenubarTrigger className="font-medium" key={item.label}>
+                      <Link href={item.href}>{item.label}</Link>
+                    </MenubarTrigger>
+                  </MenubarMenu>
                 ))}
                 <Link href="#footer">
                   <Button size="sm" color="primary">

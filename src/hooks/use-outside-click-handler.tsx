@@ -11,7 +11,7 @@ import {
 interface UseOutsideClickHandler<T> {
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
-  ref: RefObject<T>;
+  ref: RefObject<T | null>;
   handleClickOutside: (event: any) => void;
 }
 

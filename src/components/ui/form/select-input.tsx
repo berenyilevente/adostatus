@@ -22,22 +22,25 @@ export interface SelectInputProps extends React.HTMLAttributes<HTMLDivElement> {
   selectLabel?: string;
 }
 
-export const SelectInput = forwardRef(
-  ({
-    options,
-    name,
-    control,
-    placeholder = "Select an option",
-    error,
-    selectLabel,
-    ...props
-  }: SelectInputProps) => {
+export const SelectInput = forwardRef<HTMLDivElement, SelectInputProps>(
+  (
+    {
+      options,
+      name,
+      control,
+      placeholder = "Select an option",
+      error,
+      selectLabel,
+      ...props
+    }: SelectInputProps,
+    ref
+  ) => {
     return (
       <Controller
         name={name}
         control={control}
         render={({ field }) => (
-          <div {...field} {...props}>
+          <div {...field} {...props} ref={ref}>
             <Select>
               <SelectTrigger>
                 <SelectValue placeholder={placeholder} />
@@ -62,3 +65,5 @@ export const SelectInput = forwardRef(
     );
   }
 );
+
+SelectInput.displayName = "SelectInput";

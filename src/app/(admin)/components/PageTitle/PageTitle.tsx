@@ -25,16 +25,13 @@ const Breadcrumbs = ({
     <Breadcrumb>
       <BreadcrumbList>
         {breadcrumbs.map(({ label, path }) => (
-          <>
-            <BreadcrumbItem key={label}>
-              {path ? (
-                <BreadcrumbLink href={path}>{label}</BreadcrumbLink>
-              ) : (
-                <span>{label}</span>
-              )}
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-          </>
+          <BreadcrumbItem key={label}>
+            {path ? (
+              <BreadcrumbLink href={path}>{label}</BreadcrumbLink>
+            ) : (
+              <span>{label}</span>
+            )}
+          </BreadcrumbItem>
         ))}
       </BreadcrumbList>
     </Breadcrumb>
