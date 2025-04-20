@@ -24,14 +24,17 @@ const Breadcrumbs = ({
   return (
     <Breadcrumb>
       <BreadcrumbList>
-        {breadcrumbs.map(({ label, path }) => (
-          <BreadcrumbItem key={label}>
-            {path ? (
-              <BreadcrumbLink href={path}>{label}</BreadcrumbLink>
-            ) : (
-              <span>{label}</span>
-            )}
-          </BreadcrumbItem>
+        {breadcrumbs.map(({ label, path }, index) => (
+          <span className="flex items-center gap-2" key={label}>
+            <BreadcrumbItem>
+              {path ? (
+                <BreadcrumbLink href={path}>{label}</BreadcrumbLink>
+              ) : (
+                <span>{label}</span>
+              )}
+            </BreadcrumbItem>
+            {index < breadcrumbs.length - 1 && <BreadcrumbSeparator />}
+          </span>
         ))}
       </BreadcrumbList>
     </Breadcrumb>
