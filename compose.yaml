@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:n15-alpine
+    image: postgres:15-alpine
     environment:
       POSTGRES_PASSWORD: example
     ports:
