@@ -10,6 +10,7 @@ import {
   Label,
   FileInput,
   TextInput,
+  CardHeader,
 } from "@/components";
 
 import { useEditUser } from "./use-edit-user";
@@ -28,8 +29,10 @@ const EditUser = () => {
     <div>
       <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
         <Card className="bg-base-100">
-          <CardContent className="gap-0">
+          <CardHeader>
             <CardTitle>Basic Information</CardTitle>
+          </CardHeader>
+          <CardContent className="gap-0">
             <div className="mt-1 grid grid-cols-1 gap-5 gap-y-3 md:grid-cols-2">
               <div>
                 <Label htmlFor="email">Email</Label>
@@ -53,8 +56,10 @@ const EditUser = () => {
           </CardContent>
         </Card>
         <Card className="bg-base-100">
-          <CardContent>
+          <CardHeader>
             <CardTitle>Upload Profile Image</CardTitle>
+          </CardHeader>
+          <CardContent>
             <div className="mt-1">
               <div className="filepond-file-upload">
                 <FileInput
@@ -69,7 +74,7 @@ const EditUser = () => {
       </div>
       <div className="mt-6 flex justify-end gap-6">
         <Button
-          variant="ghost"
+          variant="outline"
           size="sm"
           className="bg-base-content/10"
           onClick={handleCancel}

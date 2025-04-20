@@ -79,7 +79,7 @@ const CreateUser = () => {
 
       <div className="mt-6 flex justify-end gap-6">
         <Button
-          variant="ghost"
+          variant="outline"
           size="sm"
           className="bg-base-content/10"
           onClick={handleCancel}
