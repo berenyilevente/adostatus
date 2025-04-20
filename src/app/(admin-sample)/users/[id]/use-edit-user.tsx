@@ -9,11 +9,10 @@ import { useForm } from "react-hook-form";
 import { createAppContext } from "@/hooks/use-create-app-context";
 
 import { EditUserSchemaType, editUserSchema } from "../users.helper";
-import { IUser } from "../models/user.model";
 import { setImage } from "@/utils/image";
 
 type HookProp = {
-  user: IUser;
+  user: any;
 };
 
 const useHook = ({ user }: HookProp) => {

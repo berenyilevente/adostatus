@@ -7,7 +7,6 @@ import { routes } from "@/lib/routes";
 import { EditUser } from "./EditUser";
 import { EditUserProvider } from "./use-edit-user";
 import { getUser } from "../actions/user.actions";
-import { IUser } from "../models/user.model";
 import { PageTitle } from "../../components/PageTitle/PageTitle";
 
 export const metadata: Metadata = {
@@ -16,7 +15,7 @@ export const metadata: Metadata = {
 
 const EditUserPage = async (props: { params: Promise<{ id: string }> }) => {
   const params = await props.params;
-  let user: IUser | null = null;
+  let user: any | null = null;
   const rUser = await getUser(params.id);
 
   if (rUser.status === "success" && rUser.data) {

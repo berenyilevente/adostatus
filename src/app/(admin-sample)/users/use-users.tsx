@@ -28,16 +28,14 @@ import {
 } from "@/components";
 import { createAppContext } from "@/hooks/use-create-app-context";
 
-import { IUser } from "./models/user.model";
-
 type HookProp = {
-  users: IUser[];
+  users: any[];
 };
 
 const useHook = ({ users: usersData }: HookProp) => {
   const router = useRouter();
-  const [users, setUsers] = useState<IUser[]>(usersData);
-  const [usersToBeDeleted, setUsersToBeDeleted] = useState<IUser[]>([]);
+  const [users, setUsers] = useState<any[]>(usersData);
+  const [usersToBeDeleted, setUsersToBeDeleted] = useState<any[]>([]);
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
@@ -69,7 +67,7 @@ const useHook = ({ users: usersData }: HookProp) => {
     {
       header: "User",
       accessorKey: "email",
-      cell: ({ row }: { row: Row<IUser> }) => (
+      cell: ({ row }: { row: Row<any> }) => (
         <div className="flex items-center gap-2">
           <Image
             src={row.original.image}
@@ -92,7 +90,7 @@ const useHook = ({ users: usersData }: HookProp) => {
     },
   ];
 
-  const DeleteUserDialog = ({ row }: { row: Row<IUser> }) => (
+  const DeleteUserDialog = ({ row }: { row: Row<any> }) => (
     <Dialog>
       <DialogTrigger asChild>
         <Button
@@ -123,7 +121,7 @@ const useHook = ({ users: usersData }: HookProp) => {
   const TableActions = () => ({
     header: "Actions",
     accessorKey: "actions",
-    cell: ({ row }: { row: Row<IUser> }) => (
+    cell: ({ row }: { row: Row<any> }) => (
       <div className="flex">
         <Button
           size="sm"
@@ -137,7 +135,7 @@ const useHook = ({ users: usersData }: HookProp) => {
     ),
   });
 
-  const columns: ColumnDef<IUser, any>[] = [
+  const columns: ColumnDef<any, any>[] = [
     TableCheckbox(),
     ...TableColumns(),
     TableActions(),

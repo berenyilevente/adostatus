@@ -5,13 +5,13 @@ import { UserTable } from "./UserTable";
 import { UsersProvider } from "./use-users";
 import { getUsers } from "./actions";
 import { PageTitle } from "../components/PageTitle/PageTitle";
-import { IUser } from "./models/user.model";
+
 export const metadata: Metadata = {
   title: "Users",
 };
 
 const Users = async () => {
-  let users: IUser[] = [];
+  let users: any[] = [];
   const rUsers = await getUsers();
 
   if (rUsers.status === "success" && rUsers.data) {

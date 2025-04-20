@@ -10,6 +10,7 @@ import { createAppContext } from "@/hooks/use-create-app-context";
 import { setImage } from "@/utils/image";
 
 import { CreateUserSchemaType, createUserSchema } from "../users.helper";
+import { createUser } from "../actions/user.actions";
 
 const useHook = () => {
   const router = useRouter();
@@ -22,7 +23,6 @@ const useHook = () => {
         email: "",
         mobileNumber: "",
         image: "",
-        role: "",
       },
     });
 
@@ -39,7 +39,8 @@ const useHook = () => {
   const onSubmit = handleSubmit(async (data) => {
     console.log(data);
     setIsLoading(true);
-
+    const response = await createUser(data);
+    router.push("/users");
     setIsLoading(false);
   });
 

@@ -1,18 +1,14 @@
 "use server";
 
-import connectMongo from "@/lib/mongo/mongoose";
 import { Response } from "@/types/action.types";
 
-import { Lead } from "../models/lead.model";
-import { ILead } from "../types/lead.types";
 import { config } from "@/config";
 import { resend } from "@/lib/email/resend";
 import { WelcomeEmail } from "@/components/email/welcome.email";
 import { NewLeadEmail } from "@/components/email/new-lead.email";
+import client from "@/lib/prisma/client";
 
-export const saveLead = async (email: string): Promise<Response<ILead>> => {
-  await connectMongo();
-
+export const saveLead = async (email: string): Promise<Response<any>> => {
   if (!email) {
     return {
       status: "error",
@@ -22,7 +18,7 @@ export const saveLead = async (email: string): Promise<Response<ILead>> => {
     };
   }
 
-  const existingLead = await Lead.findOne({ email });
+  const existingLead = await client.lead.findUnique({ where: { email } });
 
   if (existingLead) {
     return {
@@ -33,7 +29,7 @@ export const saveLead = async (email: string): Promise<Response<ILead>> => {
     };
   }
 
-  const data = await Lead.create({ email });
+  const data = await client.lead.create({ data: { email } });
 
   if (data) {
     await resend.emails.send({

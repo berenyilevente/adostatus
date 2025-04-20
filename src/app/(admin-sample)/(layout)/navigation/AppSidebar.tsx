@@ -13,6 +13,7 @@ import {
   SidebarMenuItem,
   SidebarGroupLabel,
   Icon,
+  SidebarSeparator,
 } from "@/components";
 import { config } from "@/config";
 
@@ -36,6 +37,7 @@ export const AppSidebar = (): ReactElement => {
                       <span>{item.label}</span>
                     </a>
                   </SidebarMenuButton>
+                  <SidebarSeparator />
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>

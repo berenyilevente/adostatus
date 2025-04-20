@@ -28,8 +28,8 @@ export const Logo = ({
 
   return (
     <div className={classNames}>
-      <Image src={logo} height={size} alt="logo" className="inline " />
-      {text && <span className="text-xl font-bold">{text}</span>}
+      <Image src={logo} height={size} alt="logo" className="inline" />
+      {text && <span className="text-xl font-bold text-primary">{text}</span>}
     </div>
   );
 };
