@@ -39,23 +39,13 @@ export const TextInput = <
   label,
   ...props
 }: TextInputProps<TField, TName>) => {
-  const getClassName = (fieldState: ControllerFieldState) =>
-    cn(
-      "form-control relative",
-      {
-        "border border-error/60": fieldState.invalid,
-        "bg-base-content/10": props.disabled,
-      },
-      className
-    );
-
   return (
     <>
       <Controller<TField, TName>
         control={control}
         render={({ field, fieldState }) => (
           <>
-            <div className={getClassName(fieldState)}>
+            <div className="from-control relative">
               {startIcon ? (
                 <Icon
                   icon={startIcon}
@@ -76,7 +66,14 @@ export const TextInput = <
                   );
                 }}
                 placeholder={placeholder}
-                className={cn(startIcon && "pl-10", endIcon && "pr-10")}
+                className={cn(
+                  startIcon && "pl-10",
+                  endIcon && "pr-10",
+                  {
+                    "border-red-500": fieldState.error,
+                  },
+                  className
+                )}
               />
               {endIcon ? (
                 <Icon
@@ -89,7 +86,7 @@ export const TextInput = <
               )}
             </div>
             {fieldState.invalid && (
-              <div className="text-sm text-error mt-1 text-start">
+              <div className="text-sm text-red-500 mt-1 text-start">
                 {fieldState.error?.message}
               </div>
             )}

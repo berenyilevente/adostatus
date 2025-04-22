@@ -35,7 +35,7 @@ type HookProp = {
 const useHook = ({ usersData }: HookProp) => {
   const router = useRouter();
   const [usersToBeDeleted, setUsersToBeDeleted] = useState<any[]>([]);
-  const [users, setUsers] = useState<any[]>([]);
+  const [users, setUsers] = useState<any[]>(usersData);
 
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,

@@ -1,17 +1,17 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 import { routes } from "@/lib/routes";
 
 export const useLogin = () => {
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const loginSchema = z.object({
     email: z.string().email({ message: "Please enter a valid email address." }),
@@ -21,6 +21,9 @@ export const useLogin = () => {
 
   const { control, handleSubmit, setError } = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+    },
   });
 
   const setErrors = (errors: Record<string, any>) => {
@@ -29,16 +32,16 @@ export const useLogin = () => {
     );
   };
 
-  const onSubmit = handleSubmit(async (data: LoginSchemaType) => {
+  const onSubmit = handleSubmit(async ({ email }: LoginSchemaType) => {
     setIsLoading(true);
+    const callbackUrl = routes.dashboard.index;
+
     try {
-      await signIn("email", {
-        email: data.email,
-        callbackUrl: routes.dashboard.index,
-      });
-      setIsLoading(false);
+      await signIn("email", { email, callbackUrl });
     } catch (e: any) {
+      setErrors({ email: e.message });
     } finally {
+      router.push(callbackUrl);
       setIsLoading(false);
     }
   });

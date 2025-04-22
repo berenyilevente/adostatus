@@ -45,7 +45,7 @@ const useHook = () => {
   });
 
   const handleCancel = () => {
-    router.push("/users");
+    router.back();
   };
 
   return {

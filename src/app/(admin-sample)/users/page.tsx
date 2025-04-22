@@ -14,10 +14,12 @@ const Users = async () => {
   let users: any[] = [];
   const rUsers = await getUsers();
 
+  if (rUsers === null) {
+    return notFound();
+  }
+
   if (rUsers.status === "success" && rUsers.data) {
     users = rUsers.data;
-  } else {
-    notFound();
   }
 
   return (

@@ -18,7 +18,7 @@ const LoginPage = () => {
         <h3 className="text-center text-sm text-base-content/70">
           Sign in to your account with a magic link
         </h3>
-        <div className="mt-1">
+        <div className="mt-4">
           <LoginAuth />
         </div>
       </CardContent>

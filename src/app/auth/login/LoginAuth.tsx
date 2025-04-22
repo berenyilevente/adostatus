@@ -9,15 +9,15 @@ export const LoginAuth = () => {
   const { isLoading, control, onSubmit } = useLogin();
 
   return (
-    <form className="flex flex-col gap-4 items-center w-full">
+    <form className="flex flex-col  items-center w-full">
       <div className="form-control w-3/4">
         <Label htmlFor="email">Email Address</Label>
         <TextInput
           startIcon="mail"
           control={control}
-          name="email"
           id="email"
-          placeholder="Email Address"
+          name="email"
+          placeholder="Email"
           autoComplete="email"
         />
       </div>
