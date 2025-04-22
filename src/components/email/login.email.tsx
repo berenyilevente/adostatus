@@ -16,6 +16,9 @@ import {
 import { BASE_URL, config } from "@/config";
 
 export const LoginEmail = ({ url, host }: { url: string; host: string }) => {
+  const logoUrl =
+    "https://www.swiftblocks.net/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo.29d07749.png&w=48&q=75";
+
   return (
     <Html>
       <Head />
@@ -49,7 +52,7 @@ export const LoginEmail = ({ url, host }: { url: string; host: string }) => {
 
           <Img
             className="rounded-full"
-            src={`${BASE_URL}/logo.png`}
+            src={logoUrl}
             width="48"
             height="48"
             alt="logo"

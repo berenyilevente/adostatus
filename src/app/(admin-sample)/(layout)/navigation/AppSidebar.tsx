@@ -24,7 +24,7 @@ export const AppSidebar = (): ReactElement => {
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="my-2">
+          <SidebarGroupLabel className="my-2 mb-6">
             <Logo text={config.app.name} />
           </SidebarGroupLabel>
           <SidebarGroupContent>
@@ -37,7 +37,6 @@ export const AppSidebar = (): ReactElement => {
                       <span>{item.label}</span>
                     </a>
                   </SidebarMenuButton>
-                  <SidebarSeparator />
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>

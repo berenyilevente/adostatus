@@ -23,17 +23,15 @@ const Users = async () => {
   }
 
   return (
-    <div>
+    <UsersProvider usersData={users}>
       <PageTitle
         title={"Users"}
         breadcrumbs={[{ label: "Users", active: true }]}
       />
       <div className="mt-5">
-        <UsersProvider usersData={users}>
-          <UserTable />
-        </UsersProvider>
+        <UserTable />
       </div>
-    </div>
+    </UsersProvider>
   );
 };
 
