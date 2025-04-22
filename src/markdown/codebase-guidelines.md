@@ -1,4 +1,4 @@
-- # Developer Guidelines
+# Codebase Guidelines
 
 ## Project Structure
 
