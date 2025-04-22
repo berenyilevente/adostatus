@@ -15,4 +15,4 @@ export const NODE_ENV = assertEnvVar("NODE_ENV", "development");
 export const BASE_URL = assertEnvVar("BASE_URL", "");
 
 // DATABASE
-export const DATABASE_URL = assertEnvVar("DATABASE_URL", "");
+export const POSTGRES_URL = assertEnvVar("POSTGRES_URL", "");
