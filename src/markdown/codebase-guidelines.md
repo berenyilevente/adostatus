@@ -12,6 +12,7 @@ The application follows a feature-based structure within the Next.js app router 
 ## Project Structure
 
 The application follows a feature-based structure within the Next.js app router pattern:
+```
 src/app/(admin-sample)/
 ├── users/                      # User management feature
 │   ├── actions/                # Server actions
@@ -30,6 +31,7 @@ src/app/(admin-sample)/
 │   └── page.tsx                # Users list page
 └── components/                 # Shared admin components
     └── PageTitle/              # Page title component
+```
 
 ## Key Technologies
 
