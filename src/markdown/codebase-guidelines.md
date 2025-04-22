@@ -56,8 +56,10 @@ src/app/(admin-sample)/
 
 The application uses a custom context pattern for state management:
 
+```
 // Example from use-users.tsx
 const [useUsers, UsersProvider] = createAppContext(useHook);
+```
 
 This pattern allows:
 
@@ -74,6 +76,7 @@ Each page follows a consistent pattern:
 - Client components consume the provider data
 
 Example:
+```
 // From users/page.tsx
 return (
   <UsersProvider usersData={users}>
@@ -83,6 +86,7 @@ return (
     </div>
   </UsersProvider>
 );
+```
 
 ## Form Handling
 
