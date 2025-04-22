@@ -114,12 +114,14 @@ Server actions handle data operations:
 - createUser(user): Create a new user
 
 All server actions return a standardized Response type:
+```
 {
   status: "success" | "error",
   data: T | undefined,
   code: number,
   errors: string | undefined
 }
+```
 
 ## UI Components
 
