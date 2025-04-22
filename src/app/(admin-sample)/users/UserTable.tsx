@@ -12,7 +12,6 @@ import {
   TablePagination,
   TableSearch,
   TableHeader,
-  Dialog,
 } from "@/components";
 
 import { useUsers } from "./use-users";

@@ -4,11 +4,29 @@ import { Response } from "@/types/action.types";
 
 import prisma from "@/lib/prisma/client";
 import { revalidatePath } from "next/cache";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/auth/next-auth";
 
 export const getUsers = async (): Promise<Response<any[]>> => {
-  // const usersDemo = getUsersDemo();
+  const session = await getServerSession(authOptions);
+  const currentUserEmail = session?.user?.email;
 
-  const users: any[] = await prisma.user.findMany();
+  if (!currentUserEmail) {
+    return {
+      status: "error",
+      data: undefined,
+      code: 404,
+      errors: "Current user not found",
+    };
+  }
+
+  const users: any[] = await prisma.user.findMany({
+    where: {
+      email: {
+        not: currentUserEmail,
+      },
+    },
+  });
 
   return {
     status: "success",

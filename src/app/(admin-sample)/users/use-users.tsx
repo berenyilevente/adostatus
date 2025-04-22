@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import {
@@ -29,13 +29,14 @@ import {
 import { createAppContext } from "@/hooks/use-create-app-context";
 
 type HookProp = {
-  users: any[];
+  usersData: any[];
 };
 
-const useHook = ({ users: usersData }: HookProp) => {
+const useHook = ({ usersData }: HookProp) => {
   const router = useRouter();
-  const [users, setUsers] = useState<any[]>(usersData);
   const [usersToBeDeleted, setUsersToBeDeleted] = useState<any[]>([]);
+  const [users, setUsers] = useState<any[]>([]);
+
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
@@ -58,6 +59,10 @@ const useHook = ({ users: usersData }: HookProp) => {
     rowSelection,
     globalFilter: search,
   };
+
+  useEffect(() => {
+    setUsers(usersData);
+  }, [usersData]);
 
   const onDeleteUsers = () => {
     console.log(usersToBeDeleted);

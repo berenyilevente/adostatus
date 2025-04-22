@@ -18,7 +18,6 @@ export const LoginAuth = () => {
           name="email"
           id="email"
           placeholder="Email Address"
-          className="w-full focus:border-transparent focus:outline-0"
           autoComplete="email"
         />
       </div>
