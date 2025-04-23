@@ -5,6 +5,7 @@ const baseUserSchemaObject = {
   mobileNumber: z.string().trim().min(1, { message: "Required!" }),
   image: z.string().optional() ?? null,
   dateOfBirth: z.date().min(new Date("1900-01-01"), { message: "Required!" }),
+  timeOfBirth: z.string().min(1, { message: "Required!" }),
 };
 
 export const editUserSchema = z.object(baseUserSchemaObject);

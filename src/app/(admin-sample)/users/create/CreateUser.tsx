@@ -13,6 +13,7 @@ import {
   CardHeader,
   Form,
   FormDatepicker,
+  FormTimepicker,
 } from "@/components";
 
 import { useCreateUser } from "./use-create-user";
@@ -56,6 +57,11 @@ const CreateUser = () => {
                   control={form.control}
                   name="dateOfBirth"
                   label="Date of birth"
+                />
+                <FormTimepicker
+                  control={form.control}
+                  name="timeOfBirth"
+                  label="Time of birth"
                 />
               </div>
             </CardContent>

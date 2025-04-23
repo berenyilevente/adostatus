@@ -23,10 +23,11 @@ const useHook = () => {
       mobileNumber: "",
       image: "",
       dateOfBirth: new Date(),
+      timeOfBirth: "",
     },
   });
 
-  const { handleSubmit, setValue, setError } = form;
+  const { handleSubmit, setValue, setError, watch } = form;
 
   const setErrors = (errors: Record<string, any>) => {
     Object.entries(errors).forEach(([key, value]: any[]) =>

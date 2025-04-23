@@ -1,7 +1,11 @@
 "use client";
 
-import { Control, FieldPath, FieldValues } from "react-hook-form";
-import { RadioGroupItemProps } from "@radix-ui/react-radio-group";
+import {
+  Control,
+  ControllerRenderProps,
+  FieldPath,
+  FieldValues,
+} from "react-hook-form";
 import { format } from "date-fns";
 
 import {
@@ -19,6 +23,7 @@ import {
 } from "@/components";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/utils";
+import { useState } from "react";
 
 type FormDatepickerProps<
   TField extends FieldValues = FieldValues,
@@ -41,6 +46,7 @@ export const FormDatepicker = <
   label,
   description,
 }: FormDatepickerProps<TField, TName>) => {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <FormField
       control={control}
@@ -48,11 +54,11 @@ export const FormDatepicker = <
       render={({ field }) => (
         <FormItem className="flex flex-col">
           <FormLabel>{label}</FormLabel>
-          <Popover>
+          <Popover open={isOpen} onOpenChange={setIsOpen}>
             <PopoverTrigger asChild>
               <FormControl>
                 <Button
-                  variant={"outline"}
+                  variant="outline"
                   className={cn(
                     "pl-3 text-left font-normal",
                     !field.value && "text-muted-foreground"
@@ -71,7 +77,10 @@ export const FormDatepicker = <
               <Calendar
                 mode="single"
                 selected={field.value}
-                onSelect={field.onChange}
+                onSelect={(date) => {
+                  field.onChange(date);
+                  setIsOpen(false);
+                }}
                 initialFocus
                 className={cn(className)}
               />
