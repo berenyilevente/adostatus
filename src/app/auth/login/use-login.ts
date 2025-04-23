@@ -19,12 +19,14 @@ export const useLogin = () => {
 
   type LoginSchemaType = z.infer<typeof loginSchema>;
 
-  const { control, handleSubmit, setError } = useForm<LoginSchemaType>({
+  const form = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
     },
   });
+
+  const { control, handleSubmit, setError } = form;
 
   const setErrors = (errors: Record<string, any>) => {
     Object.entries(errors).forEach(([key, value]: any[]) =>
@@ -48,7 +50,7 @@ export const useLogin = () => {
 
   return {
     isLoading,
-    control,
+    form,
     onSubmit,
   };
 };

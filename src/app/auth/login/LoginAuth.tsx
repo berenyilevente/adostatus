@@ -2,37 +2,37 @@
 
 import React from "react";
 
-import { Button, Label, TextInput } from "@/components";
+import { Button, FormInput, Form } from "@/components";
 import { useLogin } from "./use-login";
 
 export const LoginAuth = () => {
-  const { isLoading, control, onSubmit } = useLogin();
+  const { isLoading, form, onSubmit } = useLogin();
 
   return (
-    <form className="flex flex-col  items-center w-full">
-      <div className="form-control w-3/4">
-        <Label htmlFor="email">Email Address</Label>
-        <TextInput
+    <Form {...form}>
+      <form className="flex flex-col items-center w-full">
+        <FormInput
           startIcon="mail"
-          control={control}
+          control={form.control}
           id="email"
           name="email"
           placeholder="Email"
           autoComplete="email"
+          label="Email Address"
         />
-      </div>
-      <div className="mt-4 md:mt-6">
-        <Button
-          color="primary"
-          isLoading={isLoading}
-          onClick={onSubmit}
-          className="gap-3 text-base"
-          fullWidth
-          startIcon="login"
-        >
-          Send Login Link
-        </Button>
-      </div>
-    </form>
+        <div className="mt-4 md:mt-6">
+          <Button
+            color="primary"
+            isLoading={isLoading}
+            onClick={onSubmit}
+            className="gap-3 text-base"
+            fullWidth
+            startIcon="login"
+          >
+            Send Login Link
+          </Button>
+        </div>
+      </form>
+    </Form>
   );
 };

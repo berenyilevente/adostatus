@@ -1,7 +1,7 @@
 "use client";
 
 import React, { forwardRef } from "react";
-import { Control, Controller } from "react-hook-form";
+import { Control } from "react-hook-form";
 
 import {
   Select,
@@ -19,9 +19,8 @@ import {
   FormMessage,
   Input,
 } from "@/components";
-import { cn } from "@/utils";
 
-export interface SelectInputProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface FormSelectProps extends React.HTMLAttributes<HTMLDivElement> {
   options: string[];
   name: string;
   control: Control<any> | undefined;
@@ -32,7 +31,7 @@ export interface SelectInputProps extends React.HTMLAttributes<HTMLDivElement> {
   description?: string;
 }
 
-export const SelectInput = forwardRef<HTMLDivElement, SelectInputProps>(
+export const FormSelect = forwardRef<HTMLDivElement, FormSelectProps>(
   (
     {
       options,
@@ -44,7 +43,7 @@ export const SelectInput = forwardRef<HTMLDivElement, SelectInputProps>(
       label,
       description,
       ...props
-    }: SelectInputProps,
+    }: FormSelectProps,
     ref
   ) => {
     return (
@@ -87,4 +86,4 @@ export const SelectInput = forwardRef<HTMLDivElement, SelectInputProps>(
   }
 );
 
-SelectInput.displayName = "SelectInput";
+FormSelect.displayName = "FormSelect";

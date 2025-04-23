@@ -3,9 +3,9 @@
 import { ReactElement, useState } from "react";
 import { Control, FieldPath, FieldValues } from "react-hook-form";
 
-import { Icon, Button, TextInput } from "@/components";
+import { Icon, Button, FormInput } from "@/components";
 
-interface PasswordInputProps<
+interface FormPasswordInputProps<
   TField extends FieldValues = FieldValues,
   TName extends FieldPath<TField> = FieldPath<TField>,
 > extends React.ComponentProps<"input"> {
@@ -13,18 +13,18 @@ interface PasswordInputProps<
   name: TName;
 }
 
-export const PasswordInput = <
+export const FormPasswordInput = <
   TField extends FieldValues = FieldValues,
   TName extends FieldPath<TField> = FieldPath<TField>,
 >({
   control,
   name,
   ...props
-}: PasswordInputProps<TField, TName>): ReactElement => {
+}: FormPasswordInputProps<TField, TName>): ReactElement => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <TextInput
+    <FormInput
       {...props}
       control={control}
       name={name}

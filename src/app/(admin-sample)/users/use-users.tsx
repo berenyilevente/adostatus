@@ -43,15 +43,14 @@ const useHook = ({ usersData }: HookProp) => {
   });
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState<Record<string, boolean>>({});
-  const {
-    control: filterControl,
-    watch,
-    setValue,
-  } = useForm({
+  const filterForm = useForm({
     defaultValues: {
       search: "",
     },
   });
+
+  const { control, watch, setValue } = filterForm;
+
   const search = watch("search");
   const tableState = {
     pagination,
@@ -168,7 +167,7 @@ const useHook = ({ usersData }: HookProp) => {
   return {
     table,
     search,
-    filterControl,
+    filterForm,
     usersToBeDeleted,
     onDeleteUsers,
   };

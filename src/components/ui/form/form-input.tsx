@@ -1,15 +1,9 @@
 "use client";
 
 import { ReactNode } from "react";
-import {
-  Control,
-  Controller,
-  ControllerFieldState,
-  FieldPath,
-  FieldValues,
-} from "react-hook-form";
+import { Control, FieldPath, FieldValues } from "react-hook-form";
 
-import { cn } from "@/utils/combineClassNames";
+import { cn } from "@/utils";
 import {
   FormControl,
   FormDescription,
@@ -50,7 +44,7 @@ const EndIcon = ({ endIcon }: { endIcon?: IconType }) => {
   );
 };
 
-interface TextInputProps<
+interface FormInputProps<
   TField extends FieldValues = FieldValues,
   TName extends FieldPath<TField> = FieldPath<TField>,
 > extends React.ComponentProps<"input"> {
@@ -64,7 +58,7 @@ interface TextInputProps<
   description?: string;
 }
 
-export const TextInput = <
+export const FormInput = <
   TField extends FieldValues = FieldValues,
   TName extends FieldPath<TField> = FieldPath<TField>,
 >({
@@ -78,7 +72,7 @@ export const TextInput = <
   label,
   description,
   ...props
-}: TextInputProps<TField, TName>) => {
+}: FormInputProps<TField, TName>) => {
   return (
     <FormField
       control={control}
@@ -110,4 +104,4 @@ export const TextInput = <
     />
   );
 };
-TextInput.displayName = "TextInput";
+FormInput.displayName = "FormInput";

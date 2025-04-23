@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Control } from "react-hook-form";
+import { Control, UseFormReturn } from "react-hook-form";
 import { flexRender, Row, Table as TTable } from "@tanstack/react-table";
 
 import {
@@ -9,7 +9,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-  TextInput,
+  FormInput,
+  Form,
 } from "@/components";
 import { cn } from "@/lib/utils";
 import {
@@ -18,7 +19,6 @@ import {
   PaginationItem,
   PaginationPrevious,
   PaginationLink,
-  PaginationEllipsis,
   PaginationNext,
 } from "./pagination";
 
@@ -274,19 +274,23 @@ const TablePagination = <T,>({
 TablePagination.displayName = "TablePagination";
 
 const TableSearch = ({
-  filterControl,
+  filterForm,
 }: {
-  filterControl: Control<any>;
+  filterForm: UseFormReturn<any>;
 }): React.ReactElement<any> => {
   return (
-    <div className="flex m-4">
-      <TextInput
-        startIcon="search"
-        control={filterControl}
-        name="search"
-        placeholder="Search all columns..."
-      />
-    </div>
+    <Form {...filterForm}>
+      <form>
+        <div className="flex m-4">
+          <FormInput
+            startIcon="search"
+            control={filterForm.control}
+            name="search"
+            placeholder="Search all columns..."
+          />
+        </div>
+      </form>
+    </Form>
   );
 };
 TableSearch.displayName = "TableSearch";

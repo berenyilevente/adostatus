@@ -1,6 +1,6 @@
 "use client";
 
-import { Control, Controller, FieldPath, FieldValues } from "react-hook-form";
+import { Control, FieldPath, FieldValues } from "react-hook-form";
 
 import {
   FormControl,
@@ -12,7 +12,7 @@ import {
   Switch,
 } from "@/components";
 
-type SwitchInputProps<
+type FormSwitchProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > = {
@@ -23,7 +23,7 @@ type SwitchInputProps<
   description?: string;
 };
 
-export const SwitchInput = <
+export const FormSwitch = <
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({
@@ -33,7 +33,7 @@ export const SwitchInput = <
   label,
   description,
   ...props
-}: SwitchInputProps<TFieldValues, TName>) => {
+}: FormSwitchProps<TFieldValues, TName>) => {
   return (
     <FormField
       control={control}

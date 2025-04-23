@@ -25,7 +25,7 @@ const useHook = () => {
     },
   });
 
-  const { control, handleSubmit, setValue, setError } = form;
+  const { handleSubmit, setValue, setError } = form;
 
   const setErrors = (errors: Record<string, any>) => {
     Object.entries(errors).forEach(([key, value]: any[]) =>
@@ -49,14 +49,7 @@ const useHook = () => {
     router.back();
   };
 
-  return {
-    control,
-    onSubmit,
-    handleCancel,
-    handleChangeImage,
-    isLoading,
-    form,
-  };
+  return { onSubmit, handleCancel, handleChangeImage, isLoading, form };
 };
 
 const [useCreateUser, CreateUserProvider] = createAppContext(useHook);

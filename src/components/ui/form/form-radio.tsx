@@ -1,6 +1,6 @@
 "use client";
 
-import { Control, Controller, FieldPath, FieldValues } from "react-hook-form";
+import { Control, FieldPath, FieldValues } from "react-hook-form";
 import { RadioGroupItemProps } from "@radix-ui/react-radio-group";
 
 import {
@@ -13,7 +13,7 @@ import {
   RadioGroupItem,
 } from "@/components";
 
-type RadioInputProps<
+type FormRadioInputProps<
   TField extends FieldValues = FieldValues,
   TName extends FieldPath<TField> = FieldPath<TField>,
 > = Omit<RadioGroupItemProps, "name"> & {
@@ -23,7 +23,7 @@ type RadioInputProps<
   description?: string;
 };
 
-export const RadioInput = <
+export const FormRadioInput = <
   TField extends FieldValues = FieldValues,
   TName extends FieldPath<TField> = FieldPath<TField>,
 >({
@@ -34,7 +34,7 @@ export const RadioInput = <
   label,
   description,
   ...other
-}: RadioInputProps<TField, TName>) => {
+}: FormRadioInputProps<TField, TName>) => {
   return (
     <FormField
       control={control}

@@ -8,31 +8,17 @@ import {
   CardContent,
   CardTitle,
   FileInput,
-  TextInput,
-  Label,
+  FormInput,
+  FormSelect,
   CardHeader,
-  SelectInput,
   Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormDescription,
-  FormMessage,
-  Input,
 } from "@/components";
 
 import { useCreateUser } from "./use-create-user";
 
 const CreateUser = () => {
-  const {
-    form,
-    control,
-    handleChangeImage,
-    handleCancel,
-    onSubmit,
-    isLoading,
-  } = useCreateUser();
+  const { form, handleChangeImage, handleCancel, onSubmit, isLoading } =
+    useCreateUser();
 
   return (
     <Form {...form}>
@@ -44,21 +30,21 @@ const CreateUser = () => {
             </CardHeader>
             <CardContent className="gap-0">
               <div className="mt-1 grid grid-cols-1 gap-5 gap-y-3 md:grid-cols-2">
-                <TextInput
+                <FormInput
                   control={form.control}
                   id="email"
                   name="email"
                   placeholder="Email"
                   label="Email"
                 />
-                <TextInput
+                <FormInput
                   control={form.control}
                   id="mobile"
                   name={"mobileNumber"}
                   placeholder="Mobile"
                   label="Mobile"
                 />
-                <SelectInput
+                <FormSelect
                   control={form.control}
                   name="role"
                   id="role"
