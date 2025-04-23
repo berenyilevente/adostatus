@@ -5,7 +5,7 @@ import { routes } from "@/lib/routes";
 
 import { CreateUser } from "./CreateUser";
 import { CreateUserProvider } from "./use-create-user";
-import { PageTitle } from "../../components/PageTitle/PageTitle";
+import { PageTitle } from "../../components/ui/page-title";
 
 export const metadata: Metadata = {
   title: "Create User",

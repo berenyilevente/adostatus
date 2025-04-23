@@ -16,15 +16,16 @@ const useHook = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const { control, handleSubmit, setValue, setError } =
-    useForm<CreateUserSchemaType>({
-      resolver: zodResolver(createUserSchema),
-      defaultValues: {
-        email: "",
-        mobileNumber: "",
-        image: "",
-      },
-    });
+  const form = useForm<CreateUserSchemaType>({
+    resolver: zodResolver(createUserSchema),
+    defaultValues: {
+      email: "",
+      mobileNumber: "",
+      image: "",
+    },
+  });
+
+  const { control, handleSubmit, setValue, setError } = form;
 
   const setErrors = (errors: Record<string, any>) => {
     Object.entries(errors).forEach(([key, value]: any[]) =>
@@ -54,6 +55,7 @@ const useHook = () => {
     handleCancel,
     handleChangeImage,
     isLoading,
+    form,
   };
 };
 

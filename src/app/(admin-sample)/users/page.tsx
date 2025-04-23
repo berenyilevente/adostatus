@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { UserTable } from "./UserTable";
 import { UsersProvider } from "./use-users";
 import { getUsers } from "./actions";
-import { PageTitle } from "../components/PageTitle/PageTitle";
+import { PageTitle } from "../components/ui/page-title";
 
 export const metadata: Metadata = {
   title: "Users",

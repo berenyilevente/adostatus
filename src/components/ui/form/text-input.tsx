@@ -10,7 +10,45 @@ import {
 } from "react-hook-form";
 
 import { cn } from "@/utils/combineClassNames";
-import { Icon, IconType, Input } from "@/components";
+import {
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Icon,
+  IconType,
+  Input,
+} from "@/components";
+
+const StartIcon = ({ startIcon }: { startIcon?: IconType }) => {
+  if (!startIcon) {
+    return null;
+  }
+
+  return (
+    <Icon
+      icon={startIcon}
+      className="absolute top-[42px] left-3 -translate-y-1/2 text-gray-400"
+      size="xs"
+    />
+  );
+};
+
+const EndIcon = ({ endIcon }: { endIcon?: IconType }) => {
+  if (!endIcon) {
+    return null;
+  }
+
+  return (
+    <Icon
+      icon={endIcon}
+      size="xs"
+      className="absolute top-[42px] right-3 -translate-y-1/2 text-gray-400"
+    />
+  );
+};
 
 interface TextInputProps<
   TField extends FieldValues = FieldValues,
@@ -23,6 +61,7 @@ interface TextInputProps<
   endIcon?: IconType;
   endIconComponent?: ReactNode;
   label?: string;
+  description?: string;
 }
 
 export const TextInput = <
@@ -37,64 +76,38 @@ export const TextInput = <
   endIcon,
   endIconComponent,
   label,
+  description,
   ...props
 }: TextInputProps<TField, TName>) => {
   return (
-    <>
-      <Controller<TField, TName>
-        control={control}
-        render={({ field, fieldState }) => (
-          <>
-            <div className="from-control relative">
-              {startIcon ? (
-                <Icon
-                  icon={startIcon}
-                  className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400"
-                  size="xs"
-                />
-              ) : null}
-              <Input
-                {...field}
-                {...props}
-                onChange={(event) => {
-                  return field.onChange(
-                    props.type === "number"
-                      ? event.target.value.length > 0
-                        ? parseFloat(event.target.value) + ""
-                        : props.min
-                      : event.target.value
-                  );
-                }}
-                placeholder={placeholder}
-                className={cn(
-                  startIcon && "pl-10",
-                  endIcon && "pr-10",
-                  {
-                    "border-red-500": fieldState.error,
-                  },
-                  className
-                )}
-              />
-              {endIcon ? (
-                <Icon
-                  icon={endIcon}
-                  size="xs"
-                  className="absolute top-1/2 right-3 -translate-y-1/2 text-gray-400"
-                />
-              ) : (
-                endIconComponent
+    <FormField
+      control={control}
+      name={name}
+      render={({ field, fieldState }) => (
+        <FormItem className="relative">
+          <FormLabel>{label}</FormLabel>
+          <StartIcon startIcon={startIcon} />
+          <FormControl>
+            <Input
+              {...field}
+              {...props}
+              placeholder={placeholder}
+              className={cn(
+                startIcon && "pl-10",
+                endIcon && "pr-10",
+                {
+                  "border-red-500": fieldState.error,
+                },
+                className
               )}
-            </div>
-            {fieldState.invalid && (
-              <div className="text-sm text-red-500 mt-1 text-start">
-                {fieldState.error?.message}
-              </div>
-            )}
-          </>
-        )}
-        name={name}
-      />
-    </>
+            />
+          </FormControl>
+          <EndIcon endIcon={endIcon} />
+          <FormDescription>{description}</FormDescription>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
   );
 };
 TextInput.displayName = "TextInput";
