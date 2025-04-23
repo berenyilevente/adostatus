@@ -13,11 +13,10 @@ import {
   SidebarMenuItem,
   SidebarGroupLabel,
   Icon,
-  SidebarSeparator,
 } from "@/components";
 import { config } from "@/config";
 
-import { adminMenuItems as menuItems } from "./menu";
+import { adminMenuItems as menuItems } from "./menu-items";
 
 export const AppSidebar = (): ReactElement => {
   return (

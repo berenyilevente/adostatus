@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { config } from "@/config";
-import { Leads } from "../Leads/Leads";
+import { Leads } from "../leads/leads";
 
 export const Footer = () => {
   return (

@@ -7,7 +7,6 @@ import { signOut } from "next-auth/react";
 import {
   NavbarEnd,
   NavbarStart,
-  Icon,
   Button,
   Avatar,
   DropdownMenu,
@@ -15,13 +14,11 @@ import {
   DropdownMenuContent,
   Spinner,
   AvatarImage,
-  AvatarFallback,
   Navbar,
   NavbarCenter,
   SidebarTrigger,
 } from "@/components";
 import avatar from "@/assets/images/avatar/avatar.png";
-import { routes } from "@/lib/routes";
 
 const UserDropdown = ({
   image,
@@ -29,8 +26,8 @@ const UserDropdown = ({
   status,
   onLogout,
 }: {
-  image: string;
   email: string;
+  image?: string | null;
   status: "loading" | "authenticated" | "unauthenticated";
   onLogout: () => void;
 }) => {
@@ -41,11 +38,8 @@ const UserDropdown = ({
           <Spinner />
         ) : (
           <div className="flex items-center gap-2">
-            <Avatar>
+            <Avatar className="size-8">
               <AvatarImage src={image || avatar.src} alt="avatar" />
-              <AvatarFallback>
-                <Icon icon="user" />
-              </AvatarFallback>
             </Avatar>
             <div className="flex flex-col items-start">
               <p className="text-sm/none">{`${email}`}</p>
@@ -72,8 +66,7 @@ const UserDropdown = ({
   );
 };
 
-export const Topbar = () => {
-  const navigate = useRouter();
+export const AppTopbar = () => {
   const { data: session, status } = useSession();
 
   const user = session?.user;
@@ -90,7 +83,7 @@ export const Topbar = () => {
       <NavbarCenter />
       <NavbarEnd>
         <UserDropdown
-          image={user?.image || avatar.src}
+          image={user?.image}
           email={user?.email || ""}
           status={status}
           onLogout={onLogout}

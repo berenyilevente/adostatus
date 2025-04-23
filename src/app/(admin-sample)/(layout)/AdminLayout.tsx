@@ -1,13 +1,13 @@
 "use client";
 
-import { Topbar } from "./navigation/TopBar";
+import { AppTopbar } from "./navigation/AppTopbar";
 
 const AdminLayout = ({ children }: { children: any }) => {
   return (
     <div className="size-full">
       <div className="flex overflow-hidden">
         <div className="site-layout overflow-auto">
-          <Topbar />
+          <AppTopbar />
           <div className="flex h-full flex-col">
             <div className="content-layout">{children}</div>
           </div>
