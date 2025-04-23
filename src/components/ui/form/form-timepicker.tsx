@@ -53,7 +53,7 @@ export const FormTimepicker = <
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className="flex flex-col">
+        <FormItem className="flex flex-col gap-1 mt-2">
           <FormLabel>{label}</FormLabel>
           <Popover open={isOpen} onOpenChange={setIsOpen}>
             <PopoverTrigger asChild>
