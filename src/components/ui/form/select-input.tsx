@@ -11,7 +11,15 @@ import {
   SelectValue,
   SelectGroup,
   SelectLabel,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Input,
 } from "@/components";
+import { cn } from "@/utils";
 
 export interface SelectInputProps extends React.HTMLAttributes<HTMLDivElement> {
   options: string[];
@@ -20,6 +28,8 @@ export interface SelectInputProps extends React.HTMLAttributes<HTMLDivElement> {
   placeholder?: string;
   error?: any;
   selectLabel?: string;
+  label?: string;
+  description?: string;
 }
 
 export const SelectInput = forwardRef<HTMLDivElement, SelectInputProps>(
@@ -31,35 +41,46 @@ export const SelectInput = forwardRef<HTMLDivElement, SelectInputProps>(
       placeholder = "Select an option",
       error,
       selectLabel,
+      label,
+      description,
       ...props
     }: SelectInputProps,
     ref
   ) => {
     return (
-      <Controller
-        name={name}
+      <FormField
         control={control}
+        name={name}
         render={({ field }) => (
-          <div {...field} {...props} ref={ref}>
-            <Select>
-              <SelectTrigger>
-                <SelectValue placeholder={placeholder} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>{selectLabel}</SelectLabel>
-                  {options.map((option) => (
-                    <SelectItem key={option} value={option}>
-                      {option}
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-            {error && (
-              <span className="text-error text-start">{error as string}</span>
-            )}
-          </div>
+          <FormItem className="relative">
+            <FormLabel>{label}</FormLabel>
+            <FormControl>
+              <div {...field} {...props} ref={ref}>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder={placeholder} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>{selectLabel}</SelectLabel>
+                      {options.map((option) => (
+                        <SelectItem key={option} value={option}>
+                          {option}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+                {error && (
+                  <span className="text-error text-start">
+                    {error as string}
+                  </span>
+                )}
+              </div>
+            </FormControl>
+            <FormDescription>{description}</FormDescription>
+            <FormMessage />
+          </FormItem>
         )}
       />
     );

@@ -49,19 +49,21 @@ const CreateUser = () => {
                   id="email"
                   name="email"
                   placeholder="Email"
+                  label="Email"
                 />
                 <TextInput
                   control={form.control}
                   id="mobile"
                   name={"mobileNumber"}
                   placeholder="Mobile"
+                  label="Mobile"
                 />
                 <SelectInput
                   control={form.control}
                   name="role"
                   id="role"
                   options={["Admin", "User"]}
-                  selectLabel="Select Role"
+                  label="Role"
                 />
               </div>
             </CardContent>
