@@ -285,8 +285,10 @@ const TableSearch = ({
           <FormInput
             startIcon="search"
             control={filterForm.control}
+            id="search"
             name="search"
             placeholder="Search all columns..."
+            label="Search"
           />
         </div>
       </form>

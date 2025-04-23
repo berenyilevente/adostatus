@@ -33,7 +33,7 @@ export const FormRadioInput = <
   value,
   label,
   description,
-  ...other
+  ...props
 }: FormRadioInputProps<TField, TName>) => {
   return (
     <FormField
@@ -45,7 +45,7 @@ export const FormRadioInput = <
           <FormControl>
             <RadioGroupItem
               {...field}
-              {...other}
+              {...props}
               className={className}
               checked={field.value === value}
               onChange={() => field.onChange(value)}

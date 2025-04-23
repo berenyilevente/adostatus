@@ -22,6 +22,7 @@ const useHook = () => {
       email: "",
       mobileNumber: "",
       image: "",
+      dateOfBirth: new Date(),
     },
   });
 
@@ -40,7 +41,7 @@ const useHook = () => {
   const onSubmit = handleSubmit(async (data) => {
     console.log(data);
     setIsLoading(true);
-    const response = await createUser(data);
+    // const response = await createUser(data);
     router.push("/users");
     setIsLoading(false);
   });
