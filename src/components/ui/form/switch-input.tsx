@@ -2,7 +2,15 @@
 
 import { Control, Controller, FieldPath, FieldValues } from "react-hook-form";
 
-import { Switch } from "@/components";
+import {
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Switch,
+} from "@/components";
 
 type SwitchInputProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -11,6 +19,8 @@ type SwitchInputProps<
   control: Control<TFieldValues>;
   name: TName;
   className?: string;
+  label?: string;
+  description?: string;
 };
 
 export const SwitchInput = <
@@ -20,20 +30,29 @@ export const SwitchInput = <
   control,
   name,
   className,
+  label,
+  description,
   ...props
 }: SwitchInputProps<TFieldValues, TName>) => {
   return (
-    <Controller<TFieldValues, TName>
+    <FormField
       control={control}
-      render={({ field }) => (
-        <Switch
-          {...field}
-          {...props}
-          className={className}
-          checked={field.value}
-        />
-      )}
       name={name}
+      render={({ field }) => (
+        <FormItem className="relative">
+          <FormLabel>{label}</FormLabel>
+          <FormControl>
+            <Switch
+              {...field}
+              {...props}
+              className={className}
+              checked={field.value}
+            />
+          </FormControl>
+          <FormDescription>{description}</FormDescription>
+          <FormMessage />
+        </FormItem>
+      )}
     />
   );
 };

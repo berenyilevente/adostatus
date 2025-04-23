@@ -17,6 +17,7 @@ export const PasswordInput = <
   TField extends FieldValues = FieldValues,
   TName extends FieldPath<TField> = FieldPath<TField>,
 >({
+  control,
   name,
   ...props
 }: PasswordInputProps<TField, TName>): ReactElement => {
@@ -25,6 +26,7 @@ export const PasswordInput = <
   return (
     <TextInput
       {...props}
+      control={control}
       name={name}
       type={showPassword ? "text" : "password"}
       endIconComponent={
