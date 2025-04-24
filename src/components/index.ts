@@ -44,3 +44,5 @@ export * from "./ui/form/form-timepicker";
 export * from "./ui/form/form-datepicker";
 export * from "./ui/scroll-area";
 export * from "./ui/popover";
+export * from "./ui/form/form-checkbox";
+export * from "./ui/checkbox";

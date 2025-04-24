@@ -48,3 +48,4 @@ export const FormPasswordInput = <
     />
   );
 };
+FormPasswordInput.displayName = "FormPasswordInput";

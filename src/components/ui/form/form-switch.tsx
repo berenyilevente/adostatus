@@ -56,3 +56,4 @@ export const FormSwitch = <
     />
   );
 };
+FormSwitch.displayName = "FormSwitch";

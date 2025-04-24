@@ -13,7 +13,7 @@ import {
   RadioGroupItem,
 } from "@/components";
 
-type FormRadioInputProps<
+type FormRadioProps<
   TField extends FieldValues = FieldValues,
   TName extends FieldPath<TField> = FieldPath<TField>,
 > = Omit<RadioGroupItemProps, "name"> & {
@@ -23,7 +23,7 @@ type FormRadioInputProps<
   description?: string;
 };
 
-export const FormRadioInput = <
+export const FormRadio = <
   TField extends FieldValues = FieldValues,
   TName extends FieldPath<TField> = FieldPath<TField>,
 >({
@@ -34,7 +34,7 @@ export const FormRadioInput = <
   label,
   description,
   ...props
-}: FormRadioInputProps<TField, TName>) => {
+}: FormRadioProps<TField, TName>) => {
   return (
     <FormField
       control={control}
@@ -58,3 +58,4 @@ export const FormRadioInput = <
     />
   );
 };
+FormRadio.displayName = "FormRadio";

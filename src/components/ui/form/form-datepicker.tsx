@@ -93,3 +93,4 @@ export const FormDatepicker = <
     />
   );
 };
+FormDatepicker.displayName = "FormDatepicker";

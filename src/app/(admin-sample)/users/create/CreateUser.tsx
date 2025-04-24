@@ -14,6 +14,7 @@ import {
   Form,
   FormDatepicker,
   FormTimepicker,
+  FormCheckbox,
 } from "@/components";
 
 import { useCreateUser } from "./use-create-user";
@@ -62,6 +63,12 @@ const CreateUser = () => {
                   control={form.control}
                   name="timeOfBirth"
                   label="Time of birth"
+                />
+                <FormCheckbox
+                  control={form.control}
+                  name="isActive"
+                  label="Is active"
+                  className="mt-10"
                 />
               </div>
             </CardContent>

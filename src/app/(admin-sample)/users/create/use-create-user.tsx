@@ -24,6 +24,7 @@ const useHook = () => {
       image: "",
       dateOfBirth: new Date(),
       timeOfBirth: "",
+      isActive: false,
     },
   });
 

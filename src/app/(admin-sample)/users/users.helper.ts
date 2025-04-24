@@ -6,6 +6,7 @@ const baseUserSchemaObject = {
   image: z.string().optional() ?? null,
   dateOfBirth: z.date().min(new Date("1900-01-01"), { message: "Required!" }),
   timeOfBirth: z.string().min(1, { message: "Required!" }),
+  isActive: z.boolean().optional(),
 };
 
 export const editUserSchema = z.object(baseUserSchemaObject);
