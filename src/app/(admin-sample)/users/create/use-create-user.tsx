@@ -9,22 +9,20 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createAppContext } from "@/hooks/use-create-app-context";
 import { setImage } from "@/utils/image";
 
-import { CreateUserSchemaType, createUserSchema } from "../users.helper";
+import { UserSchemaType, userSchema } from "../users.helper";
 import { createUser } from "../actions/user.actions";
+import { User } from "@/generated/prisma";
 
 const useHook = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const form = useForm<CreateUserSchemaType>({
-    resolver: zodResolver(createUserSchema),
+  const form = useForm<UserSchemaType>({
+    resolver: zodResolver(userSchema),
     defaultValues: {
       email: "",
-      mobileNumber: "",
+      name: "",
       image: "",
-      dateOfBirth: new Date(),
-      timeOfBirth: "",
-      isActive: false,
     },
   });
 

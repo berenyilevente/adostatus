@@ -44,10 +44,10 @@ const EditUser = () => {
                 />
                 <FormInput
                   control={form.control}
-                  id="mobile"
-                  name="mobileNumber"
-                  placeholder="Mobile"
-                  label="Mobile"
+                  id="name"
+                  name="name"
+                  placeholder="Name"
+                  label="Name"
                 />
               </div>
             </CardContent>

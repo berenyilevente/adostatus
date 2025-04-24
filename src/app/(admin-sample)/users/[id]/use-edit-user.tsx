@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 
 import { createAppContext } from "@/hooks/use-create-app-context";
 
-import { EditUserSchemaType, editUserSchema } from "../users.helper";
+import { UserSchemaType, userSchema } from "../users.helper";
 import { setImage } from "@/utils/image";
 
 type HookProp = {
@@ -20,11 +20,11 @@ const useHook = ({ user }: HookProp) => {
   const { id: userId } = useParams();
   const [isLoading, setIsLoading] = useState(false);
 
-  const form = useForm<EditUserSchemaType>({
-    resolver: zodResolver(editUserSchema),
+  const form = useForm<UserSchemaType>({
+    resolver: zodResolver(userSchema),
     defaultValues: {
       email: user.email ?? undefined,
-      mobileNumber: user.mobileNumber ?? undefined,
+      name: user.name ?? undefined,
       image: user.image ?? undefined,
     },
   });

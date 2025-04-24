@@ -14,6 +14,7 @@ import {
   SortingState,
   useReactTable,
 } from "@tanstack/react-table";
+import { User } from "@/generated/prisma";
 
 import {
   Button,
@@ -29,13 +30,13 @@ import {
 import { createAppContext } from "@/hooks/use-create-app-context";
 
 type HookProp = {
-  usersData: any[];
+  usersData: User[];
 };
 
 const useHook = ({ usersData }: HookProp) => {
   const router = useRouter();
-  const [usersToBeDeleted, setUsersToBeDeleted] = useState<any[]>([]);
-  const [users, setUsers] = useState<any[]>(usersData);
+  const [usersToBeDeleted, setUsersToBeDeleted] = useState<User[]>([]);
+  const [users, setUsers] = useState<User[]>(usersData);
 
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
@@ -71,15 +72,17 @@ const useHook = ({ usersData }: HookProp) => {
     {
       header: "User",
       accessorKey: "email",
-      cell: ({ row }: { row: Row<any> }) => (
+      cell: ({ row }: { row: Row<User> }) => (
         <div className="flex items-center gap-2">
-          <Image
-            src={row.original.image}
-            width={32}
-            height={32}
-            alt={row.original.email}
-            className="rounded-full"
-          />
+          {row.original.image && (
+            <Image
+              src={row.original.image}
+              width={32}
+              height={32}
+              alt={row.original.email}
+              className="rounded-full"
+            />
+          )}
           <span>{row.original.email}</span>
         </div>
       ),
@@ -94,7 +97,7 @@ const useHook = ({ usersData }: HookProp) => {
     },
   ];
 
-  const DeleteUserDialog = ({ row }: { row: Row<any> }) => (
+  const DeleteUserDialog = ({ row }: { row: Row<User> }) => (
     <Dialog>
       <DialogTrigger asChild>
         <Button
@@ -125,7 +128,7 @@ const useHook = ({ usersData }: HookProp) => {
   const TableActions = () => ({
     header: "Actions",
     accessorKey: "actions",
-    cell: ({ row }: { row: Row<any> }) => (
+    cell: ({ row }: { row: Row<User> }) => (
       <div className="flex">
         <Button
           size="sm"
@@ -139,7 +142,7 @@ const useHook = ({ usersData }: HookProp) => {
     ),
   });
 
-  const columns: ColumnDef<any, any>[] = [
+  const columns: ColumnDef<User, any>[] = [
     TableCheckbox(),
     ...TableColumns(),
     TableActions(),
