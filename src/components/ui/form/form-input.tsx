@@ -78,7 +78,7 @@ export const FormInput = <
       control={control}
       name={name}
       render={({ field, fieldState }) => (
-        <FormItem className="relative">
+        <FormItem className="relative flex flex-col">
           <FormLabel>{label}</FormLabel>
           <StartIcon startIcon={startIcon} />
           <FormControl>

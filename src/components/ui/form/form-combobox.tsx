@@ -1,0 +1,123 @@
+"use client";
+
+import { ReactElement, useState } from "react";
+import { Control, FieldPath, FieldValues } from "react-hook-form";
+
+import {
+  FormItem,
+  FormMessage,
+  FormDescription,
+  FormControl,
+  FormLabel,
+  FormField,
+  Textarea,
+  Popover,
+  PopoverContent,
+  CommandList,
+  Command,
+  CommandItem,
+  CommandGroup,
+  CommandEmpty,
+  CommandInput,
+  PopoverTrigger,
+  Button,
+} from "@/components";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { cn } from "@/utils";
+
+interface FormComboboxProps<
+  TField extends FieldValues = FieldValues,
+  TName extends FieldPath<TField> = FieldPath<TField>,
+> {
+  control: Control<TField>;
+  name: TName;
+  options: { label: string; value: string }[];
+  label?: string;
+  description?: string;
+  placeholder?: string;
+  className?: string;
+  id?: string;
+}
+
+export const FormCombobox = <
+  TField extends FieldValues = FieldValues,
+  TName extends FieldPath<TField> = FieldPath<TField>,
+>({
+  control,
+  name,
+  label,
+  description,
+  placeholder,
+  options,
+  className,
+  id,
+}: FormComboboxProps<TField, TName>): ReactElement => {
+  const [open, setOpen] = useState(false);
+  return (
+    <FormField
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <FormItem className="flex flex-col">
+          <FormLabel>{label}</FormLabel>
+          <Popover open={open} onOpenChange={setOpen}>
+            <PopoverTrigger asChild>
+              <FormControl>
+                <Button
+                  id={id}
+                  variant="outline"
+                  role="combobox"
+                  className={cn(
+                    "justify-between",
+                    !field.value && "text-muted-foreground",
+                    className
+                  )}
+                >
+                  {field.value
+                    ? options.find((option) => option.value === field.value)
+                        ?.label
+                    : placeholder}
+                  <ChevronsUpDown className="ml-auto opacity-50" />
+                </Button>
+              </FormControl>
+            </PopoverTrigger>
+            <PopoverContent className="p-0">
+              <Command>
+                <CommandInput placeholder={placeholder} className="h-9" />
+                <CommandList>
+                  <CommandEmpty>No options found.</CommandEmpty>
+                  <CommandGroup>
+                    {options.map((option) => (
+                      <CommandItem
+                        value={option.label}
+                        key={option.value}
+                        onSelect={() => {
+                          field.onChange(option.value);
+                          setOpen(false);
+                        }}
+                        className="cursor-pointer"
+                      >
+                        {option.label}
+                        <Check
+                          className={cn(
+                            "ml-auto",
+                            option.value === field.value
+                              ? "opacity-100"
+                              : "opacity-0"
+                          )}
+                        />
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
+          <FormDescription>{description}</FormDescription>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  );
+};
+FormCombobox.displayName = "FormCombobox";
