@@ -8,16 +8,18 @@ import { leadsSchema, LeadsSchemaType } from "./schemas/lead.schemas";
 import { useState } from "react";
 
 export const useLeads = () => {
-  const {
-    control,
-    handleSubmit,
-    formState: { isValid, isSubmitSuccessful, errors },
-  } = useForm<LeadsSchemaType>({
+  const form = useForm<LeadsSchemaType>({
     defaultValues: {
       email: "",
     },
     resolver: zodResolver(leadsSchema),
   });
+
+  const {
+    control,
+    handleSubmit,
+    formState: { isValid, isSubmitSuccessful, errors },
+  } = form;
 
   const [submitted, setSubmitted] = useState<boolean>(false);
 
@@ -26,5 +28,5 @@ export const useLeads = () => {
     await saveLead(data.email);
   });
 
-  return { control, onSubmit, isValid, submitted };
+  return { form, onSubmit, isValid, submitted };
 };

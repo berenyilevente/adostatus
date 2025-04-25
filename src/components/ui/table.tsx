@@ -11,6 +11,7 @@ import {
   SelectValue,
   FormInput,
   Form,
+  FormWrapper,
 } from "@/components";
 import { cn } from "@/lib/utils";
 import {
@@ -279,20 +280,18 @@ const TableSearch = ({
   filterForm: UseFormReturn<any>;
 }): React.ReactElement<any> => {
   return (
-    <Form {...filterForm}>
-      <form>
-        <div className="flex m-4">
-          <FormInput
-            startIcon="search"
-            control={filterForm.control}
-            id="search"
-            name="search"
-            placeholder="Search all columns..."
-            label="Search"
-          />
-        </div>
-      </form>
-    </Form>
+    <FormWrapper form={filterForm}>
+      <div className="flex m-4">
+        <FormInput
+          startIcon="search"
+          control={filterForm.control}
+          id="search"
+          name="search"
+          placeholder="Search all columns..."
+          label="Search"
+        />
+      </div>
+    </FormWrapper>
   );
 };
 TableSearch.displayName = "TableSearch";

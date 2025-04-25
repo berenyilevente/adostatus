@@ -2,16 +2,23 @@
 
 import { ReactElement } from "react";
 
-import { Button, CardContent, Icon, Label, TextInput } from "@/components";
+import {
+  Button,
+  CardContent,
+  Icon,
+  Label,
+  FormInput,
+  FormWrapper,
+} from "@/components";
 import { config } from "@/config";
 
 import { useLeads } from "./use-leads";
 
 export const Leads = (): ReactElement => {
-  const { control, onSubmit, submitted } = useLeads();
+  const { form, onSubmit, submitted } = useLeads();
 
   return (
-    <div className="min-w-1/3 max-w-lg mx-auto">
+    <FormWrapper form={form} className="min-w-1/3 max-w-lg mx-auto">
       <CardContent>
         {!submitted ? (
           <>
@@ -20,32 +27,27 @@ export const Leads = (): ReactElement => {
               secure your discount at launch.
             </h3>
 
-            <div className="mt-1">
-              <form
-                className="flex flex-col gap-4 items-center w-full"
-                onSubmit={onSubmit}
-              >
-                <div className="w-full">
-                  <Label htmlFor="email">Email Address</Label>
-                  <TextInput
-                    placeholder="Email Address"
-                    startIcon="mail"
-                    control={control}
-                    required
-                    type="email"
-                    autoComplete="email"
-                    name="email"
-                  />
-                </div>
-                <Button
-                  onClick={onSubmit}
+            <div className="mt-1 flex flex-col gap-4 items-center w-full">
+              <div className="w-full">
+                <Label htmlFor="email">Email Address</Label>
+                <FormInput
+                  placeholder="Email Address"
                   startIcon="mail"
-                  fullWidth
-                  type="submit"
-                >
-                  Join waitlist
-                </Button>
-              </form>
+                  control={form.control}
+                  required
+                  type="email"
+                  autoComplete="email"
+                  name="email"
+                />
+              </div>
+              <Button
+                onClick={onSubmit}
+                startIcon="mail"
+                fullWidth
+                type="submit"
+              >
+                Join waitlist
+              </Button>
             </div>
           </>
         ) : (
@@ -58,6 +60,6 @@ export const Leads = (): ReactElement => {
           </div>
         )}
       </CardContent>
-    </div>
+    </FormWrapper>
   );
 };

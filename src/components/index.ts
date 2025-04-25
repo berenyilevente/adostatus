@@ -12,6 +12,7 @@ export * from "./form/form-select";
 export * from "./form/form-switch";
 export * from "./form/form-textarea";
 export * from "./form/form-timepicker";
+export * from "./form/form-wrapper";
 
 export * from "./ui/accordion";
 export * from "./ui/alert";
