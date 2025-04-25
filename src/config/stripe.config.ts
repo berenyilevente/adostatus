@@ -1,5 +1,4 @@
 import { NODE_ENV } from "./env.config";
-import { config } from "./main.config";
 
 type Plan = {
   name: string;
@@ -28,7 +27,7 @@ const pirceId: Record<string, Record<string, string>> = {
 };
 
 const basic: Plan = {
-  name: `${config.app.name} Essentials`,
+  name: "SwiftBlocks Essentials",
   description:
     "Perfect for solo developers and freelancers who want to launch faster without breaking the bank.",
   priceId: pirceId.basic[NODE_ENV],
@@ -49,7 +48,7 @@ const basic: Plan = {
 };
 
 const advanced: Plan = {
-  name: `${config.app.name} Pro`,
+  name: " SwiftBlocks Pro",
   description:
     "For developers who want everything Essentials offers - plus advanced features to scale faster.",
   priceId: pirceId.advanced[NODE_ENV],
