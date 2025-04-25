@@ -92,7 +92,7 @@ export const FormInput = <
       control={control}
       name={name}
       render={({ field, fieldState }) => (
-        <FormItem className="relative flex flex-col">
+        <FormItem className={cn("relative flex flex-col", className)}>
           <FormLabel>{label}</FormLabel>
           <StartIcon startIcon={startIcon} label={!!label} />
           <FormControl>
@@ -100,14 +100,9 @@ export const FormInput = <
               {...field}
               {...props}
               placeholder={placeholder}
-              className={cn(
-                startIcon && "pl-10",
-                endIcon && "pr-10",
-                {
-                  "border-red-500": fieldState.error,
-                },
-                className
-              )}
+              className={cn(startIcon && "pl-10", endIcon && "pr-10", {
+                "border-red-500": fieldState.error,
+              })}
             />
           </FormControl>
           <EndIcon endIcon={endIcon} label={!!label} />

@@ -9,7 +9,7 @@ export const LoginAuth = () => {
   const { isLoading, form, onSubmit } = useLogin();
 
   return (
-    <FormWrapper form={form} className="flex flex-col items-center w-full">
+    <FormWrapper form={form} className="flex flex-col items-center mx-8">
       <FormInput
         startIcon="mail"
         control={form.control}
@@ -18,19 +18,17 @@ export const LoginAuth = () => {
         placeholder="Email"
         autoComplete="email"
         label="Email Address"
+        className="w-full"
       />
-      <div className="mt-4 md:mt-6">
-        <Button
-          color="primary"
-          isLoading={isLoading}
-          onClick={onSubmit}
-          className="gap-3 text-base"
-          fullWidth
-          startIcon="login"
-        >
-          Send Login Link
-        </Button>
-      </div>
+      <Button
+        color="primary"
+        isLoading={isLoading}
+        onClick={onSubmit}
+        className="gap-3 text-base"
+        fullWidth
+      >
+        Send Login Link
+      </Button>
     </FormWrapper>
   );
 };
