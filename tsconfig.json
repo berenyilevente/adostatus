@@ -32,11 +32,8 @@
       "@/components/*": [
         "./src/components/*"
       ],
-      "@/components/emails/*": [
-        "./src/components/email/*"
-      ],
-      "@/components/ui/*": [
-        "./src/components/ui/*"
+      "@/components/admin/*": [
+        "./src/app/(admin-sample)/components/*"
       ]
     },
     "target": "ES2017"

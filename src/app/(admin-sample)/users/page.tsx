@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { User } from "@/generated/prisma";
+import { PageTitle } from "@/components/admin/index";
+
 import { UserTable } from "./UserTable";
 import { UsersProvider } from "./use-users";
 import { getUsers } from "./actions";
-import { PageTitle } from "../components/ui/page-title";
-import { User } from "@/generated/prisma";
 
 export const metadata: Metadata = {
   title: "Users",

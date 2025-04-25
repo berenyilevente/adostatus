@@ -1,7 +1,9 @@
 import { ReactElement } from "react";
+
+import { PageTitle } from "@/components/admin/index";
+
 import { DashboardProvider } from "./use-dashboard";
 import { Dashboard } from "./Dashboard";
-import { PageTitle } from "../components/ui/page-title";
 
 const DashboardPage = (): ReactElement => {
   return (
