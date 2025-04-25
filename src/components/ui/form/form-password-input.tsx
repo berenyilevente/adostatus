@@ -8,7 +8,7 @@ import { Icon, Button, FormInput } from "@/components";
 interface FormPasswordInputProps<
   TField extends FieldValues = FieldValues,
   TName extends FieldPath<TField> = FieldPath<TField>,
-> extends React.ComponentProps<"input"> {
+> extends React.HTMLAttributes<HTMLInputElement> {
   control: Control<TField>;
   name: TName;
 }

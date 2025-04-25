@@ -12,9 +12,7 @@ import {
   FormSelect,
   CardHeader,
   Form,
-  FormDatepicker,
-  FormTimepicker,
-  FormCheckbox,
+  FormTextarea,
 } from "@/components";
 
 import { useCreateUser } from "./use-create-user";
@@ -40,10 +38,10 @@ const CreateUser = () => {
                   placeholder="Email"
                   label="Email"
                 />
-                <FormInput
+                <FormTextarea
                   control={form.control}
                   id="mobile"
-                  name={"mobileNumber"}
+                  name={"name"}
                   placeholder="Mobile"
                   label="Mobile"
                 />
@@ -53,22 +51,6 @@ const CreateUser = () => {
                   id="role"
                   options={["Admin", "User"]}
                   label="Role"
-                />
-                <FormDatepicker
-                  control={form.control}
-                  name="dateOfBirth"
-                  label="Date of birth"
-                />
-                <FormTimepicker
-                  control={form.control}
-                  name="timeOfBirth"
-                  label="Time of birth"
-                />
-                <FormCheckbox
-                  control={form.control}
-                  name="isActive"
-                  label="Is active"
-                  className="mt-10"
                 />
               </div>
             </CardContent>
