@@ -9,8 +9,6 @@ import { z } from "zod";
 
 import {
   Button,
-  Calendar,
-  Form,
   FormControl,
   FormDescription,
   FormField,
@@ -62,7 +60,8 @@ export const FormTimepicker = <
                   variant="outline"
                   className={cn(
                     "w-full font-normal",
-                    !field.value && "text-muted-foreground"
+                    !field.value && "text-muted-foreground",
+                    className
                   )}
                 >
                   {field.value ? time : <span>Pick a time</span>}

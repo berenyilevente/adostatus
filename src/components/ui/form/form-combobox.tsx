@@ -2,6 +2,7 @@
 
 import { ReactElement, useState } from "react";
 import { Control, FieldPath, FieldValues } from "react-hook-form";
+import { Check, ChevronsUpDown } from "lucide-react";
 
 import {
   FormItem,
@@ -10,7 +11,6 @@ import {
   FormControl,
   FormLabel,
   FormField,
-  Textarea,
   Popover,
   PopoverContent,
   CommandList,
@@ -22,7 +22,6 @@ import {
   PopoverTrigger,
   Button,
 } from "@/components";
-import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/utils";
 
 interface FormComboboxProps<
@@ -36,7 +35,6 @@ interface FormComboboxProps<
   description?: string;
   placeholder?: string;
   className?: string;
-  id?: string;
 }
 
 export const FormCombobox = <
@@ -50,7 +48,6 @@ export const FormCombobox = <
   placeholder,
   options,
   className,
-  id,
 }: FormComboboxProps<TField, TName>): ReactElement => {
   const [open, setOpen] = useState(false);
   return (
@@ -64,7 +61,6 @@ export const FormCombobox = <
             <PopoverTrigger asChild>
               <FormControl>
                 <Button
-                  id={id}
                   variant="outline"
                   role="combobox"
                   className={cn(

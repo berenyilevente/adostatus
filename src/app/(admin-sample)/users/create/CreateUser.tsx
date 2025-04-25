@@ -11,7 +11,7 @@ import {
   FormInput,
   CardHeader,
   Form,
-  FormCombobox,
+  FormSelect,
 } from "@/components";
 
 import { useCreateUser } from "./use-create-user";
@@ -37,21 +37,10 @@ const CreateUser = () => {
                   placeholder="Email"
                   label="Email"
                 />
-                {/* <FormInput
-                  control={form.control}
-                  id="name"
-                  name="name"
-                  placeholder="Name"
-                  label="Name"
-                /> */}
-                <FormCombobox
+                <FormSelect
                   control={form.control}
                   name="name"
-                  id="name"
-                  options={[
-                    { label: "Admin", value: "admin" },
-                    { label: "User", value: "user" },
-                  ]}
+                  options={["Admin", "User"]}
                   label="Name"
                 />
               </div>
