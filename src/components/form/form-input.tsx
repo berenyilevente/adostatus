@@ -16,7 +16,15 @@ import {
   Input,
 } from "@/components";
 
-const StartIcon = ({ startIcon }: { startIcon?: IconType }) => {
+const iconBaseClassNames = "absolute top-[18px] -translate-y-1/2 text-gray-400";
+
+const StartIcon = ({
+  startIcon,
+  label,
+}: {
+  startIcon?: IconType;
+  label?: boolean;
+}) => {
   if (!startIcon) {
     return null;
   }
@@ -24,13 +32,19 @@ const StartIcon = ({ startIcon }: { startIcon?: IconType }) => {
   return (
     <Icon
       icon={startIcon}
-      className="absolute top-[42px] left-3 -translate-y-1/2 text-gray-400"
+      className={cn(iconBaseClassNames, "left-3", label && "!top-[31px]")}
       size="xs"
     />
   );
 };
 
-const EndIcon = ({ endIcon }: { endIcon?: IconType }) => {
+const EndIcon = ({
+  endIcon,
+  label,
+}: {
+  endIcon?: IconType;
+  label?: boolean;
+}) => {
   if (!endIcon) {
     return null;
   }
@@ -39,7 +53,7 @@ const EndIcon = ({ endIcon }: { endIcon?: IconType }) => {
     <Icon
       icon={endIcon}
       size="xs"
-      className="absolute top-[42px] right-3 -translate-y-1/2 text-gray-400"
+      className={cn(iconBaseClassNames, "right-3", label && "!top-[31px]")}
     />
   );
 };
@@ -80,7 +94,7 @@ export const FormInput = <
       render={({ field, fieldState }) => (
         <FormItem className="relative flex flex-col">
           <FormLabel>{label}</FormLabel>
-          <StartIcon startIcon={startIcon} />
+          <StartIcon startIcon={startIcon} label={!!label} />
           <FormControl>
             <Input
               {...field}
@@ -96,7 +110,7 @@ export const FormInput = <
               )}
             />
           </FormControl>
-          <EndIcon endIcon={endIcon} />
+          <EndIcon endIcon={endIcon} label={!!label} />
           <FormDescription>{description}</FormDescription>
           <FormMessage />
         </FormItem>
