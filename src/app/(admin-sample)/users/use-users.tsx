@@ -37,7 +37,6 @@ const useHook = ({ usersData }: HookProp) => {
   const router = useRouter();
   const [usersToBeDeleted, setUsersToBeDeleted] = useState<User[]>([]);
   const [users, setUsers] = useState<User[]>(usersData);
-
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
@@ -50,7 +49,7 @@ const useHook = ({ usersData }: HookProp) => {
     },
   });
 
-  const { control, watch, setValue } = filterForm;
+  const { watch, setValue } = filterForm;
 
   const search = watch("search");
   const tableState = {
@@ -59,10 +58,6 @@ const useHook = ({ usersData }: HookProp) => {
     rowSelection,
     globalFilter: search,
   };
-
-  useEffect(() => {
-    setUsers(usersData);
-  }, [usersData]);
 
   const onDeleteUsers = () => {
     console.log(usersToBeDeleted);
