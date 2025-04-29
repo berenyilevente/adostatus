@@ -27,51 +27,58 @@ const pirceId: Record<string, Record<string, string>> = {
 };
 
 const basic: Plan = {
-  name: "SwiftBlocks Essentials",
+  name: "TimeGrid Starter",
   description:
-    "Perfect for solo developers and freelancers who want to launch faster without breaking the bank.",
+    "Perfect for trying TimeGrid with a single business or service type.",
   priceId: pirceId.basic[NODE_ENV],
   included: [
     {
-      name: "Pre-configured components: Tailwind, shadcn/ui, React, and Next.js.",
+      name: "1 booking form",
     },
     {
-      name: "Core integrations: User auth, emails, and backend setup.",
+      name: "Up to 20 bookings per month",
     },
-    { name: "Basic modules: User management, task management, and more" },
-    { name: "Clear development guidelines: Speed and consistency, built-in." },
+    { name: "Basic email notifications" },
+    { name: "Website embedding" },
   ],
-  excluded: [],
-  price: 179,
-  priceAnchor: 299,
+  excluded: [
+    { name: "Team access" },
+    { name: "Calendar integrations" },
+    { name: "Multiple forms" },
+  ],
+  price: 0,
+  priceAnchor: 0,
   isFeatured: false,
 };
 
 const advanced: Plan = {
-  name: " SwiftBlocks Pro",
+  name: "TimeGrid Business Pro",
   description:
-    "For developers who want everything Essentials offers - plus advanced features to scale faster.",
+    "Everything you need for multiple businesses with a single subscription.",
   priceId: pirceId.advanced[NODE_ENV],
   included: [
     {
-      name: "Everything from Essentials",
+      name: "Unlimited appointment bookings",
     },
     {
-      name: "Advanced integrations: Stripe payments, calendar modules, and more.",
+      name: "Up to 5 custom booking forms",
     },
     {
-      name: "Premium modules: Advanced user dashboards, analytics, and reporting.",
+      name: "Team access (up to 3 users)",
     },
     {
-      name: "Priority support: Get your questions answered faster.",
+      name: "Advanced website embedding",
     },
     {
-      name: "Exclusive templates: Additional landing page and UI templates.",
+      name: "Email notifications & reminders",
+    },
+    {
+      name: "Calendar integrations",
     },
   ],
   excluded: [],
-  price: 210,
-  priceAnchor: 349,
+  price: 29,
+  priceAnchor: 49,
   isFeatured: true,
 };
 

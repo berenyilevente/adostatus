@@ -2,27 +2,33 @@ import { config } from "@/config";
 
 export const faqs = [
   {
-    title: `Who is ${config.app.name} for?`,
-    content: `${config.app.name} is designed for freelancers and hobbyists who want to save time and streamline their workflow. Whether you’re building a side project or a client app, ${config.app.name} gives you the tools to launch faster and with less hassle.`,
+    title: "How is TimeGrid different from other scheduling tools?",
+    content:
+      "TimeGrid is specifically designed for businesses that need multiple scheduling forms for different services or business types. Unlike other tools that require separate accounts for each business, TimeGrid lets you manage everything from one dashboard with a single subscription.",
   },
   {
-    title: `Is ${config.app.name} a subscription?`,
-    content: `${config.app.name} is a one-time purchase. You pay once and own the code forever - no recurring fees or hidden costs.`,
+    title: "Can I customize the booking forms for different businesses?",
+    content:
+      "Absolutely! TimeGrid's form builder lets you create completely custom booking forms with different fields, branding, and validation rules for each business type. You can even use our pre-built templates as starting points.",
   },
   {
-    title: `Can I customize ${config.app.name} for my project?`,
-    content: `${config.app.name} is designed to be fully customizable. Use the pre-built components and modules as a starting point, then tailor them to fit your project’s unique needs.`,
+    title: "How do I embed the booking forms on my website?",
+    content:
+      "TimeGrid provides simple embed codes that you can copy and paste into your website. We support direct HTML embedding, WordPress integration, and Webflow components. You can also use our hosted booking page if you prefer not to embed the form.",
   },
   {
-    title: `What if I’m not an expert developer?`,
-    content: `The clear documentation and step-by-step guidelines make it accessible for developers at every level. If you’re comfortable with React and Next.js, you’ll find ${config.app.name} easy to use.`,
+    title: "Can my team members access the system?",
+    content:
+      "Yes, you can invite team members as Basic Users and control which booking forms and calendars they can access. This is perfect for staff who need to view appointments but shouldn't have admin privileges.",
   },
   {
-    title: `What if I need help or support?`,
-    content: `We’ve got you covered! The Pro version includes priority support, so you can get your questions answered quickly. For Essentials users, we offer community support and detailed documentation to help you get started.`,
+    title: "Do you offer a free trial?",
+    content:
+      "Yes! We offer a 14-day free trial of our Business Pro plan with no credit card required. You can also use our free Starter plan indefinitely with limited features.",
   },
   {
-    title: `Can I use ${config.app.name} for commercial projects?`,
-    content: `Absolutely! Once you purchase ${config.app.name}, you own the code and can use it for personal or commercial projects. Build as many apps as you want—no limits.`,
+    title: "Can I export my appointment data?",
+    content:
+      "Yes, you can export your appointment data to CSV or integrate with popular calendar applications like Google Calendar, Outlook, and Apple Calendar.",
   },
 ];

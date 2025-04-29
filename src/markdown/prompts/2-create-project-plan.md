@@ -1,12 +1,11 @@
 ## Prompt:
 
 Based on the following design document, create a structured project plan for building the web application. The project uses this tech stack:
-Next.js + React + TypeScript + Tailwind CSS + Prisma + PostgreSQL.
+Next.js and Server Actions + React + TypeScript + Tailwind CSS + Prisma + PostgreSQL.
 
 ⸻
 
 ### Design Document:
-(Insert the user’s answers to the design questionnaire here)
 
 ⸻
 

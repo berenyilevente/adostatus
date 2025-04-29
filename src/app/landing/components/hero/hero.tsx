@@ -1,7 +1,7 @@
 "use client";
 
-import { Hero1 } from "./components/Hero1";
+import { Hero2 } from "./components/Hero2";
 
 export const Hero = () => {
-  return <Hero1 />;
+  return <Hero2 />;
 };

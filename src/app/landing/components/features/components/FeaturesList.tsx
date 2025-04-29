@@ -8,22 +8,22 @@ const features: {
   icon: IconType;
 }[] = [
   {
-    name: "Pre-configured features:",
+    name: "Custom Form Builder:",
     description:
-      "Stripe, user auth, backend, emails and more - all configured and ready to go in minutes.",
-    icon: "wand2",
+      "Create industry-specific booking forms with custom fields, branding, and validation rules for each business type.",
+    icon: "edit",
   },
   {
-    name: "Copy-pasteable modules:",
+    name: "Unified Calendar:",
     description:
-      "Use prebuilt fullstack modules for a calendar page, users page, task management, and much more.",
-    icon: "copy",
+      "View and manage appointments across all your businesses in one centralized dashboard, saving time and reducing confusion.",
+    icon: "calendar",
   },
   {
-    name: "Clear development guidelines:",
+    name: "Website Integration:",
     description:
-      "Developed with industry best practices to maximize speed and consistency.",
-    icon: "codeSquare",
+      "Embed booking forms directly into your WordPress, Webflow, or custom website with simple copy-paste code.",
+    icon: "globe",
   },
 ];
 
@@ -38,11 +38,12 @@ export const FeaturesList = (): ReactElement => {
                 Introducing {config.app.name}
               </h2>
               <p className="mt-2 text-pretty text-4xl font-semibold tracking-tight">
-                Your All-in-One Code Library
+                One Platform for All Your Businesses
               </p>
               <p className="mt-6 text-lg/8 text-gray-600">
-                {config.app.name} is a deployment-ready, full-stack template
-                built on Tailwind, shadcn/ui, postgres, React, and Next.js.
+                {config.app.name} is a flexible appointment scheduling platform
+                designed to support a wide range of businesses — from
+                restaurants and salons to dentists and consultants.
               </p>
               <dl className="mt-10 max-w-xl space-y-8 text-base/7 text-gray-600 lg:max-w-none">
                 {features.map((feature) => (

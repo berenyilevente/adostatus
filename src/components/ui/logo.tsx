@@ -2,8 +2,9 @@
 
 import { Image } from "@/components";
 
-import logo from "@/assets/images/logo/logo.png";
 import { cn } from "@/utils";
+
+import logo from "../../../public/logo.svg";
 
 type ILogoProps = {
   size?: number;

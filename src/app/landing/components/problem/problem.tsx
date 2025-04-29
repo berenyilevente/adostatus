@@ -11,11 +11,14 @@ const ProblemMobile = () => {
   return (
     <div className="mx-auto w-full sm:w-min flex flex-col sm:flex-row items-center sm:gap-16 gap-8">
       <Step
-        emoji="🧑‍💻"
-        text="Configuring basic features like auth, payments, etc."
+        emoji="🔄"
+        text="Juggling multiple scheduling tools for different businesses"
       />
-      <Step emoji="😮‍💨" text="Reinventing the wheel for every project" />
-      <Step emoji="😔" text="Struggling to maintain consistency" />
+      <Step
+        emoji="😮‍💨"
+        text="Confusing customers with inconsistent booking experiences"
+      />
+      <Step emoji="😔" text="Wasting money on multiple subscription services" />
     </div>
   );
 };
@@ -35,14 +38,14 @@ export const Problem = () => {
     <section className="bg-base-200">
       <div className="max-w-7xl mx-auto px-8 py-16 md:py-32 text-center">
         <h2 className="max-w-4xl mx-auto font-extrabold text-4xl md:text-5xl tracking-tight mb-6 md:mb-8">
-          Building Software Shouldn&apos;t Take Forever!
+          Managing Multiple Businesses Shouldn&apos;t Be This Hard!
         </h2>
         <div className="py-4">
           <ProblemMobile />
         </div>
         <p className="max-w-xl mx-auto text-lg text-center opacity-90 leading-relaxed mt-12">
-          What if you could skip the tedious parts and jump straight to the fun
-          part: <strong>building your app</strong>?
+          What if you could manage scheduling for all your businesses from{" "}
+          <strong>one unified platform</strong>?
         </p>
       </div>
     </section>

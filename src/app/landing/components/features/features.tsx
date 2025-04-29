@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { FeaturesWithImage } from "./components/FeaturesWithImage";
+import { FeaturesList } from "./components/FeaturesList";
 
 // todo: rephrase and move to documentation
 // Features: A crucial, yet overlooked, component for a landing page that sells.
@@ -11,5 +11,5 @@ import { FeaturesWithImage } from "./components/FeaturesWithImage";
 // - Features: "Swiftblocks has user auth, Stripe, emails all set up for you"
 // select from the Features/components the one that best fits your product
 export const Features = (): ReactElement => {
-  return <FeaturesWithImage />;
+  return <FeaturesList />;
 };

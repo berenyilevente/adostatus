@@ -5,7 +5,7 @@ You’re about to create a detailed design document for a web application. This 
 	•	Backend: Next.js server actions (if using App Router), Prisma ORM
 	•	Database: PostgreSQL
 
-Please answer the following questions as clearly and thoroughly as possible:
+Ask the below questions one by one sequentially. I will answer each question and then you will ask the next one. Based on my answers, you will generate a detailed design document.
 
 ⸻
 

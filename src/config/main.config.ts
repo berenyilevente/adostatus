@@ -5,8 +5,8 @@ import { BASE_URL } from "./env.config";
 
 export const config: Config = {
   app: {
-    name: "SwiftBlocks",
-    description: "The best fullstack nextjs template for your next project.",
+    name: "TimeGrid",
+    description: "The best scheduling platform for your business.",
     domain: BASE_URL,
   },
   resend,
