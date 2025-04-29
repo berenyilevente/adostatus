@@ -10,18 +10,15 @@ import {
   FileInput,
   FormInput,
   CardHeader,
-  Form,
   FormSelect,
   FormWrapper,
   ButtonLink,
 } from "@/components";
 
 import { useCreateUser } from "./use-create-user";
-import Link from "next/link";
 
 const CreateUser = () => {
-  const { form, handleChangeImage, handleCancel, onSubmit, isLoading } =
-    useCreateUser();
+  const { form, handleChangeImage, onSubmit, isLoading } = useCreateUser();
 
   return (
     <FormWrapper form={form}>

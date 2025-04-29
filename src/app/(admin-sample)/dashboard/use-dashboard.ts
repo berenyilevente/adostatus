@@ -3,7 +3,7 @@
 import { createAppContext } from "@/hooks/use-create-app-context";
 import { DashboardData } from "./types/dashboard.types";
 
-const useHook = ({ data }: { data: DashboardData }) => {
+const useHook = ({ data: _ }: { data: DashboardData }) => {
   return {};
 };
 

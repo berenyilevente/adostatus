@@ -1,11 +1,13 @@
 "use client";
 
-import { FormInput, FormWrapper } from "@/components";
 import React from "react";
 import { useForm } from "react-hook-form";
 
+import { FormInput, FormWrapper } from "@/components";
+
 export const ContactForm: React.FC = () => {
   const form = useForm();
+
   return (
     <FormWrapper form={form} className="container pt-24">
       <>

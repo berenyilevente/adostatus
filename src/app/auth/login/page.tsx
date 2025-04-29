@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 import { Card, CardContent, Logo } from "@/components";
+import { config } from "@/config/main.config";
 
 import { LoginAuth } from "./LoginAuth";
-import { config } from "@/config/main.config";
 
 export const metadata: Metadata = {
   title: "Login",

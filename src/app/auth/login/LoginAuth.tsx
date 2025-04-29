@@ -2,7 +2,8 @@
 
 import React from "react";
 
-import { Button, FormInput, Form, FormWrapper } from "@/components";
+import { Button, FormInput, FormWrapper } from "@/components";
+
 import { useLogin } from "./use-login";
 
 export const LoginAuth = () => {

@@ -26,7 +26,7 @@ export const useLogin = () => {
     },
   });
 
-  const { control, handleSubmit, setError } = form;
+  const { handleSubmit, setError } = form;
 
   const setErrors = (errors: Record<string, any>) => {
     Object.entries(errors).forEach(([key, value]: any[]) =>

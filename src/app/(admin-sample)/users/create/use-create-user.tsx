@@ -10,8 +10,6 @@ import { createAppContext } from "@/hooks/use-create-app-context";
 import { setImage } from "@/utils/image";
 
 import { UserSchemaType, userSchema } from "../users.helper";
-import { createUser } from "../actions/user.actions";
-import { User } from "@/generated/prisma";
 
 const useHook = () => {
   const router = useRouter();
@@ -26,13 +24,7 @@ const useHook = () => {
     },
   });
 
-  const { handleSubmit, setValue, setError, watch } = form;
-
-  const setErrors = (errors: Record<string, any>) => {
-    Object.entries(errors).forEach(([key, value]: any[]) =>
-      setError(key, { message: value })
-    );
-  };
+  const { handleSubmit, setValue } = form;
 
   const handleChangeImage = async (fileItems: FilePondFile[]) => {
     setImage(fileItems, setValue);
