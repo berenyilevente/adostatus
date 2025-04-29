@@ -16,13 +16,22 @@ datasource db {
 
 model User {
   id            String    @id @default(cuid())
-  name          String?
   email         String    @unique
-  emailVerified DateTime?
+  passwordHash  String
+  firstName     String?
+  lastName      String?
+  phone         String?
+  emailVerified Boolean   @default(false)
+  isActive      Boolean   @default(true)
+  lastLoginAt   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
   image         String?
 
-  createdAt DateTime? @default(now())
-  updatedAt DateTime? @updatedAt
+  businesses           Business[]
+  teamMemberships      TeamMember[]
+  calendarIntegrations CalendarIntegration[]
+  subscriptions        Subscription[]
 
   @@map("users")
 }
@@ -43,4 +52,281 @@ model Lead {
   updatedAt DateTime @updatedAt
 
   @@map("leads")
+}
+
+model Business {
+  id           String   @id @default(cuid())
+  ownerId      String
+  name         String
+  description  String?
+  businessType String?
+  timezone     String   @default("UTC")
+  logoUrl      String?
+  primaryColor String?
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  owner         User                 @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  teamMembers   TeamMember[]
+  businessHours BusinessHours[]
+  breakTimes    BreakTime[]
+  timeOffs      TimeOff[]
+  forms         Form[]
+  services      Service[]
+  appointments  Appointment[]
+  integrations  WebsiteIntegration[]
+
+  @@index([ownerId])
+  @@index([businessType])
+  @@map("businesses")
+}
+
+model TeamMember {
+  id         String   @id @default(cuid())
+  businessId String
+  userId     String
+  role       String // admin, manager, staff
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  business     Business      @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  appointments Appointment[]
+  timeOffs     TimeOff[]
+
+  @@unique([businessId, userId])
+  @@index([businessId])
+  @@index([userId])
+  @@map("team_members")
+}
+
+model BusinessHours {
+  id         String   @id @default(cuid())
+  businessId String
+  dayOfWeek  Int // 0-6 (Sunday-Saturday)
+  openTime   DateTime @db.Time()
+  closeTime  DateTime @db.Time()
+  isClosed   Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  @@unique([businessId, dayOfWeek])
+  @@map("business_hours")
+}
+
+model BreakTime {
+  id         String   @id @default(cuid())
+  businessId String
+  dayOfWeek  Int // 0-6 (Sunday-Saturday)
+  startTime  DateTime @db.Time()
+  endTime    DateTime @db.Time()
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  @@map("break_times")
+}
+
+model TimeOff {
+  id           String    @id @default(cuid())
+  businessId   String
+  teamMemberId String?
+  startDate    DateTime  @db.Date
+  endDate      DateTime  @db.Date
+  startTime    DateTime? @db.Time()
+  endTime      DateTime? @db.Time()
+  description  String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  business   Business    @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  teamMember TeamMember? @relation(fields: [teamMemberId], references: [id], onDelete: SetNull)
+
+  @@map("time_off")
+}
+
+model Form {
+  id                      String   @id @default(cuid())
+  businessId              String
+  name                    String
+  description             String?
+  isTemplate              Boolean  @default(false)
+  templateType            String?
+  confirmationMessage     String?
+  redirectUrl             String?
+  allowCancellation       Boolean  @default(true)
+  cancellationNoticeHours Int      @default(24)
+  isActive                Boolean  @default(true)
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+
+  business     Business             @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  fields       FormField[]
+  services     Service[]
+  integrations WebsiteIntegration[]
+
+  @@index([businessId])
+  @@index([isTemplate, templateType])
+  @@map("forms")
+}
+
+model FormField {
+  id              String   @id @default(cuid())
+  formId          String
+  fieldType       String // text, email, phone, select, radio, checkbox, date, time, etc.
+  label           String
+  placeholder     String?
+  helpText        String?
+  isRequired      Boolean  @default(false)
+  fieldOrder      Int
+  defaultValue    String?
+  options         Json? // For select, radio, checkbox options
+  validationRules Json? // JSON with validation rules
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  form Form @relation(fields: [formId], references: [id], onDelete: Cascade)
+
+  @@index([formId])
+  @@map("form_fields")
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  businessId  String
+  name        String
+  description String?
+  duration    Int // in minutes
+  bufferTime  Int      @default(0) // in minutes
+  price       Decimal? @db.Decimal(10, 2)
+  color       String?
+  formId      String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  business     Business      @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  form         Form?         @relation(fields: [formId], references: [id], onDelete: SetNull)
+  appointments Appointment[]
+
+  @@index([businessId])
+  @@map("services")
+}
+
+model Appointment {
+  id            String   @id @default(cuid())
+  businessId    String
+  serviceId     String?
+  teamMemberId  String?
+  customerName  String
+  customerEmail String
+  customerPhone String?
+  startTime     DateTime
+  endTime       DateTime
+  status        String   @default("confirmed") // confirmed, cancelled, completed, no-show
+  notes         String?
+  formData      Json? // Stores the form submission data
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  business   Business              @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  service    Service?              @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+  teamMember TeamMember?           @relation(fields: [teamMemberId], references: [id], onDelete: SetNull)
+  reminders  AppointmentReminder[]
+
+  @@index([businessId])
+  @@index([serviceId])
+  @@index([teamMemberId])
+  @@index([startTime, endTime])
+  @@index([status])
+  @@map("appointments")
+}
+
+model AppointmentReminder {
+  id            String    @id @default(cuid())
+  appointmentId String
+  reminderType  String // email, sms
+  scheduledTime DateTime
+  sentAt        DateTime?
+  status        String    @default("pending") // pending, sent, failed
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  appointment Appointment @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+
+  @@map("appointment_reminders")
+}
+
+model WebsiteIntegration {
+  id              String   @id @default(cuid())
+  businessId      String
+  formId          String
+  integrationType String // embed, wordpress, webflow
+  embedCode       String?
+  settings        Json? // Integration-specific settings
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  form     Form     @relation(fields: [formId], references: [id], onDelete: Cascade)
+
+  @@map("website_integrations")
+}
+
+model CalendarIntegration {
+  id             String    @id @default(cuid())
+  userId         String
+  provider       String // google, outlook, apple
+  accessToken    String
+  refreshToken   String?
+  tokenExpiresAt DateTime?
+  calendarId     String?
+  isActive       Boolean   @default(true)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("calendar_integrations")
+}
+
+model Subscription {
+  id                   String   @id @default(cuid())
+  userId               String
+  planType             String // starter, business_pro
+  status               String // active, canceled, past_due
+  currentPeriodStart   DateTime
+  currentPeriodEnd     DateTime
+  cancelAtPeriodEnd    Boolean  @default(false)
+  stripeSubscriptionId String?
+  stripeCustomerId     String?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  user   User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  limits SubscriptionLimits?
+
+  @@index([userId])
+  @@index([status])
+  @@map("subscriptions")
+}
+
+model SubscriptionLimits {
+  id                      String   @id @default(cuid())
+  subscriptionId          String   @unique
+  maxBusinesses           Int?
+  maxForms                Int?
+  maxTeamMembers          Int?
+  maxAppointmentsPerMonth Int?
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+
+  subscription Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  @@map("subscription_limits")
 }
