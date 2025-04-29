@@ -55,16 +55,18 @@ export const FormCheckbox = <
           </FormControl>
           <div className="space-y-1 leading-none">
             <FormLabel>{label}</FormLabel>
-            <FormDescription>
-              <>
-                {description}{" "}
-                {link && (
-                  <Link href={link} className="text-primary">
-                    {linkText}
-                  </Link>
-                )}
-              </>
-            </FormDescription>
+            {description && (
+              <FormDescription>
+                <>
+                  {description}{" "}
+                  {link && (
+                    <Link href={link} className="text-primary">
+                      {linkText}
+                    </Link>
+                  )}
+                </>
+              </FormDescription>
+            )}
           </div>
         </FormItem>
       )}

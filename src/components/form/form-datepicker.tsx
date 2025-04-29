@@ -81,7 +81,7 @@ export const FormDatepicker = <
               />
             </PopoverContent>
           </Popover>
-          <FormDescription>{description}</FormDescription>
+          {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />
         </FormItem>
       )}

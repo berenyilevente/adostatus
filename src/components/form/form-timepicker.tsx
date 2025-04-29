@@ -102,7 +102,7 @@ export const FormTimepicker = <
               </div>
             </PopoverContent>
           </Popover>
-          <FormDescription>{description}</FormDescription>
+          {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />
         </FormItem>
       )}

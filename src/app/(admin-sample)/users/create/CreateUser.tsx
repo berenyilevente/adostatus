@@ -13,9 +13,11 @@ import {
   Form,
   FormSelect,
   FormWrapper,
+  ButtonLink,
 } from "@/components";
 
 import { useCreateUser } from "./use-create-user";
+import Link from "next/link";
 
 const CreateUser = () => {
   const { form, handleChangeImage, handleCancel, onSubmit, isLoading } =
@@ -64,15 +66,15 @@ const CreateUser = () => {
       </div>
 
       <div className="mt-6 flex justify-end gap-6">
-        <Button
+        <ButtonLink
+          href="/users"
           variant="outline"
           size="sm"
           className="bg-base-content/10"
-          onClick={handleCancel}
           startIcon="close"
         >
           Cancel
-        </Button>
+        </ButtonLink>
         <Button
           color="primary"
           size="sm"

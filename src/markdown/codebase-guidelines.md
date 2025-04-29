@@ -11,7 +11,9 @@ The application follows a feature-based structure within the Next.js app router 
 
 ## Project Structure
 
-The application follows a feature-based structure within the Next.js app router pattern:
+The application follows a feature-based structure within the Next.js app router pattern.
+
+Example for a simple user management feature:
 ```
 src/app/(admin-sample)/
 ├── users/                      # User management feature
@@ -92,9 +94,10 @@ return (
 
 Forms use React Hook Form with Zod validation:
 
-1. Define schemas in users.helper.ts
-2. Use schemas in form hooks
-3. Handle form submission with server actions
+1. Define zod schemas inside a `.helper.ts` file
+2. Generate typescript types from the schemas
+3. Use schemas in form hooks
+4. Handle form submission with server actions
 
 ## Table Management
 
@@ -109,9 +112,11 @@ Tables use TanStack Table with these features:
 
 Server actions handle data operations:
 
-- getUsers(): Fetch all users
-- getUser(id): Fetch a single user
-- createUser(user): Create a new user
+- every server action is protected by the `useIsAuthenticated` hook
+- example requests for user actions:
+  * getUsers(): Fetch all users
+  * getUser(id): Fetch a single user
+  * createUser(user): Create a new user
 
 All server actions return a standardized Response type:
 ```
@@ -125,15 +130,16 @@ All server actions return a standardized Response type:
 
 ## UI Components
 
-The application uses shadcn/ui library with adjusted custom components for handeling forms:
+The application uses shadcn/ui library. Form components are pre configures:
 
-- text-input.tsx
-- file-input.tsx
-- select-input.tsx
-- switch-input.tsx
-- checkbox-input.tsx
-- password-input.tsx
-- radio-input.tsx
+- form-input.tsx
+- form-select.tsx
+- form-switch.tsx
+- form-checkbox.tsx
+- form-password.tsx
+- form-radio.tsx
+- form-textarea.tsx
+- form-combobox.tsx
 
 ## Development Guidelines
 
@@ -166,6 +172,7 @@ The application uses shadcn/ui library with adjusted custom components for hande
 - Follow Next.js App Router conventions
 - Use dynamic routes for entity pages
 - Define routes in a central location
+- ever page is protected by adding it to the `middleware.ts` file matcher config
 
 ### Adding New Features:
 

@@ -16,6 +16,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components";
+import { cn } from "@/lib/utils";
 
 interface FormSelectProps<
   TField extends FieldValues = FieldValues,
@@ -44,11 +45,11 @@ export const FormSelect = <
     <FormField
       control={control}
       name={name}
-      render={({ field }) => (
-        <FormItem className="flex flex-col">
+      render={({ field, fieldState }) => (
+        <FormItem className="flex flex-col ">
           <FormLabel>{label}</FormLabel>
           <Select onValueChange={field.onChange} defaultValue={field.value}>
-            <FormControl>
+            <FormControl className={cn({ "border-red-500": fieldState.error })}>
               <SelectTrigger>
                 <SelectValue placeholder={placeholder} />
               </SelectTrigger>
@@ -61,7 +62,7 @@ export const FormSelect = <
               ))}
             </SelectContent>
           </Select>
-          <FormDescription>{description}</FormDescription>
+          {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />
         </FormItem>
       )}

@@ -109,7 +109,7 @@ export const FormCombobox = <
               </Command>
             </PopoverContent>
           </Popover>
-          <FormDescription>{description}</FormDescription>
+          {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />
         </FormItem>
       )}

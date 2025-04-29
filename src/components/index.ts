@@ -19,6 +19,7 @@ export * from "./ui/alert";
 export * from "./ui/avatar";
 export * from "./ui/badge";
 export * from "./ui/breadcrumb";
+export * from "./ui/button-link";
 export * from "./ui/button";
 export * from "./ui/calendar";
 export * from "./ui/card";

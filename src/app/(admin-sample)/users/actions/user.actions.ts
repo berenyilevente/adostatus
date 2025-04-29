@@ -1,14 +1,14 @@
 "use server";
 
 import { Response } from "@/types/action.types";
+import { revalidatePath } from "next/cache";
 
 import prisma from "@/lib/prisma/client";
-import { revalidatePath } from "next/cache";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth/next-auth";
+import { useIsAuthenticated } from "@/hooks/use-is-authenticated";
 
 export const getUsers = async (): Promise<Response<any[]>> => {
-  const session = await getServerSession(authOptions);
+  const session = await useIsAuthenticated();
+
   const currentUserEmail = session?.user?.email;
 
   if (!currentUserEmail) {
@@ -37,6 +37,8 @@ export const getUsers = async (): Promise<Response<any[]>> => {
 };
 
 export const getUser = async (id: string): Promise<Response<any>> => {
+  await useIsAuthenticated();
+
   // const user = await User.findById(id);
 
   // const user = getUserByIdDemo(id);
@@ -65,6 +67,8 @@ export const getUser = async (id: string): Promise<Response<any>> => {
 };
 
 export const createUser = async (user: any): Promise<Response<any>> => {
+  await useIsAuthenticated();
+
   await prisma.user.create({
     data: user,
   });

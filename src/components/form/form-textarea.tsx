@@ -45,7 +45,7 @@ export const FormTextarea = <
           <FormControl>
             <Textarea {...field} {...props} placeholder={placeholder} />
           </FormControl>
-          <FormDescription>{description}</FormDescription>
+          {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />
         </FormItem>
       )}

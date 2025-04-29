@@ -51,7 +51,7 @@ export const FormRadio = <
               onChange={() => field.onChange(value)}
             />
           </FormControl>
-          <FormDescription>{description}</FormDescription>
+          {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />
         </FormItem>
       )}

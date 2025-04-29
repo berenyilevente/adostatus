@@ -49,7 +49,7 @@ export const FormSwitch = <
               checked={field.value}
             />
           </FormControl>
-          <FormDescription>{description}</FormDescription>
+          {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />
         </FormItem>
       )}

@@ -106,7 +106,7 @@ export const FormInput = <
             />
           </FormControl>
           <EndIcon endIcon={endIcon} label={!!label} />
-          <FormDescription>{description}</FormDescription>
+          {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />
         </FormItem>
       )}

@@ -47,7 +47,7 @@ const useHook = () => {
   });
 
   const handleCancel = () => {
-    router.back();
+    router.push("/users");
   };
 
   return { onSubmit, handleCancel, handleChangeImage, isLoading, form };
