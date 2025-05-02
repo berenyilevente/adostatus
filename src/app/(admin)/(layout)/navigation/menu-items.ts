@@ -9,6 +9,12 @@ export const adminMenuItems: IMenuItem[] = [
     url: routes.admin.dashboard.index,
   },
   {
+    key: "form-builder",
+    icon: "form",
+    label: "Form builder",
+    url: routes.admin.formBuilder.index,
+  },
+  {
     key: "users",
     icon: "users",
     label: "Users",
