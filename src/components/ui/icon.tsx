@@ -54,6 +54,7 @@ import eyeIcon from "@iconify/icons-lucide/eye";
 import eyeOffIcon from "@iconify/icons-lucide/eye-off";
 import plusIcon from "@iconify/icons-lucide/plus";
 import formIcon from "@iconify/icons-lucide/clipboard-list";
+import saveIcon from "@iconify/icons-lucide/save";
 
 export const iconMap = {
   mail: mailIcon,

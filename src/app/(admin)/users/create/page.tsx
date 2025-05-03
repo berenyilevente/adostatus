@@ -2,10 +2,10 @@ import { Metadata } from "next";
 import React from "react";
 
 import { routes } from "@/lib/routes";
-import { PageTitle } from "@/components/admin/index";
 
 import { CreateUser } from "./CreateUser";
 import { CreateUserProvider } from "./use-create-user";
+import { PageTitle } from "../../components";
 
 export const metadata: Metadata = {
   title: "Create User",

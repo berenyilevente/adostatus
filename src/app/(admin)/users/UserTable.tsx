@@ -22,7 +22,7 @@ export const UserTable = () => {
   const { table, filterForm, usersToBeDeleted, onDeleteUsers } = useUsers();
 
   return (
-    <Card className="bg-base-100">
+    <Card className="bg-white">
       <CardContent className="p-0">
         <div className="flex justify-between items-center">
           <TableSearch filterForm={filterForm} />

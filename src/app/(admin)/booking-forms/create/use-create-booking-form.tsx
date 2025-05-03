@@ -12,11 +12,6 @@ import { createForm } from "../actions";
 import { toast } from "sonner";
 import { createAppContext } from "@/hooks/use-create-app-context";
 
-type DragItem = {
-  id: string;
-  type: string;
-};
-
 type HookProp = {
   formsData: Form[];
   initialForm?: Form & { fields: FormFieldSchemaType[] };

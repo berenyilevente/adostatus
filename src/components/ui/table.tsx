@@ -288,7 +288,6 @@ const TableSearch = ({
           id="search"
           name="search"
           placeholder="Search all columns..."
-          label="Search"
         />
       </div>
     </FormWrapper>

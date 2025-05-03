@@ -19,7 +19,8 @@ const useHook = () => {
     resolver: zodResolver(userSchema),
     defaultValues: {
       email: "",
-      name: "",
+      firstName: "",
+      lastName: "",
       image: "",
     },
   });

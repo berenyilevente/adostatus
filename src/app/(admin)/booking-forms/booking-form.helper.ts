@@ -2,6 +2,8 @@ import { z } from "zod";
 
 import { Form, FormField } from "@/generated/prisma";
 
+export const FIELD_TYPE = "form-field";
+
 // Form schema for validation
 export const formSchema = z.object({
   id: z.string().optional(),

@@ -48,7 +48,7 @@ export const BookingFormList = (): ReactElement => {
         </Button>
       </div>
       {sample.map((sam) => (
-        <Card className="bg-base-100" key={sam}>
+        <Card className="bg-white" key={sam}>
           <CardContent className="p-4">{sam}</CardContent>
         </Card>
       ))}

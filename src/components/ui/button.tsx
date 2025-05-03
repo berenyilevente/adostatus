@@ -45,7 +45,7 @@ export interface ButtonProps
   iconSize?: "xs" | "sm" | "md" | "lg";
   startIcon?: IconType;
   endIcon?: IconType;
-  iconColor?: string;
+  iconClassName?: string;
   isLoading?: boolean;
   fullWidth?: boolean;
 }
@@ -60,7 +60,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       iconSize,
       startIcon,
       endIcon,
-      iconColor,
+      iconClassName,
       isLoading,
       fullWidth,
       ...props
@@ -82,11 +82,15 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ) : (
           <>
             {startIcon && (
-              <Icon className={iconColor} icon={startIcon} size={iconSize} />
+              <Icon
+                className={iconClassName}
+                icon={startIcon}
+                size={iconSize}
+              />
             )}
             {props.children}
             {endIcon && (
-              <Icon className={iconColor} icon={endIcon} size={iconSize} />
+              <Icon className={iconClassName} icon={endIcon} size={iconSize} />
             )}
           </>
         )}
