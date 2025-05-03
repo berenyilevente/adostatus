@@ -9,10 +9,10 @@ export const adminMenuItems: IMenuItem[] = [
     url: routes.admin.dashboard.index,
   },
   {
-    key: "form-builder",
+    key: "booking-forms",
     icon: "form",
-    label: "Form builder",
-    url: routes.admin.formBuilder.index,
+    label: "Booking forms",
+    url: routes.admin.bookingForms.index,
   },
   {
     key: "users",

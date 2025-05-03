@@ -7,7 +7,7 @@ type CreateUserType = Omit<
   "id" | "createdAt" | "updatedAt" | "emailVerified"
 >;
 
-export const userSchema: z.ZodType<any> = z.object({
+export const userSchema: z.ZodType<CreateUserType> = z.object({
   email: z.string().email().min(1, { message: "Required!" }),
   name: z.string().min(1, { message: "Required!" }),
   image: z.string().nullable(),

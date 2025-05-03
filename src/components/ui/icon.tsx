@@ -53,6 +53,7 @@ import FilterIcon from "@iconify/icons-lucide/settings-2";
 import eyeIcon from "@iconify/icons-lucide/eye";
 import eyeOffIcon from "@iconify/icons-lucide/eye-off";
 import plusIcon from "@iconify/icons-lucide/plus";
+import formIcon from "@iconify/icons-lucide/clipboard-list";
 
 export const iconMap = {
   mail: mailIcon,
@@ -105,6 +106,7 @@ export const iconMap = {
   eye: eyeIcon,
   eyeOff: eyeOffIcon,
   plus: plusIcon,
+  form: formIcon,
 };
 
 export type IconType = keyof typeof iconMap;
