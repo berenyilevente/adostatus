@@ -1,13 +1,10 @@
 import { Label, Input, Textarea, Switch, Button } from "@/components";
-import { FormSchemaType } from "../../booking-form.helper";
 
-export const FormSettings = ({
-  formData,
-  onUpdate,
-}: {
-  formData: any;
-  onUpdate: (key: keyof FormSchemaType, value: any) => void;
-}) => {
+import { useCreateBookingForm } from "../use-create-booking-form";
+
+export const FormSettings = () => {
+  const { formData, updateFormData } = useCreateBookingForm();
+
   return (
     <div className="space-y-4">
       <div>
@@ -15,7 +12,7 @@ export const FormSettings = ({
         <Input
           id="form-name"
           value={formData.name}
-          onChange={(e) => onUpdate("name", e.target.value)}
+          onChange={(e) => updateFormData("name", e.target.value)}
         />
       </div>
 
@@ -24,7 +21,7 @@ export const FormSettings = ({
         <Textarea
           id="form-description"
           value={formData.description || ""}
-          onChange={(e) => onUpdate("description", e.target.value)}
+          onChange={(e) => updateFormData("description", e.target.value)}
         />
       </div>
 
@@ -33,7 +30,9 @@ export const FormSettings = ({
         <Textarea
           id="confirmation-message"
           value={formData.confirmationMessage || ""}
-          onChange={(e) => onUpdate("confirmationMessage", e.target.value)}
+          onChange={(e) =>
+            updateFormData("confirmationMessage", e.target.value)
+          }
         />
       </div>
 
@@ -42,7 +41,7 @@ export const FormSettings = ({
         <Input
           id="redirect-url"
           value={formData.redirectUrl || ""}
-          onChange={(e) => onUpdate("redirectUrl", e.target.value)}
+          onChange={(e) => updateFormData("redirectUrl", e.target.value)}
           placeholder="https://example.com/thank-you"
         />
       </div>
@@ -51,7 +50,9 @@ export const FormSettings = ({
         <Switch
           id="allow-cancellation"
           checked={formData.allowCancellation}
-          onCheckedChange={(checked) => onUpdate("allowCancellation", checked)}
+          onCheckedChange={(checked) =>
+            updateFormData("allowCancellation", checked)
+          }
         />
         <Label htmlFor="allow-cancellation">
           Allow Appointment Cancellation
@@ -69,7 +70,10 @@ export const FormSettings = ({
             min="0"
             value={formData.cancellationNoticeHours}
             onChange={(e) =>
-              onUpdate("cancellationNoticeHours", parseInt(e.target.value))
+              updateFormData(
+                "cancellationNoticeHours",
+                parseInt(e.target.value)
+              )
             }
           />
         </div>
@@ -79,7 +83,7 @@ export const FormSettings = ({
         <Switch
           id="is-active"
           checked={formData.isActive}
-          onCheckedChange={(checked) => onUpdate("isActive", checked)}
+          onCheckedChange={(checked) => updateFormData("isActive", checked)}
         />
         <Label htmlFor="is-active">Form Active</Label>
       </div>

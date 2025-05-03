@@ -1,6 +1,12 @@
 import { useRef, useState } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import { FIELD_TYPE, fieldTypes } from "../../booking-form.helper";
+import { MoveVertical, Plus } from "lucide-react";
+
+import {
+  FIELD_TYPE,
+  fieldTypes,
+  FormFieldSchemaType,
+} from "../../booking-form.helper";
 import {
   Button,
   Dialog,
@@ -8,31 +14,24 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
-  Input,
-  Label,
-  Switch,
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components";
-import { MoveVertical, Plus, Trash2 } from "lucide-react";
 import { FormFieldDetails } from "./FormFieldDetails";
+import { useCreateBookingForm } from "../use-create-booking-form";
 
-export const DroppedFormField = ({
+export const FormFieldDropped = ({
   index,
   field,
-  onUpdate,
-  onRemove,
-  onReorder,
 }: {
   index: number;
-  field: any;
-  onUpdate: (index: number, field: any) => void;
-  onRemove: (index: number) => void;
-  onReorder: (startIndex: number, endIndex: number) => void;
+  field: FormFieldSchemaType;
 }) => {
+  const { formFields, removeField, reorderFields, addFieldToRow } =
+    useCreateBookingForm();
+  console.log(formFields);
   const [{ isDragging }, drag] = useDrag(() => ({
     type: FIELD_TYPE,
     item: { index },
@@ -50,7 +49,7 @@ export const DroppedFormField = ({
       }
 
       if (item.index !== index) {
-        onReorder(item.index, index);
+        reorderFields(item.index, index);
         item.index = index;
       }
     },
@@ -89,7 +88,7 @@ export const DroppedFormField = ({
               variant="ghost"
               size="icon"
               startIcon="trash"
-              onClick={() => onRemove(index)}
+              onClick={() => removeField(index)}
             />
           </div>
         </div>
@@ -98,7 +97,7 @@ export const DroppedFormField = ({
             <DialogHeader>
               <DialogTitle>Edit Field</DialogTitle>
             </DialogHeader>
-            <FormFieldDetails index={index} field={field} onUpdate={onUpdate} />
+            <FormFieldDetails index={index} field={field} />
             <DialogFooter>
               <Button variant="outline" onClick={() => setOpen(false)}>
                 Cancel
@@ -116,11 +115,7 @@ export const DroppedFormField = ({
           {fieldTypes.map((type) => (
             <DropdownMenuItem
               key={type.id}
-              onClick={() => {
-                setOpen(false);
-                console.log(type.id);
-              }}
-              className="cursor-pointer"
+              onClick={() => addFieldToRow(index, type.id)}
             >
               {type.label}
             </DropdownMenuItem>

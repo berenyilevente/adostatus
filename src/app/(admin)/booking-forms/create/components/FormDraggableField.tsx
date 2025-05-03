@@ -1,9 +1,10 @@
 import { useRef } from "react";
-import { FIELD_TYPE } from "../../booking-form.helper";
 import { useDrag } from "react-dnd";
 import { FormInput } from "lucide-react";
 
-export const DraggableField = ({
+import { FIELD_TYPE } from "../../booking-form.helper";
+
+export const FormDraggableField = ({
   type,
   label,
 }: {

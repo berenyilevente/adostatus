@@ -1,18 +1,18 @@
-import { useRef } from "react";
-import { useDrag, useDrop } from "react-dnd";
-import { FIELD_TYPE } from "../../booking-form.helper";
+import { Plus, Trash2 } from "lucide-react";
+
 import { Button, Input, Label, Switch } from "@/components";
-import { MoveVertical, Plus, Trash2 } from "lucide-react";
+import { useCreateBookingForm } from "../use-create-booking-form";
+import { FormFieldSchemaType } from "../../booking-form.helper";
 
 export const FormFieldDetails = ({
   index,
   field,
-  onUpdate,
 }: {
   index: number;
-  field: any;
-  onUpdate: (index: number, field: any) => void;
+  field: FormFieldSchemaType;
 }) => {
+  const { updateField } = useCreateBookingForm();
+
   return (
     <div className="p-4 mb-3 border rounded">
       <div className="flex flex-col gap-4">
@@ -21,7 +21,7 @@ export const FormFieldDetails = ({
           <Input
             id={`field-${index}-label`}
             value={field.label}
-            onChange={(e) => onUpdate(index, { label: e.target.value })}
+            onChange={(e) => updateField(index, { label: e.target.value })}
           />
         </div>
 
@@ -30,7 +30,9 @@ export const FormFieldDetails = ({
           <Input
             id={`field-${index}-placeholder`}
             value={field.placeholder || ""}
-            onChange={(e) => onUpdate(index, { placeholder: e.target.value })}
+            onChange={(e) =>
+              updateField(index, { placeholder: e.target.value })
+            }
           />
         </div>
 
@@ -39,7 +41,7 @@ export const FormFieldDetails = ({
           <Input
             id={`field-${index}-helpText`}
             value={field.helpText || ""}
-            onChange={(e) => onUpdate(index, { helpText: e.target.value })}
+            onChange={(e) => updateField(index, { helpText: e.target.value })}
           />
         </div>
 
@@ -48,7 +50,7 @@ export const FormFieldDetails = ({
             id={`field-${index}-required`}
             checked={field.isRequired}
             onCheckedChange={(checked) =>
-              onUpdate(index, { isRequired: checked })
+              updateField(index, { isRequired: checked })
             }
           />
           <Label htmlFor={`field-${index}-required`}>Required</Label>
@@ -70,7 +72,7 @@ export const FormFieldDetails = ({
                       label: e.target.value,
                       value: e.target.value.toLowerCase().replace(/\s+/g, "_"),
                     };
-                    onUpdate(index, { options: newOptions });
+                    updateField(index, { options: newOptions });
                   }}
                   className="mr-2"
                 />
@@ -80,7 +82,7 @@ export const FormFieldDetails = ({
                   onClick={() => {
                     const newOptions = [...field.options];
                     newOptions.splice(optionIndex, 1);
-                    onUpdate(index, { options: newOptions });
+                    updateField(index, { options: newOptions });
                   }}
                 >
                   <Trash2 className="h-4 w-4" />
@@ -96,7 +98,7 @@ export const FormFieldDetails = ({
                   label: `Option ${newOptions.length + 1}`,
                   value: `option${newOptions.length + 1}`,
                 });
-                onUpdate(index, { options: newOptions });
+                updateField(index, { options: newOptions });
               }}
               className="mt-2"
             >

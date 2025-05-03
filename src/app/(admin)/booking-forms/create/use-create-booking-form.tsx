@@ -33,6 +33,8 @@ function useCreateBookingFormHook({ formsData, initialForm }: HookProp) {
       allowCancellation: true,
       cancellationNoticeHours: 24,
       isActive: true,
+      redirectUrl: "",
+      confirmationMessage: "",
     }
   );
 
@@ -46,7 +48,6 @@ function useCreateBookingFormHook({ formsData, initialForm }: HookProp) {
     setIsPreviewMode(!isPreviewMode);
   }, [isPreviewMode]);
 
-  // Update form data
   const updateFormData = useCallback(
     (key: keyof FormSchemaType, value: any) => {
       setFormData((prev) => ({ ...prev, [key]: value }));
@@ -54,7 +55,6 @@ function useCreateBookingFormHook({ formsData, initialForm }: HookProp) {
     []
   );
 
-  // Add a new field
   const addField = useCallback(
     (fieldType: string) => {
       const newField = createEmptyField(fieldType, formFields.length);
@@ -63,7 +63,6 @@ function useCreateBookingFormHook({ formsData, initialForm }: HookProp) {
     [formFields]
   );
 
-  // Update a field
   const updateField = useCallback(
     (index: number, field: Partial<FormFieldSchemaType>) => {
       setFormFields((prev) => {
@@ -75,7 +74,6 @@ function useCreateBookingFormHook({ formsData, initialForm }: HookProp) {
     []
   );
 
-  // Remove a field
   const removeField = useCallback((index: number) => {
     setFormFields((prev) => {
       const newFields = [...prev];
@@ -85,7 +83,6 @@ function useCreateBookingFormHook({ formsData, initialForm }: HookProp) {
     });
   }, []);
 
-  // Reorder fields (for drag and drop)
   const reorderFields = useCallback((startIndex: number, endIndex: number) => {
     setFormFields((prev) => {
       const result = Array.from(prev);
@@ -96,6 +93,11 @@ function useCreateBookingFormHook({ formsData, initialForm }: HookProp) {
       return result.map((field, idx) => ({ ...field, fieldOrder: idx }));
     });
   }, []);
+
+  const addFieldToRow = useCallback(
+    (index: number, fieldType: string) => {},
+    []
+  );
 
   // Save the form
   const saveForm = useCallback(async () => {
@@ -136,6 +138,7 @@ function useCreateBookingFormHook({ formsData, initialForm }: HookProp) {
     removeField,
     reorderFields,
     saveForm,
+    addFieldToRow,
   };
 }
 

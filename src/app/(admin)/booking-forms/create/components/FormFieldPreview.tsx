@@ -1,3 +1,7 @@
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+import { useState } from "react";
+
 import {
   Textarea,
   Input,
@@ -11,16 +15,11 @@ import {
   SelectValue,
   SelectContent,
   SelectItem,
-} from "@/components";
-import { Calendar } from "@/components/ui/calendar";
-import {
+  Calendar,
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import { format } from "date-fns";
-import { CalendarIcon, Clock } from "lucide-react";
-import { useState } from "react";
+} from "@/components";
 
 export const FormFieldPreview = ({ field }: { field: any }) => {
   const [date, setDate] = useState<Date | undefined>();
@@ -213,22 +212,8 @@ export const FormFieldPreview = ({ field }: { field: any }) => {
     case "time":
       return (
         <div className="mb-4">
-          <Label htmlFor={`preview-${field.id}`}>
-            {field.label}{" "}
-            {field.isRequired && <span className="text-red-500">*</span>}
-          </Label>
-          {field.helpText && (
-            <p className="text-sm text-gray-500 mb-1">{field.helpText}</p>
-          )}
-          <div className="flex items-center">
-            <Clock className="mr-2 h-4 w-4 text-gray-500" />
-            <Input
-              id={`preview-${field.id}`}
-              type="time"
-              placeholder={field.placeholder}
-              defaultValue={field.defaultValue || ""}
-            />
-          </div>
+          <Label>{field.label}</Label>
+          <Input type="time" />
         </div>
       );
 

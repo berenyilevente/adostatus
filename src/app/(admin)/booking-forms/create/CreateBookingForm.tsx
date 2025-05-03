@@ -3,6 +3,8 @@
 import { ReactElement } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { useRouter } from "next/navigation";
+import { Save, Settings, FormInput } from "lucide-react";
 
 import { useCreateBookingForm } from "./use-create-booking-form";
 import { fieldTypes } from "../booking-form.helper";
@@ -18,28 +20,14 @@ import {
   TabsTrigger,
 } from "@/components";
 
-import { Save, Settings, FormInput } from "lucide-react";
 import { FormPreview } from "./components/FormPreview";
 import { FormSettings } from "./components/FormSettings";
-import { DraggableField } from "./components/DraggableField";
+import { FormDraggableField } from "./components/FormDraggableField";
 import { FormDropArea } from "./components/FormDropArea";
-import { useRouter } from "next/navigation";
 
 export const FormBuilder = (): ReactElement => {
   const router = useRouter();
-  const {
-    formData,
-    formFields,
-    isPreviewMode,
-    isSaving,
-    togglePreview,
-    updateFormData,
-    addField,
-    updateField,
-    removeField,
-    reorderFields,
-    saveForm,
-  } = useCreateBookingForm();
+  const { isSaving, saveForm } = useCreateBookingForm();
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -82,7 +70,7 @@ export const FormBuilder = (): ReactElement => {
                   <CardContent>
                     <div className="space-y-1">
                       {fieldTypes.map((fieldType) => (
-                        <DraggableField
+                        <FormDraggableField
                           key={fieldType.id}
                           type={fieldType.id}
                           label={fieldType.label}
@@ -98,18 +86,12 @@ export const FormBuilder = (): ReactElement => {
                     <CardTitle>Form Layout</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <FormDropArea
-                      fields={formFields}
-                      onAddField={addField}
-                      onUpdateField={updateField}
-                      onRemoveField={removeField}
-                      onReorderFields={reorderFields}
-                    />
+                    <FormDropArea />
                   </CardContent>
                 </Card>
               </div>
               <div className="lg:col-span-2">
-                <FormPreview formData={formData} fields={formFields} />
+                <FormPreview />
               </div>
             </div>
           </TabsContent>
@@ -120,7 +102,7 @@ export const FormBuilder = (): ReactElement => {
                 <CardTitle>Form Settings</CardTitle>
               </CardHeader>
               <CardContent>
-                <FormSettings formData={formData} onUpdate={updateFormData} />
+                <FormSettings />
               </CardContent>
             </Card>
           </TabsContent>
