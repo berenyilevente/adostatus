@@ -1,6 +1,7 @@
 import { config } from "@/config";
 import { resend } from "@/lib/email/resend";
 import { LoginEmail } from "../../components/email/login.email";
+import prisma from "../prisma/client";
 
 type SendVerificationRequestParams = {
   identifier: string;
@@ -21,6 +22,7 @@ export async function sendVerificationRequest(
       text: text({ url, host }),
       react: LoginEmail({ url, host }),
     });
+
     return { success: true, data };
   } catch (error) {
     throw new Error("Failed to send the verification Email.", {

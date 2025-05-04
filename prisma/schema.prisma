@@ -18,16 +18,16 @@ model User {
   id String @id @default(cuid())
 
   email         String    @unique
-  passwordHash  String
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  emailVerified DateTime?
   firstName     String?
   lastName      String?
   phone         String?
-  emailVerified Boolean   @default(false)
-  isActive      Boolean   @default(true)
   lastLoginAt   DateTime?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
   image         String?
+  name          String?
 
   businesses           Business[]
   teamMemberships      TeamMember[]
@@ -35,6 +35,15 @@ model User {
   subscriptions        Subscription[]
 
   @@map("users")
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+  @@map("verification_token")
 }
 
 model Business {
