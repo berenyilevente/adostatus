@@ -6,8 +6,6 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { useRouter } from "next/navigation";
 import { Save, Settings, FormInput } from "lucide-react";
 
-import { useCreateBookingForm } from "./use-create-booking-form";
-import { fieldTypes } from "../booking-form.helper";
 import {
   Card,
   CardContent,
@@ -20,6 +18,8 @@ import {
   TabsTrigger,
 } from "@/components";
 
+import { useCreateBookingForm } from "./use-create-booking-form";
+import { fieldTypes } from "../booking-form.helper";
 import { FormPreview } from "./components/FormPreview";
 import { FormSettings } from "./components/FormSettings";
 import { FormDraggableField } from "./components/FormDraggableField";

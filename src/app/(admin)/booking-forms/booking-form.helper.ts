@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { Form, FormField } from "@/generated/prisma";
+import { Form, FormField, Prisma } from "@/generated/prisma";
 
 export const FIELD_TYPE = "form-field";
 
@@ -56,10 +56,10 @@ export type FormFieldSchemaType = z.infer<typeof formFieldSchema>;
 export const createEmptyField = (
   fieldType: string,
   order: number
-): FormFieldSchemaType => {
+): Prisma.FormFieldCreateInput => {
   return {
     fieldType: fieldType as any,
-    label: `New ${fieldType} field`,
+    label: `${fieldType.charAt(0).toUpperCase() + fieldType.slice(1)}`,
     placeholder: "",
     helpText: "",
     isRequired: false,
@@ -71,5 +71,10 @@ export const createEmptyField = (
       fieldType === "checkbox"
         ? [{ label: "Option 1", value: "option1" }]
         : undefined,
+    form: {
+      connect: {
+        id: "1",
+      },
+    },
   };
 };

@@ -2,19 +2,21 @@
 
 import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { Form } from "@/generated/prisma";
+import { toast } from "sonner";
+import { Form, Prisma } from "@/generated/prisma";
+
+import { createAppContext } from "@/hooks/use-create-app-context";
+
 import {
   createEmptyField,
   FormFieldSchemaType,
   FormSchemaType,
 } from "../booking-form.helper";
 import { createForm } from "../actions";
-import { toast } from "sonner";
-import { createAppContext } from "@/hooks/use-create-app-context";
 
 type HookProp = {
   formsData: Form[];
-  initialForm?: Form & { fields: FormFieldSchemaType[] };
+  initialForm?: Prisma.FormCreateInput;
 };
 
 function useCreateBookingFormHook({ formsData, initialForm }: HookProp) {
@@ -24,9 +26,8 @@ function useCreateBookingFormHook({ formsData, initialForm }: HookProp) {
   const [isSaving, setIsSaving] = useState(false);
 
   // Form state
-  const [formData, setFormData] = useState(
+  const [formData, setFormData] = useState<Prisma.FormCreateInput>(
     initialForm || {
-      businessId: "", // This would be set from the user's context in a real app
       name: "New Form",
       description: "",
       isTemplate: false,
@@ -35,12 +36,16 @@ function useCreateBookingFormHook({ formsData, initialForm }: HookProp) {
       isActive: true,
       redirectUrl: "",
       confirmationMessage: "",
+      business: {
+        connect: {
+          id: "1",
+        },
+      },
     }
   );
 
-  // Form fields state
-  const [formFields, setFormFields] = useState<FormFieldSchemaType[]>(
-    initialForm?.fields || []
+  const [formFields, setFormFields] = useState<Prisma.FormFieldCreateInput[]>(
+    []
   );
 
   // Toggle preview mode
@@ -94,21 +99,16 @@ function useCreateBookingFormHook({ formsData, initialForm }: HookProp) {
     });
   }, []);
 
+  // TODO implement this function to enable adding a field to a specific row
   const addFieldToRow = useCallback(
     (index: number, fieldType: string) => {},
     []
   );
 
-  // Save the form
   const saveForm = useCallback(async () => {
     setIsSaving(true);
     try {
-      const formToSave = {
-        ...formData,
-        fields: formFields,
-      };
-
-      const response = await createForm(formToSave);
+      const response = await createForm(formData, formFields);
 
       if (response.status === "success") {
         toast.success("Form saved successfully");

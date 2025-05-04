@@ -29,9 +29,8 @@ export const FormFieldDropped = ({
   index: number;
   field: FormFieldSchemaType;
 }) => {
-  const { formFields, removeField, reorderFields, addFieldToRow } =
-    useCreateBookingForm();
-  console.log(formFields);
+  const { removeField, reorderFields, addFieldToRow } = useCreateBookingForm();
+
   const [{ isDragging }, drag] = useDrag(() => ({
     type: FIELD_TYPE,
     item: { index },

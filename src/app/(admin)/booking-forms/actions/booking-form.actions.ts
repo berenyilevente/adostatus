@@ -2,6 +2,7 @@
 
 import prisma from "@/lib/prisma/client";
 import { isAuthenticated } from "@/lib/auth";
+import { Prisma } from "@/generated/prisma/index";
 
 export const getBookingForms = async () => {
   await isAuthenticated();
@@ -54,15 +55,23 @@ export const getForm = async (id: string) => {
   }
 };
 
-export const createForm = async (formData: any): Promise<any> => {
+export const createForm = async (
+  formData: Prisma.FormCreateInput,
+  fields: Prisma.FormFieldCreateInput[]
+): Promise<any> => {
   await isAuthenticated();
-
   try {
-    // In a real implementation, you would create the form in the database
-    // For now, we'll just return a mock response
+    const form = await prisma.form.create({
+      data: { ...formData, fields: undefined },
+    });
+
+    await prisma.formField.createMany({
+      data: fields.map((field) => ({ ...field, formId: form.id })),
+    });
+
     return {
       status: "success",
-      data: { id: "mock-form-id", ...formData },
+      data: [form],
       code: 200,
       errors: undefined,
     };
