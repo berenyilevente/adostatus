@@ -23,6 +23,7 @@ export * from "./ui/button-link";
 export * from "./ui/button";
 export * from "./ui/calendar";
 export * from "./ui/card";
+export * from "./ui/carousel";
 export * from "./ui/checkbox";
 export * from "./ui/command";
 export * from "./ui/dialog";

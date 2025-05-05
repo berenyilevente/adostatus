@@ -9,3 +9,4 @@ export * from "./compare/compare";
 export * from "./footer/footer";
 export * from "./motion/motion";
 export * from "./leads/leads";
+export * from "./testimonials/Testimonials";

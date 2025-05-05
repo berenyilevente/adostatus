@@ -8,6 +8,7 @@ import {
   Compare,
   Footer,
   Motion,
+  Testimonials,
 } from "./components";
 
 const LandingPage = () => {
@@ -25,6 +26,9 @@ const LandingPage = () => {
       </Motion>
       <Motion id="compare">
         <Compare />
+      </Motion>
+      <Motion id="testimonials">
+        <Testimonials />
       </Motion>
       <Motion id="pricing">
         <Pricing />
