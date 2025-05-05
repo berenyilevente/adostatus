@@ -3,11 +3,11 @@ import { notFound } from "next/navigation";
 import React from "react";
 
 import { routes } from "@/lib/routes";
-import { PageTitle } from "@/components/admin/index";
 
 import { EditUser } from "./EditUser";
 import { EditUserProvider } from "./use-edit-user";
 import { getUser } from "../actions/user.actions";
+import { PageTitle } from "../../components";
 
 export const metadata: Metadata = {
   title: "Edit User",

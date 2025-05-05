@@ -20,12 +20,11 @@ export const Hero2 = () => {
           </div>
           <div className="text-center">
             <h1 className="text-5xl font-semibold tracking-tight text-balance text-gray-900 sm:text-7xl">
-              One Scheduling Platform for All Your Businesses
+              Appointment Scheduling That Adapts to Your Business{" "}
             </h1>
             <p className="mt-8 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8">
-              TimeGrid is the flexible appointment scheduling solution that
-              adapts to any business type — from restaurants and salons to
-              clinics and consultants.
+              Create fully customizable booking forms that match your brand and
+              work across industries — all from one intuitive platform.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Link href="#footer">

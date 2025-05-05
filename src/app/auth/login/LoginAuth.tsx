@@ -10,7 +10,7 @@ export const LoginAuth = () => {
   const { isLoading, form, onSubmit } = useLogin();
 
   return (
-    <FormWrapper form={form} className="flex flex-col items-center mx-8">
+    <FormWrapper form={form} className="flex flex-col items-center gap-2 mx-8">
       <FormInput
         startIcon="mail"
         control={form.control}
@@ -25,7 +25,6 @@ export const LoginAuth = () => {
         color="primary"
         isLoading={isLoading}
         onClick={onSubmit}
-        className="gap-3 text-base"
         fullWidth
       >
         Send Login Link

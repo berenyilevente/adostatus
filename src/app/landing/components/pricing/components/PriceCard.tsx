@@ -1,4 +1,6 @@
-import { ReactElement } from "react";
+"use client";
+
+import { ReactElement, useState } from "react";
 
 import {
   Card,
@@ -8,8 +10,45 @@ import {
   CardFooter,
   CardHeader,
   CardDescription,
+  Button,
 } from "@/components";
-import { Price } from "./Price";
+import { stripe } from "@/config/stripe.config";
+import { createCheckoutSession } from "@/app/actions/stripe/checkout.action";
+
+interface PriceProps {
+  title: string;
+  price: number;
+  priceAnchor: number;
+}
+
+export const Price = ({
+  title,
+  price,
+  priceAnchor,
+}: PriceProps): ReactElement => {
+  return (
+    <div className="mt-2 flex items-center justify-between ">
+      <p className="text-xl font-medium">{title}</p>
+      <div className="flex items-center gap-2">
+        <div>
+          <p className="text-2xl font-semibold">
+            {price}
+            {stripe.currency}
+          </p>
+        </div>
+        <div className="flex flex-col justify-end text-lg">
+          <p className="relative">
+            <span className="absolute bg-black h-[1.5px] inset-x-0 top-[50%]"></span>
+            <span className="text-black/80">
+              {stripe.currency}
+              {priceAnchor}
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 interface PriceCardProps {
   priceId: string;
@@ -36,6 +75,16 @@ export const PriceCard = ({
   excluded,
   isFeatured,
 }: PriceCardProps): ReactElement => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleCheckout = async () => {
+    setIsLoading(true);
+    const url = await createCheckoutSession({ priceId });
+    if (url) {
+      window.location.href = url;
+    }
+  };
+
   return (
     <Card
       className={`w-full sm:w-96 ${isFeatured ? "border border-primary" : ""}`}
@@ -52,47 +101,46 @@ export const PriceCard = ({
           <CardDescription>{description}</CardDescription>
         </CardHeader>
         <div className="flex flex-col gap-2">
-          <div>
-            <div className="grid gap-2 h-80">
-              <p className="mt-4 text-sm text-base-content/70">Includes:</p>
-              {included.map((item, index) => (
+          <CardContent className="grid gap-2 h-80">
+            <p className="mt-4 text-sm text-base-content/70">Includes:</p>
+            {included.map((item, index) => (
+              <div
+                key={`included-${item}-${index}`}
+                className="grid grid-cols-9 items-center"
+              >
+                <Icon icon="check" fontSize={16} className="text-green-500" />
+                <p className="col-span-8">{item.name}</p>
+              </div>
+            ))}
+            <div className="flex flex-col gap-2">
+              {excluded.map((item, index) => (
                 <div
-                  key={`included-${item}-${index}`}
+                  key={`excluded-${item}-${index}`}
                   className="grid grid-cols-9 items-center"
                 >
-                  <Icon icon="check" fontSize={16} className="text-green-500" />
+                  <Icon
+                    icon="xCircle"
+                    fontSize={16}
+                    className="text-gray-500"
+                  />
                   <p className="col-span-8">{item.name}</p>
                 </div>
               ))}
-              <div className="flex flex-col gap-2">
-                {excluded.map((item, index) => (
-                  <div
-                    key={`excluded-${item}-${index}`}
-                    className="grid grid-cols-9 items-center"
-                  >
-                    <Icon
-                      icon="xCircle"
-                      fontSize={16}
-                      className="text-gray-500"
-                    />
-                    <p className="col-span-8">{item.name}</p>
-                  </div>
-                ))}
-              </div>
             </div>
-          </div>
-          <div>
-            <CardFooter className="h-full">
-              {/* <Link className="w-full" href="/leads">
-                <Button variant={isFeatured ? "active" : "outline"}>
-                  Buy now!
-                </Button>
-              </Link> */}
-              <div className="text-sm text-base-content/70 mt-2">
-                Pay once, access forever!
-              </div>
-            </CardFooter>
-          </div>
+          </CardContent>
+          <CardFooter className="flex flex-col items-center">
+            <Button
+              variant={isFeatured ? "default" : "outline"}
+              fullWidth
+              onClick={handleCheckout}
+              isLoading={isLoading}
+            >
+              Buy now!
+            </Button>
+            <div className="text-sm text-base-content/70 mt-2">
+              Billed yearly, cancel anytime. Prices excl. VAT.
+            </div>
+          </CardFooter>
         </div>
       </CardContent>
     </Card>

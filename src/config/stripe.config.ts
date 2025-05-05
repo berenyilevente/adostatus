@@ -13,15 +13,16 @@ type Plan = {
 
 export type StripeConfig = {
   plans: Plan[];
+  currency: string;
 };
 
 const pirceId: Record<string, Record<string, string>> = {
   basic: {
-    development: "price_1PVfBeGadLSSnbBWcBsTWbIs",
+    development: "price_1RL87MPpJ1qNQtT58JGuEsfp",
     production: "price_456",
   },
   advanced: {
-    development: "price_1PVpFqGadLSSnbBWWE3KB09S",
+    development: "price_1RLGGDPpJ1qNQtT5g32E3m5h",
     production: "price_457",
   },
 };
@@ -46,13 +47,13 @@ const basic: Plan = {
     { name: "Calendar integrations" },
     { name: "Multiple forms" },
   ],
-  price: 0,
-  priceAnchor: 0,
+  price: 19,
+  priceAnchor: 29,
   isFeatured: false,
 };
 
 const advanced: Plan = {
-  name: "TimeGrid Business Pro",
+  name: "TimeGrid Business",
   description:
     "Everything you need for multiple businesses with a single subscription.",
   priceId: pirceId.advanced[NODE_ENV],
@@ -77,11 +78,12 @@ const advanced: Plan = {
     },
   ],
   excluded: [],
-  price: 29,
-  priceAnchor: 49,
+  price: 49,
+  priceAnchor: 69,
   isFeatured: true,
 };
 
 export const stripe: StripeConfig = {
   plans: [basic, advanced],
+  currency: "€",
 };
