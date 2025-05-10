@@ -1,6 +1,6 @@
 import { NODE_ENV } from "./env.config";
 
-type Plan = {
+export type Plan = {
   name: string;
   priceId: string;
   included: { name: string }[];
@@ -28,9 +28,9 @@ const pirceId: Record<string, Record<string, string>> = {
 };
 
 const basic: Plan = {
-  name: "TimeGrid Starter",
+  name: "Timegrid Starter",
   description:
-    "Perfect for trying TimeGrid with a single business or service type.",
+    "Perfect for trying Timegrid with a single business or service type.",
   priceId: pirceId.basic[NODE_ENV],
   included: [
     {
@@ -53,7 +53,7 @@ const basic: Plan = {
 };
 
 const advanced: Plan = {
-  name: "TimeGrid Business",
+  name: "Timegrid Business",
   description:
     "Everything you need for multiple businesses with a single subscription.",
   priceId: pirceId.advanced[NODE_ENV],

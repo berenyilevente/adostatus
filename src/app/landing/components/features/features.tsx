@@ -1,4 +1,5 @@
 import { Button } from "@/components";
+import { config } from "@/config";
 import Link from "next/link";
 
 const features = [
@@ -37,7 +38,7 @@ export const Features = () => {
     <div className="min-h-screen flex items-center justify-center">
       <div className="max-w-screen-lg w-full py-10 px-6">
         <h2 className="text-4xl md:text-5xl md:leading-[3.5rem] font-bold tracking-tight max-w-xl md:text-center md:mx-auto">
-          ...introducing <span className="text-primary">TimeGrid</span>
+          ...introducing <span className="text-primary">{config.app.name}</span>
         </h2>
         <div className="text-muted-foreground text-lg max-w-md md:text-end md:mx-auto">
           *scheduling, simplified

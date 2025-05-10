@@ -5,7 +5,7 @@ import { BASE_URL } from "./env.config";
 
 export const config: Config = {
   app: {
-    name: "TimeGrid",
+    name: "Timegrid",
     description: "The best scheduling platform for your business.",
     domain: BASE_URL,
   },

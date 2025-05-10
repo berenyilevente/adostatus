@@ -290,13 +290,14 @@ model CalendarIntegration {
 model Subscription {
   id                   String   @id @default(cuid())
   userId               String
-  planType             String // starter, business_pro
+  planName             String // starter, business_pro
   status               String // active, canceled, past_due
   currentPeriodStart   DateTime
   currentPeriodEnd     DateTime
   cancelAtPeriodEnd    Boolean  @default(false)
-  stripeSubscriptionId String?
-  stripeCustomerId     String?
+  stripeSubscriptionId String
+  stripeCustomerId     String
+  stripePriceId        String
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
 

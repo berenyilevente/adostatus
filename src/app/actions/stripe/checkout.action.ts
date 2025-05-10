@@ -25,8 +25,8 @@ export async function createCheckoutSession({ priceId }: { priceId: string }) {
         quantity: 1,
       },
     ],
-    success_url: `${STRIPE_SUCCESS_URL}?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${STRIPE_CANCEL_URL}`,
+    success_url: STRIPE_SUCCESS_URL,
+    cancel_url: STRIPE_CANCEL_URL,
   });
 
   return session.url;
