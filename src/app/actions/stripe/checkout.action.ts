@@ -7,9 +7,6 @@ import {
   STRIPE_SUCCESS_URL,
   STRIPE_CANCEL_URL,
 } from "@/config/env.config";
-import { loadEnv } from "@/utils/load-env";
-
-loadEnv();
 
 const stripe = new Stripe(STRIPE_SECRET_KEY, {
   apiVersion: "2025-04-30.basil",
