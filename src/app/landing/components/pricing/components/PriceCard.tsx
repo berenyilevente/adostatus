@@ -14,6 +14,7 @@ import {
 } from "@/components";
 import { stripe } from "@/config/stripe.config";
 import { createCheckoutSession } from "@/app/actions/stripe/checkout.action";
+import { useRouter } from "next/navigation";
 
 interface PriceProps {
   title: string;
@@ -76,9 +77,11 @@ export const PriceCard = ({
   isFeatured,
 }: PriceCardProps): ReactElement => {
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const handleCheckout = async () => {
     setIsLoading(true);
+    router.push("/auth/login");
     const url = await createCheckoutSession({ priceId });
     if (url) {
       window.location.href = url;
@@ -135,7 +138,7 @@ export const PriceCard = ({
               onClick={handleCheckout}
               isLoading={isLoading}
             >
-              Buy now!
+              Get Started
             </Button>
             <div className="text-sm text-base-content/70 mt-2">
               Billed yearly, cancel anytime. Prices excl. VAT.

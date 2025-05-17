@@ -92,9 +92,9 @@ export const Navigation = () => {
                     </MenubarTrigger>
                   </MenubarMenu>
                 ))}
-                <Link href="#footer">
+                <Link href="#pricing">
                   <Button size="sm" color="primary">
-                    Join waitlist
+                    Get Started
                   </Button>
                 </Link>
               </Menubar>

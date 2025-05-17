@@ -15,5 +15,4 @@ export const authOptions: NextAuthOptions = {
     signIn: "/auth/login",
     verifyRequest: "/auth/verify-request",
   },
-  callbacks: {},
 };

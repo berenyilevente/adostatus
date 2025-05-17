@@ -27,7 +27,7 @@ export const Hero2 = () => {
               work across industries — all from one intuitive platform.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
-              <Link href="#footer">
+              <Link href="#pricing">
                 <Button variant="default">Get Started</Button>
               </Link>
               <Link

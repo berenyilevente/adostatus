@@ -13,7 +13,7 @@ export const getOrCreateUser = async (email: string) => {
 
   if (!user) {
     user = await prisma.user.create({
-      data: { email },
+      data: { email, isActive: false },
     });
   }
 
