@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth";
 
 export async function GET(req: NextRequest) {
   const email = req.nextUrl.searchParams.get("email");
+
   if (!email) {
     return NextResponse.json({ hasAccess: false }, { status: 401 });
   }
@@ -18,8 +19,6 @@ export async function GET(req: NextRequest) {
       userId: user?.id,
     },
   });
-
-  console.log("route.ts at Line: 21", subscription);
 
   if (subscription) {
     return NextResponse.json({ hasAccess: true }, { status: 200 });

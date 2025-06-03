@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Card, CardContent, Logo } from "@/components";
 import { config } from "@/config/main.config";
 
-import { LoginAuth } from "./LoginAuth";
+import { Purchase } from "./Purchase";
 
 export const metadata: Metadata = {
   title: "Login",
@@ -15,13 +15,14 @@ const LoginPage = () => {
       <CardContent>
         <Logo size={64} text={config.app.name} textPosition="bottom" />
         <h3 className="text-center text-xl font-semibold mt-6">
-          Welcome back!
+          Welcome to TimeGrid
         </h3>
         <h3 className="text-center text-sm text-base-content/70">
-          Please enter your email, we will send a login link to this address.
+          Provide your email address to get started. We will send you a link
+          with the payment details.
         </h3>
         <div className="mt-6">
-          <LoginAuth />
+          <Purchase />
         </div>
       </CardContent>
     </Card>

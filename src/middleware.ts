@@ -9,9 +9,10 @@ export async function middleware(request: NextRequest) {
     secret: process.env.NEXTAUTH_SECRET,
   });
 
-  if (!token) {
+  if (!token || !token.email) {
     return NextResponse.redirect(new URL("/auth/login", request.url));
   }
+
   const url = `${BASE_URL}/api/stripe/subscription?email=${token.email}`;
 
   const res = await fetch(url, {
@@ -21,13 +22,8 @@ export async function middleware(request: NextRequest) {
   const { hasAccess } = await res.json();
 
   if (!hasAccess) {
-    const url = await createCheckoutSession({
-      priceId: "price_1RLGGDPpJ1qNQtT5g32E3m5h",
-    });
-
-    if (url) {
-      return NextResponse.redirect(new URL(url));
-    }
+    // TODO redirect the user to a new choose pricing plan page (Please select a plan to start using timegrid, etc.)
+    return NextResponse.redirect(new URL(`${BASE_URL}/#pricing`));
   }
 
   return NextResponse.next();

@@ -10,20 +10,25 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  RadioGroup,
   RadioGroupItem,
 } from "@/components";
 
-type FormRadioProps<
+type FormRadioGroupProps<
   TField extends FieldValues = FieldValues,
   TName extends FieldPath<TField> = FieldPath<TField>,
 > = Omit<RadioGroupItemProps, "name"> & {
   control: Control<TField>;
   name: TName;
+  items: {
+    label: string;
+    value: string;
+  }[];
   label?: string;
   description?: string;
 };
 
-export const FormRadio = <
+export const FormRadioGroup = <
   TField extends FieldValues = FieldValues,
   TName extends FieldPath<TField> = FieldPath<TField>,
 >({
@@ -33,8 +38,9 @@ export const FormRadio = <
   value,
   label,
   description,
+  items,
   ...props
-}: FormRadioProps<TField, TName>) => {
+}: FormRadioGroupProps<TField, TName>) => {
   return (
     <FormField
       control={control}
@@ -43,13 +49,23 @@ export const FormRadio = <
         <FormItem className="relative">
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <RadioGroupItem
-              {...field}
-              {...props}
-              className={className}
-              checked={field.value === value}
-              onChange={() => field.onChange(value)}
-            />
+            <RadioGroup
+              onValueChange={field.onChange}
+              defaultValue={field.value}
+              className="flex flex-col space-y-1"
+            >
+              {items.map((item, index) => (
+                <FormItem
+                  className="flex items-center space-x-3 space-y-0"
+                  key={`${index}-${item.value}`}
+                >
+                  <FormControl>
+                    <RadioGroupItem value={item.value} />
+                  </FormControl>
+                  <FormLabel className="font-normal">{item.label}</FormLabel>
+                </FormItem>
+              ))}
+            </RadioGroup>
           </FormControl>
           {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />
@@ -58,4 +74,4 @@ export const FormRadio = <
     />
   );
 };
-FormRadio.displayName = "FormRadio";
+FormRadioGroup.displayName = "FormRadioGroup";

@@ -10,7 +10,9 @@
     "lint:fix": "next lint --fix",
     "prisma:push": "prisma generate && prisma db push",
     "vercel-build": "prisma generate && prisma migrate deploy && next build",
-    "stripe:webhook": "stripe listen --forward-to http://localhost:3000/api/webhook/stripe"
+    "stripe:webhook": "stripe listen --forward-to http://localhost:3000/api/stripe/webhook",
+    "compose:up": "docker compose up",
+    "compose:down": "docker compose down"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.9.0",

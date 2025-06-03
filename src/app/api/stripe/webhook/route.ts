@@ -4,6 +4,7 @@ import Stripe from "stripe";
 import { STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET } from "@/config/env.config";
 import { getOrCreateUser, createSubscription } from "./queries";
 import { getCheckoutSessionData } from "@/lib/stripe/getCheckoutSessionData";
+import { signIn } from "next-auth/react";
 
 const stripe = new Stripe(STRIPE_SECRET_KEY, {
   apiVersion: "2025-04-30.basil",

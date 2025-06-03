@@ -27,7 +27,7 @@ export const LoginAuth = () => {
         onClick={onSubmit}
         fullWidth
       >
-        Send Login Link
+        Send login link
       </Button>
     </FormWrapper>
   );

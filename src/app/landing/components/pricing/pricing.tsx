@@ -17,14 +17,8 @@ export const Pricing = () => {
         </div>
         <p className="mt-1 text-3xl font-semibold">Pricing</p>
         <p className="mt-3 inline-block max-w-sm text-base-content/70">
-          Limited-Time Offer: Join the waitlist today and get an exclusive
-          discount at launch!
+          Choose your plan and improve your business today!
         </p>
-      </div>
-      <div className="flex flex-col items-center justify-center mt-4">
-        <Link href="#footer">
-          <Button>Join the waitlist</Button>
-        </Link>
       </div>
       <div className="mt-8 flex sm:flex-row flex-col justify-center gap-6 px-4 sm:px-0">
         {config.stripe.plans.map((plan) => (

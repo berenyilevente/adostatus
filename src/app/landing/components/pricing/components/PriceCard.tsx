@@ -15,6 +15,7 @@ import {
 import { stripe } from "@/config/stripe.config";
 import { createCheckoutSession } from "@/app/actions/stripe/checkout.action";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 interface PriceProps {
   title: string;
@@ -81,16 +82,12 @@ export const PriceCard = ({
 
   const handleCheckout = async () => {
     setIsLoading(true);
-    router.push("/auth/login");
-    const url = await createCheckoutSession({ priceId });
-    if (url) {
-      window.location.href = url;
-    }
+    router.push(`/auth/purchase?priceId=${priceId}`);
   };
 
   return (
     <Card
-      className={`w-full sm:w-96 ${isFeatured ? "border border-primary" : ""}`}
+      className={cn("w-full sm:w-96", isFeatured && "border border-primary")}
     >
       <CardContent>
         <CardHeader>
@@ -140,8 +137,8 @@ export const PriceCard = ({
             >
               Get Started
             </Button>
-            <div className="text-sm text-base-content/70 mt-2">
-              Billed yearly, cancel anytime. Prices excl. VAT.
+            <div className="text-xs text-base-content/70 mt-2 w-full text-start">
+              Billed anually - Prices excl. VAT.
             </div>
           </CardFooter>
         </div>

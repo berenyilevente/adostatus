@@ -7,7 +7,7 @@ export * from "./form/form-combobox";
 export * from "./form/form-datepicker";
 export * from "./form/form-input";
 export * from "./form/form-password-input";
-export * from "./form/form-radio";
+export * from "./form/form-radio-group";
 export * from "./form/form-select";
 export * from "./form/form-switch";
 export * from "./form/form-textarea";
