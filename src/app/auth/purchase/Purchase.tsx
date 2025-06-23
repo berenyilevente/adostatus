@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import React from "react";
+import React from 'react';
 
 import {
   Button,
@@ -8,10 +8,10 @@ import {
   FormRadioGroup,
   FormWrapper,
   Label,
-} from "@/components";
+} from '@/components';
 
-import { usePurchase } from "./use-purchase";
-import Link from "next/link";
+import { usePurchase } from './use-purchase';
+import Link from 'next/link';
 
 export const Purchase = () => {
   const { isLoading, form, onSubmit } = usePurchase();
@@ -34,7 +34,7 @@ export const Purchase = () => {
         onClick={onSubmit}
         fullWidth
       >
-        Submit
+        Continue
       </Button>
       <div className="text-sm text-base-content/70 space-x-1">
         <span>Already have an account?</span>

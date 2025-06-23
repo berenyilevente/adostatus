@@ -1,7 +1,7 @@
-import { NextResponse, NextRequest } from "next/server";
-import { getToken } from "next-auth/jwt";
-import { BASE_URL } from "./config/env.config";
-import { createCheckoutSession } from "./app/actions/stripe/checkout.action";
+import { NextResponse, NextRequest } from 'next/server';
+import { getToken } from 'next-auth/jwt';
+import { BASE_URL } from './config/env.config';
+import { createCheckoutSession } from './app/actions/stripe/checkout.action';
 
 export async function middleware(request: NextRequest) {
   const token = await getToken({
@@ -10,7 +10,7 @@ export async function middleware(request: NextRequest) {
   });
 
   if (!token || !token.email) {
-    return NextResponse.redirect(new URL("/auth/login", request.url));
+    return NextResponse.redirect(new URL('/auth/login', request.url));
   }
 
   const url = `${BASE_URL}/api/stripe/subscription?email=${token.email}`;
@@ -26,9 +26,17 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL(`${BASE_URL}/#pricing`));
   }
 
+  const business = false;
+
+  if (!business) {
+    return NextResponse.redirect(
+      new URL(`${BASE_URL}/onboard-user`, request.url)
+    );
+  }
+
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/dashboard", "/users"],
+  matcher: ['/dashboard', '/users'],
 };

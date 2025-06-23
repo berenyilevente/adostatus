@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { ReactNode } from "react";
-import { Control, FieldPath, FieldValues } from "react-hook-form";
+import { ReactNode } from 'react';
+import { Control, FieldPath, FieldValues } from 'react-hook-form';
 
-import { cn } from "@/utils";
+import { cn } from '@/utils';
 import {
   FormControl,
   FormDescription,
@@ -14,9 +14,9 @@ import {
   Icon,
   IconType,
   Input,
-} from "@/components";
+} from '@/components';
 
-const iconBaseClassNames = "absolute top-[18px] -translate-y-1/2 text-gray-400";
+const iconBaseClassNames = 'absolute top-[18px] -translate-y-1/2 text-gray-400';
 
 const StartIcon = ({
   startIcon,
@@ -32,7 +32,7 @@ const StartIcon = ({
   return (
     <Icon
       icon={startIcon}
-      className={cn(iconBaseClassNames, "left-3", label && "!top-[31px]")}
+      className={cn(iconBaseClassNames, 'left-3', label && '!top-[31px]')}
       size="xs"
     />
   );
@@ -53,7 +53,7 @@ const EndIcon = ({
     <Icon
       icon={endIcon}
       size="xs"
-      className={cn(iconBaseClassNames, "right-3", label && "!top-[31px]")}
+      className={cn(iconBaseClassNames, 'right-3', label && '!top-[31px]')}
     />
   );
 };
@@ -61,7 +61,7 @@ const EndIcon = ({
 interface FormInputProps<
   TField extends FieldValues = FieldValues,
   TName extends FieldPath<TField> = FieldPath<TField>,
-> extends React.ComponentProps<"input"> {
+> extends React.ComponentProps<'input'> {
   control: Control<TField, object>;
   name: TName;
   placeholder?: string;
@@ -92,16 +92,16 @@ export const FormInput = <
       control={control}
       name={name}
       render={({ field, fieldState }) => (
-        <FormItem className={cn("relative flex flex-col", className)}>
-          <FormLabel>{label}</FormLabel>
+        <FormItem className={cn('relative flex flex-col', className)}>
+          {label && <FormLabel>{label}</FormLabel>}
           <StartIcon startIcon={startIcon} label={!!label} />
           <FormControl>
             <Input
               {...field}
               {...props}
               placeholder={placeholder}
-              className={cn(startIcon && "pl-10", endIcon && "pr-10", {
-                "border-red-500": fieldState.error,
+              className={cn(startIcon && 'pl-10', endIcon && 'pr-10', {
+                'border-red-500': fieldState.error,
               })}
             />
           </FormControl>
@@ -113,4 +113,4 @@ export const FormInput = <
     />
   );
 };
-FormInput.displayName = "FormInput";
+FormInput.displayName = 'FormInput';

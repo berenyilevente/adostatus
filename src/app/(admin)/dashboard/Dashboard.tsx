@@ -1,8 +1,7 @@
-import { ReactElement } from "react";
-import { getUsers } from "./actions/dashboard.actions";
+'use client';
+
+import { ReactElement } from 'react';
 
 export const Dashboard = async (): Promise<ReactElement> => {
-  const { data, errors } = await getUsers();
-
-  return <div>User count: {JSON.stringify(data)} </div>;
+  return <div>Dashboard </div>;
 };

@@ -18,11 +18,16 @@ import {
 } from "@/components";
 import { cn } from "@/lib/utils";
 
+export type FormSelectOption = {
+  label: string;
+  value: string;
+};
+
 interface FormSelectProps<
   TField extends FieldValues = FieldValues,
   TName extends FieldPath<TField> = FieldPath<TField>,
 > {
-  options: string[];
+  options: FormSelectOption[];
   name: TName;
   control: Control<TField>;
   placeholder?: string;
@@ -56,8 +61,8 @@ export const FormSelect = <
             </FormControl>
             <SelectContent>
               {options.map((option, index) => (
-                <SelectItem key={index} value={option}>
-                  {option}
+                <SelectItem key={index} value={option.value}>
+                  {option.label}
                 </SelectItem>
               ))}
             </SelectContent>

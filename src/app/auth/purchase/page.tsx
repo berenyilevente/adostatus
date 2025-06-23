@@ -1,12 +1,12 @@
-import type { Metadata } from "next";
+import type { Metadata } from 'next';
 
-import { Card, CardContent, Logo } from "@/components";
-import { config } from "@/config/main.config";
+import { Card, CardContent, Logo } from '@/components';
+import { config } from '@/config/main.config';
 
-import { Purchase } from "./Purchase";
+import { Purchase } from './Purchase';
 
 export const metadata: Metadata = {
-  title: "Login",
+  title: 'Login',
 };
 
 const LoginPage = () => {
@@ -18,8 +18,7 @@ const LoginPage = () => {
           Welcome to TimeGrid
         </h3>
         <h3 className="text-center text-sm text-base-content/70">
-          Provide your email address to get started. We will send you a link
-          with the payment details.
+          Provide your email address to get started.
         </h3>
         <div className="mt-6">
           <Purchase />

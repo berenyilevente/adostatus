@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { CalendarIcon, ClockIcon } from "lucide-react";
-import { format } from "date-fns";
-import { useRef, useState } from "react";
-import { Control, FieldPath, FieldValues, useForm } from "react-hook-form";
-import { z } from "zod";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { CalendarIcon, ClockIcon } from 'lucide-react';
+import { format } from 'date-fns';
+import { useRef, useState } from 'react';
+import { Control, FieldPath, FieldValues, useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 import {
   Button,
@@ -19,8 +19,8 @@ import {
   PopoverContent,
   PopoverTrigger,
   ScrollArea,
-} from "@/components";
-import { cn } from "@/utils/combineClassNames";
+} from '@/components';
+import { cn } from '@/utils/combineClassNames';
 
 type FormTimepickerProps<
   TField extends FieldValues = FieldValues,
@@ -31,6 +31,7 @@ type FormTimepickerProps<
   className?: string;
   label?: string;
   description?: string;
+  placeholder?: string;
 };
 
 export const FormTimepicker = <
@@ -42,25 +43,26 @@ export const FormTimepicker = <
   className,
   label,
   description,
+  placeholder,
 }: FormTimepickerProps<TField, TName>) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [time, setTime] = useState<string>("05:00");
+  const [time, setTime] = useState<string>(placeholder || '12:00');
 
   return (
     <FormField
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className="flex flex-col gap-1 mt-2">
-          <FormLabel>{label}</FormLabel>
+        <FormItem className="flex flex-col gap-1 mt-2 w-full">
+          {label && <FormLabel>{label}</FormLabel>}
           <Popover open={isOpen} onOpenChange={setIsOpen}>
             <PopoverTrigger asChild>
               <FormControl>
                 <Button
                   variant="outline"
                   className={cn(
-                    "w-full font-normal",
-                    !field.value && "text-muted-foreground",
+                    'w-full font-normal',
+                    !field.value && 'text-muted-foreground',
                     className
                   )}
                 >
@@ -79,8 +81,8 @@ export const FormTimepicker = <
                     {Array.from({ length: 96 }).map((_, i) => {
                       const hour = Math.floor(i / 4)
                         .toString()
-                        .padStart(2, "0");
-                      const minute = ((i % 4) * 15).toString().padStart(2, "0");
+                        .padStart(2, '0');
+                      const minute = ((i % 4) * 15).toString().padStart(2, '0');
                       const timeValue = `${hour}:${minute}`;
                       return (
                         <Button
@@ -109,4 +111,4 @@ export const FormTimepicker = <
     />
   );
 };
-FormTimepicker.displayName = "FormTimepicker";
+FormTimepicker.displayName = 'FormTimepicker';

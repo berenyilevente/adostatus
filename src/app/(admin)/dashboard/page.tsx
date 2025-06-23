@@ -1,15 +1,15 @@
-import { ReactElement } from "react";
+import { ReactElement } from 'react';
 
-import { PageTitle } from "../components";
-import { DashboardProvider } from "./use-dashboard";
-import { Dashboard } from "./Dashboard";
+import { PageTitle } from '../components';
+import { DashboardProvider } from './use-dashboard';
+import { Dashboard } from './Dashboard';
 
 const DashboardPage = (): ReactElement => {
   return (
     <div>
       <PageTitle
         title="Dashboard"
-        breadcrumbs={[{ label: "Dashboard", active: true }]}
+        breadcrumbs={[{ label: 'Dashboard', active: true }]}
       />
       <DashboardProvider data={[]}>
         <Dashboard />
