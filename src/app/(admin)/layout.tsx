@@ -15,7 +15,7 @@ const Layout = ({ children }: { children: any }) => {
   const shouldExcludeFromAdminLayout = EXCLUDED_PAGES.includes(pathname);
 
   if (shouldExcludeFromAdminLayout) {
-    return <>{children}</>;
+    return <SessionProvider>{children}</SessionProvider>;
   }
 
   return (

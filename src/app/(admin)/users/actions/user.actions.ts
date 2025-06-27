@@ -1,22 +1,22 @@
-"use server";
+'use server';
 
-import { Response } from "@/types/action.types";
-import { revalidatePath } from "next/cache";
+import { Response } from '@/types/action.types';
+import { revalidatePath } from 'next/cache';
 
-import prisma from "@/lib/prisma/client";
-import { useIsAuthenticated } from "@/hooks/use-is-authenticated";
+import prisma from '@/lib/prisma/client';
+import { isAuthenticated } from '@/utils/isAuthenticated';
 
 export const getUsers = async (): Promise<Response<any[]>> => {
-  const session = await useIsAuthenticated();
+  const session = await isAuthenticated();
 
   const currentUserEmail = session?.user?.email;
 
   if (!currentUserEmail) {
     return {
-      status: "error",
+      status: 'error',
       data: undefined,
       code: 404,
-      errors: "Current user not found",
+      errors: 'Current user not found',
     };
   }
 
@@ -29,7 +29,7 @@ export const getUsers = async (): Promise<Response<any[]>> => {
   });
 
   return {
-    status: "success",
+    status: 'success',
     data: users,
     code: 200,
     errors: undefined,
@@ -37,7 +37,7 @@ export const getUsers = async (): Promise<Response<any[]>> => {
 };
 
 export const getUser = async (id: string): Promise<Response<any>> => {
-  await useIsAuthenticated();
+  await isAuthenticated();
 
   // const user = await User.findById(id);
 
@@ -51,15 +51,15 @@ export const getUser = async (id: string): Promise<Response<any>> => {
 
   if (!user) {
     return {
-      status: "error",
+      status: 'error',
       data: undefined,
       code: 404,
-      errors: "User not found",
+      errors: 'User not found',
     };
   }
 
   return {
-    status: "success",
+    status: 'success',
     data: user,
     code: 200,
     errors: undefined,
@@ -67,15 +67,15 @@ export const getUser = async (id: string): Promise<Response<any>> => {
 };
 
 export const createUser = async (user: any): Promise<Response<any>> => {
-  await useIsAuthenticated();
+  await isAuthenticated();
 
   await prisma.user.create({
     data: user,
   });
 
-  revalidatePath("/users");
+  revalidatePath('/users');
   return {
-    status: "success",
+    status: 'success',
     data: user,
     code: 200,
     errors: undefined,

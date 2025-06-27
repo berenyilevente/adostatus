@@ -16,7 +16,7 @@ import {
   Input,
 } from '@/components';
 
-const iconBaseClassNames = 'absolute top-[18px] -translate-y-1/2 text-gray-400';
+const iconBaseClassNames = 'absolute top-[26px] -translate-y-1/2 text-gray-400';
 
 const StartIcon = ({
   startIcon,

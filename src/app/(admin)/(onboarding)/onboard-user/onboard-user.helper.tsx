@@ -2,20 +2,16 @@ import { z } from 'zod';
 
 import { Business } from '@/generated/prisma';
 
-type CreateBusinessType = Omit<
-  Business,
-  'id' | 'createdAt' | 'updatedAt' | 'emailVerified'
->;
+type CreateBusiness = Omit<Business, 'id' | 'createdAt' | 'updatedAt'>;
 
-export const businessSchema = z.object({
+export const businessSchema: z.ZodType<CreateBusiness> = z.object({
+  ownerId: z.string(),
   name: z.string().min(2, 'Business name must be at least 2 characters'),
-  description: z.string().optional(),
-  businessType: z.string().min(1, 'Please select a business type'),
-  logoUrl: z.string().optional(),
-  primaryColor: z.string().optional(),
-  businessHours: z.array(z.string()).optional(),
-  services: z.array(z.string()).optional(),
-  customBusinessType: z.string().optional(),
+  description: z.string().nullable(),
+  businessType: z.string().nullable(),
+  logoUrl: z.string().nullable(),
+  primaryColor: z.string().nullable(),
+  isActive: z.boolean(),
 });
 
 export type BusinessFormData = z.infer<typeof businessSchema>;

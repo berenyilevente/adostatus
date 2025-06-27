@@ -52,7 +52,6 @@ model Business {
   name         String
   description  String?
   businessType String?
-  timezone     String   @default("UTC")
   logoUrl      String?
   primaryColor String?
   isActive     Boolean  @default(true)

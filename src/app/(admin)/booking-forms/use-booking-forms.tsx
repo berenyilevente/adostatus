@@ -1,53 +1,32 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import {
-  ColumnDef,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  PaginationState,
-  Row,
-  SortingState,
-  useReactTable,
-} from "@tanstack/react-table";
-import { Form } from "@/generated/prisma";
+import { useForm } from 'react-hook-form';
 
-import {
-  Button,
-  Image,
-  TableCheckbox,
-  Dialog,
-  DialogTrigger,
-  DialogHeader,
-  DialogTitle,
-  DialogContent,
-  DialogFooter,
-} from "@/components";
-import { createAppContext } from "@/hooks/use-create-app-context";
+import { Business, Form } from '@/generated/prisma';
+
+import { createAppContext } from '@/hooks/use-create-app-context';
 
 type HookProp = {
   bookingFormsData: Form[];
+  businessData: Business;
 };
 
-const useHook = ({ bookingFormsData }: HookProp) => {
+const useHook = ({ bookingFormsData, businessData }: HookProp) => {
   const filterForm = useForm({
     defaultValues: {
-      search: "",
-      business: "",
+      search: '',
+      business: '',
     },
   });
 
-  const { watch, setValue } = filterForm;
+  const { watch } = filterForm;
 
-  const search = watch("search");
+  const search = watch('search');
 
   return {
     search,
     filterForm,
+    businessData,
   };
 };
 

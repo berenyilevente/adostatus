@@ -2,6 +2,6 @@
 
 import { ReactElement } from 'react';
 
-export const Dashboard = async (): Promise<ReactElement> => {
+export const Dashboard = (): ReactElement => {
   return <div>Dashboard </div>;
 };

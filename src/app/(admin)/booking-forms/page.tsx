@@ -1,34 +1,44 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
-import { Form } from "@/generated/prisma";
+import { Business, Form } from '@/generated/prisma';
 
-import { BookingFormList } from "./BookingFormList";
-import { BookingFormsProvider } from "./use-booking-forms";
-import { getBookingForms } from "./actions";
-import { PageTitle } from "../components";
+import { BookingFormList } from './BookingFormList';
+import { BookingFormsProvider } from './use-booking-forms';
+import { getBookingForms } from './actions';
+import { PageTitle } from '../components';
+import { getBusiness } from '../business/actions/business.actions';
 
 export const metadata: Metadata = {
-  title: "Booking Forms",
+  title: 'Booking Forms',
 };
 
 const BookingForms = async () => {
   let bookingForms: Form[] = [];
+  let businessData: Business = {} as Business;
   const rBookingForms = await getBookingForms();
+  const rBusiness = await getBusiness();
 
-  if (rBookingForms === null) {
+  if (rBookingForms === null || rBusiness.data === null) {
     return notFound();
   }
 
-  if (rBookingForms.status === "success" && rBookingForms.data) {
+  if (rBookingForms.status === 'success' && rBookingForms.data) {
     bookingForms = rBookingForms.data;
   }
 
+  if (rBusiness.status === 'success' && rBusiness.data) {
+    businessData = rBusiness.data;
+  }
+
   return (
-    <BookingFormsProvider bookingFormsData={bookingForms}>
+    <BookingFormsProvider
+      bookingFormsData={bookingForms}
+      businessData={businessData}
+    >
       <PageTitle
-        title={"Booking Forms"}
-        breadcrumbs={[{ label: "Booking Forms", active: true }]}
+        title={'Booking Forms'}
+        breadcrumbs={[{ label: 'Booking Forms', active: true }]}
       />
       <div className="mt-5">
         <BookingFormList />
