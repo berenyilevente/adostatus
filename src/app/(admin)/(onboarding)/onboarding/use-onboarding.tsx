@@ -5,9 +5,8 @@ import { useState } from 'react';
 import { createAppContext } from '@/hooks/use-create-app-context';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { BusinessFormData, businessSchema } from './onboard-user.helper';
-import { createBusiness } from './actions/onboard-user.actions';
-import { useRouter } from 'next/navigation';
+import { BusinessForm, BusinessSchema } from './onboarding.helper';
+import { createBusiness } from './actions/onboarding.actions';
 import { useSession } from 'next-auth/react';
 
 const useHook = () => {
@@ -15,8 +14,8 @@ const useHook = () => {
   const session = useSession();
   const [isLoading, setIsLoading] = useState(false);
 
-  const form = useForm<BusinessFormData>({
-    resolver: zodResolver(businessSchema),
+  const form = useForm<BusinessForm>({
+    resolver: zodResolver(BusinessSchema),
     defaultValues: {
       businessType: '',
       name: '',
@@ -30,7 +29,7 @@ const useHook = () => {
 
   const { handleSubmit } = form;
 
-  const onSubmit = handleSubmit(async (data: BusinessFormData) => {
+  const onSubmit = handleSubmit(async (data: BusinessForm) => {
     if (!session.data?.user?.id) {
       return;
     }
@@ -56,5 +55,5 @@ const useHook = () => {
   };
 };
 
-const [useOnboardUser, OnboardUserProvider] = createAppContext(useHook);
-export { useOnboardUser, OnboardUserProvider };
+const [useOnboarding, OnboardingProvider] = createAppContext(useHook);
+export { useOnboarding, OnboardingProvider };

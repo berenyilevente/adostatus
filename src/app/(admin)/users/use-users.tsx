@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
 import {
   ColumnDef,
   getCoreRowModel,
@@ -13,8 +13,8 @@ import {
   Row,
   SortingState,
   useReactTable,
-} from "@tanstack/react-table";
-import { User } from "@/generated/prisma";
+} from '@tanstack/react-table';
+import { User } from '@/generated/prisma';
 
 import {
   Button,
@@ -26,8 +26,8 @@ import {
   DialogTitle,
   DialogContent,
   DialogFooter,
-} from "@/components";
-import { createAppContext } from "@/hooks/use-create-app-context";
+} from '@/components';
+import { createAppContext } from '@/hooks/use-create-app-context';
 
 type HookProp = {
   usersData: User[];
@@ -45,13 +45,13 @@ const useHook = ({ usersData }: HookProp) => {
   const [rowSelection, setRowSelection] = useState<Record<string, boolean>>({});
   const filterForm = useForm({
     defaultValues: {
-      search: "",
+      search: '',
     },
   });
 
   const { watch, setValue } = filterForm;
 
-  const search = watch("search");
+  const search = watch('search');
   const tableState = {
     pagination,
     sorting,
@@ -65,8 +65,8 @@ const useHook = ({ usersData }: HookProp) => {
 
   const TableColumns = () => [
     {
-      header: "User",
-      accessorKey: "email",
+      header: 'User',
+      accessorKey: 'email',
       cell: ({ row }: { row: Row<User> }) => (
         <div className="flex items-center gap-2">
           {row.original.image && (
@@ -83,12 +83,12 @@ const useHook = ({ usersData }: HookProp) => {
       ),
     },
     {
-      header: "Id",
-      accessorKey: "id",
+      header: 'Id',
+      accessorKey: 'id',
     },
     {
-      header: "Mobile Number",
-      accessorKey: "mobileNumber",
+      header: 'Mobile Number',
+      accessorKey: 'mobileNumber',
     },
   ];
 
@@ -121,8 +121,8 @@ const useHook = ({ usersData }: HookProp) => {
   );
 
   const TableActions = () => ({
-    header: "Actions",
-    accessorKey: "actions",
+    header: 'Actions',
+    accessorKey: 'actions',
     cell: ({ row }: { row: Row<User> }) => (
       <div className="flex">
         <Button
@@ -152,7 +152,7 @@ const useHook = ({ usersData }: HookProp) => {
     onSortingChange: setSorting,
     onPaginationChange: setPagination,
     onRowSelectionChange: setRowSelection,
-    onGlobalFilterChange: (value: string) => setValue("search", value),
+    onGlobalFilterChange: (value: string) => setValue('search', value),
   };
 
   const table = useReactTable({

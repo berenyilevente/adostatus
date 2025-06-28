@@ -6,11 +6,11 @@ import { revalidatePath } from 'next/cache';
 import prisma from '@/lib/prisma/client';
 import { isAuthenticated } from '@/utils/isAuthenticated';
 
-import { BusinessFormData } from '../onboard-user.helper';
+import { BusinessForm } from '../onboarding.helper';
 
 export const createBusiness = async (
-  business: BusinessFormData
-): Promise<Response<BusinessFormData>> => {
+  business: BusinessForm
+): Promise<Response<BusinessForm>> => {
   await isAuthenticated();
 
   const businessResult = await prisma.business.create({
@@ -26,7 +26,7 @@ export const createBusiness = async (
     };
   }
 
-  revalidatePath('/onboard-user');
+  revalidatePath('/onboarding');
 
   return {
     status: 'success',

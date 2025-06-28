@@ -14,12 +14,12 @@ import {
   TableHeader,
 } from '@/components';
 
-import { useUsers } from './use-business';
+import { useBusiness } from './use-business';
 import { useRouter } from 'next/navigation';
 
 export const UserTable = () => {
   const router = useRouter();
-  const { table, filterForm, usersToBeDeleted, onDeleteUsers } = useUsers();
+  const { table, filterForm } = useBusiness();
 
   return (
     <Card className="bg-white">
@@ -43,9 +43,9 @@ export const UserTable = () => {
               iconSize="xs"
               variant="default"
               color="primary"
-              onClick={() => router.push('/users/create')}
+              onClick={() => router.push('/business/create')}
             >
-              Create User
+              Add Business
             </Button>
           </div>
         </div>

@@ -1,15 +1,13 @@
 'use client';
 
-import { Button, Progress } from '@/components';
 import { Step, OnboardingStep } from './components/step';
-import { useRouter } from 'next/navigation';
 
-export interface OnboardingProps {
+export interface StepperProps {
   steps: OnboardingStep[];
   currentStep: number;
 }
 
-export function Onboarding({ steps, currentStep }: OnboardingProps) {
+export function Stepper({ steps, currentStep }: StepperProps) {
   const progress = (currentStep / steps.length) * 100;
 
   return (

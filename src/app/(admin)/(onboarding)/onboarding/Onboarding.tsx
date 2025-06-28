@@ -1,7 +1,7 @@
 'use client';
 
-import { Onboarding } from '@/app/(admin)/components/';
-import { useOnboardUser } from './use-onboard-user';
+import { Stepper } from '@/app/(admin)/components/';
+import { useOnboarding } from './use-onboarding';
 import {
   Button,
   Card,
@@ -14,14 +14,13 @@ import {
   Label,
   Logo,
 } from '@/components';
-import { OnboardingStep } from '../../components/onboarding/components/step';
-import { businessTypes } from './onboard-user.helper';
+import { OnboardingStep } from '../../components/stepper/components/step';
 import { config } from '@/config';
 import { useRouter } from 'next/navigation';
 
 // TODO add a notification indicator to finish business creation (services, hours, etc.)
-export const OnboardUser = () => {
-  const { currentStep, isLoading, form, onSubmit } = useOnboardUser();
+export const Onboarding = () => {
+  const { currentStep, isLoading, form, onSubmit } = useOnboarding();
   const router = useRouter();
 
   const steps: OnboardingStep[] = [
@@ -85,7 +84,7 @@ export const OnboardUser = () => {
       <CardContent className="p-6">
         <FormWrapper form={form}>
           <Logo text={config.app.name} />
-          <Onboarding steps={steps} currentStep={currentStep} />
+          <Stepper steps={steps} currentStep={currentStep} />
         </FormWrapper>
       </CardContent>
     </Card>

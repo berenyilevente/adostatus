@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
 import {
   ColumnDef,
   getCoreRowModel,
@@ -13,30 +13,18 @@ import {
   Row,
   SortingState,
   useReactTable,
-} from "@tanstack/react-table";
-import { User } from "@/generated/prisma";
+} from '@tanstack/react-table';
+import { Business } from '@/generated/prisma';
 
-import {
-  Button,
-  Image,
-  TableCheckbox,
-  Dialog,
-  DialogTrigger,
-  DialogHeader,
-  DialogTitle,
-  DialogContent,
-  DialogFooter,
-} from "@/components";
-import { createAppContext } from "@/hooks/use-create-app-context";
+import { Button, Image, TableCheckbox } from '@/components';
+import { createAppContext } from '@/hooks/use-create-app-context';
 
 type HookProp = {
-  usersData: User[];
+  businessData: Business[];
 };
 
-const useHook = ({ usersData }: HookProp) => {
+const useHook = ({ businessData }: HookProp) => {
   const router = useRouter();
-  const [usersToBeDeleted, setUsersToBeDeleted] = useState<User[]>([]);
-  const [users, setUsers] = useState<User[]>(usersData);
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
@@ -45,13 +33,13 @@ const useHook = ({ usersData }: HookProp) => {
   const [rowSelection, setRowSelection] = useState<Record<string, boolean>>({});
   const filterForm = useForm({
     defaultValues: {
-      search: "",
+      search: '',
     },
   });
 
   const { watch, setValue } = filterForm;
 
-  const search = watch("search");
+  const search = watch('search');
   const tableState = {
     pagination,
     sorting,
@@ -59,85 +47,52 @@ const useHook = ({ usersData }: HookProp) => {
     globalFilter: search,
   };
 
-  const onDeleteUsers = () => {
-    console.log(usersToBeDeleted);
-  };
-
   const TableColumns = () => [
     {
-      header: "User",
-      accessorKey: "email",
-      cell: ({ row }: { row: Row<User> }) => (
+      header: 'Business',
+      accessorKey: 'name',
+      cell: ({ row }: { row: Row<Business> }) => (
         <div className="flex items-center gap-2">
-          {row.original.image && (
+          {row.original.logoUrl && (
             <Image
-              src={row.original.image}
+              src={row.original.logoUrl}
               width={32}
               height={32}
-              alt={row.original.email}
+              alt={row.original.name}
               className="rounded-full"
             />
           )}
-          <span>{row.original.email}</span>
+          <span>{row.original.name}</span>
         </div>
       ),
     },
     {
-      header: "Id",
-      accessorKey: "id",
+      header: 'Id',
+      accessorKey: 'id',
     },
     {
-      header: "Mobile Number",
-      accessorKey: "mobileNumber",
+      header: 'Mobile Number',
+      accessorKey: 'mobileNumber',
     },
   ];
 
-  const DeleteUserDialog = ({ row }: { row: Row<User> }) => (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button
-          size="sm"
-          iconSize="xs"
-          variant="ghost"
-          startIcon="trash"
-          onClick={() => setUsersToBeDeleted([row.original])}
-        />
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>
-            Are you sure you want to delete user
-            {usersToBeDeleted[0]?.email}?
-          </DialogTitle>
-        </DialogHeader>
-        <DialogFooter>
-          <Button variant="ghost">Cancel</Button>
-          <Button color="error" className="text-white" onClick={onDeleteUsers}>
-            Yes, delete user
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  );
-
   const TableActions = () => ({
-    header: "Actions",
-    accessorKey: "actions",
-    cell: ({ row }: { row: Row<User> }) => (
+    header: 'Actions',
+    accessorKey: 'actions',
+    cell: ({ row }: { row: Row<Business> }) => (
       <div className="flex">
         <Button
           size="sm"
           iconSize="xs"
           variant="ghost"
           startIcon="pencil"
-          onClick={() => router.push(`/users/${row.original.id}`)}
+          onClick={() => router.push(`/business/${row.original.id}`)}
         />
-        <DeleteUserDialog row={row} />
       </div>
     ),
   });
 
-  const columns: ColumnDef<User, any>[] = [
+  const columns: ColumnDef<Business, any>[] = [
     TableCheckbox(),
     ...TableColumns(),
     TableActions(),
@@ -152,11 +107,11 @@ const useHook = ({ usersData }: HookProp) => {
     onSortingChange: setSorting,
     onPaginationChange: setPagination,
     onRowSelectionChange: setRowSelection,
-    onGlobalFilterChange: (value: string) => setValue("search", value),
+    onGlobalFilterChange: (value: string) => setValue('search', value),
   };
 
   const table = useReactTable({
-    data: users,
+    data: businessData,
     columns,
     state: tableState,
     ...tableOptions,
@@ -166,11 +121,9 @@ const useHook = ({ usersData }: HookProp) => {
     table,
     search,
     filterForm,
-    usersToBeDeleted,
-    onDeleteUsers,
   };
 };
 
-const [useUsers, UsersProvider] = createAppContext(useHook);
+const [useBusiness, BusinessProvider] = createAppContext(useHook);
 
-export { useUsers, UsersProvider };
+export { useBusiness, BusinessProvider };

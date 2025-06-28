@@ -4,22 +4,23 @@ import React from 'react';
 
 import { routes } from '@/lib/routes';
 
-import { EditUser } from './EditBusiness';
-import { EditUserProvider } from './use-edit-business';
-import { getUser } from '../actions/business.actions';
+import { EditBusiness } from './EditBusiness';
+import { EditBusinessProvider } from './use-edit-business';
+import { getBusiness } from '../actions/business.actions';
 import { PageTitle } from '../../components';
+import { Business } from '@/generated/prisma';
 
 export const metadata: Metadata = {
-  title: 'Edit User',
+  title: 'Edit Business',
 };
 
 const EditUserPage = async (props: { params: Promise<{ id: string }> }) => {
   const params = await props.params;
-  let user: any | null = null;
-  const rUser = await getUser(params.id);
+  let business: Business | null = null;
+  const rBusiness = await getBusiness(params.id);
 
-  if (rUser.status === 'success' && rUser.data) {
-    user = rUser.data;
+  if (rBusiness.status === 'success' && rBusiness.data) {
+    business = rBusiness.data;
   } else {
     notFound();
   }
@@ -27,16 +28,16 @@ const EditUserPage = async (props: { params: Promise<{ id: string }> }) => {
   return (
     <div>
       <PageTitle
-        title={'Edit User'}
+        title={'Edit Business'}
         breadcrumbs={[
-          { label: 'Users', path: routes.admin.users.index },
+          { label: 'Business', path: routes.admin.business.index },
           { label: 'Edit', active: true },
         ]}
       />
       <div className="mt-5">
-        <EditUserProvider user={user}>
-          <EditUser />
-        </EditUserProvider>
+        <EditBusinessProvider business={business}>
+          <EditBusiness />
+        </EditBusinessProvider>
       </div>
     </div>
   );

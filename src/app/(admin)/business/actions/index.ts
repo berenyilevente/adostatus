@@ -1,1 +1,1 @@
-export { getUsers } from './business.actions';
+export { getBusiness, getBusinesses } from './business.actions';

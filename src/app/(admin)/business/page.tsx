@@ -1,40 +1,40 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import { User } from '@/generated/prisma';
+import { Business as BusinessType } from '@/generated/prisma';
 
 import { UserTable } from './BusinessTable';
-import { UsersProvider } from './use-business';
-import { getUsers } from './actions';
+import { BusinessProvider } from './use-business';
+import { getBusinesses } from './actions';
 import { PageTitle } from '../components';
 
 export const metadata: Metadata = {
-  title: 'Users',
+  title: 'Business',
 };
 
-const Users = async () => {
-  let users: User[] = [];
-  const rUsers = await getUsers();
+const Business = async () => {
+  let business: BusinessType[] = [];
+  const rBusiness = await getBusinesses();
 
-  if (rUsers === null) {
+  if (rBusiness === null) {
     return notFound();
   }
 
-  if (rUsers.status === 'success' && rUsers.data) {
-    users = rUsers.data;
+  if (rBusiness.status === 'success' && rBusiness.data) {
+    business = rBusiness.data;
   }
 
   return (
-    <UsersProvider usersData={users}>
+    <BusinessProvider businessData={business}>
       <PageTitle
-        title={'Users'}
-        breadcrumbs={[{ label: 'Users', active: true }]}
+        title={'Business'}
+        breadcrumbs={[{ label: 'Business', active: true }]}
       />
       <div className="mt-5">
         <UserTable />
       </div>
-    </UsersProvider>
+    </BusinessProvider>
   );
 };
 
-export default Users;
+export default Business;

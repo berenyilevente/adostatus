@@ -14,9 +14,9 @@ import {
   FormWrapper,
 } from '@/components';
 
-import { useEditUser } from './use-edit-business';
+import { useEditBusiness } from './use-edit-business';
 
-const EditUser = () => {
+const EditBusiness = () => {
   const {
     form,
     userImage,
@@ -24,7 +24,7 @@ const EditUser = () => {
     isLoading,
     handleChangeImage,
     handleCancel,
-  } = useEditUser();
+  } = useEditBusiness();
 
   return (
     <FormWrapper form={form}>
@@ -37,10 +37,10 @@ const EditUser = () => {
             <div className="mt-1 grid grid-cols-1 gap-5 gap-y-3 md:grid-cols-2">
               <FormInput
                 control={form.control}
-                id="email"
-                name="email"
-                placeholder="Email"
-                label="Email"
+                id="name"
+                name="name"
+                placeholder="Name"
+                label="Name"
               />
               <FormInput
                 control={form.control}
@@ -93,4 +93,4 @@ const EditUser = () => {
   );
 };
 
-export { EditUser };
+export { EditBusiness };

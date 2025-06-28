@@ -1,10 +1,10 @@
 import { z } from 'zod';
 
-import { Business } from '@/generated/prisma';
+import { Business as BusinessTable } from '@/generated/prisma';
 
-type CreateBusiness = Omit<Business, 'id' | 'createdAt' | 'updatedAt'>;
+type Business = Omit<BusinessTable, 'id' | 'createdAt' | 'updatedAt'>;
 
-export const businessSchema: z.ZodType<CreateBusiness> = z.object({
+export const BusinessSchema: z.ZodType<Business> = z.object({
   ownerId: z.string(),
   name: z.string().min(2, 'Business name must be at least 2 characters'),
   description: z.string().nullable(),
@@ -14,7 +14,7 @@ export const businessSchema: z.ZodType<CreateBusiness> = z.object({
   isActive: z.boolean(),
 });
 
-export type BusinessFormData = z.infer<typeof businessSchema>;
+export type BusinessForm = z.infer<typeof BusinessSchema>;
 
 export const businessTypes = [
   { value: 'salon', label: 'Salon & Beauty' },

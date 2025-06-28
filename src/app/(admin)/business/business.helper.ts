@@ -1,21 +1,26 @@
 import { z } from 'zod';
 
-import { Business } from '@/generated/prisma';
+import { Business as BusinessTable } from '@/generated/prisma';
 
-type CreateBusinessType = Omit<
-  Business,
-  'id' | 'createdAt' | 'updatedAt' | 'emailVerified'
->;
+type Business = Omit<BusinessTable, 'id' | 'createdAt' | 'updatedAt'>;
 
-export const businessSchema = z.object({
+export const BusinessSchema: z.ZodType<Business> = z.object({
+  ownerId: z.string(),
   name: z.string().min(2, 'Business name must be at least 2 characters'),
-  description: z.string().optional(),
-  businessType: z.string().min(1, 'Please select a business type'),
-  timezone: z.string().default('UTC'),
-  logoUrl: z.string().optional(),
-  primaryColor: z.string().optional(),
-  businessHours: z.array(z.string()).optional(),
-  services: z.array(z.string()).optional(),
+  description: z.string().nullable(),
+  businessType: z.string().nullable(),
+  logoUrl: z.string().nullable(),
+  primaryColor: z.string().nullable(),
+  isActive: z.boolean(),
 });
 
-export type BusinessFormData = z.infer<typeof businessSchema>;
+export type BusinessForm = z.infer<typeof BusinessSchema>;
+
+export const businessTypes = [
+  { value: 'salon', label: 'Salon & Beauty' },
+  { value: 'health', label: 'Health & Wellness' },
+  { value: 'fitness', label: 'Fitness & Training' },
+  { value: 'consulting', label: 'Consulting' },
+  { value: 'education', label: 'Education & Tutoring' },
+  { value: 'other', label: 'Other' },
+];

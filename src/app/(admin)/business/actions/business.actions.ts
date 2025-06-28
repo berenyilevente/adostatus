@@ -34,12 +34,13 @@ export const createBusiness = async (
   };
 };
 
-export const getBusiness = async (): Promise<Response<Business>> => {
+export const getBusiness = async (id: string): Promise<Response<Business>> => {
   const session = await isAuthenticated();
 
   const business = await prisma.business.findFirst({
     where: {
       ownerId: session.user.id,
+      id,
     },
   });
 
@@ -55,6 +56,32 @@ export const getBusiness = async (): Promise<Response<Business>> => {
   return {
     status: 'success',
     data: business,
+    code: 200,
+    errors: undefined,
+  };
+};
+
+export const getBusinesses = async (): Promise<Response<Business[]>> => {
+  const session = await isAuthenticated();
+
+  const businesses = await prisma.business.findMany({
+    where: {
+      ownerId: session.user.id,
+    },
+  });
+
+  if (!businesses) {
+    return {
+      status: 'error',
+      data: undefined,
+      code: 404,
+      errors: 'Business not found',
+    };
+  }
+
+  return {
+    status: 'success',
+    data: businesses,
     code: 200,
     errors: undefined,
   };
