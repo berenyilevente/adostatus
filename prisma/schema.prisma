@@ -96,7 +96,7 @@ model TeamMember {
 model BusinessHours {
   id         String   @id @default(cuid())
   businessId String
-  dayOfWeek  Int // 0-6 (Sunday-Saturday)
+  dayOfWeek  String // 0-6 (Sunday-Saturday)
   openTime   DateTime @db.Time()
   closeTime  DateTime @db.Time()
   isClosed   Boolean  @default(false)
@@ -112,7 +112,7 @@ model BusinessHours {
 model BreakTime {
   id         String   @id @default(cuid())
   businessId String
-  dayOfWeek  Int // 0-6 (Sunday-Saturday)
+  dayOfWeek  String // 0-6 (Sunday-Saturday)
   startTime  DateTime @db.Time()
   endTime    DateTime @db.Time()
   createdAt  DateTime @default(now())
@@ -194,7 +194,7 @@ model Service {
   description String?
   duration    Int // in minutes
   bufferTime  Int      @default(0) // in minutes
-  price       Decimal? @db.Decimal(10, 2)
+  price       Int?
   color       String?
   formId      String?
   isActive    Boolean  @default(true)

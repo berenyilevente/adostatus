@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Control, FieldPath, FieldValues } from "react-hook-form";
-import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
+import { useState } from 'react';
+import { Control, FieldPath, FieldValues } from 'react-hook-form';
+import { format } from 'date-fns';
+import { CalendarIcon } from 'lucide-react';
 
 import {
   Button,
@@ -17,8 +17,8 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components";
-import { cn } from "@/utils";
+} from '@/components';
+import { cn } from '@/utils';
 
 type FormDatepickerProps<
   TField extends FieldValues = FieldValues,
@@ -47,20 +47,20 @@ export const FormDatepicker = <
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className="flex flex-col gap-1 mt-2">
-          <FormLabel>{label}</FormLabel>
+        <FormItem className="flex flex-col gap-1 mt-2 w-full">
+          {label && <FormLabel>{label}</FormLabel>}
           <Popover open={isOpen} onOpenChange={setIsOpen}>
             <PopoverTrigger asChild>
               <FormControl>
                 <Button
                   variant="outline"
                   className={cn(
-                    "pl-3 text-left font-normal",
-                    !field.value && "text-muted-foreground"
+                    'pl-3 text-left font-normal',
+                    !field.value && 'text-muted-foreground'
                   )}
                 >
                   {field.value ? (
-                    format(field.value, "PPP")
+                    format(field.value, 'PPP')
                   ) : (
                     <span>Pick a date</span>
                   )}
@@ -76,7 +76,6 @@ export const FormDatepicker = <
                   field.onChange(date);
                   setIsOpen(false);
                 }}
-                initialFocus
                 className={cn(className)}
               />
             </PopoverContent>
@@ -88,4 +87,4 @@ export const FormDatepicker = <
     />
   );
 };
-FormDatepicker.displayName = "FormDatepicker";
+FormDatepicker.displayName = 'FormDatepicker';

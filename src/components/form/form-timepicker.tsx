@@ -46,7 +46,7 @@ export const FormTimepicker = <
   placeholder,
 }: FormTimepickerProps<TField, TName>) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [time, setTime] = useState<string>(placeholder || '12:00');
+  const [time, setTime] = useState<string>();
 
   return (
     <FormField
@@ -66,7 +66,7 @@ export const FormTimepicker = <
                     className
                   )}
                 >
-                  {field.value ? time : <span>Pick a time</span>}
+                  {field.value ? time : <span>{placeholder}</span>}
                   <ClockIcon className="ml-auto h-4 w-4 opacity-50" />
                 </Button>
               </FormControl>
