@@ -15,34 +15,16 @@ import {
   CardHeader,
   CardTitle,
   FormTimepicker,
-  FormDatepicker,
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-  DialogClose,
   CardDescription,
 } from '@/components';
 
 import { useCreateBusiness } from './use-create-business';
 import { Label } from '@radix-ui/react-label';
-import { PlusIcon } from 'lucide-react';
 import { FormMultiselect } from '@/components/form/form-multiselect';
+import { businessTypes, daysOfWeek } from '../business.helper';
 
 const CreateBusiness = () => {
-  const { form, onSubmit, isLoading, businessTypes } = useCreateBusiness();
-
-  const daysOfWeek = [
-    { label: 'Monday', value: 'monday' },
-    { label: 'Tuesday', value: 'tuesday' },
-    { label: 'Wednesday', value: 'wednesday' },
-    { label: 'Thursday', value: 'thursday' },
-    { label: 'Friday', value: 'friday' },
-    { label: 'Saturday', value: 'saturday' },
-    { label: 'Sunday', value: 'sunday' },
-  ];
+  const { form, onSubmit, isLoading } = useCreateBusiness();
 
   return (
     <FormWrapper form={form} className="space-y-6">
@@ -151,73 +133,6 @@ const CreateBusiness = () => {
                     />
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Services */}
-          <div className="space-y-6">
-            <Card className="bg-white">
-              <CardHeader>
-                <CardTitle>Services</CardTitle>
-                <CardDescription>
-                  Configure your the services you offer.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6 gap-0">
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button size="icon" endIcon="plus" fullWidth>
-                      Add Service
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>Add Service</DialogTitle>
-                    </DialogHeader>
-                    <div className="grid grid-cols-2 gap-2">
-                      <FormInput
-                        control={form.control}
-                        label="Service Name"
-                        name="services.name"
-                        placeholder="Enter your service name"
-                      />
-                      <FormInput
-                        control={form.control}
-                        label="Price"
-                        name="services.price"
-                        placeholder="Enter your service price"
-                      />
-                    </div>
-                    <div className="grid grid-cols-2 gap-2">
-                      <FormInput
-                        control={form.control}
-                        label="Duration"
-                        name="services.duration"
-                        placeholder="Enter your service duration"
-                      />
-                      <FormInput
-                        control={form.control}
-                        label="Buffer Time"
-                        name="services.bufferTime"
-                        placeholder="Enter your service buffer time"
-                      />
-                    </div>
-                    <FormTextarea
-                      control={form.control}
-                      label="Service Description"
-                      name="services.description"
-                      placeholder="Enter your service description"
-                      className="resize-none"
-                    />
-                    <DialogFooter>
-                      <DialogClose asChild>
-                        <Button variant="outline">Cancel</Button>
-                      </DialogClose>
-                      <Button type="submit">Add Service</Button>
-                    </DialogFooter>
-                  </DialogContent>
-                </Dialog>
               </CardContent>
             </Card>
           </div>

@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 
 import { Business as BusinessType } from '@/generated/prisma';
 
-import { UserTable } from './BusinessTable';
+import { BusinessList } from './BusinessList';
 import { BusinessProvider } from './use-business';
 import { getBusinesses } from './actions';
 import { PageTitle } from '../components';
@@ -31,7 +31,7 @@ const Business = async () => {
         breadcrumbs={[{ label: 'Business', active: true }]}
       />
       <div className="mt-5">
-        <UserTable />
+        <BusinessList />
       </div>
     </BusinessProvider>
   );

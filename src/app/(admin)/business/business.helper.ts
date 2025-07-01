@@ -23,15 +23,6 @@ export const BusinessSchema: z.ZodType<Business> = z.object({
 
 export type BusinessForm = z.infer<typeof BusinessSchema>;
 
-export const businessTypes = [
-  { value: 'salon', label: 'Salon & Beauty' },
-  { value: 'health', label: 'Health & Wellness' },
-  { value: 'fitness', label: 'Fitness & Training' },
-  { value: 'consulting', label: 'Consulting' },
-  { value: 'education', label: 'Education & Tutoring' },
-  { value: 'other', label: 'Other' },
-];
-
 // Business Hours
 type BusinessHours = Omit<BusinessHoursTable, 'id' | 'createdAt' | 'updatedAt'>;
 
@@ -73,24 +64,52 @@ type Services = Omit<ServiceTable, 'id' | 'createdAt' | 'updatedAt'>;
 
 export const ServicesSchema: z.ZodType<Services> = z.object({
   businessId: z.string(),
-  name: z.string(),
-  description: z.string(),
+  name: z.string().min(1, 'Service name is required'),
+  description: z.string().nullable(),
   isActive: z.boolean(),
-  duration: z.number(),
-  bufferTime: z.number(),
-  price: z.number(),
-  isPublic: z.boolean(),
-  isFeatured: z.boolean(),
-  color: z.string(),
-  formId: z.string(),
+  duration: z.string().nullable(),
+  bufferTime: z.string().nullable(),
+  price: z.string().min(1, 'Service price is required'),
+  currency: z.string().min(1, 'Service currency is required').nullable(),
+  color: z.string().nullable(),
+  formId: z.string().nullable(),
 });
+
+export type ServicesForm = z.infer<typeof ServicesSchema>;
 
 // Create Business
 export const CreateBusinessSchema = z.object({
   business: BusinessSchema,
   businessHours: BusinessHoursSchema,
   breakTimes: BreakTimesSchema,
-  services: ServicesSchema,
 });
 
 export type CreateBusinessForm = z.infer<typeof CreateBusinessSchema>;
+
+export const daysOfWeek = [
+  { label: 'Monday', value: 'monday' },
+  { label: 'Tuesday', value: 'tuesday' },
+  { label: 'Wednesday', value: 'wednesday' },
+  { label: 'Thursday', value: 'thursday' },
+  { label: 'Friday', value: 'friday' },
+  { label: 'Saturday', value: 'saturday' },
+  { label: 'Sunday', value: 'sunday' },
+];
+
+// TODO: create a supported currencies list
+export const currencies = [
+  { label: 'USD', value: 'usd' },
+  { label: 'EUR', value: 'eur' },
+  { label: 'GBP', value: 'gbp' },
+  { label: 'CAD', value: 'cad' },
+  { label: 'AUD', value: 'aud' },
+];
+
+export const businessTypes = [
+  { value: 'salon', label: 'Salon & Beauty' },
+  { value: 'health', label: 'Health & Wellness' },
+  { value: 'fitness', label: 'Fitness & Training' },
+  { value: 'consulting', label: 'Consulting' },
+  { value: 'education', label: 'Education & Tutoring' },
+  { value: 'other', label: 'Other' },
+];

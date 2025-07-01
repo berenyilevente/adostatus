@@ -192,9 +192,10 @@ model Service {
   businessId  String
   name        String
   description String?
-  duration    Int // in minutes
-  bufferTime  Int      @default(0) // in minutes
-  price       Int?
+  duration    String? // in minutes
+  bufferTime  String? // in minutes
+  price       String?
+  currency    String?
   color       String?
   formId      String?
   isActive    Boolean  @default(true)

@@ -10,7 +10,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { createAppContext } from '@/hooks/use-create-app-context';
 import { setImage } from '@/utils/image';
 
-import { CreateBusinessForm, CreateBusinessSchema } from '../business.helper';
+import {
+  CreateBusinessForm,
+  CreateBusinessSchema,
+  ServicesForm,
+  ServicesSchema,
+} from '../business.helper';
 // import { createBusiness } from '../actions/business.actions';
 
 const useHook = () => {
@@ -28,24 +33,8 @@ const useHook = () => {
         primaryColor: '#000000',
         isActive: true,
       },
-      businessHours: {
-        businessId: '',
-        isClosed: false,
-      },
-      breakTimes: {
-        businessId: '',
-      },
     },
   });
-
-  const businessTypes = [
-    { value: 'salon', label: 'Salon & Beauty' },
-    { value: 'health', label: 'Health & Wellness' },
-    { value: 'fitness', label: 'Fitness & Training' },
-    { value: 'consulting', label: 'Consulting' },
-    { value: 'education', label: 'Education & Tutoring' },
-    { value: 'other', label: 'Other' },
-  ];
 
   const { handleSubmit, setValue } = form;
 
@@ -67,7 +56,6 @@ const useHook = () => {
     handleChangeImage,
     isLoading,
     form,
-    businessTypes,
   };
 };
 

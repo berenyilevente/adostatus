@@ -8,7 +8,12 @@ import { useForm } from 'react-hook-form';
 
 import { createAppContext } from '@/hooks/use-create-app-context';
 
-import { BusinessForm, BusinessSchema } from '../business.helper';
+import {
+  CreateBusinessForm,
+  CreateBusinessSchema,
+  ServicesForm,
+  ServicesSchema,
+} from '../business.helper';
 import { setImage } from '@/utils/image';
 import { Business } from '@/generated/prisma';
 
@@ -18,19 +23,36 @@ type HookProp = {
 
 const useHook = ({ business }: HookProp) => {
   const router = useRouter();
-  const { id: userId } = useParams();
+  const { id: businessId } = useParams();
   const [isLoading, setIsLoading] = useState(false);
+  const [services, setServices] = useState<ServicesForm[]>([]);
 
-  const form = useForm<BusinessForm>({
-    resolver: zodResolver(BusinessSchema),
+  const form = useForm<CreateBusinessForm>({
+    resolver: zodResolver(CreateBusinessSchema),
     defaultValues: {
-      name: business.name ?? undefined,
-      ownerId: business.ownerId ?? undefined,
-      description: business.description ?? undefined,
-      businessType: business.businessType ?? undefined,
-      logoUrl: business.logoUrl ?? undefined,
-      primaryColor: business.primaryColor ?? undefined,
-      isActive: business.isActive ?? undefined,
+      business: {
+        businessType: business.businessType ?? undefined,
+        name: business.name ?? undefined,
+        description: business.description ?? undefined,
+        logoUrl: business.logoUrl ?? undefined,
+        primaryColor: business.primaryColor ?? undefined,
+        isActive: true,
+      },
+    },
+  });
+
+  const servicesForm = useForm<ServicesForm>({
+    resolver: zodResolver(ServicesSchema),
+    defaultValues: {
+      name: '',
+      description: '',
+      isActive: true,
+      businessId: businessId?.toString(),
+      color: '',
+      currency: '',
+      duration: '',
+      bufferTime: '',
+      price: '',
     },
   });
 
@@ -46,8 +68,14 @@ const useHook = ({ business }: HookProp) => {
     setImage(fileItems, setValue);
   };
 
+  const handleServicesSubmit = servicesForm.handleSubmit(async (data) => {
+    console.log(data);
+    setServices([...services, data]);
+    servicesForm.reset();
+  });
+
   const onSubmit = handleSubmit(async (data) => {
-    if (!userId) {
+    if (!businessId) {
       return;
     }
 
@@ -65,8 +93,10 @@ const useHook = ({ business }: HookProp) => {
     onSubmit,
     handleCancel,
     handleChangeImage,
-    userImage: watch('logoUrl'),
     isLoading,
+    servicesForm,
+    handleServicesSubmit,
+    services,
   };
 };
 
