@@ -16,6 +16,7 @@ export * from './form/form-timepicker';
 export * from './form/form-wrapper';
 export * from './form/form-color-picker';
 export * from './form/form-tag-input';
+export * from './form/form-multiselect';
 
 export * from './ui/accordion';
 export * from './ui/alert';
