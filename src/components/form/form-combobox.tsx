@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { ReactElement, useState } from "react";
-import { Control, FieldPath, FieldValues } from "react-hook-form";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { ReactElement, useState } from 'react';
+import { Control, FieldPath, FieldValues } from 'react-hook-form';
+import { Check, ChevronsUpDown } from 'lucide-react';
 
 import {
   FormItem,
@@ -21,8 +21,8 @@ import {
   CommandInput,
   PopoverTrigger,
   Button,
-} from "@/components";
-import { cn } from "@/utils";
+} from '@/components';
+import { cn } from '@/utils';
 
 interface FormComboboxProps<
   TField extends FieldValues = FieldValues,
@@ -55,7 +55,7 @@ export const FormCombobox = <
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className="flex flex-col">
+        <FormItem className={cn('flex flex-col', className)}>
           <FormLabel>{label}</FormLabel>
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
@@ -64,8 +64,8 @@ export const FormCombobox = <
                   variant="outline"
                   role="combobox"
                   className={cn(
-                    "justify-between",
-                    !field.value && "text-muted-foreground",
+                    'justify-between',
+                    !field.value && 'text-muted-foreground',
                     className
                   )}
                 >
@@ -96,10 +96,10 @@ export const FormCombobox = <
                         {option.label}
                         <Check
                           className={cn(
-                            "ml-auto",
+                            'ml-auto',
                             option.value === field.value
-                              ? "opacity-100"
-                              : "opacity-0"
+                              ? 'opacity-100'
+                              : 'opacity-0'
                           )}
                         />
                       </CommandItem>
@@ -116,4 +116,4 @@ export const FormCombobox = <
     />
   );
 };
-FormCombobox.displayName = "FormCombobox";
+FormCombobox.displayName = 'FormCombobox';

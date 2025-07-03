@@ -29,6 +29,22 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components';
+import { useForm } from 'react-hook-form';
+import {
+  FormInput,
+  FormCheckbox,
+  FormCombobox,
+  FormSelect,
+  FormDatepicker,
+  FormRadioGroup,
+  FormTextarea,
+  FormSwitch,
+  FormMultiselect,
+  FormColorPicker,
+  FormTagInput,
+  FormTimepicker,
+  FormWrapper,
+} from '@/components';
 
 export const FormBuilder = (): ReactElement => {
   const {
@@ -47,6 +63,18 @@ export const FormBuilder = (): ReactElement => {
 
   // Local state for modal form
   const [modalForm, setModalForm] = useState<any>(null);
+
+  // Preview form state
+  const previewForm = useForm({
+    mode: 'onChange',
+    defaultValues: React.useMemo(() => {
+      const values: Record<string, any> = {};
+      editorFields.flat().forEach((field) => {
+        values[field.id] = field.defaultValue || '';
+      });
+      return values;
+    }, [editorFields]),
+  });
 
   // Open modal with selected field's data
   useEffect(() => {
@@ -71,6 +99,57 @@ export const FormBuilder = (): ReactElement => {
     if (selectedFieldId && modalForm) {
       editField(selectedFieldId, modalForm);
       closeModal();
+    }
+  };
+
+  // Map fieldType to component
+  const renderPreviewField = (field: any) => {
+    const commonProps = {
+      control: previewForm.control,
+      name: field.id,
+      label: field.label,
+      description: field.helpText,
+      placeholder: field.placeholder,
+      options: field.options || [],
+      className: 'w-full',
+    };
+    switch (field.fieldType) {
+      case 'text-input':
+        return <FormInput {...commonProps} key={field.id} />;
+      case 'checkbox':
+        return <FormCheckbox {...commonProps} key={field.id} />;
+      case 'combobox':
+        return <FormCombobox {...commonProps} key={field.id} />;
+      case 'select':
+        return <FormSelect {...commonProps} key={field.id} />;
+      case 'datepicker':
+        return <FormDatepicker {...commonProps} key={field.id} />;
+      case 'radio-group':
+        return (
+          <FormRadioGroup
+            control={previewForm.control}
+            name={field.id}
+            items={field.options || []}
+            label={field.label}
+            description={field.helpText}
+            key={field.id}
+            value={field.defaultValue}
+          />
+        );
+      case 'textarea':
+        return <FormTextarea {...commonProps} key={field.id} />;
+      case 'switch':
+        return <FormSwitch {...commonProps} key={field.id} />;
+      case 'multiselect':
+        return <FormMultiselect {...commonProps} key={field.id} />;
+      case 'color-picker':
+        return <FormColorPicker {...commonProps} key={field.id} />;
+      case 'tag-input':
+        return <FormTagInput {...commonProps} key={field.id} />;
+      case 'timepicker':
+        return <FormTimepicker {...commonProps} key={field.id} />;
+      default:
+        return null;
     }
   };
 
@@ -172,7 +251,21 @@ export const FormBuilder = (): ReactElement => {
           <CardTitle>Preview</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-muted-foreground">Preview</div>
+          <FormWrapper form={previewForm} className="flex flex-col gap-4">
+            <>
+              {editorFields.map((row, rowIdx) => (
+                <div
+                  key={rowIdx}
+                  className="flex gap-4 w-full items-center flex-row"
+                >
+                  {row.map((field) => renderPreviewField(field))}
+                </div>
+              ))}
+            </>
+            <Button type="submit" variant="default" className="mt-4">
+              Submit
+            </Button>
+          </FormWrapper>
         </CardContent>
       </Card>
       <Dialog open={modalOpen} onOpenChange={closeModal}>

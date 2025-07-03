@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { Control, FieldPath, FieldValues } from "react-hook-form";
-import { RadioGroupItemProps } from "@radix-ui/react-radio-group";
+import { Control, FieldPath, FieldValues } from 'react-hook-form';
+import { RadioGroupItemProps } from '@radix-ui/react-radio-group';
 
 import {
   Checkbox,
@@ -10,9 +10,9 @@ import {
   FormField,
   FormItem,
   FormLabel,
-} from "@/components";
-import Link from "next/link";
-import { cn } from "@/utils";
+} from '@/components';
+import Link from 'next/link';
+import { cn } from '@/utils';
 
 type FormCheckboxProps<
   TField extends FieldValues = FieldValues,
@@ -46,7 +46,7 @@ export const FormCheckbox = <
       render={({ field }) => (
         <FormItem
           className={cn(
-            "flex flex-row items-start space-x-3 space-y-0",
+            'flex flex-row items-start space-x-3 space-y-0',
             className
           )}
         >
@@ -54,11 +54,11 @@ export const FormCheckbox = <
             <Checkbox checked={field.value} onCheckedChange={field.onChange} />
           </FormControl>
           <div className="space-y-1 leading-none">
-            <FormLabel>{label}</FormLabel>
-            {description && (
+            {label && <FormLabel>{label}</FormLabel>}
+            {description ? (
               <FormDescription>
                 <>
-                  {description}{" "}
+                  {description}
                   {link && (
                     <Link href={link} className="text-primary">
                       {linkText}
@@ -66,6 +66,8 @@ export const FormCheckbox = <
                   )}
                 </>
               </FormDescription>
+            ) : (
+              <FormDescription>{description}</FormDescription>
             )}
           </div>
         </FormItem>
@@ -73,4 +75,4 @@ export const FormCheckbox = <
     />
   );
 };
-FormCheckbox.displayName = "FormCheckbox";
+FormCheckbox.displayName = 'FormCheckbox';
