@@ -26,4 +26,10 @@ export const adminMenuItems: IMenuItem[] = [
     label: 'Business',
     url: routes.admin.business.index,
   },
+  {
+    key: 'team-members',
+    icon: 'users',
+    label: 'Team Members',
+    url: routes.admin.teamMembers.index,
+  },
 ];

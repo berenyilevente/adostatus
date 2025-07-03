@@ -8,6 +8,7 @@ export const routes = {
       index: '/business',
       create: '/business/create',
     },
+    teamMembers: { index: '/team-members', create: '/team-members/create' },
   },
   auth: {
     login: '/api/auth/login',

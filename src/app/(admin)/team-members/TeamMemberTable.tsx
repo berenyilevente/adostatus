@@ -1,25 +1,24 @@
-"use client";
+'use client';
 
-import React from "react";
+import React from 'react';
+import { useRouter } from 'next/navigation';
 
 import {
   Button,
   Card,
   CardContent,
   Table,
-  TableHead,
   TableBody,
   TablePagination,
   TableSearch,
   TableHeader,
-} from "@/components";
+} from '@/components';
 
-import { useUsers } from "./use-users";
-import { useRouter } from "next/navigation";
+import { useTeamMembers } from './use-teamMembers';
 
-export const UserTable = () => {
+export const TeamMemberTable = () => {
   const router = useRouter();
-  const { table, filterForm, usersToBeDeleted, onDeleteUsers } = useUsers();
+  const { table, filterForm } = useTeamMembers();
 
   return (
     <Card className="bg-white">
@@ -43,9 +42,9 @@ export const UserTable = () => {
               iconSize="xs"
               variant="default"
               color="primary"
-              onClick={() => router.push("/users/create")}
+              onClick={() => router.push('/team-members/create')}
             >
-              Create User
+              Create TeamMember
             </Button>
           </div>
         </div>
