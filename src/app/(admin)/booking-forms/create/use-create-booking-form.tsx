@@ -11,23 +11,48 @@ import {
 
 export type EditorField = ReturnType<typeof createEmptyField> & { id: string };
 
+type EditorRow = EditorField[];
+
 type HookProp = {
   formsData: Form[];
 };
 
 function useCreateBookingFormHook({ formsData }: HookProp) {
-  const [editorFields, setEditorFields] = useState<EditorField[]>([]);
+  const [editorFields, setEditorFields] = useState<EditorRow[]>([]);
   const [selectedFieldId, setSelectedFieldId] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
 
-  // Add a new field to the editor
-  const addField = (fieldType: string) => {
-    const order = editorFields.length;
-    const newField = {
-      ...createEmptyField(fieldType, order),
+  // Add a new field to a specific row (by index)
+  const addFieldToRow = (rowIdx: number, fieldType: string) => {
+    setEditorFields((prev) => {
+      const newField: EditorField = {
+        ...createEmptyField(fieldType, prev[rowIdx]?.length || 0),
+        id: `${fieldType}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+      };
+      const newRows = [...prev];
+      if (!newRows[rowIdx]) newRows[rowIdx] = [];
+      newRows[rowIdx] = [...newRows[rowIdx], newField];
+      return newRows;
+    });
+  };
+
+  // Add a new row with a field
+  const addRowWithField = (fieldType: string) => {
+    const newField: EditorField = {
+      ...createEmptyField(fieldType, 0),
       id: `${fieldType}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
     };
-    setEditorFields((prev) => [...prev, newField]);
+    setEditorFields((prev) => [...prev, [newField]]);
+  };
+
+  // Remove a field by id
+  const removeField = (id: string) => {
+    setEditorFields((prev) =>
+      prev
+        .map((row) => row.filter((f) => f.id !== id))
+        .filter((row) => row.length > 0)
+    );
+    if (selectedFieldId === id) setSelectedFieldId(null);
   };
 
   // Select a field for editing
@@ -39,43 +64,49 @@ function useCreateBookingFormHook({ formsData }: HookProp) {
   // Edit a field's properties
   const editField = (id: string, updates: Partial<EditorField>) => {
     setEditorFields((prev) =>
-      prev.map((f) => (f.id === id ? { ...f, ...updates } : f))
+      prev.map((row) =>
+        row.map((f) => (f.id === id ? { ...f, ...updates } : f))
+      )
     );
   };
 
-  // Remove a field
-  const removeField = (id: string) => {
-    setEditorFields((prev) => prev.filter((f) => f.id !== id));
-    if (selectedFieldId === id) setSelectedFieldId(null);
-  };
-
-  // Add another field after a given field
-  const addFieldAfter = (afterId: string, fieldType: string) => {
-    const idx = editorFields.findIndex((f) => f.id === afterId);
-    if (idx === -1) return;
-    const newField = {
-      ...createEmptyField(fieldType, idx + 1),
-      id: `${fieldType}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-    };
-    setEditorFields((prev) => [
-      ...prev.slice(0, idx + 1),
-      newField,
-      ...prev.slice(idx + 1),
-    ]);
-    setSelectedFieldId(newField.id);
-    setModalOpen(true);
+  // Add another field after a given field (in the same row)
+  const addFieldAfter = (
+    rowIdx: number,
+    afterId: string,
+    fieldType: string
+  ) => {
+    setEditorFields((prev) => {
+      const row = prev[rowIdx] || [];
+      const idx = row.findIndex((f) => f.id === afterId);
+      if (idx === -1) return prev;
+      const newField: EditorField = {
+        ...createEmptyField(fieldType, idx + 1),
+        id: `${fieldType}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+      };
+      const newRow = [
+        ...row.slice(0, idx + 1),
+        newField,
+        ...row.slice(idx + 1),
+      ];
+      const newRows = [...prev];
+      newRows[rowIdx] = newRow;
+      return newRows;
+    });
   };
 
   // Modal controls
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
 
+  // Find selected field
   const selectedField =
-    editorFields.find((f) => f.id === selectedFieldId) || null;
+    editorFields.flat().find((f) => f.id === selectedFieldId) || null;
 
   return {
     editorFields,
-    addField,
+    addFieldToRow,
+    addRowWithField,
     addFieldAfter,
     selectField,
     editField,

@@ -14,6 +14,11 @@ import {
   Textarea,
   Checkbox,
   Label,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
 } from '@/components';
 import { useCreateBookingForm } from './use-create-booking-form';
 import {
@@ -24,13 +29,12 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components';
-import { fields } from '../booking-form.helper';
 
 export const FormBuilder = (): ReactElement => {
   const {
     editorFields,
-    addField,
-    addFieldAfter,
+    addFieldToRow,
+    addRowWithField,
     selectField,
     editField,
     removeField,
@@ -86,7 +90,7 @@ export const FormBuilder = (): ReactElement => {
                 className="cursor-pointer text-sm font-normal"
                 variant="outline"
                 key={field.key}
-                onClick={() => addField(field.key)}
+                onClick={() => addRowWithField(field.key)}
               >
                 {field.label}
               </Badge>
@@ -102,49 +106,62 @@ export const FormBuilder = (): ReactElement => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex flex-col gap-4">
-            {editorFields.map((field, idx) => (
-              <div
-                key={field.id}
-                className="flex items-center justify-between rounded-xl border px-3 py-2 shadow-sm bg-white"
-                onClick={() => selectField(field.id)}
-                style={{ cursor: 'pointer' }}
-              >
-                <div className="flex-1 text-base font-normal">
-                  {field.label}
-                </div>
-                <div className="flex items-center gap-2">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      selectField(field.id);
-                    }}
+          <div className="flex flex-col gap-4 overflow-x-auto">
+            {editorFields.map((row, rowIdx) => (
+              <div key={rowIdx} className="flex gap-2 items-stretch">
+                {row.map((field) => (
+                  <div
+                    key={field.id}
+                    className="w-full flex items-center justify-between rounded-xl border px-3 py-2 shadow-sm bg-white min-w-[200px]"
+                    onClick={() => selectField(field.id)}
+                    style={{ cursor: 'pointer' }}
                   >
-                    <Icon icon="pencil" size="sm" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      removeField(field.id);
-                    }}
-                  >
-                    <Icon icon="trash" size="sm" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      addFieldAfter(field.id, field.fieldType);
-                    }}
-                  >
-                    <Icon icon="plus" size="sm" />
-                  </Button>
-                </div>
+                    <div className="flex-1 text-base font-normal">
+                      {field.label}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          selectField(field.id);
+                        }}
+                        endIcon="pencil"
+                      />
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          removeField(field.id);
+                        }}
+                        endIcon="trash"
+                      />
+                    </div>
+                  </div>
+                ))}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      endIcon="plus"
+                      className="w-5 h-5"
+                    />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start">
+                    <DropdownMenuLabel>Select Component</DropdownMenuLabel>
+                    {availableFields.map((field) => (
+                      <DropdownMenuItem
+                        key={field.key}
+                        onClick={() => addFieldToRow(rowIdx, field.key)}
+                      >
+                        {field.label}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             ))}
           </div>
