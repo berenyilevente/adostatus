@@ -33,7 +33,7 @@ const BookingForms = async () => {
 
   return (
     <BookingFormsProvider
-      bookingFormsData={bookingForms}
+      bookingForms={bookingForms}
       businessData={businessData}
     >
       <PageTitle

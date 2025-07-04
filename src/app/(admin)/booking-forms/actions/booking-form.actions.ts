@@ -2,8 +2,10 @@
 
 import prisma from '@/lib/prisma/client';
 import { isAuthenticated } from '@/lib/auth';
-import { Prisma } from '@/generated/prisma/index';
+import { Form, Prisma } from '@/generated/prisma/index';
 import { handleResponse } from '@/utils/handleResponse';
+import { revalidatePath } from 'next/cache';
+import { CreateBookingForm } from '../booking-form.helper';
 
 export const getBookingForms = async () => {
   await isAuthenticated();
@@ -21,9 +23,20 @@ export const getForm = async (id: string) => {
   await isAuthenticated();
 };
 
-export const createForm = async (
-  formData: Prisma.FormCreateInput,
-  fields: Prisma.FormFieldCreateInput[]
+export const createBookingForm = async (
+  data: CreateBookingForm
 ): Promise<any> => {
   await isAuthenticated();
+
+  const form = await prisma.form.create({
+    data,
+  });
+
+  revalidatePath('/booking-forms');
+
+  return handleResponse({
+    data: form,
+    error: 'Form creation failed',
+    code: 404,
+  });
 };

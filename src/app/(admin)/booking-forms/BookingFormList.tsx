@@ -9,37 +9,41 @@ import {
   FormWrapper,
   FormInput,
   FormSelect,
-  Drawer,
-  DrawerTrigger,
-  DrawerContent,
   Sheet,
   SheetTrigger,
   SheetContent,
   SheetDescription,
   SheetTitle,
   SheetHeader,
+  Badge,
+  FormTextarea,
 } from '@/components';
 import { useRouter } from 'next/navigation';
 import { useBookingForms } from './use-booking-forms';
+import { cn } from '@/utils/combineClassNames';
 
 export const BookingFormList = (): ReactElement => {
   const router = useRouter();
-  const { filterForm, createForm, businessOptions, serviceOptions } =
-    useBookingForms();
-  const sample = [
-    {
-      id: '1',
-      name: 'form 1',
-      description: 'form 1 description',
-    },
-  ];
+  const {
+    bookingForms,
+    filterForm,
+    createForm,
+    businessOptions,
+    serviceOptions,
+    onSubmitBookingForm,
+  } = useBookingForms();
+
+  const statusColorMap = {
+    draft: 'bg-slate-400',
+    live: 'bg-green-400',
+    archived: 'bg-yellow-400',
+  };
 
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between w-full items-center gap-1 ">
         <FormWrapper form={filterForm} className="flex gap-4 items-center">
           <FormInput
-            startIcon="search"
             control={filterForm.control}
             id="search"
             name="search"
@@ -73,42 +77,63 @@ export const BookingFormList = (): ReactElement => {
               <FormSelect
                 control={createForm.control}
                 label="Business"
-                name="business"
+                name="businessId"
                 placeholder="Select business..."
                 options={businessOptions}
               />
-              <FormSelect
+              {/* <FormSelect
                 control={createForm.control}
                 label="Service"
                 name="service"
                 placeholder="Select service..."
                 options={serviceOptions}
-              />
+              /> */}
               <FormInput
                 control={createForm.control}
-                label="Title"
-                name="title"
-                placeholder="Enter form title"
+                label="Name"
+                name="name"
+                placeholder="Enter form name"
               />
-              <Button>Create form</Button>
+              <FormTextarea
+                control={createForm.control}
+                label="Description"
+                name="description"
+                placeholder="Enter form description"
+              />
+              <Button onClick={onSubmitBookingForm}>Create form</Button>
             </FormWrapper>
           </SheetContent>
         </Sheet>
       </div>
-      {sample.map((business) => (
-        <Card className="bg-white" key={business.id}>
+      {bookingForms.map((bookingForm) => (
+        <Card className="bg-white" key={bookingForm.id}>
           <CardContent className="p-4">
-            <div className="flex items-center justify-between gap-2">
-              <div className="flex flex-col">
-                <p className="text-sm font-medium">{business.name}</p>
-                <p className="text-xs text-gray-500">{business.description}</p>
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-4">
+                <Badge
+                  className={cn(
+                    statusColorMap[
+                      bookingForm.status as keyof typeof statusColorMap
+                    ]
+                  )}
+                >
+                  {bookingForm.status}
+                </Badge>
+                <div className="flex flex-col">
+                  <p className="text-sm font-medium">{bookingForm.name}</p>
+                  <p className="text-xs text-gray-500">
+                    {bookingForm.description}
+                  </p>
+                </div>
               </div>
               <div className="flex items-center gap-2">
                 <Button
                   size="icon"
                   endIcon="pencil"
                   variant="ghost"
-                  onClick={() => router.push(`/booking-forms/${business.id}`)}
+                  onClick={() =>
+                    router.push(`/booking-forms/${bookingForm.id}`)
+                  }
                 />
                 <Button size="icon" endIcon="trash" variant="ghost" />
               </div>

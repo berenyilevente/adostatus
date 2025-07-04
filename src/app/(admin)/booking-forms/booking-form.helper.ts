@@ -1,8 +1,11 @@
 import { z } from 'zod';
 
-import { Form, FormField, Prisma } from '@/generated/prisma';
+import { Form as FormTable, FormField, Prisma } from '@/generated/prisma';
 
-export const FIELD_TYPE = 'form-field';
+export type CreateBookingForm = Omit<
+  FormTable,
+  'id' | 'createdAt' | 'updatedAt'
+>;
 
 export const FormSchema = z.object({
   id: z.string().optional(),

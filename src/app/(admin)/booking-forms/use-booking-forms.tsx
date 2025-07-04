@@ -5,14 +5,17 @@ import { useForm } from 'react-hook-form';
 import { Business, Form, Service } from '@/generated/prisma';
 
 import { createAppContext } from '@/hooks/use-create-app-context';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { getServices } from '../business/actions/business.actions';
+import { createBookingForm } from './actions';
+import { CreateBookingForm } from './booking-form.helper';
 
 type HookProp = {
-  bookingFormsData: Form[];
+  bookingForms: Form[];
   businessData: Business[];
 };
 
-const useHook = ({ bookingFormsData, businessData }: HookProp) => {
+const useHook = ({ bookingForms, businessData }: HookProp) => {
   const [services, setServices] = useState<Service[]>([]);
 
   const filterForm = useForm({
@@ -21,11 +24,18 @@ const useHook = ({ bookingFormsData, businessData }: HookProp) => {
       business: '',
     },
   });
-  const createForm = useForm({
+
+  const createForm = useForm<CreateBookingForm>({
     defaultValues: {
-      business: '',
-      service: '',
-      title: '',
+      businessId: '',
+      name: '',
+      description: '',
+      isTemplate: false,
+      templateType: '',
+      confirmationMessage: '',
+      redirectUrl: '',
+      allowCancellation: true,
+      cancellationNoticeHours: 24,
     },
   });
 
@@ -40,23 +50,39 @@ const useHook = ({ bookingFormsData, businessData }: HookProp) => {
       label: service.name,
       value: service.id,
     })),
-    {
-      label: 'Add service',
-      value: 'add-service',
-    },
   ];
 
-  const { watch } = filterForm;
+  const search = filterForm.watch('search');
+  const businessId = createForm.watch('businessId');
 
-  const search = watch('search');
+  const getServicesFromBusiness = async (businessId: string) => {
+    const response = await getServices(businessId);
+    if (response.status === 'success' && response.data) {
+      setServices(response.data);
+    }
+  };
+
+  useEffect(() => {
+    if (businessId) {
+      getServicesFromBusiness(businessId);
+    }
+  }, [businessId]);
+
+  const onSubmitBookingForm = createForm.handleSubmit(
+    async (data: CreateBookingForm) => {
+      await createBookingForm(data);
+    }
+  );
 
   return {
+    bookingForms,
     search,
     filterForm,
     businessData,
     createForm,
     serviceOptions,
     businessOptions,
+    onSubmitBookingForm,
   };
 };
 
