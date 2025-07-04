@@ -1,17 +1,17 @@
-export type ResponseStatus = "success" | "error";
+export type ResponseStatus = 'success' | 'error';
 
 export type Response<T> =
   | {
       status: ResponseStatus;
       data: T;
       code: number;
-      errors: undefined;
+      error: undefined;
     }
   | {
       status: ResponseStatus;
-      data: undefined;
+      data: undefined | null;
       code: number;
-      errors: string;
+      error: string;
     };
 
 export type RenderToast = Record<ResponseStatus, (message?: string) => void>;

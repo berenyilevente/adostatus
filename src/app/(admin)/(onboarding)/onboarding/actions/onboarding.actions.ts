@@ -7,6 +7,7 @@ import prisma from '@/lib/prisma/client';
 import { isAuthenticated } from '@/utils/isAuthenticated';
 
 import { BusinessForm } from '../onboarding.helper';
+import { handleResponse } from '@/utils/handleResponse';
 
 export const createBusiness = async (
   business: BusinessForm
@@ -17,21 +18,10 @@ export const createBusiness = async (
     data: business,
   });
 
-  if (!businessResult) {
-    return {
-      status: 'error',
-      data: undefined,
-      code: 400,
-      errors: 'Business creation failed',
-    };
-  }
-
-  revalidatePath('/onboarding');
-
-  return {
-    status: 'success',
-    data: business,
-    code: 200,
-    errors: undefined,
-  };
+  return handleResponse({
+    data: businessResult,
+    error: 'Business creation failed',
+    code: 400,
+    path: '/onboarding',
+  });
 };

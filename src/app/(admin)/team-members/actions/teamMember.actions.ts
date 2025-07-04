@@ -1,6 +1,7 @@
-import { TeamMember } from "@/generated/prisma";
+import { TeamMember } from '@/generated/prisma';
 import prisma from '@/lib/prisma/client';
 import { Response } from '@/types/action.types';
+import { handleResponse } from '@/utils/handleResponse';
 import { isAuthenticated } from '@/utils/isAuthenticated';
 
 export async function getTeamMembers(): Promise<Response<TeamMember[]>> {
@@ -8,21 +9,12 @@ export async function getTeamMembers(): Promise<Response<TeamMember[]>> {
 
   const teamMembers = await prisma.teamMember.findMany();
 
-  if (!teamMembers) {
-    return {
-      status: 'error',
-      data: undefined,
-      code: 404,
-      errors: 'TeamMembers not found',
-    };
-  }
-
-  return {
-    status: 'success',
+  return handleResponse({
     data: teamMembers,
-    code: 200,
-    errors: undefined,
-  };
+    error: 'TeamMembers not found',
+    code: 404,
+    path: '/team-members',
+  });
 }
 
 export async function getTeamMember(id: string): Promise<Response<TeamMember>> {
@@ -34,21 +26,12 @@ export async function getTeamMember(id: string): Promise<Response<TeamMember>> {
     },
   });
 
-  if (!teamMember) {
-    return {
-      status: 'error',
-      data: undefined,
-      code: 404,
-      errors: 'TeamMember not found',
-    };
-  }
-
-  return {
-    status: 'success',
+  return handleResponse({
     data: teamMember,
-    code: 200,
-    errors: undefined,
-  };
+    error: 'TeamMember not found',
+    code: 404,
+    path: '/team-members',
+  });
 }
 
 export async function createTeamMember(

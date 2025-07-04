@@ -1,11 +1,11 @@
 'use server';
 
 import { Response } from '@/types/action.types';
-import { revalidatePath } from 'next/cache';
 
 import prisma from '@/lib/prisma/client';
-import { Business } from '@/generated/prisma';
+import { Business, Service } from '@/generated/prisma';
 import { isAuthenticated } from '@/utils/isAuthenticated';
+import { handleResponse } from '@/utils/handleResponse';
 
 export const createBusiness = async (
   business: any
@@ -16,22 +16,12 @@ export const createBusiness = async (
     data: business,
   });
 
-  if (!businessResult) {
-    return {
-      status: 'error',
-      data: undefined,
-      code: 400,
-      errors: 'Business creation failed',
-    };
-  }
-
-  revalidatePath('/business');
-  return {
-    status: 'success',
-    data: business,
-    code: 200,
-    errors: undefined,
-  };
+  return handleResponse({
+    data: businessResult,
+    error: 'Business creation failed',
+    code: 400,
+    path: '/business',
+  });
 };
 
 export const getBusiness = async (id: string): Promise<Response<Business>> => {
@@ -44,21 +34,11 @@ export const getBusiness = async (id: string): Promise<Response<Business>> => {
     },
   });
 
-  if (!business) {
-    return {
-      status: 'error',
-      data: undefined,
-      code: 404,
-      errors: 'Business not found',
-    };
-  }
-
-  return {
-    status: 'success',
+  return handleResponse<Business>({
     data: business,
-    code: 200,
-    errors: undefined,
-  };
+    code: 404,
+    error: 'Business not found',
+  });
 };
 
 export const getBusinesses = async (): Promise<Response<Business[]>> => {
@@ -70,19 +50,27 @@ export const getBusinesses = async (): Promise<Response<Business[]>> => {
     },
   });
 
-  if (!businesses) {
-    return {
-      status: 'error',
-      data: undefined,
-      code: 404,
-      errors: 'Business not found',
-    };
-  }
-
-  return {
-    status: 'success',
+  return handleResponse<Business[]>({
     data: businesses,
-    code: 200,
-    errors: undefined,
-  };
+    code: 404,
+    error: 'Business not found',
+  });
+};
+
+export const getServices = async (
+  businessId: string
+): Promise<Response<Service[]>> => {
+  await isAuthenticated();
+
+  const services = await prisma.service.findMany({
+    where: {
+      businessId: businessId,
+    },
+  });
+
+  return handleResponse<Service[]>({
+    data: services,
+    code: 404,
+    error: 'Services not found',
+  });
 };
