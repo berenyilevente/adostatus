@@ -26,7 +26,13 @@ export const BookingFormList = (): ReactElement => {
   const router = useRouter();
   const { filterForm, createForm, businessOptions, serviceOptions } =
     useBookingForms();
-  const sample = ['form 1', 'form 2', 'form 3'];
+  const sample = [
+    {
+      id: '1',
+      name: 'form 1',
+      description: 'form 1 description',
+    },
+  ];
 
   return (
     <div className="flex flex-col gap-4">
@@ -89,9 +95,25 @@ export const BookingFormList = (): ReactElement => {
           </SheetContent>
         </Sheet>
       </div>
-      {sample.map((sam) => (
-        <Card className="bg-white" key={sam}>
-          <CardContent className="p-4">{sam}</CardContent>
+      {sample.map((business) => (
+        <Card className="bg-white" key={business.id}>
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex flex-col">
+                <p className="text-sm font-medium">{business.name}</p>
+                <p className="text-xs text-gray-500">{business.description}</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <Button
+                  size="icon"
+                  endIcon="pencil"
+                  variant="ghost"
+                  onClick={() => router.push(`/booking-forms/${business.id}`)}
+                />
+                <Button size="icon" endIcon="trash" variant="ghost" />
+              </div>
+            </div>
+          </CardContent>
         </Card>
       ))}
     </div>

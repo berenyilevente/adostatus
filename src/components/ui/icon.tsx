@@ -54,7 +54,7 @@ import eye from '@iconify/icons-lucide/eye';
 import eyeOff from '@iconify/icons-lucide/eye-off';
 import plus from '@iconify/icons-lucide/plus';
 import form from '@iconify/icons-lucide/clipboard-list';
-import business from '@iconify/icons-lucide/building';
+import business from '@iconify/icons-lucide/home';
 
 export const iconMap = {
   mail,
