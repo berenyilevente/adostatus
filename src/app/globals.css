@@ -24,6 +24,18 @@ input:-webkit-autofill:active {
   transition: background-color 10000s ease-in-out 0s;
 }
 
+.filepond--drop-label {
+  font-size: 14px !important;
+  margin-top: 2px !important;
+  color: #7b7b7b !important;
+}
+
+/* bordered drop area */
+.filepond--panel-root {
+  background-color: white !important;
+  border: 1px solid #e0e0e0;
+}
+
 .topbar {
   background: var(--topbar-background);
 }

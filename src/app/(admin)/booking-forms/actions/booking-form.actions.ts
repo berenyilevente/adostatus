@@ -2,7 +2,6 @@
 
 import prisma from '@/lib/prisma/client';
 import { isAuthenticated } from '@/lib/auth';
-import { Form, Prisma } from '@/generated/prisma/index';
 import { handleResponse } from '@/utils/handleResponse';
 import { revalidatePath } from 'next/cache';
 import { CreateBookingForm } from '../booking-form.helper';
@@ -21,6 +20,18 @@ export const getBookingForms = async () => {
 
 export const getForm = async (id: string) => {
   await isAuthenticated();
+
+  const form = await prisma.form.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  return handleResponse({
+    data: form,
+    error: 'Form not found',
+    code: 404,
+  });
 };
 
 export const createBookingForm = async (

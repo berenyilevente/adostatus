@@ -3,7 +3,6 @@
 import React from 'react';
 
 import {
-  Button,
   FileInput,
   FormInput,
   FormSelect,
@@ -64,17 +63,20 @@ const CreateBusiness = () => {
                 placeholder="Tell us about your business..."
                 className="resize-none"
               />
-              <div className="filepond-file-upload">
-                <FileInput
-                  onupdatefiles={() => {}}
-                  labelIdle={`<div>Add your business logo <span style="text-decoration: underline">Browse</span></div>`}
+              <div className="flex flex-row gap-8 w-full">
+                <div className="w-full">
+                  <Label className="text-sm font-semibold">Logo</Label>
+                  <FileInput
+                    onupdatefiles={() => {}}
+                    labelIdle={'Add your business logo'}
+                  />
+                </div>
+                <FormColorPicker
+                  control={form.control}
+                  name="business.primaryColor"
+                  label="Brand Color"
                 />
               </div>
-              <FormColorPicker
-                control={form.control}
-                name="business.primaryColor"
-                label="Brand Color"
-              />
             </div>
           </CardContent>
         </Card>

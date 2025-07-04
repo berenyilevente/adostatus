@@ -37,9 +37,9 @@ import wand2 from '@iconify/icons-lucide/wand-2';
 import chevronLeft from '@iconify/icons-lucide/chevron-left';
 import chevronRight from '@iconify/icons-lucide/chevron-right';
 import shoppingCart from '@iconify/icons-lucide/shopping-cart';
-import CloudArrowUp from '@iconify/icons-lucide/upload-cloud';
-import LockClosed from '@iconify/icons-lucide/lock';
-import Server from '@iconify/icons-lucide/server';
+import uploadCloud from '@iconify/icons-lucide/upload-cloud';
+import lock from '@iconify/icons-lucide/lock';
+import server from '@iconify/icons-lucide/server';
 import bell from '@iconify/icons-lucide/bell';
 import users from '@iconify/icons-lucide/users';
 import calendar from '@iconify/icons-lucide/calendar';
@@ -91,9 +91,9 @@ export const iconMap = {
   chevronLeft,
   chevronRight,
   shoppingCart,
-  uploadCloud: CloudArrowUp,
-  lock: LockClosed,
-  server: Server,
+  uploadCloud,
+  lock,
+  server,
   bell,
   users,
   calendar,

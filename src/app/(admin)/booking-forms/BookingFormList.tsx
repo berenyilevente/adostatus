@@ -134,13 +134,16 @@ export const BookingFormList = (): ReactElement => {
               </div>
               <div className="flex items-center gap-2">
                 <Button
-                  size="icon"
-                  endIcon="pencil"
-                  variant="ghost"
+                  size="sm"
+                  variant="outline"
                   onClick={() =>
                     router.push(`/booking-forms/${bookingForm.id}`)
                   }
-                />
+                  endIcon="form"
+                >
+                  Open form editor
+                </Button>
+                <Button size="icon" endIcon="pencil" variant="ghost" />
                 <Button size="icon" endIcon="trash" variant="ghost" />
               </div>
             </div>

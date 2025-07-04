@@ -1,21 +1,28 @@
 import type { Metadata } from 'next';
 
 import { PageTitle } from '../../components';
-import { CreateBookingFormProvider } from './use-create-booking-form';
-import { FormBuilder } from './CreateBookingForm';
+import { EditBookingFormProvider } from './use-edit-booking-form';
+import { EditBookingForm } from './EditBookingForm';
 import { routes } from '@/lib/routes';
 import { getBusinesses } from '../../business/actions/business.actions';
 import { notFound } from 'next/navigation';
-import { getBookingForms } from '../actions';
-import { Business } from '@/generated/prisma';
+import { getForm } from '../actions';
+import { Business, Form } from '@/generated/prisma';
 
 export const metadata: Metadata = {
   title: 'Forms',
 };
 
-const CreateBookingFormPage = async () => {
+const CreateBookingFormPage = async (props: {
+  params: Promise<{ id: string }>;
+}) => {
+  const params = await props.params;
+
   let businessData: Business[] = [];
+  let formData: Form | null = null;
+
   const rBusiness = await getBusinesses();
+  const rForm = await getForm(params.id);
 
   if (rBusiness.data === null) {
     return notFound();
@@ -25,19 +32,23 @@ const CreateBookingFormPage = async () => {
     businessData = rBusiness.data;
   }
 
+  if (rForm.status === 'success' && rForm.data) {
+    formData = rForm.data;
+  }
+
   return (
-    <CreateBookingFormProvider formsData={[]} businessData={businessData}>
+    <EditBookingFormProvider formsData={formData} businessData={businessData}>
       <PageTitle
-        title={'Create Booking Form'}
+        title="Form Editor"
         breadcrumbs={[
           { label: 'Booking Forms', path: routes.admin.bookingForms.index },
-          { label: 'Create Booking Form', active: true },
+          { label: 'Form editor', active: true },
         ]}
       />
       <div className="mt-5">
-        <FormBuilder />
+        <EditBookingForm />
       </div>
-    </CreateBookingFormProvider>
+    </EditBookingFormProvider>
   );
 };
 

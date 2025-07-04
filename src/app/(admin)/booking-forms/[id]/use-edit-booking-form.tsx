@@ -14,21 +14,26 @@ import { getServices } from '../../business/actions/business.actions';
 export type EditorField = ReturnType<typeof createEmptyField> & { id: string };
 
 type HookProp = {
-  formsData: Form[];
+  formsData: Form | null;
   businessData: Business[];
 };
 
-function useCreateBookingFormHook({ formsData, businessData }: HookProp) {
+function useEditBookingFormHook({ formsData, businessData }: HookProp) {
   const [editorFields, setEditorFields] = useState<EditorField[][]>([]);
   const [services, setServices] = useState<Service[]>([]);
   const [selectedFieldId, setSelectedFieldId] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
 
-  const filterForm = useForm({
+  const createForm = useForm({
     defaultValues: {
-      business: '',
-      service: '',
-      title: '',
+      business: formsData?.businessId || '',
+      name: formsData?.name || '',
+      description: formsData?.description || '',
+      isTemplate: formsData?.isTemplate || false,
+      templateType: formsData?.templateType || '',
+      confirmationMessage: formsData?.confirmationMessage || '',
+      redirectUrl: formsData?.redirectUrl || '',
+      allowCancellation: formsData?.allowCancellation || true,
     },
   });
 
@@ -42,7 +47,7 @@ function useCreateBookingFormHook({ formsData, businessData }: HookProp) {
     value: service.id,
   }));
 
-  const businessId = filterForm.watch('business');
+  const businessId = createForm.watch('business');
 
   const addFieldToRow = (rowIdx: number, fieldType: string) => {
     setEditorFields((prev) => {
@@ -145,10 +150,11 @@ function useCreateBookingFormHook({ formsData, businessData }: HookProp) {
     closeModal,
     availableFields,
     businessOptions,
-    filterForm,
+    createForm,
     serviceOptions,
   };
 }
 
-export const [useCreateBookingForm, CreateBookingFormProvider] =
-  createAppContext(useCreateBookingFormHook);
+export const [useEditBookingForm, EditBookingFormProvider] = createAppContext(
+  useEditBookingFormHook
+);

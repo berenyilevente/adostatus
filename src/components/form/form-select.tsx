@@ -53,7 +53,7 @@ export const FormSelect = <
       control={control}
       name={name}
       render={({ field, fieldState }) => (
-        <FormItem>
+        <FormItem className={cn(className)}>
           {label && <FormLabel>{label}</FormLabel>}
           <Select onValueChange={field.onChange} defaultValue={field.value}>
             <FormControl className={cn({ 'border-red-500': fieldState.error })}>

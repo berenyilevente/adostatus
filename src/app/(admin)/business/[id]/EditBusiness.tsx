@@ -299,7 +299,7 @@ const EditBusiness = () => {
         <Button
           variant="outline"
           startIcon="chevronLeft"
-          onClick={() => router.back()}
+          onClick={() => router.push('/business')}
         >
           Back
         </Button>

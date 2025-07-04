@@ -21,7 +21,7 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
 } from '@/components';
-import { useCreateBookingForm } from './use-create-booking-form';
+import { useEditBookingForm } from './use-edit-booking-form';
 import {
   Badge,
   Card,
@@ -47,7 +47,7 @@ import {
   FormWrapper,
 } from '@/components';
 
-export const FormBuilder = (): ReactElement => {
+export const EditBookingForm = (): ReactElement => {
   const router = useRouter();
   const {
     editorFields,
@@ -61,10 +61,10 @@ export const FormBuilder = (): ReactElement => {
     modalOpen,
     closeModal,
     availableFields,
-    filterForm,
+    createForm,
     businessOptions,
     serviceOptions,
-  } = useCreateBookingForm();
+  } = useEditBookingForm();
 
   const [modalForm, setModalForm] = useState<any>(null);
 
@@ -158,31 +158,6 @@ export const FormBuilder = (): ReactElement => {
 
   return (
     <div>
-      <FormWrapper form={filterForm} className="flex gap-2 mb-4 items-center">
-        {/* First, select a business and then a service related to that business.
-        Until then, the form editor will be disabled.
-        Then, give a form title. Clicking on create form will create the form, 
-        this way we can add fields to the form by the form id.
-        */}
-        <FormSelect
-          control={filterForm.control}
-          name="business"
-          placeholder="Select business..."
-          options={businessOptions}
-        />
-        <FormSelect
-          control={filterForm.control}
-          name="service"
-          placeholder="Select service..."
-          options={serviceOptions}
-        />
-        <FormInput
-          control={filterForm.control}
-          name="title"
-          placeholder="Enter form title"
-        />
-        <Button>Create form</Button>
-      </FormWrapper>
       <div className="grid grid-cols-5 gap-4">
         <Card className="col-span-1">
           <CardHeader>
