@@ -54,7 +54,7 @@ export const FormSelect = <
       name={name}
       render={({ field, fieldState }) => (
         <FormItem className={cn('flex flex-col', className)}>
-          <FormLabel>{label}</FormLabel>
+          {label && <FormLabel>{label}</FormLabel>}
           <Select onValueChange={field.onChange} defaultValue={field.value}>
             <FormControl className={cn({ 'border-red-500': fieldState.error })}>
               <SelectTrigger>

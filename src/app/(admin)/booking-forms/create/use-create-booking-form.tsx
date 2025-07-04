@@ -1,14 +1,15 @@
 'use client';
 
-import { Business, Form } from '@/generated/prisma';
+import { Business, Form, Service } from '@/generated/prisma';
 
 import { createAppContext } from '@/hooks/use-create-app-context';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   createEmptyField,
   fields as availableFields,
 } from '../booking-form.helper';
 import { useForm } from 'react-hook-form';
+import { getServices } from '../../business/actions/business.actions';
 
 export type EditorField = ReturnType<typeof createEmptyField> & { id: string };
 
@@ -19,14 +20,29 @@ type HookProp = {
 
 function useCreateBookingFormHook({ formsData, businessData }: HookProp) {
   const [editorFields, setEditorFields] = useState<EditorField[][]>([]);
+  const [services, setServices] = useState<Service[]>([]);
   const [selectedFieldId, setSelectedFieldId] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
 
   const filterForm = useForm({
     defaultValues: {
       business: '',
+      service: '',
+      title: '',
     },
   });
+
+  const businessOptions = businessData.map((business) => ({
+    label: business.name,
+    value: business.id,
+  }));
+
+  const serviceOptions = services.map((service) => ({
+    label: service.name,
+    value: service.id,
+  }));
+
+  const businessId = filterForm.watch('business');
 
   const addFieldToRow = (rowIdx: number, fieldType: string) => {
     setEditorFields((prev) => {
@@ -70,6 +86,19 @@ function useCreateBookingFormHook({ formsData, businessData }: HookProp) {
       )
     );
   };
+
+  const getServicesFromBusiness = async (businessId: string) => {
+    const response = await getServices(businessId);
+    if (response.status === 'success' && response.data) {
+      setServices(response.data);
+    }
+  };
+
+  useEffect(() => {
+    if (businessId) {
+      getServicesFromBusiness(businessId);
+    }
+  }, [businessId]);
 
   const addFieldAfter = (
     rowIdx: number,
@@ -115,8 +144,9 @@ function useCreateBookingFormHook({ formsData, businessData }: HookProp) {
     openModal,
     closeModal,
     availableFields,
-    businessData,
+    businessOptions,
     filterForm,
+    serviceOptions,
   };
 }
 

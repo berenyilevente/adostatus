@@ -62,13 +62,9 @@ export const FormBuilder = (): ReactElement => {
     closeModal,
     availableFields,
     filterForm,
-    businessData,
+    businessOptions,
+    serviceOptions,
   } = useCreateBookingForm();
-
-  const businessOptions = businessData.map((business) => ({
-    label: business.name,
-    value: business.id,
-  }));
 
   const [modalForm, setModalForm] = useState<any>(null);
 
@@ -174,8 +170,17 @@ export const FormBuilder = (): ReactElement => {
           placeholder="Select business..."
           options={businessOptions}
         />
-        <div>Select service (optional)</div>
-        <div>Give a form title</div>
+        <FormSelect
+          control={filterForm.control}
+          name="service"
+          placeholder="Select service..."
+          options={serviceOptions}
+        />
+        <FormInput
+          control={filterForm.control}
+          name="title"
+          placeholder="Enter form title"
+        />
         <Button>Create form</Button>
       </FormWrapper>
       <div className="grid grid-cols-5 gap-4">
