@@ -52,7 +52,7 @@ export const FormTimepicker = <
     <FormField
       control={control}
       name={name}
-      render={({ field }) => (
+      render={({ field, fieldState }) => (
         <FormItem className="flex flex-col gap-1 mt-2 w-full">
           {label && <FormLabel>{label}</FormLabel>}
           <Popover open={isOpen} onOpenChange={setIsOpen}>
@@ -63,7 +63,8 @@ export const FormTimepicker = <
                   className={cn(
                     'w-full font-normal',
                     !field.value && 'text-muted-foreground',
-                    className
+                    className,
+                    { 'border-red-500': fieldState.error }
                   )}
                 >
                   {field.value ? time : <span>{placeholder}</span>}

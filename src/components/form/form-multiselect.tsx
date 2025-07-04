@@ -59,6 +59,7 @@ export const FormMultiselect = <
             onValueChange={field.onChange}
             defaultValue={field.value}
             placeholder={placeholder}
+            className={cn({ 'border-red-500': fieldState.error })}
           />
           {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />
