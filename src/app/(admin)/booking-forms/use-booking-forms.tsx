@@ -22,6 +22,7 @@ const useHook = ({ bookingForms, businessData }: HookProp) => {
     defaultValues: {
       search: '',
       business: '',
+      status: '',
     },
   });
 
@@ -38,6 +39,13 @@ const useHook = ({ bookingForms, businessData }: HookProp) => {
       cancellationNoticeHours: 24,
     },
   });
+
+  const statusOptions = [
+    { label: 'Draft', value: 'draft' },
+    { label: 'Live', value: 'live' },
+    { label: 'Archived', value: 'archived' },
+    { label: 'All', value: 'all' },
+  ];
 
   const businessOptions = businessData.map((business) => ({
     label: business.name,
@@ -82,6 +90,7 @@ const useHook = ({ bookingForms, businessData }: HookProp) => {
     createForm,
     serviceOptions,
     businessOptions,
+    statusOptions,
     onSubmitBookingForm,
   };
 };

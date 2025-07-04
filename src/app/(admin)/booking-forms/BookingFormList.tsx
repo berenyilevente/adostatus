@@ -29,14 +29,14 @@ export const BookingFormList = (): ReactElement => {
     filterForm,
     createForm,
     businessOptions,
-    serviceOptions,
+    statusOptions,
     onSubmitBookingForm,
   } = useBookingForms();
 
   const statusColorMap = {
-    draft: 'bg-slate-400',
-    live: 'bg-green-400',
-    archived: 'bg-yellow-400',
+    draft: 'bg-slate-500 text-white',
+    live: 'bg-green-500 text-white',
+    archived: 'bg-yellow-500 text-white',
   };
 
   return (
@@ -54,6 +54,12 @@ export const BookingFormList = (): ReactElement => {
             name="business"
             placeholder="Select business..."
             options={businessOptions}
+          />
+          <FormSelect
+            control={filterForm.control}
+            name="status"
+            placeholder="Select status..."
+            options={statusOptions}
           />
         </FormWrapper>
         <Sheet>
