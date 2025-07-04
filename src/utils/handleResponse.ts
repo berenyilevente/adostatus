@@ -5,14 +5,12 @@ type ResponseProps<T> = {
   data: T | null;
   error?: string;
   code?: number;
-  path?: string;
 };
 
 export const handleResponse = <T>({
   data,
   error = 'Something went wrong',
   code = 400,
-  path = '/business',
 }: ResponseProps<T>): Response<T> => {
   if (!data) {
     return {
@@ -22,8 +20,6 @@ export const handleResponse = <T>({
       error,
     };
   }
-
-  revalidatePath(path);
 
   return {
     status: 'success',

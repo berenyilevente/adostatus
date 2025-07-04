@@ -20,7 +20,6 @@ export const createBusiness = async (
     data: businessResult,
     error: 'Business creation failed',
     code: 400,
-    path: '/business',
   });
 };
 
