@@ -36,11 +36,11 @@ import { useRouter } from 'next/navigation';
 const EditBusiness = () => {
   const router = useRouter();
   const {
-    form,
-    onSubmit,
+    businessForm,
+    onBusinessSubmit,
     isLoading,
     servicesForm,
-    handleServicesSubmit,
+    onServicesSubmit,
     services,
     isServicesModalOpen,
     setIsServicesModalOpen,
@@ -66,7 +66,7 @@ const EditBusiness = () => {
   ];
 
   return (
-    <FormWrapper form={form} className="space-y-6">
+    <FormWrapper form={businessForm} className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card className="bg-white">
           <CardHeader>
@@ -75,14 +75,14 @@ const EditBusiness = () => {
           <CardContent className="gap-0">
             <div className="space-y-6">
               <FormInput
-                control={form.control}
+                control={businessForm.control}
                 label="Business Name"
                 name="business.name"
                 placeholder="Enter your business name"
               />
-              {form.watch('business.businessType') !== 'other' ? (
+              {businessForm.watch('business.businessType') !== 'other' ? (
                 <FormSelect
-                  control={form.control}
+                  control={businessForm.control}
                   label="Business Type"
                   name="business.businessType"
                   placeholder="Select your business type"
@@ -90,14 +90,14 @@ const EditBusiness = () => {
                 />
               ) : (
                 <FormInput
-                  control={form.control}
+                  control={businessForm.control}
                   label="Business Type"
                   name="business.businessType"
                   placeholder="Enter your business type"
                 />
               )}
               <FormTextarea
-                control={form.control}
+                control={businessForm.control}
                 label="Description"
                 name="business.description"
                 placeholder="Tell us about your business..."
@@ -110,7 +110,7 @@ const EditBusiness = () => {
                 />
               </div>
               <FormColorPicker
-                control={form.control}
+                control={businessForm.control}
                 name="business.primaryColor"
                 label="Brand Color"
               />
@@ -132,19 +132,19 @@ const EditBusiness = () => {
                 <div>
                   <Label className="text-sm font-bold">Business Hours</Label>
                   <FormMultiselect
-                    control={form.control}
+                    control={businessForm.control}
                     name="businessHours.dayOfWeek"
                     options={daysOfWeek}
                     placeholder="Days of the week"
                   />
                   <div className="flex flex-row gap-2">
                     <FormTimepicker
-                      control={form.control}
+                      control={businessForm.control}
                       name="businessHours.openTime"
                       placeholder="From"
                     />
                     <FormTimepicker
-                      control={form.control}
+                      control={businessForm.control}
                       name="businessHours.closeTime"
                       placeholder="To"
                     />
@@ -153,19 +153,19 @@ const EditBusiness = () => {
                 <div>
                   <Label className="text-sm font-bold">Break Times</Label>
                   <FormMultiselect
-                    control={form.control}
+                    control={businessForm.control}
                     name="breakTimes.dayOfWeek"
                     options={daysOfWeek}
                     placeholder="Days of the week"
                   />
                   <div className="flex flex-row gap-2 items-center">
                     <FormTimepicker
-                      control={form.control}
+                      control={businessForm.control}
                       name="breakTimes.startTime"
                       placeholder="From"
                     />
                     <FormTimepicker
-                      control={form.control}
+                      control={businessForm.control}
                       name="breakTimes.endTime"
                       placeholder="To"
                     />
@@ -283,7 +283,7 @@ const EditBusiness = () => {
                             Cancel
                           </Button>
                         </DialogClose>
-                        <Button type="submit" onClick={handleServicesSubmit}>
+                        <Button type="submit" onClick={onServicesSubmit}>
                           Add Service
                         </Button>
                       </DialogFooter>
@@ -303,7 +303,7 @@ const EditBusiness = () => {
         >
           Back
         </Button>
-        <Button startIcon="check" onClick={onSubmit}>
+        <Button startIcon="check" onClick={onBusinessSubmit}>
           Save
         </Button>
       </div>

@@ -15,20 +15,21 @@ import {
   ServicesSchema,
 } from '../business.helper';
 import { setImage } from '@/utils/image';
-import { Business } from '@/generated/prisma';
+import { Business, Service } from '@/generated/prisma';
+import { createService } from '../actions/business.actions';
 
 type HookProp = {
   business: Business;
+  services: Service[];
 };
 
-const useHook = ({ business }: HookProp) => {
+const useHook = ({ business, services }: HookProp) => {
   const router = useRouter();
   const { id: businessId } = useParams();
   const [isLoading, setIsLoading] = useState(false);
-  const [services, setServices] = useState<ServicesForm[]>([]);
   const [isServicesModalOpen, setIsServicesModalOpen] = useState(false);
 
-  const form = useForm<CreateBusinessForm>({
+  const businessForm = useForm<CreateBusinessForm>({
     resolver: zodResolver(CreateBusinessSchema),
     defaultValues: {
       business: {
@@ -58,26 +59,18 @@ const useHook = ({ business }: HookProp) => {
     },
   });
 
-  const { control, handleSubmit, watch, setValue, setError } = form;
-
-  const setErrors = (errors: Record<string, any>) => {
-    Object.entries(errors).forEach(([key, value]: any[]) =>
-      setError(key, { message: value })
-    );
-  };
-
   const handleChangeImage = (fileItems: FilePondFile[]) => {
-    setImage(fileItems, setValue);
+    setImage(fileItems, businessForm.setValue);
   };
 
-  const handleServicesSubmit = servicesForm.handleSubmit(async (data) => {
-    setServices([...services, data]);
+  const onServicesSubmit = servicesForm.handleSubmit(async (data) => {
+    await createService(data);
 
     servicesForm.reset();
     setIsServicesModalOpen(false);
   });
 
-  const onSubmit = handleSubmit(async (data) => {
+  const onBusinessSubmit = businessForm.handleSubmit(async (data) => {
     if (!businessId) {
       return;
     }
@@ -92,13 +85,13 @@ const useHook = ({ business }: HookProp) => {
   };
 
   return {
-    form,
-    onSubmit,
+    businessForm,
+    onBusinessSubmit,
     handleCancel,
     handleChangeImage,
     isLoading,
     servicesForm,
-    handleServicesSubmit,
+    onServicesSubmit,
     services,
     isServicesModalOpen,
     setIsServicesModalOpen,

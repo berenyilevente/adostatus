@@ -6,6 +6,7 @@ import prisma from '@/lib/prisma/client';
 import { Business, Service } from '@/generated/prisma';
 import { isAuthenticated } from '@/utils/isAuthenticated';
 import { handleResponse } from '@/utils/handleResponse';
+import { revalidatePath } from 'next/cache';
 
 export const createBusiness = async (
   business: any
@@ -71,5 +72,23 @@ export const getServices = async (
     data: services,
     code: 404,
     error: 'Services not found',
+  });
+};
+
+export const createService = async (
+  service: any
+): Promise<Response<Service>> => {
+  await isAuthenticated();
+
+  const serviceResult = await prisma.service.create({
+    data: service,
+  });
+
+  revalidatePath(`/business/${service.businessId}`);
+
+  return handleResponse<Service>({
+    data: serviceResult,
+    code: 404,
+    error: 'Service creation failed',
   });
 };
