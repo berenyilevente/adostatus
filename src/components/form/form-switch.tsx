@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { Control, FieldPath, FieldValues } from "react-hook-form";
+import { Control, FieldPath, FieldValues } from 'react-hook-form';
 
 import {
   FormControl,
@@ -10,7 +10,8 @@ import {
   FormLabel,
   FormMessage,
   Switch,
-} from "@/components";
+} from '@/components';
+import { cn } from '@/lib/utils';
 
 type FormSwitchProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -39,21 +40,22 @@ export const FormSwitch = <
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className="relative">
-          <FormLabel>{label}</FormLabel>
+        <FormItem className="flex w-full flex-row items-center justify-between rounded-lg border p-4">
+          <div className="space-y-0.5">
+            {label && <FormLabel>{label}</FormLabel>}
+            {description && <FormDescription>{description}</FormDescription>}
+          </div>
           <FormControl>
             <Switch
-              {...field}
               {...props}
-              className={className}
               checked={field.value}
+              onCheckedChange={field.onChange}
+              className="w-9"
             />
           </FormControl>
-          {description && <FormDescription>{description}</FormDescription>}
-          <FormMessage />
         </FormItem>
       )}
     />
   );
 };
-FormSwitch.displayName = "FormSwitch";
+FormSwitch.displayName = 'FormSwitch';

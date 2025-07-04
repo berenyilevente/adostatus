@@ -4,8 +4,7 @@ import { Form, FormField, Prisma } from '@/generated/prisma';
 
 export const FIELD_TYPE = 'form-field';
 
-// Form schema for validation
-export const formSchema = z.object({
+export const FormSchema = z.object({
   id: z.string().optional(),
   businessId: z.string(),
   name: z.string().min(1, 'Form name is required'),
@@ -19,7 +18,7 @@ export const formSchema = z.object({
   isActive: z.boolean().default(true),
 });
 
-export type FormSchemaType = z.infer<typeof formSchema>;
+export type FormSchemaType = z.infer<typeof FormSchema>;
 
 export const fields = [
   { key: 'checkbox', label: 'Checkbox' },
@@ -37,7 +36,7 @@ export const fields = [
   { key: 'file-input', label: 'File Input' },
 ] as const;
 
-export const formFieldSchema = z.object({
+export const FormFieldSchema = z.object({
   id: z.string().optional(),
   formId: z.string().optional(),
   fieldType: z.enum(fields.map((field) => field.key) as [string, ...string[]]),
@@ -51,12 +50,14 @@ export const formFieldSchema = z.object({
   validationRules: z.any().optional(), // JSON with validation rules
 });
 
-export type FormFieldSchemaType = z.infer<typeof formFieldSchema>;
+export type FormFieldSchemaType = z.infer<typeof FormFieldSchema>;
+
+type CreateFormField = Omit<FormField, 'id' | 'createdAt' | 'updatedAt'>;
 
 export const createEmptyField = (
   fieldType: string,
   order: number
-): Prisma.FormFieldCreateInput => {
+): CreateFormField => {
   return {
     fieldType: fieldType as any,
     label: `${fieldType.charAt(0).toUpperCase() + fieldType.slice(1)}`,
@@ -65,16 +66,8 @@ export const createEmptyField = (
     isRequired: false,
     fieldOrder: order,
     defaultValue: '',
-    options:
-      fieldType === 'select' ||
-      fieldType === 'radio' ||
-      fieldType === 'checkbox'
-        ? [{ label: 'Option 1', value: 'option1' }]
-        : undefined,
-    form: {
-      connect: {
-        id: '1',
-      },
-    },
+    options: [],
+    validationRules: [],
+    formId: '',
   };
 };

@@ -8,7 +8,7 @@ import { createAppContext } from '@/hooks/use-create-app-context';
 
 type HookProp = {
   bookingFormsData: Form[];
-  businessData: Business;
+  businessData: Business[];
 };
 
 const useHook = ({ bookingFormsData, businessData }: HookProp) => {

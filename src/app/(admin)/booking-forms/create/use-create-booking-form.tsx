@@ -1,6 +1,6 @@
 'use client';
 
-import { Form } from '@/generated/prisma';
+import { Business, Form } from '@/generated/prisma';
 
 import { createAppContext } from '@/hooks/use-create-app-context';
 import { useState } from 'react';
@@ -8,21 +8,26 @@ import {
   createEmptyField,
   fields as availableFields,
 } from '../booking-form.helper';
+import { useForm } from 'react-hook-form';
 
 export type EditorField = ReturnType<typeof createEmptyField> & { id: string };
 
-type EditorRow = EditorField[];
-
 type HookProp = {
   formsData: Form[];
+  businessData: Business[];
 };
 
-function useCreateBookingFormHook({ formsData }: HookProp) {
-  const [editorFields, setEditorFields] = useState<EditorRow[]>([]);
+function useCreateBookingFormHook({ formsData, businessData }: HookProp) {
+  const [editorFields, setEditorFields] = useState<EditorField[][]>([]);
   const [selectedFieldId, setSelectedFieldId] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
 
-  // Add a new field to a specific row (by index)
+  const filterForm = useForm({
+    defaultValues: {
+      business: '',
+    },
+  });
+
   const addFieldToRow = (rowIdx: number, fieldType: string) => {
     setEditorFields((prev) => {
       const newField: EditorField = {
@@ -36,7 +41,6 @@ function useCreateBookingFormHook({ formsData }: HookProp) {
     });
   };
 
-  // Add a new row with a field
   const addRowWithField = (fieldType: string) => {
     const newField: EditorField = {
       ...createEmptyField(fieldType, 0),
@@ -45,7 +49,6 @@ function useCreateBookingFormHook({ formsData }: HookProp) {
     setEditorFields((prev) => [...prev, [newField]]);
   };
 
-  // Remove a field by id
   const removeField = (id: string) => {
     setEditorFields((prev) =>
       prev
@@ -55,13 +58,11 @@ function useCreateBookingFormHook({ formsData }: HookProp) {
     if (selectedFieldId === id) setSelectedFieldId(null);
   };
 
-  // Select a field for editing
   const selectField = (id: string) => {
     setSelectedFieldId(id);
     setModalOpen(true);
   };
 
-  // Edit a field's properties
   const editField = (id: string, updates: Partial<EditorField>) => {
     setEditorFields((prev) =>
       prev.map((row) =>
@@ -70,7 +71,6 @@ function useCreateBookingFormHook({ formsData }: HookProp) {
     );
   };
 
-  // Add another field after a given field (in the same row)
   const addFieldAfter = (
     rowIdx: number,
     afterId: string,
@@ -95,11 +95,9 @@ function useCreateBookingFormHook({ formsData }: HookProp) {
     });
   };
 
-  // Modal controls
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
 
-  // Find selected field
   const selectedField =
     editorFields.flat().find((f) => f.id === selectedFieldId) || null;
 
@@ -117,6 +115,8 @@ function useCreateBookingFormHook({ formsData }: HookProp) {
     openModal,
     closeModal,
     availableFields,
+    businessData,
+    filterForm,
   };
 }
 

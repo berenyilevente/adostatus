@@ -10,6 +10,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from '@/components';
 import Link from 'next/link';
 import { cn } from '@/utils';
@@ -38,37 +39,25 @@ export const FormCheckbox = <
   link,
   linkText,
   className,
+  ...props
 }: FormCheckboxProps<TField, TName>) => {
   return (
     <FormField
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem
-          className={cn(
-            'flex flex-row items-start space-x-3 space-y-0',
-            className
-          )}
-        >
+        <FormItem className="flex w-full flex-row items-center space-x-3 space-y-0 rounded-md border p-4">
           <FormControl>
-            <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+            <Checkbox
+              checked={field.value}
+              onCheckedChange={field.onChange}
+              {...props}
+            />
           </FormControl>
           <div className="space-y-1 leading-none">
             {label && <FormLabel>{label}</FormLabel>}
-            {description ? (
-              <FormDescription>
-                <>
-                  {description}
-                  {link && (
-                    <Link href={link} className="text-primary">
-                      {linkText}
-                    </Link>
-                  )}
-                </>
-              </FormDescription>
-            ) : (
-              <FormDescription>{description}</FormDescription>
-            )}
+            {description && <FormDescription>{description}</FormDescription>}
+            <FormMessage />
           </div>
         </FormItem>
       )}

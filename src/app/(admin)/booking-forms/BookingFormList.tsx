@@ -19,9 +19,10 @@ export const BookingFormList = (): ReactElement => {
   const { filterForm, businessData } = useBookingForms();
   const sample = ['form 1', 'form 2', 'form 3'];
 
-  const businessOptions = [
-    { label: businessData.name, value: businessData.id },
-  ];
+  const businessOptions = businessData.map((business) => ({
+    label: business.name,
+    value: business.id,
+  }));
 
   return (
     <div className="flex flex-col gap-4">
@@ -38,7 +39,7 @@ export const BookingFormList = (): ReactElement => {
             control={filterForm.control}
             name="business"
             placeholder="Select business..."
-            options={[{ label: businessData.name, value: businessData.id }]}
+            options={businessOptions}
           />
         </FormWrapper>
         <Button

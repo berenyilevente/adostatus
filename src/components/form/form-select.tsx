@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React from "react";
-import { Control, FieldPath, FieldValues } from "react-hook-form";
+import React from 'react';
+import { Control, FieldPath, FieldValues } from 'react-hook-form';
 
 import {
   Select,
@@ -15,8 +15,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components";
-import { cn } from "@/lib/utils";
+} from '@/components';
+import { cn } from '@/lib/utils';
 
 export type FormSelectOption = {
   label: string;
@@ -33,6 +33,7 @@ interface FormSelectProps<
   placeholder?: string;
   label?: string;
   description?: string;
+  className?: string;
 }
 
 export const FormSelect = <
@@ -42,19 +43,20 @@ export const FormSelect = <
   options,
   name,
   control,
-  placeholder = "Select an option",
+  placeholder = 'Select an option',
   label,
   description,
+  className,
 }: FormSelectProps<TField, TName>) => {
   return (
     <FormField
       control={control}
       name={name}
       render={({ field, fieldState }) => (
-        <FormItem className="flex flex-col ">
+        <FormItem className={cn('flex flex-col', className)}>
           <FormLabel>{label}</FormLabel>
           <Select onValueChange={field.onChange} defaultValue={field.value}>
-            <FormControl className={cn({ "border-red-500": fieldState.error })}>
+            <FormControl className={cn({ 'border-red-500': fieldState.error })}>
               <SelectTrigger>
                 <SelectValue placeholder={placeholder} />
               </SelectTrigger>
@@ -75,4 +77,4 @@ export const FormSelect = <
   );
 };
 
-FormSelect.displayName = "FormSelect";
+FormSelect.displayName = 'FormSelect';

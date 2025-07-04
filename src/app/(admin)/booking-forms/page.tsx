@@ -7,7 +7,7 @@ import { BookingFormList } from './BookingFormList';
 import { BookingFormsProvider } from './use-booking-forms';
 import { getBookingForms } from './actions';
 import { PageTitle } from '../components';
-import { getBusiness } from '../business/actions/business.actions';
+import { getBusinesses } from '../business/actions/business.actions';
 
 export const metadata: Metadata = {
   title: 'Booking Forms',
@@ -15,9 +15,9 @@ export const metadata: Metadata = {
 
 const BookingForms = async () => {
   let bookingForms: Form[] = [];
-  let businessData: Business = {} as Business;
+  let businessData: Business[] = [];
   const rBookingForms = await getBookingForms();
-  const rBusiness = await getBusiness();
+  const rBusiness = await getBusinesses();
 
   if (rBookingForms === null || rBusiness.data === null) {
     return notFound();
