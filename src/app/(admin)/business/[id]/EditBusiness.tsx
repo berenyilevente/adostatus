@@ -23,6 +23,7 @@ import {
   DialogFooter,
   DialogClose,
   CardDescription,
+  FormSwitch,
 } from '@/components';
 
 import { useEditBusiness } from './use-edit-business';
@@ -30,8 +31,10 @@ import { Label } from '@radix-ui/react-label';
 import { PlusIcon } from 'lucide-react';
 import { FormMultiselect } from '@/components/form/form-multiselect';
 import { businessTypes } from '../business.helper';
+import { useRouter } from 'next/navigation';
 
 const EditBusiness = () => {
+  const router = useRouter();
   const {
     form,
     onSubmit,
@@ -39,6 +42,8 @@ const EditBusiness = () => {
     servicesForm,
     handleServicesSubmit,
     services,
+    isServicesModalOpen,
+    setIsServicesModalOpen,
   } = useEditBusiness();
 
   const daysOfWeek = [
@@ -114,7 +119,6 @@ const EditBusiness = () => {
         </Card>
 
         <div className="space-y-6">
-          {/* Hours */}
           <div className="space-y-6">
             <Card className="bg-white">
               <CardHeader>
@@ -182,16 +186,35 @@ const EditBusiness = () => {
               </CardHeader>
               <CardContent className="space-y-6 gap-0">
                 <div className="space-y-2">
-                  {services.map((service) => (
-                    <div className="flex flex-col gap-2">
-                      <Label className="text-sm font-bold">Service Name</Label>
-                      <p>{service.name}</p>
-                    </div>
+                  {services.map((service, index) => (
+                    <Card className="bg-white" key={index}>
+                      <CardContent className="p-4">
+                        <div className="flex items-center justify-between gap-2">
+                          <div className="flex flex-col">
+                            <p className="text-sm font-medium">
+                              {service.name}
+                            </p>
+                            <p className="text-xs text-gray-500">
+                              {service.description}
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <p>{service.price}</p>
+                            <p>{service.currency}</p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
                   ))}
                 </div>
-                <Dialog>
+                <Dialog open={isServicesModalOpen}>
                   <DialogTrigger asChild>
-                    <Button size="icon" endIcon="plus" fullWidth>
+                    <Button
+                      size="icon"
+                      endIcon="plus"
+                      fullWidth
+                      onClick={() => setIsServicesModalOpen(true)}
+                    >
                       Add Service
                     </Button>
                   </DialogTrigger>
@@ -223,6 +246,11 @@ const EditBusiness = () => {
                         />
                       </div>
                       <div className="grid grid-cols-2 gap-2">
+                        <FormSwitch
+                          control={servicesForm.control}
+                          label="Is Active"
+                          name="isActive"
+                        />
                         <FormInput
                           control={servicesForm.control}
                           label="Duration"
@@ -247,7 +275,10 @@ const EditBusiness = () => {
                         <DialogClose asChild>
                           <Button
                             variant="outline"
-                            onClick={() => servicesForm.reset()}
+                            onClick={() => {
+                              servicesForm.reset();
+                              setIsServicesModalOpen(false);
+                            }}
                           >
                             Cancel
                           </Button>
@@ -263,6 +294,18 @@ const EditBusiness = () => {
             </Card>
           </div>
         </div>
+      </div>
+      <div className="flex flex-row gap-6 justify-end">
+        <Button
+          variant="outline"
+          startIcon="chevronLeft"
+          onClick={() => router.back()}
+        >
+          Back
+        </Button>
+        <Button startIcon="check" onClick={onSubmit}>
+          Save
+        </Button>
       </div>
     </FormWrapper>
   );

@@ -26,6 +26,7 @@ const useHook = ({ business }: HookProp) => {
   const { id: businessId } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [services, setServices] = useState<ServicesForm[]>([]);
+  const [isServicesModalOpen, setIsServicesModalOpen] = useState(false);
 
   const form = useForm<CreateBusinessForm>({
     resolver: zodResolver(CreateBusinessSchema),
@@ -44,15 +45,16 @@ const useHook = ({ business }: HookProp) => {
   const servicesForm = useForm<ServicesForm>({
     resolver: zodResolver(ServicesSchema),
     defaultValues: {
+      businessId: businessId?.toString(),
       name: '',
       description: '',
       isActive: true,
-      businessId: businessId?.toString(),
-      color: '',
       currency: '',
       duration: '',
       bufferTime: '',
       price: '',
+      color: null,
+      formId: null,
     },
   });
 
@@ -69,9 +71,10 @@ const useHook = ({ business }: HookProp) => {
   };
 
   const handleServicesSubmit = servicesForm.handleSubmit(async (data) => {
-    console.log(data);
     setServices([...services, data]);
+
     servicesForm.reset();
+    setIsServicesModalOpen(false);
   });
 
   const onSubmit = handleSubmit(async (data) => {
@@ -97,6 +100,8 @@ const useHook = ({ business }: HookProp) => {
     servicesForm,
     handleServicesSubmit,
     services,
+    isServicesModalOpen,
+    setIsServicesModalOpen,
   };
 };
 
