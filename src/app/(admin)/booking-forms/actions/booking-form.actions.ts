@@ -51,3 +51,60 @@ export const createBookingForm = async (
     code: 404,
   });
 };
+
+export const updateBookingForm = async (
+  id: string,
+  data: Partial<CreateBookingForm>
+): Promise<any> => {
+  await isAuthenticated();
+
+  const form = await prisma.form.update({
+    where: {
+      id,
+    },
+    data,
+  });
+
+  revalidatePath('/booking-forms');
+
+  return handleResponse({
+    data: form,
+    error: 'Form update failed',
+    code: 404,
+  });
+};
+
+export const deleteBookingForm = async (id: string) => {
+  await isAuthenticated();
+
+  const form = await prisma.form.delete({
+    where: {
+      id,
+    },
+  });
+
+  revalidatePath('/booking-forms');
+
+  return handleResponse({
+    data: form,
+    error: 'Form deletion failed',
+    code: 404,
+  });
+};
+
+export const archiveBookingForm = async (id: string) => {
+  await isAuthenticated();
+
+  const form = await prisma.form.update({
+    where: { id },
+    data: { status: 'archived', isActive: false },
+  });
+
+  revalidatePath('/booking-forms');
+
+  return handleResponse({
+    data: form,
+    error: 'Form archiving failed',
+    code: 404,
+  });
+};

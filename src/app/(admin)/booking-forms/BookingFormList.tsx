@@ -17,6 +17,12 @@ import {
   SheetHeader,
   Badge,
   FormTextarea,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
 } from '@/components';
 import { useRouter } from 'next/navigation';
 import { useBookingForms } from './use-booking-forms';
@@ -28,9 +34,20 @@ export const BookingFormList = (): ReactElement => {
     bookingForms,
     filterForm,
     createForm,
+    editForm,
     businessOptions,
     statusOptions,
     onSubmitBookingForm,
+    onSubmitEditForm,
+    isEditSheetOpen,
+    setIsEditSheetOpen,
+    editingForm,
+    handleEditForm,
+    handleDeleteForm,
+    isDeleteDialogOpen,
+    setIsDeleteDialogOpen,
+    confirmDelete,
+    cancelDelete,
   } = useBookingForms();
 
   const statusColorMap = {
@@ -120,7 +137,8 @@ export const BookingFormList = (): ReactElement => {
                   className={cn(
                     statusColorMap[
                       bookingForm.status as keyof typeof statusColorMap
-                    ]
+                    ],
+                    'hover:cursor-pointer'
                   )}
                 >
                   {bookingForm.status}
@@ -143,13 +161,79 @@ export const BookingFormList = (): ReactElement => {
                 >
                   Open form editor
                 </Button>
-                <Button size="icon" endIcon="pencil" variant="ghost" />
-                <Button size="icon" endIcon="trash" variant="ghost" />
+                <Button
+                  size="icon"
+                  endIcon="pencil"
+                  variant="ghost"
+                  onClick={() => handleEditForm(bookingForm)}
+                />
+                <Button
+                  size="icon"
+                  endIcon="trash"
+                  variant="ghost"
+                  onClick={() => handleDeleteForm(bookingForm.id)}
+                />
               </div>
             </div>
           </CardContent>
         </Card>
       ))}
+
+      {/* Edit Sheet */}
+      <Sheet open={isEditSheetOpen} onOpenChange={setIsEditSheetOpen}>
+        <SheetContent className="h-full w-[500px]">
+          <SheetHeader>
+            <SheetTitle>Form details</SheetTitle>
+            <SheetDescription>Update the form details.</SheetDescription>
+          </SheetHeader>
+          <FormWrapper
+            form={editForm}
+            className="flex gap-4 flex-col w-full mt-6"
+          >
+            <FormSelect
+              control={editForm.control}
+              label="Business"
+              name="businessId"
+              placeholder="Select business..."
+              options={businessOptions}
+            />
+            <FormInput
+              control={editForm.control}
+              label="Name"
+              name="name"
+              placeholder="Enter form name"
+            />
+            <FormTextarea
+              control={editForm.control}
+              label="Description"
+              name="description"
+              placeholder="Enter form description"
+            />
+            <Button onClick={onSubmitEditForm}>Update form</Button>
+          </FormWrapper>
+        </SheetContent>
+      </Sheet>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete Booking Form</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete this booking form? This action
+              cannot be undone.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={cancelDelete}>
+              Cancel
+            </Button>
+            <Button variant="destructive" onClick={confirmDelete}>
+              Delete
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

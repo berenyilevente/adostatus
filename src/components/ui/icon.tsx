@@ -55,6 +55,7 @@ import eyeOff from '@iconify/icons-lucide/eye-off';
 import plus from '@iconify/icons-lucide/plus';
 import form from '@iconify/icons-lucide/clipboard-list';
 import business from '@iconify/icons-lucide/home';
+import archive from '@iconify/icons-lucide/archive';
 
 export const iconMap = {
   mail,
@@ -109,6 +110,7 @@ export const iconMap = {
   plus,
   form,
   business,
+  archive,
 };
 
 export type IconType = keyof typeof iconMap;
