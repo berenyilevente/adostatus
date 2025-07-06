@@ -16,7 +16,6 @@ const defaultColors = [
   '#f43f5e', // rose
   '#f97316', // orange
   '#84cc16', // lime
-  '#14b8a6', // teal
 ];
 
 export const ColorPicker = ({ value, onChange }: ColorPickerProps) => {

@@ -7,18 +7,37 @@ import { Business, Service } from '@/generated/prisma';
 import { isAuthenticated } from '@/utils/isAuthenticated';
 import { handleResponse } from '@/utils/handleResponse';
 import { revalidatePath } from 'next/cache';
+import { CreateBusinessForm } from '../business.helper';
 
 export const createBusiness = async (
-  business: any
+  createBusinessForm: CreateBusinessForm
 ): Promise<Response<Business>> => {
-  await isAuthenticated();
+  const { user } = await isAuthenticated();
+  const { business, businessHours, breakTimes } = createBusinessForm;
 
-  const businessResult = await prisma.business.create({
-    data: business,
+  const createBusinessResult = await prisma.$transaction(async (tx) => {
+    if (!user.id) {
+      return null;
+    }
+
+    const businessResult = await tx.business.create({
+      data: {
+        ...business,
+        ownerId: user.id,
+      },
+    });
+    await tx.businessHours.createMany({
+      data: { ...businessHours, businessId: businessResult.id },
+    });
+    await tx.breakTime.createMany({
+      data: { ...breakTimes, businessId: businessResult.id },
+    });
+
+    return businessResult;
   });
 
-  return handleResponse({
-    data: businessResult,
+  return handleResponse<Business>({
+    data: createBusinessResult,
     error: 'Business creation failed',
     code: 400,
   });
