@@ -3,6 +3,9 @@
 import React from 'react';
 
 import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
   Button,
   Card,
   CardContent,
@@ -24,6 +27,7 @@ import { businessTypes, daysOfWeek } from './business.helper';
 
 import { useBusiness } from './use-business';
 import { useRouter } from 'next/navigation';
+import { UserIcon } from 'lucide-react';
 
 export const BusinessList = () => {
   const router = useRouter();
@@ -66,9 +70,19 @@ export const BusinessList = () => {
         <Card className="bg-white" key={business.id}>
           <CardContent className="p-4">
             <div className="flex items-center justify-between gap-2">
-              <div className="flex flex-col">
-                <p className="text-sm font-medium">{business.name}</p>
-                <p className="text-xs text-gray-500">{business.description}</p>
+              <div className="flex items-center gap-2">
+                <Avatar>
+                  <AvatarImage src={business.logoUrl || ''} />
+                  <AvatarFallback>
+                    <UserIcon className="w-4 h-4" />
+                  </AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col">
+                  <p className="text-sm font-medium">{business.name}</p>
+                  <p className="text-xs text-gray-500">
+                    {business.description}
+                  </p>
+                </div>
               </div>
               <div className="flex items-center gap-2">
                 <Button size="sm" endIcon="plus" variant="outline" fullWidth>
