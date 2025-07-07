@@ -13,7 +13,6 @@ export async function getTeamMembers(): Promise<Response<TeamMember[]>> {
     data: teamMembers,
     error: 'TeamMembers not found',
     code: 404,
-    path: '/team-members',
   });
 }
 
@@ -30,7 +29,6 @@ export async function getTeamMember(id: string): Promise<Response<TeamMember>> {
     data: teamMember,
     error: 'TeamMember not found',
     code: 404,
-    path: '/team-members',
   });
 }
 

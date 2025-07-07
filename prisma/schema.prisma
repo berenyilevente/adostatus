@@ -156,7 +156,7 @@ model Form {
   updatedAt               DateTime @updatedAt
   status                  String   @default("draft") // draft, live, archived
 
-  business     Business             @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  business     Business             @relation(fields: [businessId], references: [id])
   fields       FormField[]
   services     Service[]
   integrations WebsiteIntegration[]

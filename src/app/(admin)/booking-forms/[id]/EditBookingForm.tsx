@@ -195,14 +195,14 @@ export const EditBookingForm = (): ReactElement => {
                   {row.map((field) => (
                     <div
                       key={field.id}
-                      className="w-full flex items-center justify-between rounded-xl border px-3 py-2 shadow-sm bg-white min-w-[200px]"
+                      className="w-full flex items-center justify-between rounded-xl border px-4 shadow-sm bg-white min-w-[200px]"
                       onClick={() => selectField(field.id)}
                       style={{ cursor: 'pointer' }}
                     >
-                      <div className="flex-1 text-base font-normal">
+                      <div className="flex-1 text-sm font-normal">
                         {field.label}
                       </div>
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center">
                         <Button
                           variant="ghost"
                           size="icon"
