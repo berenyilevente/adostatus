@@ -35,6 +35,7 @@ export const BusinessList = () => {
     openDeleteDialog,
   } = useBusiness();
 
+  // TODO add a business show page, where the user can add services, edit business details, etc.
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between w-full items-center gap-1 ">
@@ -77,15 +78,15 @@ export const BusinessList = () => {
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <Button size="sm" endIcon="plus" variant="outline" fullWidth>
-                  Add services
-                </Button>
                 <Button
-                  size="icon"
-                  endIcon="pencil"
-                  variant="ghost"
-                  onClick={() => router.push(`/business/${business.id}`)}
-                />
+                  size="sm"
+                  endIcon="eye"
+                  variant="outline"
+                  fullWidth
+                  onClick={() => router.push(`/business/show/${business.id}`)}
+                >
+                  Details
+                </Button>
                 <Button
                   size="icon"
                   endIcon="trash"

@@ -7,6 +7,7 @@ export const routes = {
     business: {
       index: '/business',
       create: '/business/create',
+      show: '/business/show',
     },
     teamMembers: { index: '/team-members', create: '/team-members/create' },
   },

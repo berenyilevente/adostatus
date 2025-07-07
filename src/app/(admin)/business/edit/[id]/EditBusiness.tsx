@@ -30,7 +30,7 @@ import { useEditBusiness } from './use-edit-business';
 import { Label } from '@radix-ui/react-label';
 import { PlusIcon } from 'lucide-react';
 import { FormMultiselect } from '@/components/form/form-multiselect';
-import { businessTypes, daysOfWeek } from '../business.helper';
+import { businessTypes, daysOfWeek } from '../../business.helper';
 import { useRouter } from 'next/navigation';
 
 const EditBusiness = () => {
@@ -289,7 +289,8 @@ const EditBusiness = () => {
         <Button
           variant="outline"
           startIcon="chevronLeft"
-          onClick={() => router.push('/business')}
+          type="button"
+          onClick={() => router.back()}
         >
           Back
         </Button>

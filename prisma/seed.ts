@@ -141,7 +141,7 @@ async function main() {
           'Professional dental care services in the heart of downtown',
         businessType: 'healthcare',
         logoUrl:
-          'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=200&h=200&fit=crop',
+          'https://images.unsplash.com/photo-1593022356769-11f762e25ed9?w=200&h=200&fit=crop',
         primaryColor: '#3B82F6',
         isActive: true,
       },

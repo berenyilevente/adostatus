@@ -13,10 +13,10 @@ import {
   CreateBusinessSchema,
   ServicesForm,
   ServicesSchema,
-} from '../business.helper';
+} from '../../business.helper';
 import { setImage } from '@/utils/image';
 import { Business, Service } from '@/generated/prisma';
-import { createService } from '../actions/business.actions';
+import { createService } from '../../actions/business.actions';
 
 type HookProp = {
   business: Business;

@@ -3,7 +3,12 @@
 import { Response } from '@/types/action.types';
 
 import prisma from '@/lib/prisma/client';
-import { Business, Service } from '@/generated/prisma';
+import {
+  BreakTime,
+  Business,
+  BusinessHours,
+  Service,
+} from '@/generated/prisma';
 import { isAuthenticated } from '@/utils/isAuthenticated';
 import { handleResponse } from '@/utils/handleResponse';
 import { revalidatePath } from 'next/cache';
@@ -45,7 +50,14 @@ export const createBusiness = async (
   });
 };
 
-export const getBusiness = async (id: string): Promise<Response<Business>> => {
+export type BusinessResponse = Business & {
+  businessHours: BusinessHours[];
+  breakTimes: BreakTime[];
+};
+
+export const getBusiness = async (
+  id: string
+): Promise<Response<BusinessResponse>> => {
   const session = await isAuthenticated();
 
   const business = await prisma.business.findFirst({
@@ -55,8 +67,24 @@ export const getBusiness = async (id: string): Promise<Response<Business>> => {
     },
   });
 
-  return handleResponse<Business>({
-    data: business,
+  if (!business) {
+    return handleResponse<BusinessResponse>({
+      data: null,
+      code: 404,
+      error: 'Business not found' as string,
+    });
+  }
+
+  const businessHours = await prisma.businessHours.findMany({
+    where: { businessId: id },
+  });
+
+  const breakTimes = await prisma.breakTime.findMany({
+    where: { businessId: id },
+  });
+
+  return handleResponse<BusinessResponse>({
+    data: { ...business, businessHours, breakTimes },
     code: 404,
     error: 'Business not found',
   });

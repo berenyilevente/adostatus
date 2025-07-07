@@ -57,7 +57,7 @@ const useHook = () => {
 
     if (res.status === 'success') {
       toast.success('Business created successfully');
-      router.push(`/business/${res.data?.id}`);
+      router.push(`/business/show/${res.data?.id}`);
       setIsLoading(false);
       return;
     }
