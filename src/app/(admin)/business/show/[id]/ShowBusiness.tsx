@@ -28,6 +28,10 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
+  TextField,
+  StatusField,
+  ColorField,
+  DateField,
 } from '@/components';
 
 import { useShowBusiness } from './use-show-business';
@@ -39,8 +43,11 @@ const ShowBusiness = () => {
   const router = useRouter();
 
   const getBusinessTypeLabel = (type: string | null) => {
-    if (!type) return 'Not specified';
+    if (!type) {
+      return 'Not specified';
+    }
     const found = businessTypes.find((t) => t.value === type);
+
     return found ? found.label : type;
   };
 
@@ -101,9 +108,6 @@ const ShowBusiness = () => {
                   .toUpperCase()}
               </AvatarFallback>
             </Avatar>
-            {business.isActive && (
-              <div className="absolute -bottom-1 -right-1 h-4 w-4 rounded-full bg-green-500 border-2 border-white" />
-            )}
           </div>
           <div>
             <h1 className="text-2xl font-bold text-gray-900">
@@ -141,49 +145,18 @@ const ShowBusiness = () => {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-500">
-                    Business Type
-                  </label>
-                  <p className="text-gray-900">
-                    {getBusinessTypeLabel(business.businessType)}
-                  </p>
-                </div>
-                <div className="flex flex-col space-y-2">
-                  <label className="text-sm font-medium text-gray-500">
-                    Status
-                  </label>
-                  <Badge
-                    variant={business.isActive ? 'default' : 'secondary'}
-                    className="w-fit"
-                  >
-                    {business.isActive ? 'Active' : 'Inactive'}
-                  </Badge>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-500">
-                    Primary Color
-                  </label>
-                  <div className="flex items-center space-x-2">
-                    <div
-                      className="h-6 w-6 rounded border"
-                      style={{
-                        backgroundColor: business.primaryColor || '#6B7280',
-                      }}
-                    />
-                    <span className="text-gray-900">
-                      {business.primaryColor || 'Not set'}
-                    </span>
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-500">
-                    Created
-                  </label>
-                  <p className="text-gray-900">
-                    {format(new Date(business.createdAt), 'MMM dd, yyyy')}
-                  </p>
-                </div>
+                <TextField
+                  label="Business Type"
+                  value={getBusinessTypeLabel(business.businessType)}
+                />
+                <StatusField
+                  value={business.isActive ? 'active' : 'inactive'}
+                />
+                <ColorField
+                  value={business.primaryColor || '#6B7280'}
+                  className="w-full"
+                />
+                <DateField value={business.createdAt} />
               </div>
             </CardContent>
           </Card>
