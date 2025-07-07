@@ -62,3 +62,4 @@ export * from './ui/textarea';
 export * from './ui/tooltip';
 export * from './ui/color-picker';
 export * from './ui/multiselect';
+export * from './ui/collapsible';

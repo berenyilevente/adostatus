@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { ReactElement } from "react";
+import { ReactElement } from 'react';
 
 import {
   Logo,
@@ -13,10 +13,57 @@ import {
   SidebarMenuItem,
   SidebarGroupLabel,
   Icon,
-} from "@/components";
-import { config } from "@/config";
+  SidebarMenuSub,
+  SidebarMenuSubItem,
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '@/components';
+import { config } from '@/config';
 
-import { adminMenuItems as menuItems } from "./menu-items";
+import { adminMenuItems as menuItems } from './menu-items';
+import { IMenuItem } from '../types/menu.types';
+import { ChevronDownIcon, ChevronRightIcon } from 'lucide-react';
+
+const SidebarItem = ({ item }: { item: IMenuItem }) => {
+  if (item.collapsible && item.children) {
+    return (
+      <Collapsible defaultOpen className="group/collapsible" key={item.key}>
+        <CollapsibleTrigger asChild>
+          <SidebarMenuButton>
+            {item.icon && <Icon icon={item.icon} />}
+            <span>{item.label}</span>
+            <ChevronDownIcon className="ml-auto h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-180" />
+          </SidebarMenuButton>
+        </CollapsibleTrigger>
+        <CollapsibleContent>
+          <SidebarMenuSub>
+            {item.children.map((child) => (
+              <SidebarMenuSubItem key={child.key}>
+                <SidebarMenuButton asChild>
+                  <a href={child.url || '#'}>
+                    <span>{child.label}</span>
+                  </a>
+                </SidebarMenuButton>
+              </SidebarMenuSubItem>
+            ))}
+          </SidebarMenuSub>
+        </CollapsibleContent>
+      </Collapsible>
+    );
+  }
+
+  return (
+    <SidebarMenuItem key={item.key}>
+      <SidebarMenuButton asChild>
+        <a href={item.url}>
+          {item.icon && <Icon icon={item.icon} />}
+          <span>{item.label}</span>
+        </a>
+      </SidebarMenuButton>
+    </SidebarMenuItem>
+  );
+};
 
 export const AppSidebar = (): ReactElement => {
   return (
@@ -29,14 +76,7 @@ export const AppSidebar = (): ReactElement => {
           <SidebarGroupContent>
             <SidebarMenu>
               {menuItems.map((item) => (
-                <SidebarMenuItem key={item.key}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      {item.icon && <Icon icon={item.icon} />}
-                      <span>{item.label}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+                <SidebarItem key={item.key} item={item} />
               ))}
             </SidebarMenu>
           </SidebarGroupContent>

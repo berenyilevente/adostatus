@@ -13,6 +13,19 @@ export const adminMenuItems: IMenuItem[] = [
     icon: 'business',
     label: 'Business',
     url: routes.admin.business.index,
+    collapsible: true,
+    children: [
+      {
+        key: 'business-list',
+        label: 'My businesses',
+        url: routes.admin.business.index,
+      },
+      {
+        key: 'services',
+        label: 'Services',
+        url: '/business/services',
+      },
+    ],
   },
   {
     key: 'booking-forms',

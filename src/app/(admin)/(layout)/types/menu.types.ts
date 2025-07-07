@@ -1,4 +1,4 @@
-import { IconType } from "@/components";
+import { IconType } from '@/components';
 
 export interface IMenuItem {
   key: string;
@@ -7,4 +7,5 @@ export interface IMenuItem {
   isTitle?: boolean;
   url?: string;
   children?: IMenuItem[];
+  collapsible?: boolean;
 }
