@@ -16,6 +16,7 @@ import {
   ServicesForm,
   ServicesSchema,
 } from '../business.helper';
+import { createBusiness } from '../actions/business.actions';
 
 const useHook = () => {
   const router = useRouter();
@@ -35,8 +36,6 @@ const useHook = () => {
     },
   });
 
-  const { handleSubmit, setValue } = form;
-
   const handleChangeImage = async (fileItems: FilePondFile[]) => {
     setImage({
       fileItems,
@@ -45,14 +44,15 @@ const useHook = () => {
     });
   };
 
-  const onSubmit = handleSubmit(async (data) => {
+  const onSubmit = form.handleSubmit(async (data) => {
     setIsLoading(true);
+    await createBusiness(data);
+    setIsLoading(false);
   });
 
   const handleCancel = () => {
-    router.push('/users');
+    router.push('/business');
   };
-
   return {
     onSubmit,
     handleCancel,

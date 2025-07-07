@@ -15,6 +15,7 @@ import {
   CardTitle,
   FormTimepicker,
   CardDescription,
+  Button,
 } from '@/components';
 
 import { useCreateBusiness } from './use-create-business';
@@ -23,7 +24,8 @@ import { FormMultiselect } from '@/components/form/form-multiselect';
 import { businessTypes, daysOfWeek } from '../business.helper';
 
 const CreateBusiness = () => {
-  const { form, onSubmit, isLoading } = useCreateBusiness();
+  const { form, onSubmit, isLoading, handleChangeImage, handleCancel } =
+    useCreateBusiness();
 
   return (
     <FormWrapper form={form} className="space-y-6">
@@ -63,36 +65,30 @@ const CreateBusiness = () => {
                 placeholder="Tell us about your business..."
                 className="resize-none"
               />
-              <div className="flex flex-row gap-8 w-full">
-                <div className="w-full">
-                  <Label className="text-sm font-semibold">Logo</Label>
-                  <FileInput
-                    onupdatefiles={() => {}}
-                    labelIdle={'Add your business logo'}
-                  />
-                </div>
-                <FormColorPicker
-                  control={form.control}
-                  name="business.primaryColor"
-                  label="Brand Color"
+              <div className="w-full">
+                <Label className="text-sm font-semibold">Logo</Label>
+                <FileInput
+                  onupdatefiles={handleChangeImage}
+                  labelIdle={'Add your business logo'}
                 />
               </div>
+              <FormColorPicker
+                control={form.control}
+                name="business.primaryColor"
+                label="Brand Color"
+              />
             </div>
           </CardContent>
         </Card>
 
         <div className="space-y-6">
           {/* Hours */}
-          <div className="space-y-6">
-            <Card className="bg-white">
-              <CardHeader>
-                <CardTitle>Hours</CardTitle>
-                <CardDescription>
-                  Configure your business hours and break times for each day of
-                  the week.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6 gap-0">
+          <Card className="bg-white">
+            <CardHeader>
+              <CardTitle>Business Hours</CardTitle>
+            </CardHeader>
+            <CardContent className="gap-0">
+              <div className="space-y-6 gap-0">
                 <div>
                   <Label className="text-sm font-bold">Business Hours</Label>
                   <FormMultiselect
@@ -135,10 +131,23 @@ const CreateBusiness = () => {
                     />
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
+      </div>
+      <div className="flex justify-end gap-2">
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={handleCancel}
+        >
+          Cancel
+        </Button>
+        <Button type="submit" variant="default" size="sm" onClick={onSubmit}>
+          Save
+        </Button>
       </div>
     </FormWrapper>
   );
