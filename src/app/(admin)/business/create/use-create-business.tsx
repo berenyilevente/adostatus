@@ -17,7 +17,6 @@ import {
   ServicesSchema,
 } from '../business.helper';
 import { createBusiness } from '../actions/business.actions';
-import { useSession } from 'next-auth/react';
 
 const useHook = () => {
   const router = useRouter();
@@ -54,9 +53,20 @@ const useHook = () => {
 
   const onSubmit = form.handleSubmit(async (data) => {
     setIsLoading(true);
-    await createBusiness(data);
-    router.push('/business');
-    setIsLoading(false);
+    const res = await createBusiness(data);
+
+    if (res.status === 'success') {
+      toast.success('Business created successfully');
+      router.push(`/business/${res.data?.id}`);
+      setIsLoading(false);
+      return;
+    }
+
+    if (res.status === 'error') {
+      toast.error('Failed to create business');
+      setIsLoading(false);
+      return;
+    }
   });
 
   const handleCancel = () => {

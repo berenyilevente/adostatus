@@ -9,21 +9,15 @@ import {
   Button,
   Card,
   CardContent,
-  FileInput,
-  FormColorPicker,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
   FormInput,
-  FormMultiselect,
-  FormSelect,
-  FormTextarea,
-  FormTimepicker,
   FormWrapper,
-  Label,
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
 } from '@/components';
-import { businessTypes, daysOfWeek } from './business.helper';
 
 import { useBusiness } from './use-business';
 import { useRouter } from 'next/navigation';
@@ -34,13 +28,11 @@ export const BusinessList = () => {
   const {
     businessData,
     filterForm,
-    form,
-    onSubmit,
-    handleCancel,
-    handleChangeImage,
-    isLoading,
-    isCreateSheetOpen,
-    setIsCreateSheetOpen,
+    isDeleteDialogOpen,
+    setIsDeleteDialogOpen,
+    cancelDelete,
+    confirmDelete,
+    openDeleteDialog,
   } = useBusiness();
 
   return (
@@ -94,12 +86,37 @@ export const BusinessList = () => {
                   variant="ghost"
                   onClick={() => router.push(`/business/${business.id}`)}
                 />
-                <Button size="icon" endIcon="trash" variant="ghost" />
+                <Button
+                  size="icon"
+                  endIcon="trash"
+                  variant="ghost"
+                  onClick={() => openDeleteDialog(business.id)}
+                />
               </div>
             </div>
           </CardContent>
         </Card>
-      ))}
+      ))}{' '}
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete Business</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete this business? This action cannot
+              be undone.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={cancelDelete}>
+              Cancel
+            </Button>
+            <Button variant="destructive" onClick={confirmDelete}>
+              Delete
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

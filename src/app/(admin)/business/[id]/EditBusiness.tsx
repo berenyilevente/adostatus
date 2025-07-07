@@ -30,7 +30,7 @@ import { useEditBusiness } from './use-edit-business';
 import { Label } from '@radix-ui/react-label';
 import { PlusIcon } from 'lucide-react';
 import { FormMultiselect } from '@/components/form/form-multiselect';
-import { businessTypes } from '../business.helper';
+import { businessTypes, daysOfWeek } from '../business.helper';
 import { useRouter } from 'next/navigation';
 
 const EditBusiness = () => {
@@ -45,16 +45,6 @@ const EditBusiness = () => {
     isServicesModalOpen,
     setIsServicesModalOpen,
   } = useEditBusiness();
-
-  const daysOfWeek = [
-    { label: 'Monday', value: 'monday' },
-    { label: 'Tuesday', value: 'tuesday' },
-    { label: 'Wednesday', value: 'wednesday' },
-    { label: 'Thursday', value: 'thursday' },
-    { label: 'Friday', value: 'friday' },
-    { label: 'Saturday', value: 'saturday' },
-    { label: 'Sunday', value: 'sunday' },
-  ];
 
   // TODO: create a supported currencies list
   const currencies = [

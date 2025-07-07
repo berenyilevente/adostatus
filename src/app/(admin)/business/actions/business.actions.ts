@@ -113,3 +113,21 @@ export const createService = async (
     error: 'Service creation failed',
   });
 };
+
+export const deleteBusiness = async (
+  id: string
+): Promise<Response<Business>> => {
+  await isAuthenticated();
+
+  const businessResult = await prisma.business.delete({
+    where: { id },
+  });
+
+  revalidatePath('/business');
+
+  return handleResponse<Business>({
+    data: businessResult,
+    code: 404,
+    error: 'Business deletion failed',
+  });
+};

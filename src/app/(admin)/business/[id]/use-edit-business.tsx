@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FilePondFile } from 'filepond';
 import { useParams, useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { createAppContext } from '@/hooks/use-create-app-context';
@@ -38,7 +38,7 @@ const useHook = ({ business, services }: HookProp) => {
         description: business.description ?? undefined,
         logoUrl: business.logoUrl ?? undefined,
         primaryColor: business.primaryColor ?? undefined,
-        isActive: true,
+        isActive: business.isActive ?? true,
       },
     },
   });
@@ -59,8 +59,14 @@ const useHook = ({ business, services }: HookProp) => {
     },
   });
 
+  console.log(businessForm.watch('business.logoUrl'));
+
   const handleChangeImage = (fileItems: FilePondFile[]) => {
-    setImage(fileItems, businessForm.setValue);
+    setImage({
+      fileItems,
+      setValue: businessForm.setValue,
+      name: 'business.logoUrl',
+    });
   };
 
   const onServicesSubmit = servicesForm.handleSubmit(async (data) => {

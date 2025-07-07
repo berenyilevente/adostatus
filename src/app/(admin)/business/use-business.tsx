@@ -1,16 +1,13 @@
 'use client';
 
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Business } from '@/generated/prisma';
 
 import { createAppContext } from '@/hooks/use-create-app-context';
-import { FilePondFile } from 'filepond';
-import { setImage } from '@/utils/image';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { CreateBusinessForm, CreateBusinessSchema } from './business.helper';
-import { useState } from 'react';
-import { createBusiness } from './actions/business.actions';
+import { deleteBusiness } from './actions/business.actions';
+import { toast } from 'sonner';
 
 type HookProp = {
   businessData: Business[];
@@ -18,7 +15,39 @@ type HookProp = {
 
 const useHook = ({ businessData }: HookProp) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [isCreateSheetOpen, setIsCreateSheetOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [selectedBusinessId, setSelectedBusinessId] = useState<string | null>(
+    null
+  );
+
+  const openDeleteDialog = (id: string) => {
+    setIsDeleteDialogOpen(true);
+    setSelectedBusinessId(id);
+  };
+
+  const cancelDelete = () => {
+    setIsDeleteDialogOpen(false);
+    setSelectedBusinessId(null);
+  };
+
+  const confirmDelete = async () => {
+    if (!selectedBusinessId) {
+      return;
+    }
+
+    setIsDeleteDialogOpen(false);
+    setSelectedBusinessId(null);
+
+    const res = await deleteBusiness(selectedBusinessId);
+    if (res.status === 'error') {
+      toast.error(res.error);
+      return;
+    }
+
+    if (res.status === 'success') {
+      toast.success('Business deleted successfully');
+    }
+  };
 
   const filterForm = useForm({
     defaultValues: {
@@ -26,52 +55,20 @@ const useHook = ({ businessData }: HookProp) => {
     },
   });
 
-  const form = useForm<CreateBusinessForm>({
-    resolver: zodResolver(CreateBusinessSchema),
-    defaultValues: {
-      business: {
-        ownerId: '',
-        businessType: '',
-        name: '',
-        description: '',
-        logoUrl: '',
-        primaryColor: '#000000',
-        isActive: true,
-      },
-    },
-  });
-
-  const handleChangeImage = async (fileItems: FilePondFile[]) => {
-    setImage({
-      fileItems,
-      setValue: form.setValue,
-      name: 'business.logoUrl',
-    });
-  };
-
-  const onSubmit = form.handleSubmit(async (data) => {
-    setIsLoading(true);
-    await createBusiness(data);
-    setIsLoading(false);
-  });
-
-  const handleCancel = () => {
-    setIsCreateSheetOpen(false);
-  };
-
   const search = filterForm.watch('search');
 
   return {
     businessData,
     search,
     filterForm,
-    form,
-    onSubmit,
-    handleCancel,
-    handleChangeImage,
+    isDeleteDialogOpen,
+    setIsDeleteDialogOpen,
+    selectedBusinessId,
+    setSelectedBusinessId,
     isLoading,
-    isCreateSheetOpen,
-    setIsCreateSheetOpen,
+    cancelDelete,
+    confirmDelete,
+    openDeleteDialog,
   };
 };
 
