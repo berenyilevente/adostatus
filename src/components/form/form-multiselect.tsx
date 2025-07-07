@@ -17,7 +17,14 @@ import {
   FormMessage,
 } from '@/components';
 import { cn } from '@/lib/utils';
-import { MultiSelect } from '../ui/multiselect';
+import {
+  MultiSelector,
+  MultiSelectorContent,
+  MultiSelectorInput,
+  MultiSelectorItem,
+  MultiSelectorList,
+  MultiSelectorTrigger,
+} from '../ui/multiselect';
 
 export type FormMultiselectOption = {
   label: string;
@@ -52,15 +59,32 @@ export const FormMultiselect = <
       control={control}
       name={name}
       render={({ field, fieldState }) => (
-        <FormItem className="flex flex-col ">
-          <FormLabel>{label}</FormLabel>
-          <MultiSelect
-            options={options}
-            onValueChange={field.onChange}
-            defaultValue={field.value}
-            placeholder={placeholder}
-            className={cn({ 'border-red-500': fieldState.error })}
-          />
+        <FormItem>
+          {label && <FormLabel>{label}</FormLabel>}
+          <FormControl>
+            <MultiSelector
+              values={field.value || []}
+              onValuesChange={field.onChange}
+              loop
+              className={cn(
+                'w-full',
+                fieldState.error && 'ring-1 ring-red-500'
+              )}
+            >
+              <MultiSelectorTrigger>
+                <MultiSelectorInput placeholder={placeholder} />
+              </MultiSelectorTrigger>
+              <MultiSelectorContent>
+                <MultiSelectorList>
+                  {options.map((option) => (
+                    <MultiSelectorItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MultiSelectorItem>
+                  ))}
+                </MultiSelectorList>
+              </MultiSelectorContent>
+            </MultiSelector>
+          </FormControl>
           {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />
         </FormItem>

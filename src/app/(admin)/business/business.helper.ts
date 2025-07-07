@@ -29,9 +29,9 @@ type BusinessHours = Omit<BusinessHoursTable, 'id' | 'createdAt' | 'updatedAt'>;
 export const BusinessHoursSchema: z.ZodType<BusinessHours> = z.object({
   businessId: z.string(),
   isClosed: z.boolean(),
-  dayOfWeek: z.string(),
-  openTime: z.date(),
-  closeTime: z.date(),
+  dayOfWeek: z.array(z.string()),
+  openTime: z.string(),
+  closeTime: z.string(),
 });
 
 export type BusinessHoursForm = z.infer<typeof BusinessHoursSchema>;
@@ -41,9 +41,9 @@ type BreakTimes = Omit<BreakTimeTable, 'id' | 'createdAt' | 'updatedAt'>;
 
 export const BreakTimesSchema: z.ZodType<BreakTimes> = z.object({
   businessId: z.string(),
-  dayOfWeek: z.string(),
-  startTime: z.date(),
-  endTime: z.date(),
+  dayOfWeek: z.array(z.string()),
+  startTime: z.string(),
+  endTime: z.string(),
 });
 
 // TODO move this to team member
@@ -87,13 +87,13 @@ export const CreateBusinessSchema = z.object({
 export type CreateBusinessForm = z.infer<typeof CreateBusinessSchema>;
 
 export const daysOfWeek = [
-  { label: 'Monday', value: 'monday' },
-  { label: 'Tuesday', value: 'tuesday' },
-  { label: 'Wednesday', value: 'wednesday' },
-  { label: 'Thursday', value: 'thursday' },
-  { label: 'Friday', value: 'friday' },
-  { label: 'Saturday', value: 'saturday' },
-  { label: 'Sunday', value: 'sunday' },
+  { label: 'Monday', value: 'Monday' },
+  { label: 'Tuesday', value: 'Tuesday' },
+  { label: 'Wednesday', value: 'Wednesday' },
+  { label: 'Thursday', value: 'Thursday' },
+  { label: 'Friday', value: 'Friday' },
+  { label: 'Saturday', value: 'Saturday' },
+  { label: 'Sunday', value: 'Sunday' },
 ];
 
 // TODO: create a supported currencies list

@@ -88,7 +88,7 @@ export const BusinessList = () => {
       ))}
 
       <Sheet open={isCreateSheetOpen} onOpenChange={setIsCreateSheetOpen}>
-        <SheetContent className="overflow-y-auto w-[400px]">
+        <SheetContent className="overflow-y-auto w-[400px] z-50">
           <SheetHeader>
             <SheetTitle>Business details</SheetTitle>
           </SheetHeader>
@@ -127,7 +127,7 @@ export const BusinessList = () => {
                 <div className="w-full">
                   <Label className="text-sm font-semibold">Logo</Label>
                   <FileInput
-                    onupdatefiles={() => {}}
+                    onupdatefiles={handleChangeImage}
                     labelIdle={'Add your business logo'}
                   />
                 </div>

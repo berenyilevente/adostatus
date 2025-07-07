@@ -38,7 +38,11 @@ const useHook = () => {
   const { handleSubmit, setValue } = form;
 
   const handleChangeImage = async (fileItems: FilePondFile[]) => {
-    setImage(fileItems, setValue);
+    setImage({
+      fileItems,
+      setValue: form.setValue,
+      name: 'business.logoUrl',
+    });
   };
 
   const onSubmit = handleSubmit(async (data) => {

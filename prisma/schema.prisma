@@ -96,9 +96,9 @@ model TeamMember {
 model BusinessHours {
   id         String   @id @default(cuid())
   businessId String
-  dayOfWeek  String // 0-6 (Sunday-Saturday)
-  openTime   DateTime @db.Time()
-  closeTime  DateTime @db.Time()
+  dayOfWeek  String[] // 0-6 (Sunday-Saturday)
+  openTime   String
+  closeTime  String
   isClosed   Boolean  @default(false)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
@@ -112,9 +112,9 @@ model BusinessHours {
 model BreakTime {
   id         String   @id @default(cuid())
   businessId String
-  dayOfWeek  String // 0-6 (Sunday-Saturday)
-  startTime  DateTime @db.Time()
-  endTime    DateTime @db.Time()
+  dayOfWeek  String[] // 0-6 (Sunday-Saturday)
+  startTime  String
+  endTime    String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 

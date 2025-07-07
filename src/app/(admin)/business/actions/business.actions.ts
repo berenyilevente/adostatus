@@ -33,6 +33,8 @@ export const createBusiness = async (
       data: { ...breakTimes, businessId: businessResult.id },
     });
 
+    revalidatePath('/business');
+
     return businessResult;
   });
 

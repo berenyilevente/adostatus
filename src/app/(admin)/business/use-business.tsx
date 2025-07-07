@@ -30,6 +30,7 @@ const useHook = ({ businessData }: HookProp) => {
     resolver: zodResolver(CreateBusinessSchema),
     defaultValues: {
       business: {
+        ownerId: '',
         businessType: '',
         name: '',
         description: '',
