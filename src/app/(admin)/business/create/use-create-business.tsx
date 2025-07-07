@@ -17,6 +17,7 @@ import {
   ServicesSchema,
 } from '../business.helper';
 import { createBusiness } from '../actions/business.actions';
+import { useSession } from 'next-auth/react';
 
 const useHook = () => {
   const router = useRouter();
@@ -26,12 +27,19 @@ const useHook = () => {
     resolver: zodResolver(CreateBusinessSchema),
     defaultValues: {
       business: {
+        ownerId: '',
         businessType: '',
         name: '',
         description: '',
         logoUrl: '',
         primaryColor: '#000000',
         isActive: true,
+      },
+      businessHours: {
+        businessId: '',
+      },
+      breakTimes: {
+        businessId: '',
       },
     },
   });
@@ -47,6 +55,7 @@ const useHook = () => {
   const onSubmit = form.handleSubmit(async (data) => {
     setIsLoading(true);
     await createBusiness(data);
+    router.push('/business');
     setIsLoading(false);
   });
 

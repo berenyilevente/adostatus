@@ -28,7 +28,6 @@ type BusinessHours = Omit<BusinessHoursTable, 'id' | 'createdAt' | 'updatedAt'>;
 
 export const BusinessHoursSchema: z.ZodType<BusinessHours> = z.object({
   businessId: z.string(),
-  isClosed: z.boolean(),
   dayOfWeek: z.array(z.string()),
   openTime: z.string(),
   closeTime: z.string(),

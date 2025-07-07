@@ -99,7 +99,6 @@ model BusinessHours {
   dayOfWeek  String[] // 0-6 (Sunday-Saturday)
   openTime   String
   closeTime  String
-  isClosed   Boolean  @default(false)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
