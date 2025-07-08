@@ -23,36 +23,16 @@ import { useEditTeamMember } from './use-edit-teamMember';
 import { teamMemberRoles } from '../teamMember.helper';
 
 const EditTeamMember = () => {
-  const { form, onSubmit, isLoading, handleCancel, teamMember } =
-    useEditTeamMember();
-
-  const getInitials = (name: string | null) => {
-    if (!name) return 'U';
-    return name
-      .split(' ')
-      .map((n) => n[0])
-      .join('')
-      .toUpperCase()
-      .slice(0, 2);
-  };
-
-  const getRoleLabel = (role: string) => {
-    const roleOption = teamMemberRoles.find((r) => r.value === role);
-    return roleOption ? roleOption.label : role;
-  };
-
-  const getRoleColor = (role: string) => {
-    switch (role) {
-      case 'admin':
-        return 'bg-red-100 text-red-800';
-      case 'manager':
-        return 'bg-blue-100 text-blue-800';
-      case 'staff':
-        return 'bg-green-100 text-green-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
-    }
-  };
+  const {
+    form,
+    onSubmit,
+    isLoading,
+    handleCancel,
+    teamMember,
+    getInitials,
+    getRoleColor,
+    getRoleLabel,
+  } = useEditTeamMember();
 
   if (!teamMember) {
     return (
@@ -81,7 +61,9 @@ const EditTeamMember = () => {
           </Button>
         </div>
         <div className="flex items-center space-x-2">
-          <h1 className="text-2xl font-bold text-gray-900">Edit Team Member</h1>
+          <Button onClick={onSubmit} className="w-full" disabled={isLoading}>
+            {isLoading ? 'Saving...' : 'Save Changes'}
+          </Button>
         </div>
       </div>
 
@@ -94,7 +76,7 @@ const EditTeamMember = () => {
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
                   <User className="h-5 w-5" />
-                  <span>Team Member Information</span>
+                  <span>Information</span>
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -140,7 +122,7 @@ const EditTeamMember = () => {
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
                   <Shield className="h-5 w-5" />
-                  <span>Team Member Profile</span>
+                  <span>Profile</span>
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -190,30 +172,6 @@ const EditTeamMember = () => {
                     </div>
                   )}
                 </div>
-              </CardContent>
-            </Card>
-
-            {/* Actions */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Actions</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <Button
-                  variant="outline"
-                  onClick={handleCancel}
-                  className="w-full"
-                  disabled={isLoading}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  onClick={onSubmit}
-                  className="w-full"
-                  disabled={isLoading}
-                >
-                  {isLoading ? 'Saving...' : 'Save Changes'}
-                </Button>
               </CardContent>
             </Card>
           </div>

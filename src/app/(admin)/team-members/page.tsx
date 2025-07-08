@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 
 import { TeamMember, User } from '@/generated/prisma';
 
-import { TeamMemberTable } from './TeamMemberList';
+import { TeamMemberList } from './TeamMemberList';
 import { TeamMembersProvider } from './use-teamMembers';
 import { getTeamMembers } from './actions/teamMember.actions';
 import { PageTitle } from '../components';
@@ -32,7 +32,7 @@ const TeamMembers = async () => {
         breadcrumbs={[{ label: 'TeamMembers', active: true }]}
       />
       <div className="mt-5">
-        <TeamMemberTable />
+        <TeamMemberList />
       </div>
     </TeamMembersProvider>
   );

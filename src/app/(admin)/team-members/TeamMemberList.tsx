@@ -29,7 +29,7 @@ import { useTeamMembers } from './use-teamMembers';
 import { deleteTeamMember } from './actions/teamMember.actions';
 import { teamMemberRoles } from './teamMember.helper';
 
-export const TeamMemberTable = () => {
+export const TeamMemberList = () => {
   const router = useRouter();
   const { teamMembers, filterForm } = useTeamMembers();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -98,7 +98,7 @@ export const TeamMemberTable = () => {
     <>
       <Card className="bg-white">
         <CardContent className="p-0">
-          <div className="flex justify-between items-center p-6 border-b">
+          <div className="flex justify-between items-center px-3 py-1 border-b">
             <TableSearch filterForm={filterForm} />
 
             <div className="flex items-center gap-1">
