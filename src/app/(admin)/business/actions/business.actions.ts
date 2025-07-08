@@ -153,12 +153,31 @@ export const updateService = async (
     data: service,
   });
 
-  revalidatePath(`/business/show/${service.businessId}`);
+  revalidatePath(`/business/${service.businessId}`);
 
   return handleResponse<Service>({
     data: serviceResult,
     code: 404,
     error: 'Service update failed',
+  });
+};
+
+export const deleteService = async (
+  id: string,
+  businessId: string
+): Promise<Response<Service>> => {
+  await isAuthenticated();
+
+  const serviceResult = await prisma.service.delete({
+    where: { id },
+  });
+
+  revalidatePath(`/business/${businessId}`);
+
+  return handleResponse<Service>({
+    data: serviceResult,
+    code: 404,
+    error: 'Service deletion failed',
   });
 };
 
