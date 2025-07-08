@@ -1,13 +1,19 @@
-import { TeamMember } from '@/generated/prisma';
+import { TeamMember, User } from '@/generated/prisma';
 import prisma from '@/lib/prisma/client';
 import { Response } from '@/types/action.types';
 import { handleResponse } from '@/utils/handleResponse';
 import { isAuthenticated } from '@/utils/isAuthenticated';
 
-export async function getTeamMembers(): Promise<Response<TeamMember[]>> {
+export async function getTeamMembers(): Promise<
+  Response<(TeamMember & { user: User })[]>
+> {
   await isAuthenticated();
 
-  const teamMembers = await prisma.teamMember.findMany();
+  const teamMembers = await prisma.teamMember.findMany({
+    include: {
+      user: true,
+    },
+  });
 
   return handleResponse({
     data: teamMembers,

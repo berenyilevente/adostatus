@@ -18,7 +18,7 @@ import { useTeamMembers } from './use-teamMembers';
 
 export const TeamMemberTable = () => {
   const router = useRouter();
-  const { table, filterForm } = useTeamMembers();
+  const { teamMembers, filterForm } = useTeamMembers();
 
   return (
     <Card className="bg-white">
@@ -27,15 +27,6 @@ export const TeamMemberTable = () => {
           <TableSearch filterForm={filterForm} />
 
           <div className="flex items-center gap-1 mx-4">
-            {table.getSelectedRowModel().rows.length > 0 && (
-              <Button
-                endIcon="trash"
-                size="sm"
-                iconSize="xs"
-                variant="ghost"
-                color="secondary"
-              />
-            )}
             <Button
               startIcon="plus"
               size="sm"
@@ -44,16 +35,15 @@ export const TeamMemberTable = () => {
               color="primary"
               onClick={() => router.push('/team-members/create')}
             >
-              Create TeamMember
+              Add TeamMember
             </Button>
           </div>
         </div>
-
-        <Table>
-          <TableHeader table={table} />
-          <TableBody table={table} />
-        </Table>
-        <TablePagination table={table} />
+        <div>
+          {teamMembers.map((teamMember) => (
+            <div key={teamMember.id}>{teamMember.user.name}</div>
+          ))}
+        </div>
       </CardContent>
     </Card>
   );

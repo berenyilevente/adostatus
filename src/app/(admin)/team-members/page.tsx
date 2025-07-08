@@ -1,34 +1,35 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
-import { TeamMember } from "@/generated/prisma";
+import { TeamMember, User } from '@/generated/prisma';
 
-import { TeamMemberTable } from "./TeamMemberTable";
-import { TeamMembersProvider } from "./use-teamMembers";
-import { getTeamMembers } from "./actions/teamMember.actions";
-import { PageTitle } from "../components";
+import { TeamMemberTable } from './TeamMemberList';
+import { TeamMembersProvider } from './use-teamMembers';
+import { getTeamMembers } from './actions/teamMember.actions';
+import { PageTitle } from '../components';
 
 export const metadata: Metadata = {
-  title: "TeamMembers",
+  title: 'TeamMembers',
 };
 
 const TeamMembers = async () => {
-  let teamMembers: TeamMember[] = [];
+  let teamMembers: (TeamMember & { user: User })[] = [];
+
   const rTeamMembers = await getTeamMembers();
 
   if (rTeamMembers === null) {
     return notFound();
   }
 
-  if (rTeamMembers.status === "success" && rTeamMembers.data) {
+  if (rTeamMembers.status === 'success' && rTeamMembers.data) {
     teamMembers = rTeamMembers.data;
   }
 
   return (
-    <TeamMembersProvider teamMembersData={teamMembers}>
+    <TeamMembersProvider teamMembers={teamMembers}>
       <PageTitle
-        title={"TeamMembers"}
-        breadcrumbs={[{ label: "TeamMembers", active: true }]}
+        title={'TeamMembers'}
+        breadcrumbs={[{ label: 'TeamMembers', active: true }]}
       />
       <div className="mt-5">
         <TeamMemberTable />
@@ -37,4 +38,4 @@ const TeamMembers = async () => {
   );
 };
 
-export default TeamMembers; 
+export default TeamMembers;
