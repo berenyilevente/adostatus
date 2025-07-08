@@ -29,6 +29,8 @@ const useHook = ({ business, services }: HookProp) => {
   const { id: businessId } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [isServicesModalOpen, setIsServicesModalOpen] = useState(false);
+  const [isEditServiceModalOpen, setIsEditServiceModalOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState<Service | null>(null);
 
   const servicesForm = useForm<ServicesForm>({
     resolver: zodResolver(ServicesSchema),
@@ -52,6 +54,16 @@ const useHook = ({ business, services }: HookProp) => {
     servicesForm.reset();
     setIsServicesModalOpen(false);
   });
+
+  const handleEditService = (service: Service) => {
+    setSelectedService(service);
+    setIsEditServiceModalOpen(true);
+  };
+
+  const handleServiceUpdated = () => {
+    // Refresh the page to get updated data
+    router.refresh();
+  };
 
   const handleCancel = () => {
     router.back();
@@ -101,6 +113,11 @@ const useHook = ({ business, services }: HookProp) => {
     services,
     isServicesModalOpen,
     setIsServicesModalOpen,
+    isEditServiceModalOpen,
+    setIsEditServiceModalOpen,
+    selectedService,
+    handleEditService,
+    handleServiceUpdated,
     getBusinessTypeLabel,
     formatTime,
     getDayLabel,

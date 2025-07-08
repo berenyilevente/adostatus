@@ -3,11 +3,6 @@
 import React from 'react';
 import {
   Clock,
-  MapPin,
-  Phone,
-  Mail,
-  Globe,
-  Palette,
   Building2,
   Calendar,
   Coffee,
@@ -22,11 +17,7 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-  Badge,
   Separator,
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
   TextField,
   StatusField,
   ColorField,
@@ -34,11 +25,11 @@ import {
 } from '@/components';
 
 import { useShowBusiness } from './use-show-business';
-import { businessTypes } from '../../business.helper';
 import { useRouter } from 'next/navigation';
 import { formatCurrency } from '@/utils/formatCurrency';
 import { CurrencyField } from '@/components/ui/currency-field';
 import { AddServiceDialog } from '../../components/AddServiceDialog';
+import { EditServiceDialog } from '../../components/EditServiceDialog';
 import { BusinessHeader } from '../../components/BusinessHeader';
 
 const ShowBusiness = () => {
@@ -51,6 +42,11 @@ const ShowBusiness = () => {
     formatTime,
     getDayLabel,
     formatDuration,
+    isEditServiceModalOpen,
+    setIsEditServiceModalOpen,
+    selectedService,
+    handleEditService,
+    handleServiceUpdated,
   } = useShowBusiness();
 
   return (
@@ -268,7 +264,8 @@ const ShowBusiness = () => {
                   {services.map((service) => (
                     <div
                       key={service.id}
-                      className="border rounded-lg p-4 hover:bg-gray-50 transition-colors"
+                      className="border rounded-lg p-4 hover:bg-gray-50 transition-colors cursor-pointer"
+                      onClick={() => handleEditService(service)}
                     >
                       <div className="flex items-start justify-between">
                         <div className="flex items-center space-x-3">
@@ -309,6 +306,16 @@ const ShowBusiness = () => {
           </Card>
         </div>
       </div>
+
+      {/* Edit Service Dialog */}
+      {selectedService && (
+        <EditServiceDialog
+          service={selectedService}
+          isOpen={isEditServiceModalOpen}
+          onOpenChange={setIsEditServiceModalOpen}
+          onServiceUpdated={handleServiceUpdated}
+        />
+      )}
     </div>
   );
 };

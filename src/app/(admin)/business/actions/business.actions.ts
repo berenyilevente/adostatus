@@ -142,6 +142,26 @@ export const createService = async (
   });
 };
 
+export const updateService = async (
+  id: string,
+  service: any
+): Promise<Response<Service>> => {
+  await isAuthenticated();
+
+  const serviceResult = await prisma.service.update({
+    where: { id },
+    data: service,
+  });
+
+  revalidatePath(`/business/show/${service.businessId}`);
+
+  return handleResponse<Service>({
+    data: serviceResult,
+    code: 404,
+    error: 'Service update failed',
+  });
+};
+
 export const deleteBusiness = async (
   id: string
 ): Promise<Response<Business>> => {
