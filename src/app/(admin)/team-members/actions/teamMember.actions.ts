@@ -1,9 +1,13 @@
+'use server';
+
 import { TeamMember, User } from '@/generated/prisma';
 import prisma from '@/lib/prisma/client';
 import { Response } from '@/types/action.types';
 import { handleResponse } from '@/utils/handleResponse';
 import { isAuthenticated } from '@/utils/isAuthenticated';
+import { revalidatePath } from 'next/cache';
 
+// TODO Explore an option to turn actions into a single class or function
 export async function getTeamMembers(): Promise<
   Response<(TeamMember & { user: User })[]>
 > {
@@ -22,12 +26,17 @@ export async function getTeamMembers(): Promise<
   });
 }
 
-export async function getTeamMember(id: string): Promise<Response<TeamMember>> {
+export async function getTeamMember(
+  id: string
+): Promise<Response<TeamMember & { user: User }>> {
   await isAuthenticated();
 
   const teamMember = await prisma.teamMember.findUnique({
     where: {
       id,
+    },
+    include: {
+      user: true,
     },
   });
 
@@ -40,25 +49,54 @@ export async function getTeamMember(id: string): Promise<Response<TeamMember>> {
 
 export async function createTeamMember(
   data: Partial<TeamMember>
-): Promise<TeamMember> {
+): Promise<Response<TeamMember>> {
   await isAuthenticated();
 
-  // Implementation here
-  return {} as TeamMember;
+  const teamMember = await prisma.teamMember.create({
+    data: data as any,
+  });
+
+  revalidatePath('/team-members');
+
+  return handleResponse({
+    data: teamMember,
+    error: 'Failed to create team member',
+    code: 400,
+  });
 }
 
 export async function updateTeamMember(
   id: string,
   data: Partial<TeamMember>
-): Promise<TeamMember> {
+): Promise<Response<TeamMember>> {
   await isAuthenticated();
 
-  // Implementation here
-  return {} as TeamMember;
+  const teamMember = await prisma.teamMember.update({
+    where: { id },
+    data: data as any,
+  });
+
+  revalidatePath('/team-members');
+
+  return handleResponse({
+    data: teamMember,
+    error: 'Failed to update team member',
+    code: 400,
+  });
 }
 
-export async function deleteTeamMember(id: string): Promise<void> {
+export async function deleteTeamMember(id: string): Promise<Response<void>> {
   await isAuthenticated();
 
-  // Implementation here
+  await prisma.teamMember.delete({
+    where: { id },
+  });
+
+  revalidatePath('/team-members');
+
+  return handleResponse({
+    data: undefined,
+    error: 'Failed to delete team member',
+    code: 400,
+  });
 }

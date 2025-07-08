@@ -1,14 +1,16 @@
 import { z } from 'zod';
 
-import { TeamMember as TeamMemberTable } from '@/generated/prisma';
-
-type CreateTeamMemberType = Omit<
-  TeamMemberTable,
-  'id' | 'createdAt' | 'updatedAt'
->;
-
-export const TeamMemberSchema: z.ZodType<CreateTeamMemberType> = z.object({
-  // Add fields here based on the TeamMemberTable type definition
+export const TeamMemberSchema = z.object({
+  businessId: z.string().min(1, 'Business ID is required'),
+  userId: z.string().min(1, 'User ID is required'),
+  role: z.string().min(1, 'Role is required'),
+  isActive: z.boolean().default(true),
 });
 
 export type TeamMemberSchemaType = z.infer<typeof TeamMemberSchema>;
+
+export const teamMemberRoles = [
+  { label: 'Admin', value: 'admin' },
+  { label: 'Manager', value: 'manager' },
+  { label: 'Staff', value: 'staff' },
+];

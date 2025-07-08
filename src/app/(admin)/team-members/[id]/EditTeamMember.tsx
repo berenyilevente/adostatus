@@ -1,6 +1,7 @@
-"use client";
+'use client';
 
-import React from "react";
+import React from 'react';
+import { ArrowLeft, User, Shield, ToggleLeft } from 'lucide-react';
 
 import {
   Button,
@@ -9,62 +10,217 @@ import {
   CardTitle,
   CardHeader,
   FormWrapper,
-} from "@/components";
+  FormInput,
+  FormSelect,
+  FormSwitch,
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  Badge,
+} from '@/components';
 
-import { useEditTeamMember } from "./use-edit-teamMember";
+import { useEditTeamMember } from './use-edit-teamMember';
+import { teamMemberRoles } from '../teamMember.helper';
 
 const EditTeamMember = () => {
-  const {
-    form,
-    onSubmit,
-    isLoading,
-    handleCancel,
-  } = useEditTeamMember();
+  const { form, onSubmit, isLoading, handleCancel, teamMember } =
+    useEditTeamMember();
+
+  const getInitials = (name: string | null) => {
+    if (!name) return 'U';
+    return name
+      .split(' ')
+      .map((n) => n[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
+  };
+
+  const getRoleLabel = (role: string) => {
+    const roleOption = teamMemberRoles.find((r) => r.value === role);
+    return roleOption ? roleOption.label : role;
+  };
+
+  const getRoleColor = (role: string) => {
+    switch (role) {
+      case 'admin':
+        return 'bg-red-100 text-red-800';
+      case 'manager':
+        return 'bg-blue-100 text-blue-800';
+      case 'staff':
+        return 'bg-green-100 text-green-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  if (!teamMember) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-500">Loading team member...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <FormWrapper form={form}>
-      <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
-        <Card className="bg-base-100">
-          <CardHeader>
-            <CardTitle>Title here</CardTitle>
-          </CardHeader>
-          <CardContent className="gap-0">
-            <div>
-              Content here
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-base-100">
-          <CardHeader>
-            <CardTitle>Title here</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div>Content here</div>
-          </CardContent>
-        </Card>
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-4">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleCancel}
+            className="flex items-center space-x-2"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            <span>Back to Team Members</span>
+          </Button>
+        </div>
+        <div className="flex items-center space-x-2">
+          <h1 className="text-2xl font-bold text-gray-900">Edit Team Member</h1>
+        </div>
       </div>
-      <div className="mt-6 flex justify-end gap-6">
-        <Button
-          variant="outline"
-          size="sm"
-          className="bg-base-content/10"
-          onClick={handleCancel}
-          startIcon="close"
-        >
-          Cancel
-        </Button>
-        <Button
-          color="primary"
-          size="sm"
-          onClick={onSubmit}
-          startIcon="plus"
-          isLoading={isLoading}
-        >
-          Save
-        </Button>
-      </div>
-    </FormWrapper>
+
+      <FormWrapper form={form}>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Main Form */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Team Member Information */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <User className="h-5 w-5" />
+                  <span>Team Member Information</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <FormInput
+                    control={form.control}
+                    label="Business ID"
+                    name="businessId"
+                    placeholder="Enter business ID"
+                    disabled
+                  />
+                  <FormInput
+                    control={form.control}
+                    label="User ID"
+                    name="userId"
+                    placeholder="Enter user ID"
+                    disabled
+                  />
+                </div>
+
+                <FormSelect
+                  control={form.control}
+                  label="Role"
+                  name="role"
+                  placeholder="Select role"
+                  options={teamMemberRoles}
+                />
+
+                <FormSwitch
+                  control={form.control}
+                  label="Active Status"
+                  name="isActive"
+                  description="Enable or disable this team member's access"
+                />
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Sidebar */}
+          <div className="space-y-6">
+            {/* Team Member Profile */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Shield className="h-5 w-5" />
+                  <span>Team Member Profile</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center space-x-4">
+                  <Avatar className="h-16 w-16">
+                    <AvatarImage src={teamMember.user?.image || undefined} />
+                    <AvatarFallback className="bg-blue-100 text-blue-600 text-lg">
+                      {getInitials(teamMember.user?.name)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      {teamMember.user?.name || 'Unnamed User'}
+                    </h3>
+                    <p className="text-sm text-gray-500">
+                      {teamMember.user?.email || 'No email'}
+                    </p>
+                    <div className="mt-2">
+                      <Badge className={getRoleColor(teamMember.role)}>
+                        {getRoleLabel(teamMember.role)}
+                      </Badge>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Status:</span>
+                    <Badge
+                      variant={teamMember.isActive ? 'default' : 'secondary'}
+                    >
+                      {teamMember.isActive ? 'Active' : 'Inactive'}
+                    </Badge>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Joined:</span>
+                    <span className="text-gray-900">
+                      {new Date(teamMember.createdAt).toLocaleDateString()}
+                    </span>
+                  </div>
+                  {teamMember.user?.phone && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">Phone:</span>
+                      <span className="text-gray-900">
+                        {teamMember.user.phone}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Actions */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Actions</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <Button
+                  variant="outline"
+                  onClick={handleCancel}
+                  className="w-full"
+                  disabled={isLoading}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onClick={onSubmit}
+                  className="w-full"
+                  disabled={isLoading}
+                >
+                  {isLoading ? 'Saving...' : 'Save Changes'}
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </FormWrapper>
+    </div>
   );
 };
 
-export { EditTeamMember }; 
+export { EditTeamMember };
