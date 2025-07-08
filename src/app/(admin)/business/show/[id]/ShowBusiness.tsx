@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { format } from 'date-fns';
 import {
   Clock,
   MapPin,
@@ -40,75 +39,24 @@ import { useRouter } from 'next/navigation';
 import { formatCurrency } from '@/utils/formatCurrency';
 import { CurrencyField } from '@/components/ui/currency-field';
 import { AddServiceDialog } from '../../components/AddServiceDialog';
+import { BusinessHeader } from '../../components/BusinessHeader';
 
 const ShowBusiness = () => {
-  const { business, services, handleCancel } = useShowBusiness();
   const router = useRouter();
-
-  const getBusinessTypeLabel = (type: string | null) => {
-    if (!type) {
-      return 'Not specified';
-    }
-    const found = businessTypes.find((t) => t.value === type);
-
-    return found ? found.label : type;
-  };
-
-  const formatTime = (time: string) => {
-    return format(new Date(`2000-01-01T${time}`), 'h:mm a');
-  };
-
-  const getDayLabel = (dayNumber: string) => {
-    const days = [
-      'Sunday',
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-    ];
-    return days[parseInt(dayNumber)] || dayNumber;
-  };
-
-  const formatDuration = (minutes: string | null) => {
-    if (!minutes) return 'Not specified';
-    const mins = parseInt(minutes);
-    if (mins < 60) return `${mins} min`;
-    const hours = Math.floor(mins / 60);
-    const remainingMins = mins % 60;
-    return remainingMins > 0 ? `${hours}h ${remainingMins}m` : `${hours}h`;
-  };
+  const {
+    business,
+    services,
+    handleCancel,
+    getBusinessTypeLabel,
+    formatTime,
+    getDayLabel,
+    formatDuration,
+  } = useShowBusiness();
 
   return (
     <div className="space-y-6">
-      {/* Header Section */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4">
-          <div className="relative">
-            <Avatar className="h-16 w-16">
-              <AvatarImage
-                src={business.logoUrl || undefined}
-                alt={business.name}
-              />
-              <AvatarFallback className="text-lg font-semibold">
-                {business.name
-                  .split(' ')
-                  .map((n) => n[0])
-                  .join('')
-                  .toUpperCase()}
-              </AvatarFallback>
-            </Avatar>
-          </div>
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">
-              {business.name}
-            </h1>
-            <p className="text-gray-600">
-              {business.description || 'No description provided'}
-            </p>
-          </div>
-        </div>
+        <BusinessHeader />
         <div className="flex items-center space-x-3">
           <div className="flex justify-end space-x-3 pt-6">
             <Button variant="outline" onClick={handleCancel}>
