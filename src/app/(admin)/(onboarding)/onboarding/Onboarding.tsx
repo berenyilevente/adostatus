@@ -38,7 +38,7 @@ export const Onboarding = () => {
               placeholder="Enter your business name"
               required
             />
-            <div className="filepond-file-upload space-y-2">
+            <div className="space-y-2">
               <Label>Business Logo</Label>
               <FileInput
                 onupdatefiles={() => {}}

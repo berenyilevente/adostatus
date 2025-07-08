@@ -67,3 +67,6 @@ export * from './ui/text-field';
 export * from './ui/status-field';
 export * from './ui/color-field';
 export * from './ui/date-field';
+export * from './ui/avatar-input';
+export * from './ui/currency-field';
+export * from './ui/dialog';

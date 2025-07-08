@@ -11,12 +11,9 @@ import { createAppContext } from '@/hooks/use-create-app-context';
 import {
   CreateBusinessForm,
   CreateBusinessSchema,
-  ServicesForm,
-  ServicesSchema,
 } from '../../business.helper';
 import { setImage } from '@/utils/image';
 import { Business, Service } from '@/generated/prisma';
-import { createService } from '../../actions/business.actions';
 
 type HookProp = {
   business: Business;
@@ -27,7 +24,6 @@ const useHook = ({ business, services }: HookProp) => {
   const router = useRouter();
   const { id: businessId } = useParams();
   const [isLoading, setIsLoading] = useState(false);
-  const [isServicesModalOpen, setIsServicesModalOpen] = useState(false);
 
   const businessForm = useForm<CreateBusinessForm>({
     resolver: zodResolver(CreateBusinessSchema),
@@ -43,24 +39,6 @@ const useHook = ({ business, services }: HookProp) => {
     },
   });
 
-  const servicesForm = useForm<ServicesForm>({
-    resolver: zodResolver(ServicesSchema),
-    defaultValues: {
-      businessId: businessId?.toString(),
-      name: '',
-      description: '',
-      isActive: true,
-      currency: '',
-      duration: '',
-      bufferTime: '',
-      price: '',
-      color: null,
-      formId: null,
-    },
-  });
-
-  console.log(businessForm.watch('business.logoUrl'));
-
   const handleChangeImage = (fileItems: FilePondFile[]) => {
     setImage({
       fileItems,
@@ -68,13 +46,6 @@ const useHook = ({ business, services }: HookProp) => {
       name: 'business.logoUrl',
     });
   };
-
-  const onServicesSubmit = servicesForm.handleSubmit(async (data) => {
-    await createService(data);
-
-    servicesForm.reset();
-    setIsServicesModalOpen(false);
-  });
 
   const onBusinessSubmit = businessForm.handleSubmit(async (data) => {
     if (!businessId) {
@@ -96,11 +67,7 @@ const useHook = ({ business, services }: HookProp) => {
     handleCancel,
     handleChangeImage,
     isLoading,
-    servicesForm,
-    onServicesSubmit,
     services,
-    isServicesModalOpen,
-    setIsServicesModalOpen,
   };
 };
 

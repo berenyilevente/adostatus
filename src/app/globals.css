@@ -39,6 +39,7 @@ input:-webkit-autofill:active {
 .topbar {
   background: var(--topbar-background);
 }
+
 @layer base {
   :root {
     --background: 0 0% 100%;

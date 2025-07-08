@@ -37,6 +37,9 @@ import {
 import { useShowBusiness } from './use-show-business';
 import { businessTypes } from '../../business.helper';
 import { useRouter } from 'next/navigation';
+import { formatCurrency } from '@/utils/formatCurrency';
+import { CurrencyField } from '@/components/ui/currency-field';
+import { AddServiceDialog } from '../../components/AddServiceDialog';
 
 const ShowBusiness = () => {
   const { business, services, handleCancel } = useShowBusiness();
@@ -66,18 +69,6 @@ const ShowBusiness = () => {
       'Saturday',
     ];
     return days[parseInt(dayNumber)] || dayNumber;
-  };
-
-  const formatCurrency = (price: string, currency: string | null) => {
-    const currencySymbol =
-      currency === 'USD'
-        ? '$'
-        : currency === 'EUR'
-          ? '€'
-          : currency === 'GBP'
-            ? '£'
-            : '$';
-    return `${currencySymbol}${parseFloat(price || '0').toFixed(2)}`;
   };
 
   const formatDuration = (minutes: string | null) => {
@@ -136,103 +127,94 @@ const ShowBusiness = () => {
         {/* Main Business Information */}
         <div className="lg:col-span-2 space-y-6">
           {/* Business Details Card */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <Building2 className="h-5 w-5" />
-                <span>Business Information</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <TextField
-                  label="Business Type"
-                  value={getBusinessTypeLabel(business.businessType)}
-                />
-                <StatusField
-                  value={business.isActive ? 'active' : 'inactive'}
-                />
-                <ColorField
-                  value={business.primaryColor || '#6B7280'}
-                  className="w-full"
-                />
-                <DateField value={business.createdAt} />
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Services Card */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <DollarSign className="h-5 w-5" />
-                <span>Services ({services.length})</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {services.length === 0 ? (
-                <div className="text-center py-8 text-gray-500">
-                  <DollarSign className="h-12 w-12 mx-auto mb-4 text-gray-300" />
-                  <p>No services configured yet</p>
+          <div className="flex flex-row w-full gap-4">
+            <Card className="w-full">
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Building2 className="h-5 w-5" />
+                  <span>Business Information</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <TextField
+                    label="Business Type"
+                    value={getBusinessTypeLabel(business.businessType)}
+                  />
+                  <StatusField
+                    value={business.isActive ? 'active' : 'inactive'}
+                  />
+                  <ColorField
+                    value={business.primaryColor || '#6B7280'}
+                    className="w-full"
+                  />
+                  <DateField value={business.createdAt} />
                 </div>
-              ) : (
-                <div className="space-y-4">
-                  {services.map((service) => (
-                    <div
-                      key={service.id}
-                      className="border rounded-lg p-4 hover:bg-gray-50 transition-colors"
-                    >
-                      <div className="flex items-start justify-between">
-                        <div className="flex items-center space-x-3">
-                          <div
-                            className="h-4 w-4 rounded-full"
-                            style={{
-                              backgroundColor: service.color || '#6B7280',
-                            }}
-                          />
-                          <div>
-                            <h3 className="font-semibold text-gray-900">
-                              {service.name}
-                            </h3>
-                            <p className="text-sm text-gray-600">
-                              {service.description || 'No description'}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-semibold text-gray-900">
-                            {formatCurrency(
-                              service.price || '0',
-                              service.currency
-                            )}
-                          </p>
-                          <p className="text-sm text-gray-500">
-                            {formatDuration(service.duration)}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="mt-3 flex items-center space-x-4 text-sm text-gray-500">
-                        {service.bufferTime && (
-                          <span>
-                            Buffer: {formatDuration(service.bufferTime)}
-                          </span>
-                        )}
-                        <Badge
-                          variant={service.isActive ? 'default' : 'secondary'}
-                        >
-                          {service.isActive ? 'Active' : 'Inactive'}
-                        </Badge>
-                      </div>
-                    </div>
-                  ))}
+              </CardContent>
+            </Card>
+            <Card className="w-full">
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Users className="h-5 w-5" />
+                  <span>Quick Stats</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="text-center p-3 bg-blue-50 rounded-lg">
+                    <p className="text-2xl font-bold text-blue-600">
+                      {services.length}
+                    </p>
+                    <p className="text-sm text-blue-600">Services</p>
+                  </div>
+                  <div className="text-center p-3 bg-green-50 rounded-lg">
+                    <p className="text-2xl font-bold text-green-600">
+                      {services.filter((s) => s.isActive).length}
+                    </p>
+                    <p className="text-sm text-green-600">Active</p>
+                  </div>
                 </div>
-              )}
-            </CardContent>
-          </Card>
-        </div>
+                <Separator />
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">
+                      Total Revenue Potential
+                    </span>
+                    <span className="font-medium">
+                      {formatCurrency(
+                        services
+                          .reduce(
+                            (sum, service) =>
+                              sum + parseFloat(service.price || '0'),
+                            0
+                          )
+                          .toString(),
+                        'USD'
+                      )}
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">Average Service Price</span>
+                    <span className="font-medium">
+                      {services.length > 0
+                        ? formatCurrency(
+                            (
+                              services.reduce(
+                                (sum, service) =>
+                                  sum + parseFloat(service.price || '0'),
+                                0
+                              ) / services.length
+                            ).toString(),
+                            'USD'
+                          )
+                        : '$0.00'}
+                    </span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
 
-        {/* Sidebar */}
-        <div className="space-y-6">
           {/* Business Hours Card */}
           <Card>
             <CardHeader>
@@ -312,65 +294,69 @@ const ShowBusiness = () => {
               )}
             </CardContent>
           </Card>
+        </div>
 
-          {/* Quick Stats Card */}
+        {/* Sidebar */}
+        <div className="space-y-6">
+          {/* Services Card */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
-                <Users className="h-5 w-5" />
-                <span>Quick Stats</span>
+                <div className="flex items-center space-x-2 w-full">
+                  <DollarSign className="h-5 w-5" />
+                  <span>Services ({services.length})</span>
+                </div>
+                <AddServiceDialog />
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="text-center p-3 bg-blue-50 rounded-lg">
-                  <p className="text-2xl font-bold text-blue-600">
-                    {services.length}
-                  </p>
-                  <p className="text-sm text-blue-600">Services</p>
+            <CardContent className="overflow-y-auto max-h-[500px]">
+              {services.length === 0 ? (
+                <div className="text-center py-8 text-gray-500">
+                  <DollarSign className="h-12 w-12 mx-auto mb-4 text-gray-300" />
+                  <p>No services configured yet</p>
                 </div>
-                <div className="text-center p-3 bg-green-50 rounded-lg">
-                  <p className="text-2xl font-bold text-green-600">
-                    {services.filter((s) => s.isActive).length}
-                  </p>
-                  <p className="text-sm text-green-600">Active</p>
+              ) : (
+                <div className="space-y-4">
+                  {services.map((service) => (
+                    <div
+                      key={service.id}
+                      className="border rounded-lg p-4 hover:bg-gray-50 transition-colors"
+                    >
+                      <div className="flex items-start justify-between">
+                        <div className="flex items-center space-x-3">
+                          <div>
+                            <h3 className="font-semibold text-gray-900">
+                              {service.name}
+                            </h3>
+                            <p className="text-sm text-gray-600">
+                              {service.description || 'No description'}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <CurrencyField
+                            price={service.price}
+                            currency={service.currency}
+                          />
+                          <p className="text-sm text-gray-500">
+                            {formatDuration(service.duration)}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="mt-3 flex items-center space-x-4 text-sm text-gray-500">
+                        {service.bufferTime && (
+                          <span>
+                            Buffer: {formatDuration(service.bufferTime)}
+                          </span>
+                        )}
+                        <StatusField
+                          value={service.isActive ? 'active' : 'inactive'}
+                        />
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              </div>
-              <Separator />
-              <div className="space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Total Revenue Potential</span>
-                  <span className="font-medium">
-                    {formatCurrency(
-                      services
-                        .reduce(
-                          (sum, service) =>
-                            sum + parseFloat(service.price || '0'),
-                          0
-                        )
-                        .toString(),
-                      'USD'
-                    )}
-                  </span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Average Service Price</span>
-                  <span className="font-medium">
-                    {services.length > 0
-                      ? formatCurrency(
-                          (
-                            services.reduce(
-                              (sum, service) =>
-                                sum + parseFloat(service.price || '0'),
-                              0
-                            ) / services.length
-                          ).toString(),
-                          'USD'
-                        )
-                      : '$0.00'}
-                  </span>
-                </div>
-              </div>
+              )}
             </CardContent>
           </Card>
         </div>

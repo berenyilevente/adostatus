@@ -4,10 +4,11 @@ import { Label } from '@radix-ui/react-label';
 
 interface StatusFieldProps {
   value: 'active' | 'inactive' | 'archived' | 'draft' | 'live';
+  label?: string;
   className?: string;
 }
 
-export const StatusField = ({ value, className }: StatusFieldProps) => {
+export const StatusField = ({ value, label, className }: StatusFieldProps) => {
   const statusColorMap = {
     active: 'bg-green-500 text-white',
     inactive: 'bg-red-500 text-white',
@@ -18,7 +19,7 @@ export const StatusField = ({ value, className }: StatusFieldProps) => {
 
   return (
     <div className={cn('flex flex-col space-y-1', className)}>
-      <Label className="text-sm font-medium text-gray-500">Status</Label>
+      <Label className="text-sm font-medium text-gray-500">{label}</Label>
       <Badge
         className={cn(
           statusColorMap[value as keyof typeof statusColorMap],

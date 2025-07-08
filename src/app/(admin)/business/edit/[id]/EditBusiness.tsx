@@ -24,6 +24,7 @@ import {
   DialogClose,
   CardDescription,
   FormSwitch,
+  AvatarInput,
 } from '@/components';
 
 import { useEditBusiness } from './use-edit-business';
@@ -35,25 +36,7 @@ import { useRouter } from 'next/navigation';
 
 const EditBusiness = () => {
   const router = useRouter();
-  const {
-    businessForm,
-    onBusinessSubmit,
-    isLoading,
-    servicesForm,
-    onServicesSubmit,
-    services,
-    isServicesModalOpen,
-    setIsServicesModalOpen,
-  } = useEditBusiness();
-
-  // TODO: create a supported currencies list
-  const currencies = [
-    { label: 'USD', value: 'usd' },
-    { label: 'EUR', value: 'eur' },
-    { label: 'GBP', value: 'gbp' },
-    { label: 'CAD', value: 'cad' },
-    { label: 'AUD', value: 'aud' },
-  ];
+  const { businessForm, onBusinessSubmit, services } = useEditBusiness();
 
   return (
     <FormWrapper form={businessForm} className="space-y-6">
@@ -93,10 +76,10 @@ const EditBusiness = () => {
                 placeholder="Tell us about your business..."
                 className="resize-none"
               />
-              <div className="filepond-file-upload">
-                <FileInput
+              <div>
+                <AvatarInput
                   onupdatefiles={() => {}}
-                  labelIdle={`<div>Add your business logo <span style="text-decoration: underline">Browse</span></div>`}
+                  labelIdle="Add your business logo"
                 />
               </div>
               <FormColorPicker
@@ -161,125 +144,6 @@ const EditBusiness = () => {
                     />
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Services */}
-          <div className="space-y-6">
-            <Card className="bg-white">
-              <CardHeader>
-                <CardTitle>Services</CardTitle>
-                <CardDescription>
-                  Configure your the services you offer.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6 gap-0">
-                <div className="space-y-2">
-                  {services.map((service, index) => (
-                    <Card className="bg-white" key={index}>
-                      <CardContent className="p-4">
-                        <div className="flex items-center justify-between gap-2">
-                          <div className="flex flex-col">
-                            <p className="text-sm font-medium">
-                              {service.name}
-                            </p>
-                            <p className="text-xs text-gray-500">
-                              {service.description}
-                            </p>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <p>{service.price}</p>
-                            <p>{service.currency}</p>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-                <Dialog open={isServicesModalOpen}>
-                  <DialogTrigger asChild>
-                    <Button
-                      size="icon"
-                      endIcon="plus"
-                      fullWidth
-                      onClick={() => setIsServicesModalOpen(true)}
-                    >
-                      Add Service
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <FormWrapper form={servicesForm} className="space-y-6">
-                      <DialogHeader>
-                        <DialogTitle>Add Service</DialogTitle>
-                      </DialogHeader>
-                      <FormInput
-                        control={servicesForm.control}
-                        label="Service Name"
-                        name="name"
-                        placeholder="Enter your service name"
-                      />
-                      <div className="grid grid-cols-2 gap-2">
-                        <FormInput
-                          control={servicesForm.control}
-                          label="Price"
-                          name="price"
-                          type="number"
-                          placeholder="Enter your service price"
-                        />
-                        <FormSelect
-                          control={servicesForm.control}
-                          label="Currency"
-                          name="currency"
-                          placeholder="Select your currency"
-                          options={currencies}
-                        />
-                      </div>
-                      <div className="grid grid-cols-2 gap-2">
-                        <FormSwitch
-                          control={servicesForm.control}
-                          label="Is Active"
-                          name="isActive"
-                        />
-                        <FormInput
-                          control={servicesForm.control}
-                          label="Duration"
-                          name="duration"
-                          placeholder="Enter your service duration"
-                        />
-                        <FormInput
-                          control={servicesForm.control}
-                          label="Buffer Time"
-                          name="bufferTime"
-                          placeholder="Enter your service buffer time"
-                        />
-                      </div>
-                      <FormTextarea
-                        control={servicesForm.control}
-                        label="Service Description"
-                        name="description"
-                        placeholder="Enter your service description"
-                        className="resize-none"
-                      />
-                      <DialogFooter>
-                        <DialogClose asChild>
-                          <Button
-                            variant="outline"
-                            onClick={() => {
-                              servicesForm.reset();
-                              setIsServicesModalOpen(false);
-                            }}
-                          >
-                            Cancel
-                          </Button>
-                        </DialogClose>
-                        <Button type="submit" onClick={onServicesSubmit}>
-                          Add Service
-                        </Button>
-                      </DialogFooter>
-                    </FormWrapper>
-                  </DialogContent>
-                </Dialog>
               </CardContent>
             </Card>
           </div>
