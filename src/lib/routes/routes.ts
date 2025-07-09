@@ -10,6 +10,7 @@ export const routes = {
       show: '/business/show',
     },
     teamMembers: { index: '/team-members', create: '/team-members/create' },
+    calendar: { index: '/calendar' },
   },
   auth: {
     login: '/api/auth/login',

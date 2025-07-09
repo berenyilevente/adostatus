@@ -26,4 +26,10 @@ export const adminMenuItems: IMenuItem[] = [
     label: 'Team Members',
     url: routes.admin.teamMembers.index,
   },
+  {
+    key: 'calendar',
+    icon: 'calendar',
+    label: 'Calendar',
+    url: routes.admin.calendar.index,
+  },
 ];
