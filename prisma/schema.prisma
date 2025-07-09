@@ -33,6 +33,7 @@ model User {
   teamMemberships      TeamMember[]
   calendarIntegrations CalendarIntegration[]
   subscriptions        Subscription[]
+  sentInvitations      TeamMemberInvitation[] @relation("Inviter")
 
   @@map("users")
 }
@@ -67,6 +68,7 @@ model Business {
   services      Service[]
   appointments  Appointment[]
   integrations  WebsiteIntegration[]
+  invitations   TeamMemberInvitation[]
 
   @@index([ownerId])
   @@index([businessType])
@@ -322,4 +324,25 @@ model SubscriptionLimits {
   subscription Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
 
   @@map("subscription_limits")
+}
+
+model TeamMemberInvitation {
+  id          String   @id @default(cuid())
+  businessId  String
+  email       String
+  role        String
+  invitedBy   String
+  token       String   @unique
+  expiresAt   DateTime
+  status      String   @default("pending") // pending, accepted, expired
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  inviter  User     @relation("Inviter", fields: [invitedBy], references: [id], onDelete: Cascade)
+
+  @@index([businessId])
+  @@index([email])
+  @@index([token])
+  @@map("team_member_invitations")
 }
