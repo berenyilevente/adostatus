@@ -17,7 +17,7 @@ export const AppointmentSchema: z.ZodType<Appointment> = z.object({
   status: z.string(),
   notes: z.string().nullable(),
   formData: z.string().nullable(),
-  color: z.string().nullable(),
+  backgroundColor: z.string().nullable(),
 });
 
 export type CreateAppointment = z.infer<typeof AppointmentSchema>;

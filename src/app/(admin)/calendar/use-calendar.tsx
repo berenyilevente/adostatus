@@ -46,7 +46,7 @@ const useHook = ({ businesses }: HookProp) => {
       description: '',
       status: '',
       notes: '',
-      color: '#000000',
+      backgroundColor: '#000000',
       formData: null,
     },
   });

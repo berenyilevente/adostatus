@@ -54,7 +54,7 @@ export function CalendarPage() {
     description: appointment.description,
     start: appointment.start,
     end: appointment.end,
-    backgroundColor: appointment.color ?? '#AEC6E4',
+    backgroundColor: appointment.backgroundColor ?? '#AEC6E4',
   }));
 
   const handleEventClick = (info: EventClickArg) => {

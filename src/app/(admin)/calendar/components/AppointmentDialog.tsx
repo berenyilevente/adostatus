@@ -93,7 +93,7 @@ export const AppointmentDialog = () => {
                   />
                   <FormColorPicker
                     control={appointmentForm.control}
-                    name="color"
+                    name="backgroundColor"
                     placeholder="Select Color"
                   />
                 </div>
