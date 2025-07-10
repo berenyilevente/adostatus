@@ -46,10 +46,10 @@ export const FormDateTimePicker = <
     <FormField
       control={control}
       name={name}
-      render={({ field }) => (
+      render={({ field, fieldState }) => (
         <FormItem>
           {label && <FormLabel>{label}</FormLabel>}
-          <FormControl>
+          <FormControl className={cn({ 'border-red-500': fieldState.error })}>
             <SmartDatetimeInput
               value={field.value as Date}
               onValueChange={field.onChange}

@@ -64,8 +64,6 @@ export function CalendarPage() {
     backgroundColor: '#AEC6E4',
   }));
 
-  console.log(appointments);
-
   const handleEventClick = (info: EventClickArg) => {
     const event: CalendarEvent = {
       id: info.event.id,

@@ -7,14 +7,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { Modifiers } from 'react-day-picker';
 import { Calendar } from '@/components/ui/calendar';
 import { Input } from '@/components/ui/input';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { Calendar as CalendarIcon, LucideTextCursorInput } from 'lucide-react';
+import { Calendar as CalendarIcon } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { format } from 'date-fns';
 
 /* -------------------------------------------------------------------------- */
 /*                               Inspired By:                                 */
@@ -93,7 +91,7 @@ export const formatDateTime = (datetime: Date | string) => {
 };
 
 const inputBase =
-  'bg-transparent focus:outline-none focus:ring-0 focus-within:outline-none focus-within:ring-0 sm:text-sm disabled:cursor-not-allowed disabled:opacity-50';
+  'bg-transparent focus:outline-none focus:ring-0 focus-within:outline-none focus-within:ring-0 sm:text-sm disabled:cursor-not-allowed shadow-none disabled:opacity-50';
 
 // @source: https://www.perplexity.ai/search/in-javascript-how-RfI7fMtITxKr5c.V9Lv5KA#1
 // use this pattern to validate the transformed date string for the natural language input
@@ -138,11 +136,6 @@ export const SmartDatetimeInput = React.forwardRef<
   > &
     SmartDatetimeInputProps & { modal?: boolean }
 >(({ className, value, onValueChange, placeholder, disabled, modal }, ref) => {
-  // ? refactor to be only used with controlled input
-  /*  const [dateTime, setDateTime] = React.useState<Date | undefined>(
-    value ?? undefined
-  ); */
-
   const [Time, setTime] = React.useState<string>('');
 
   const onTimeChange = React.useCallback((time: string) => {
@@ -162,10 +155,10 @@ export const SmartDatetimeInput = React.forwardRef<
             className
           )}
         >
-          <DateTimeLocalInput disabled={disabled} modal={modal} />
-          <NaturalLanguageInput
+          <DateTimeLocalInput
+            disabled={disabled}
+            modal={modal}
             placeholder={placeholder}
-            disabled={typeof disabled === 'boolean' ? disabled : false}
             ref={ref}
           />
         </div>
@@ -319,8 +312,6 @@ const TimePicker = () => {
       const formatIndex =
         PM_AM === 'AM' ? hours : hours === 12 ? hours : hours + 12;
       const formattedHours = formatIndex;
-
-      console.log(formatIndex);
 
       for (let j = 0; j <= 3; j++) {
         const diff = Math.abs(j * timestamp - minutes);
@@ -557,7 +548,7 @@ const NaturalLanguageInput = React.forwardRef<
       onKeyDown={handleKeydown}
       onBlur={handleParse}
       className={cn(
-        'px-2 mr-0.5 flex-1 border-none h-8 rounded w-full',
+        'px-2 mr-0.5 flex-1 border-none h-8 rounded w-full pointer-events-none',
         inputBase
       )}
       {...props}
@@ -571,23 +562,22 @@ type DateTimeLocalInputProps = {
   disabled?: boolean | ((date: Date) => boolean);
   className?: string;
   modal?: boolean;
+  placeholder?: string;
+  ref?: React.ForwardedRef<HTMLInputElement>;
 };
 
 const DateTimeLocalInput = ({
   className,
   disabled,
   modal,
+  placeholder,
+  ref,
   ...props
 }: DateTimeLocalInputProps) => {
   const { value, onValueChange, Time } = useSmartDateInput();
 
   const formateSelectedDate = React.useCallback(
-    (
-      date: Date | undefined,
-      selectedDate: Date,
-      m: Modifiers,
-      e: React.MouseEvent
-    ) => {
+    (selectedDate: Date) => {
       // if fully disabled, do nothing
       if (typeof disabled === 'boolean' && disabled) return;
       // if disabled is a matcher function and selected date should be disabled, do nothing
@@ -609,31 +599,36 @@ const DateTimeLocalInput = ({
   return (
     <Popover modal={modal}>
       <PopoverTrigger asChild>
-        <Button
-          disabled={typeof disabled === 'boolean' ? disabled : false}
-          variant={'outline'}
-          size={'icon'}
-          className={cn(
-            'size-9 flex items-center justify-center font-normal',
-            !value && 'text-muted-foreground'
-          )}
-        >
-          <CalendarIcon className="size-4" />
-          <span className="sr-only">calender</span>
-        </Button>
+        <div className="flex items-center gap-1 w-full cursor-pointer">
+          <Button
+            disabled={typeof disabled === 'boolean' ? disabled : false}
+            variant={'ghost'}
+            size={'icon'}
+            className={cn(
+              'size-9 flex items-center justify-center font-normal',
+              !value && 'text-muted-foreground'
+            )}
+          >
+            <CalendarIcon className="size-4" />
+            <span className="sr-only">calender</span>
+          </Button>
+          <NaturalLanguageInput
+            placeholder={placeholder}
+            disabled={typeof disabled === 'boolean' ? disabled : false}
+            ref={ref}
+          />
+        </div>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" sideOffset={8}>
         <div className="flex gap-1">
           <Calendar
-            disabled={disabled}
             {...props}
+            disabled={disabled}
             id={'calendar'}
             className={cn('peer flex justify-end', inputBase, className)}
             mode="single"
             selected={value}
-            onSelect={(date) =>
-              formateSelectedDate(date, date ?? new Date(), {}, {} as any)
-            }
+            onSelect={(date) => formateSelectedDate(date ?? new Date())}
             initialFocus
           />
           <TimePicker />

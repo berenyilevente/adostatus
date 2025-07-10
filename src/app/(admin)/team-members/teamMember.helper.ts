@@ -1,4 +1,7 @@
+import { TeamMember, User } from '@/generated/prisma';
 import { z } from 'zod';
+
+export type TeamMemberWithUser = TeamMember & { user: User };
 
 export const TeamMemberSchema = z.object({
   businessId: z.string().min(1, 'Business ID is required'),

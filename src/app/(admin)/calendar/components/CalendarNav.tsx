@@ -94,7 +94,7 @@ export default function CalendarNav({
         {/* Navigate to previous date interval */}
 
         <Button
-          variant="ghost"
+          variant="outline"
           className="w-8"
           onClick={() => {
             goPrev(calendarRef);
@@ -222,7 +222,7 @@ export default function CalendarNav({
         {/* Navigate to next date interval */}
 
         <Button
-          variant="ghost"
+          variant="outline"
           className="w-8"
           onClick={() => {
             goNext(calendarRef);
@@ -300,7 +300,11 @@ export default function CalendarNav({
         </Tabs>
 
         {/* TODO: Add event button should open a sheet */}
-        <Button endIcon="plus" onClick={() => setIsAppointmentDialogOpen(true)}>
+        <Button
+          endIcon="plus"
+          onClick={() => setIsAppointmentDialogOpen(true)}
+          disabled={!filterForm.watch('business')}
+        >
           Add Event
         </Button>
         <AppointmentDialog />

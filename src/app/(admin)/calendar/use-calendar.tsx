@@ -5,10 +5,13 @@ import { Appointment, Business, Service, TeamMember } from '@/generated/prisma';
 import { createAppContext } from '@/hooks/use-create-app-context';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+
 import { getAppointments, createAppointment } from './actions/calendar.actions';
-import { CreateAppointment } from './calendar.helper';
+import { AppointmentSchema, CreateAppointment } from './calendar.helper';
 import { getServices } from '../business/actions/business.actions';
 import { getTeamMembers } from '../team-members/actions/teamMember.actions';
+import { TeamMemberWithUser } from '../team-members/teamMember.helper';
 
 type HookProp = {
   businesses: Business[];
@@ -16,11 +19,8 @@ type HookProp = {
 
 const useHook = ({ businesses }: HookProp) => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
-  const [selectedBusiness, setSelectedBusiness] = useState<Business | null>(
-    null
-  );
   const [services, setServices] = useState<Service[]>([]);
-  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+  const [teamMembers, setTeamMembers] = useState<TeamMemberWithUser[]>([]);
   const [isAppointmentDialogOpen, setIsAppointmentDialogOpen] = useState(false);
 
   const filterForm = useForm({
@@ -29,7 +29,10 @@ const useHook = ({ businesses }: HookProp) => {
     },
   });
 
+  const businessId = filterForm.watch('business');
+
   const appointmentForm = useForm<CreateAppointment>({
+    resolver: zodResolver(AppointmentSchema),
     defaultValues: {
       businessId: '',
       serviceId: '',
@@ -50,10 +53,25 @@ const useHook = ({ businesses }: HookProp) => {
     value: business.id,
   }));
 
-  const businessId = filterForm.watch('business');
+  const serviceOptions = services.map((service) => ({
+    label: service.name,
+    value: service.id,
+  }));
+
+  const teamMemberOptions = teamMembers.map((teamMember) => ({
+    // TODO: Handle case where user is null
+    label: teamMember.user.name ?? '',
+    value: teamMember.id,
+  }));
+
+  const statusOptions = [
+    { label: 'Pending', value: 'pending' },
+    { label: 'Confirmed', value: 'confirmed' },
+    { label: 'Cancelled', value: 'cancelled' },
+  ];
 
   const onAppointmentSubmit = appointmentForm.handleSubmit(async (data) => {
-    await createAppointment(data);
+    await createAppointment({ ...data, businessId });
   });
 
   useEffect(() => {
@@ -90,6 +108,9 @@ const useHook = ({ businesses }: HookProp) => {
     isAppointmentDialogOpen,
     setIsAppointmentDialogOpen,
     onAppointmentSubmit,
+    teamMemberOptions,
+    serviceOptions,
+    statusOptions,
   };
 };
 

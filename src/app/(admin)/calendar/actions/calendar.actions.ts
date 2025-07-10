@@ -7,6 +7,7 @@ import { Appointment } from '@/generated/prisma';
 import { isAuthenticated } from '@/utils/isAuthenticated';
 import { handleResponse } from '@/utils/handleResponse';
 import { CreateAppointment } from '../calendar.helper';
+import { revalidatePath } from 'next/cache';
 
 export const getAppointments = async (
   businessIds: string[]
@@ -34,6 +35,8 @@ export const createAppointment = async (
   const newAppointment = await prisma.appointment.create({
     data: { ...appointment, formData },
   });
+
+  revalidatePath(`/calendar?business=${appointment.businessId}`);
 
   return handleResponse<Appointment>({
     data: newAppointment,

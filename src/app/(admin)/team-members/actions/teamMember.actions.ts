@@ -6,11 +6,12 @@ import { Response } from '@/types/action.types';
 import { handleResponse } from '@/utils/handleResponse';
 import { isAuthenticated } from '@/utils/isAuthenticated';
 import { revalidatePath } from 'next/cache';
+import { TeamMemberWithUser } from '../teamMember.helper';
 
 // TODO Explore an option to turn actions into a single class or function
 export async function getTeamMembers(
   busnessIds: string[]
-): Promise<Response<(TeamMember & { user: User })[]>> {
+): Promise<Response<TeamMemberWithUser[]>> {
   await isAuthenticated();
 
   const teamMembers = await prisma.teamMember.findMany({
