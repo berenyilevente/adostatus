@@ -1,32 +1,29 @@
-/*
-  Warnings:
+-- CreateTable
+CREATE TABLE "users" (
+    "id" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "isActive" BOOLEAN NOT NULL DEFAULT false,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "emailVerified" TIMESTAMP(3),
+    "firstName" TEXT,
+    "lastName" TEXT,
+    "phone" TEXT,
+    "lastLoginAt" TIMESTAMP(3),
+    "image" TEXT,
+    "name" TEXT,
 
-  - You are about to drop the `accounts` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `leads` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `sessions` table. If the table is not empty, all the data it contains will be lost.
+    CONSTRAINT "users_pkey" PRIMARY KEY ("id")
+);
 
-*/
--- DropForeignKey
-ALTER TABLE "accounts" DROP CONSTRAINT "accounts_userId_fkey";
+-- CreateTable
+CREATE TABLE "verification_token" (
+    "identifier" TEXT NOT NULL,
+    "token" TEXT NOT NULL,
+    "expires" TIMESTAMP(3) NOT NULL,
 
--- DropForeignKey
-ALTER TABLE "sessions" DROP CONSTRAINT "sessions_userId_fkey";
-
--- AlterTable
-ALTER TABLE "users" ADD COLUMN     "firstName" TEXT,
-ADD COLUMN     "isActive" BOOLEAN NOT NULL DEFAULT true,
-ADD COLUMN     "lastLoginAt" TIMESTAMP(3),
-ADD COLUMN     "lastName" TEXT,
-ADD COLUMN     "phone" TEXT;
-
--- DropTable
-DROP TABLE "accounts";
-
--- DropTable
-DROP TABLE "leads";
-
--- DropTable
-DROP TABLE "sessions";
+    CONSTRAINT "verification_token_pkey" PRIMARY KEY ("identifier","token")
+);
 
 -- CreateTable
 CREATE TABLE "businesses" (
@@ -35,7 +32,6 @@ CREATE TABLE "businesses" (
     "name" TEXT NOT NULL,
     "description" TEXT,
     "businessType" TEXT,
-    "timezone" TEXT NOT NULL DEFAULT 'UTC',
     "logoUrl" TEXT,
     "primaryColor" TEXT,
     "isActive" BOOLEAN NOT NULL DEFAULT true,
@@ -62,10 +58,9 @@ CREATE TABLE "team_members" (
 CREATE TABLE "business_hours" (
     "id" TEXT NOT NULL,
     "businessId" TEXT NOT NULL,
-    "dayOfWeek" INTEGER NOT NULL,
-    "openTime" TIME NOT NULL,
-    "closeTime" TIME NOT NULL,
-    "isClosed" BOOLEAN NOT NULL DEFAULT false,
+    "dayOfWeek" TEXT[],
+    "openTime" TEXT NOT NULL,
+    "closeTime" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -76,9 +71,9 @@ CREATE TABLE "business_hours" (
 CREATE TABLE "break_times" (
     "id" TEXT NOT NULL,
     "businessId" TEXT NOT NULL,
-    "dayOfWeek" INTEGER NOT NULL,
-    "startTime" TIME NOT NULL,
-    "endTime" TIME NOT NULL,
+    "dayOfWeek" TEXT[],
+    "startTime" TEXT NOT NULL,
+    "endTime" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -116,6 +111,7 @@ CREATE TABLE "forms" (
     "isActive" BOOLEAN NOT NULL DEFAULT true,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "status" TEXT NOT NULL DEFAULT 'draft',
 
     CONSTRAINT "forms_pkey" PRIMARY KEY ("id")
 );
@@ -145,9 +141,10 @@ CREATE TABLE "services" (
     "businessId" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT,
-    "duration" INTEGER NOT NULL,
-    "bufferTime" INTEGER NOT NULL DEFAULT 0,
-    "price" DECIMAL(10,2),
+    "duration" TEXT,
+    "bufferTime" TEXT,
+    "price" TEXT,
+    "currency" TEXT,
     "color" TEXT,
     "formId" TEXT,
     "isActive" BOOLEAN NOT NULL DEFAULT true,
@@ -166,8 +163,10 @@ CREATE TABLE "appointments" (
     "customerName" TEXT NOT NULL,
     "customerEmail" TEXT NOT NULL,
     "customerPhone" TEXT,
-    "startTime" TIMESTAMP(3) NOT NULL,
-    "endTime" TIMESTAMP(3) NOT NULL,
+    "title" TEXT NOT NULL,
+    "description" TEXT,
+    "start" TIMESTAMP(3) NOT NULL,
+    "end" TIMESTAMP(3) NOT NULL,
     "status" TEXT NOT NULL DEFAULT 'confirmed',
     "notes" TEXT,
     "formData" JSONB,
@@ -253,6 +252,25 @@ CREATE TABLE "subscription_limits" (
     CONSTRAINT "subscription_limits_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "team_member_invitations" (
+    "id" TEXT NOT NULL,
+    "businessId" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "role" TEXT NOT NULL,
+    "invitedBy" TEXT NOT NULL,
+    "token" TEXT NOT NULL,
+    "expiresAt" TIMESTAMP(3) NOT NULL,
+    "status" TEXT NOT NULL DEFAULT 'pending',
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "team_member_invitations_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
+
 -- CreateIndex
 CREATE INDEX "businesses_ownerId_idx" ON "businesses"("ownerId");
 
@@ -293,7 +311,7 @@ CREATE INDEX "appointments_serviceId_idx" ON "appointments"("serviceId");
 CREATE INDEX "appointments_teamMemberId_idx" ON "appointments"("teamMemberId");
 
 -- CreateIndex
-CREATE INDEX "appointments_startTime_endTime_idx" ON "appointments"("startTime", "endTime");
+CREATE INDEX "appointments_start_end_idx" ON "appointments"("start", "end");
 
 -- CreateIndex
 CREATE INDEX "appointments_status_idx" ON "appointments"("status");
@@ -306,6 +324,18 @@ CREATE INDEX "subscriptions_status_idx" ON "subscriptions"("status");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "subscription_limits_subscriptionId_key" ON "subscription_limits"("subscriptionId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "team_member_invitations_token_key" ON "team_member_invitations"("token");
+
+-- CreateIndex
+CREATE INDEX "team_member_invitations_businessId_idx" ON "team_member_invitations"("businessId");
+
+-- CreateIndex
+CREATE INDEX "team_member_invitations_email_idx" ON "team_member_invitations"("email");
+
+-- CreateIndex
+CREATE INDEX "team_member_invitations_token_idx" ON "team_member_invitations"("token");
 
 -- AddForeignKey
 ALTER TABLE "businesses" ADD CONSTRAINT "businesses_ownerId_fkey" FOREIGN KEY ("ownerId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -329,7 +359,7 @@ ALTER TABLE "time_off" ADD CONSTRAINT "time_off_businessId_fkey" FOREIGN KEY ("b
 ALTER TABLE "time_off" ADD CONSTRAINT "time_off_teamMemberId_fkey" FOREIGN KEY ("teamMemberId") REFERENCES "team_members"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "forms" ADD CONSTRAINT "forms_businessId_fkey" FOREIGN KEY ("businessId") REFERENCES "businesses"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "forms" ADD CONSTRAINT "forms_businessId_fkey" FOREIGN KEY ("businessId") REFERENCES "businesses"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "form_fields" ADD CONSTRAINT "form_fields_formId_fkey" FOREIGN KEY ("formId") REFERENCES "forms"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -366,3 +396,9 @@ ALTER TABLE "subscriptions" ADD CONSTRAINT "subscriptions_userId_fkey" FOREIGN K
 
 -- AddForeignKey
 ALTER TABLE "subscription_limits" ADD CONSTRAINT "subscription_limits_subscriptionId_fkey" FOREIGN KEY ("subscriptionId") REFERENCES "subscriptions"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "team_member_invitations" ADD CONSTRAINT "team_member_invitations_businessId_fkey" FOREIGN KEY ("businessId") REFERENCES "businesses"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "team_member_invitations" ADD CONSTRAINT "team_member_invitations_invitedBy_fkey" FOREIGN KEY ("invitedBy") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
