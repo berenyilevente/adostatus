@@ -23,6 +23,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  FormSelect,
 } from '@/components';
 
 import { useTeamMembers } from './use-teamMembers';
@@ -43,6 +44,7 @@ export const TeamMemberList = () => {
     getRoleColor,
     getInitials,
     setDeleteDialogOpen,
+    businessOptions,
   } = useTeamMembers();
 
   return (
@@ -50,7 +52,16 @@ export const TeamMemberList = () => {
       <Card className="bg-white">
         <CardContent className="p-0">
           <div className="flex justify-between items-center px-3 py-1 border-b">
-            <TableSearch filterForm={filterForm} />
+            <div className="flex items-center gap-2">
+              <TableSearch filterForm={filterForm} />
+              {/* TODO: Add filter component */}
+              {/* <FormSelect
+                name="business"
+                control={filterForm.control}
+                options={businessOptions}
+                placeholder="Select a business"
+              /> */}
+            </div>
 
             <div className="flex items-center gap-1">
               <Button

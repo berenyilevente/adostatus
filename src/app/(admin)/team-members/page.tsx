@@ -1,12 +1,13 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import { TeamMember, User } from '@/generated/prisma';
+import { Business, TeamMember, User } from '@/generated/prisma';
 
 import { TeamMemberList } from './TeamMemberList';
 import { TeamMembersProvider } from './use-teamMembers';
 import { getTeamMembers } from './actions/teamMember.actions';
 import { PageTitle } from '../components';
+import { getBusinesses } from '../business/actions';
 
 export const metadata: Metadata = {
   title: 'TeamMembers',
@@ -14,8 +15,17 @@ export const metadata: Metadata = {
 
 const TeamMembers = async () => {
   let teamMembers: (TeamMember & { user: User })[] = [];
+  let businesses: Business[] = [];
 
-  const rTeamMembers = await getTeamMembers();
+  const rbusinesses = await getBusinesses();
+
+  if (rbusinesses.status === 'success' && rbusinesses.data) {
+    businesses = rbusinesses.data;
+  }
+
+  const businessIds = businesses.map((business) => business.id);
+
+  const rTeamMembers = await getTeamMembers(businessIds);
 
   if (rTeamMembers === null) {
     return notFound();
@@ -26,7 +36,7 @@ const TeamMembers = async () => {
   }
 
   return (
-    <TeamMembersProvider teamMembers={teamMembers}>
+    <TeamMembersProvider teamMembers={teamMembers} businesses={businesses}>
       <PageTitle
         title={'TeamMembers'}
         breadcrumbs={[{ label: 'TeamMembers', active: true }]}

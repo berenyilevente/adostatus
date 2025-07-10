@@ -50,6 +50,7 @@ import {
 import { useCalendar } from '../use-calendar';
 import { FormWrapper } from '@/components/form/form-wrapper';
 import { FormSelect } from '@/components/form/form-select';
+import { AppointmentDialog } from './AppointmentDialog';
 
 interface CalendarNavProps {
   calendarRef: calendarRef;
@@ -65,7 +66,8 @@ export default function CalendarNav({
   viewedDate,
 }: CalendarNavProps) {
   const [currentView, setCurrentView] = useState('timeGridWeek');
-  const { businessOptions, filterForm } = useCalendar();
+  const { businessOptions, filterForm, setIsAppointmentDialogOpen } =
+    useCalendar();
 
   const selectedMonth = viewedDate.getMonth() + 1;
   const selectedDay = viewedDate.getDate();
@@ -298,7 +300,10 @@ export default function CalendarNav({
         </Tabs>
 
         {/* TODO: Add event button should open a sheet */}
-        <Button endIcon="plus">Add Event</Button>
+        <Button endIcon="plus" onClick={() => setIsAppointmentDialogOpen(true)}>
+          Add Event
+        </Button>
+        <AppointmentDialog />
       </div>
     </div>
   );

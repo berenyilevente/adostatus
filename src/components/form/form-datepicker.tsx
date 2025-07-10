@@ -29,6 +29,7 @@ type FormDatepickerProps<
   className?: string;
   label?: string;
   description?: string;
+  modal?: boolean;
 };
 
 export const FormDatepicker = <
@@ -40,6 +41,7 @@ export const FormDatepicker = <
   className,
   label,
   description,
+  modal = false,
 }: FormDatepickerProps<TField, TName>) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -49,7 +51,7 @@ export const FormDatepicker = <
       render={({ field }) => (
         <FormItem className="flex flex-col gap-1 mt-2 w-full">
           {label && <FormLabel>{label}</FormLabel>}
-          <Popover open={isOpen} onOpenChange={setIsOpen}>
+          <Popover open={isOpen} onOpenChange={setIsOpen} modal={modal}>
             <PopoverTrigger asChild>
               <FormControl>
                 <Button

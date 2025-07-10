@@ -8,12 +8,17 @@ import { isAuthenticated } from '@/utils/isAuthenticated';
 import { revalidatePath } from 'next/cache';
 
 // TODO Explore an option to turn actions into a single class or function
-export async function getTeamMembers(): Promise<
-  Response<(TeamMember & { user: User })[]>
-> {
+export async function getTeamMembers(
+  busnessIds: string[]
+): Promise<Response<(TeamMember & { user: User })[]>> {
   await isAuthenticated();
 
   const teamMembers = await prisma.teamMember.findMany({
+    where: {
+      businessId: {
+        in: busnessIds,
+      },
+    },
     include: {
       user: true,
     },

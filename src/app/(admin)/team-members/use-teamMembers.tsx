@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-import { TeamMember, User } from '@/generated/prisma';
+import { Business, TeamMember, User } from '@/generated/prisma';
 import { useMemo, useState } from 'react';
 
 import { createAppContext } from '@/hooks/use-create-app-context';
@@ -11,14 +11,16 @@ import { deleteTeamMember } from './actions/teamMember.actions';
 
 type HookProp = {
   teamMembers: (TeamMember & { user: User })[];
+  businesses: Business[];
 };
 
-const useHook = ({ teamMembers }: HookProp) => {
+const useHook = ({ teamMembers, businesses }: HookProp) => {
   const router = useRouter();
 
   const filterForm = useForm({
     defaultValues: {
       search: '',
+      business: null,
     },
   });
 
@@ -26,7 +28,9 @@ const useHook = ({ teamMembers }: HookProp) => {
 
   // Filter team members based on search
   const filteredTeamMembers = useMemo(() => {
-    if (!search) return teamMembers;
+    if (!search) {
+      return teamMembers;
+    }
 
     const searchLower = search.toLowerCase();
     return teamMembers.filter((teamMember) => {
@@ -106,6 +110,11 @@ const useHook = ({ teamMembers }: HookProp) => {
       .slice(0, 2);
   };
 
+  const businessOptions = businesses.map((business) => ({
+    label: business.name,
+    value: business.id,
+  }));
+
   return {
     teamMembers: filteredTeamMembers,
     search,
@@ -119,6 +128,7 @@ const useHook = ({ teamMembers }: HookProp) => {
     getRoleColor,
     getInitials,
     setDeleteDialogOpen,
+    businessOptions,
   };
 };
 
