@@ -2,17 +2,13 @@ import { CalendarProvider } from './use-calendar';
 import { CalendarPage } from './CalendarPage';
 import { PageTitle } from '../components';
 import { getAppointments } from './actions/calendar.actions';
-import { Business } from '@/generated/prisma';
+import { Appointment, Business } from '@/generated/prisma';
 import { notFound } from 'next/navigation';
 import { getBusinesses } from '../business/actions';
 
-export default async function Calendar(props: {
-  params: Promise<{ id: string }>;
-}) {
-  const params = await props.params;
-  const businessId = params.id;
-
+export default async function Calendar() {
   let businesses: Business[] = [];
+  let appointments: Appointment[] = [];
   const rBusinesses = await getBusinesses();
 
   if (rBusinesses === null) {
@@ -21,6 +17,18 @@ export default async function Calendar(props: {
 
   if (rBusinesses.status === 'success' && rBusinesses.data) {
     businesses = rBusinesses.data;
+  }
+
+  const businessIds = businesses.map((business) => business.id) || [];
+
+  const rAppointments = await getAppointments(businessIds);
+
+  if (rAppointments === null) {
+    return notFound();
+  }
+
+  if (rAppointments.status === 'success' && rAppointments.data) {
+    appointments = rAppointments.data;
   }
 
   return (

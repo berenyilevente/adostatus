@@ -17,6 +17,7 @@ import {
   FormDatepicker,
   FormWrapper,
   FormTimepicker,
+  FormDateTimePicker,
 } from '@/components';
 
 export const AppointmentDialog = () => {
@@ -51,32 +52,20 @@ export const AppointmentDialog = () => {
               name="title"
               placeholder="Enter event title"
             />
-            <div className="grid grid-cols-2 gap-4">
-              <FormDatepicker
-                control={appointmentForm.control}
-                label="Start Date"
-                name="start"
-                modal
-              />
-              <FormTimepicker
-                control={appointmentForm.control}
-                label="Start Time"
-                name="start"
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <FormDatepicker
-                control={appointmentForm.control}
-                label="End Date"
-                name="end"
-                modal
-              />
-              <FormTimepicker
-                control={appointmentForm.control}
-                label="End Time"
-                name="end"
-              />
-            </div>
+            <FormDateTimePicker
+              control={appointmentForm.control}
+              label="Start Date"
+              name="start"
+              modal
+              placeholder="Select start date and time"
+            />
+            <FormDateTimePicker
+              control={appointmentForm.control}
+              label="End Date"
+              name="end"
+              modal
+              placeholder="Select end date and time"
+            />
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={handleClose}>

@@ -9,12 +9,12 @@ import { handleResponse } from '@/utils/handleResponse';
 import { CreateAppointment } from '../calendar.helper';
 
 export const getAppointments = async (
-  businessId: string
+  businessIds: string[]
 ): Promise<Response<Appointment[]>> => {
   await isAuthenticated();
 
   const appointments = await prisma.appointment.findMany({
-    where: { businessId },
+    where: { businessId: { in: businessIds } },
   });
 
   return handleResponse<Appointment[]>({

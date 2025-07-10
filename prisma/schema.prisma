@@ -222,8 +222,8 @@ model Appointment {
   customerPhone String?
   title         String
   description   String?
-  start         String   
-  end           String   
+  start         DateTime
+  end           DateTime
   status        String   @default("confirmed") // confirmed, cancelled, completed, no-show
   notes         String?
   formData      Json? // Stores the form submission data

@@ -16,19 +16,22 @@ type HookProp = {
 
 const useHook = ({ businesses }: HookProp) => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [selectedBusiness, setSelectedBusiness] = useState<Business | null>(
+    null
+  );
   const [services, setServices] = useState<Service[]>([]);
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
   const [isAppointmentDialogOpen, setIsAppointmentDialogOpen] = useState(false);
 
   const filterForm = useForm({
     defaultValues: {
-      business: businesses[0].id,
+      business: '',
     },
   });
 
   const appointmentForm = useForm<CreateAppointment>({
     defaultValues: {
-      businessId: businesses[0].id,
+      businessId: '',
       serviceId: '',
       teamMemberId: '',
       customerName: '',
@@ -59,7 +62,7 @@ const useHook = ({ businesses }: HookProp) => {
     }
 
     const fetchAppointments = async () => {
-      const rAppointments = await getAppointments(businessId);
+      const rAppointments = await getAppointments([businessId]);
       setAppointments(rAppointments.data || []);
     };
 
