@@ -40,7 +40,12 @@ export const FormSwitch = <
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className="flex w-full flex-row items-center justify-between rounded-lg border p-4">
+        <FormItem
+          className={cn(
+            'flex w-full flex-row items-center justify-between gap-2 rounded-lg border px-4 py-2',
+            className
+          )}
+        >
           <div className="space-y-0.5">
             {label && <FormLabel>{label}</FormLabel>}
             {description && <FormDescription>{description}</FormDescription>}

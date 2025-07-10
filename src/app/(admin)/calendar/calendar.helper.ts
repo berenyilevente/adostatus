@@ -5,11 +5,11 @@ type Appointment = Omit<AppointmentTable, 'id' | 'createdAt' | 'updatedAt'>;
 
 export const AppointmentSchema: z.ZodType<Appointment> = z.object({
   businessId: z.string(),
-  serviceId: z.string(),
-  teamMemberId: z.string(),
-  customerName: z.string(),
-  customerEmail: z.string(),
-  customerPhone: z.string(),
+  serviceId: z.string().min(1, 'Service is required'),
+  teamMemberId: z.string().min(1, 'Team member is required'),
+  customerName: z.string().min(1, 'Customer name is required'),
+  customerEmail: z.string().email('Invalid email address'),
+  customerPhone: z.string().min(1, 'Customer phone is required'),
   title: z.string().min(2, 'Appointment title must be at least 2 characters'),
   description: z.string().nullable(),
   start: z.date(),
@@ -17,6 +17,7 @@ export const AppointmentSchema: z.ZodType<Appointment> = z.object({
   status: z.string(),
   notes: z.string().nullable(),
   formData: z.string().nullable(),
+  color: z.string().nullable(),
 });
 
 export type CreateAppointment = z.infer<typeof AppointmentSchema>;

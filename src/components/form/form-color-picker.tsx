@@ -1,23 +1,25 @@
-import { FormMessage } from "../ui/form";
+import { FormMessage } from '../ui/form';
 
-import { ColorPicker } from "../ui/color-picker";
-import { FormControl } from "../ui/form";
+import { ColorPicker } from '../ui/color-picker';
+import { FormControl } from '../ui/form';
 
-import { FormLabel } from "../ui/form";
+import { FormLabel } from '../ui/form';
 
-import { FormItem } from "../ui/form";
+import { FormItem } from '../ui/form';
 
-import { FormField } from "../ui/form";
-import { Control, FieldPath, FieldValues } from "react-hook-form";
-import { IconType } from "..";
+import { FormField } from '../ui/form';
+import { Control, FieldPath, FieldValues } from 'react-hook-form';
+import { IconType } from '..';
 
 interface FormColorPickerProps<
   TField extends FieldValues = FieldValues,
   TName extends FieldPath<TField> = FieldPath<TField>,
-> extends React.ComponentProps<"input"> {
+> extends React.ComponentProps<'input'> {
   control: Control<TField, object>;
   name: TName;
   label?: string;
+  showColorOptions?: boolean;
+  placeholder?: string;
 }
 
 export const FormColorPicker = <
@@ -27,6 +29,8 @@ export const FormColorPicker = <
   control,
   name,
   label,
+  showColorOptions = false,
+  placeholder,
 }: FormColorPickerProps<TField, TName>) => {
   return (
     <FormField
@@ -34,9 +38,14 @@ export const FormColorPicker = <
       name={name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{label}</FormLabel>
+          {label && <FormLabel>{label}</FormLabel>}
           <FormControl>
-            <ColorPicker value={field.value} onChange={field.onChange} />
+            <ColorPicker
+              value={field.value}
+              onChange={field.onChange}
+              showColorOptions={showColorOptions}
+              placeholder={placeholder}
+            />
           </FormControl>
           <FormMessage />
         </FormItem>

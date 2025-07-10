@@ -25,11 +25,13 @@ const useHook = ({ businesses }: HookProp) => {
 
   const filterForm = useForm({
     defaultValues: {
-      business: '',
+      business: businesses[0].id,
     },
   });
 
   const businessId = filterForm.watch('business');
+  const business = businesses.find((business) => business.id === businessId);
+  const businessName = business?.name;
 
   const appointmentForm = useForm<CreateAppointment>({
     resolver: zodResolver(AppointmentSchema),
@@ -42,8 +44,9 @@ const useHook = ({ businesses }: HookProp) => {
       customerPhone: '',
       title: '',
       description: '',
-      status: 'pending',
+      status: '',
       notes: '',
+      color: '#000000',
       formData: null,
     },
   });
@@ -111,6 +114,7 @@ const useHook = ({ businesses }: HookProp) => {
     teamMemberOptions,
     serviceOptions,
     statusOptions,
+    businessName,
   };
 };
 

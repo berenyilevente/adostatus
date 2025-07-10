@@ -38,7 +38,9 @@ export function CalendarPage() {
   const [selectedEvent, setSelectedEvent] = useState<
     CalendarEvent | undefined
   >();
+
   const [isDrag, setIsDrag] = useState(false);
+
   const {
     appointments,
     filterForm,
@@ -52,7 +54,7 @@ export function CalendarPage() {
     description: appointment.description,
     start: appointment.start,
     end: appointment.end,
-    backgroundColor: '#AEC6E4',
+    backgroundColor: appointment.color ?? '#AEC6E4',
   }));
 
   const handleEventClick = (info: EventClickArg) => {
@@ -123,14 +125,14 @@ export function CalendarPage() {
               onClick={() => setIsAppointmentDialogOpen(true)}
               disabled={!filterForm.watch('business')}
             >
-              Add Event
+              Add Appointment
             </Button>
             <AppointmentDialog />
           </>
         }
       />
 
-      <Card className="p-3">
+      <Card className="p-3 h-[calc(100vh-20rem)] overflow-auto">
         <FullCalendar
           ref={calendarRef}
           timeZone="local"
@@ -147,7 +149,7 @@ export function CalendarPage() {
           // slotMaxTime={calendarLatestTime}
           allDaySlot={false}
           firstDay={1}
-          height={'32vh'}
+          height={''}
           displayEventEnd={true}
           windowResizeDelay={0}
           events={events}

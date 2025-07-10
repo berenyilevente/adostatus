@@ -46,7 +46,12 @@ export const FormCheckbox = <
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className="flex w-full flex-row items-center space-x-3 space-y-0 rounded-md border p-4">
+        <FormItem
+          className={cn(
+            'flex w-full flex-row items-center space-x-3 space-y-0 rounded-md border px-4 py-[10px] cursor-pointer',
+            className
+          )}
+        >
           <FormControl>
             <Checkbox
               checked={field.value}
@@ -55,7 +60,9 @@ export const FormCheckbox = <
             />
           </FormControl>
           <div className="space-y-1 leading-none">
-            {label && <FormLabel>{label}</FormLabel>}
+            {label && (
+              <FormLabel className="!cursor-pointer">{label}</FormLabel>
+            )}
             {description && <FormDescription>{description}</FormDescription>}
             <FormMessage />
           </div>
