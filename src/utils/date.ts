@@ -1,6 +1,6 @@
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 
-type KnownFormats = "DD MM" | "DD MM YYYY" | "DD MMM" | "MMM YYYY";
+type KnownFormats = 'DD MM' | 'DD MM YYYY' | 'DD MMM' | 'MMM YYYY';
 
 type IDateProps = {
   onlyDate?: boolean;
@@ -10,26 +10,26 @@ type IDateProps = {
 const defaultProps: IDateProps = { onlyDate: true };
 
 const monthNames = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
 ];
 
 const formatted = (date: Date, props: IDateProps = defaultProps) => {
-  let format = "";
+  let format = '';
   if (props.format) {
     format = props.format;
   } else {
-    if (props.onlyDate) format += "DD MMM YYYY";
+    if (props.onlyDate) format += 'DD MMM YYYY';
   }
 
   return dayjs(date).format(format);

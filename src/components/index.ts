@@ -72,3 +72,4 @@ export * from './ui/currency-field';
 export * from './ui/dialog';
 export * from './ui/extension/smart-datetime-input';
 export * from './form/form-date-timepicker';
+export * from './ui/full-calendar/full-calendar';

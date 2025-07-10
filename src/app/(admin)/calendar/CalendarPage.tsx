@@ -1,13 +1,9 @@
 'use client';
 
-import './calendar.css';
 import {
   DateSelectArg,
-  DayCellContentArg,
-  DayHeaderContentArg,
   EventChangeArg,
   EventClickArg,
-  EventContentArg,
 } from '@fullcalendar/core/index.js';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -17,29 +13,19 @@ import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 
 import { useRef, useState } from 'react';
-import CalendarNav from './components/CalendarNav';
-import { CalendarEvent, earliestTime, latestTime } from './utils/const';
 import { Card } from '@/components/ui/card';
 import { useCalendar } from './use-calendar';
-
-function getDateFromMinutes(minutes: number) {
-  const now = new Date();
-  now.setHours(0, 0, 0, 0); // Set time to midnight
-  now.setMinutes(minutes);
-  return now;
-}
-
-type EventItemProps = {
-  info: EventContentArg;
-};
-
-type DayHeaderProps = {
-  info: DayHeaderContentArg;
-};
-
-type DayRenderProps = {
-  info: DayCellContentArg;
-};
+import {
+  Button,
+  DayHeader,
+  DayRender,
+  EventItem,
+  FormSelect,
+  FormWrapper,
+  FullCalendarNav,
+} from '@/components';
+import { CalendarEvent } from './calendar.helper';
+import { AppointmentDialog } from './components/AppointmentDialog';
 
 export function CalendarPage() {
   const calendarRef = useRef<FullCalendar | null>(null);
@@ -53,7 +39,12 @@ export function CalendarPage() {
     CalendarEvent | undefined
   >();
   const [isDrag, setIsDrag] = useState(false);
-  const { appointments } = useCalendar();
+  const {
+    appointments,
+    filterForm,
+    businessOptions,
+    setIsAppointmentDialogOpen,
+  } = useCalendar();
 
   const events = appointments.map((appointment) => ({
     id: appointment.id,
@@ -103,123 +94,40 @@ export function CalendarPage() {
     setSelectedEvent(event);
   };
 
-  const EventItem = ({ info }: EventItemProps) => {
-    const { event } = info;
-    const [left, right] = info.timeText.split(' - ');
-
-    return (
-      <div className="overflow-hidden w-full">
-        {info.view.type == 'dayGridMonth' ? (
-          <div
-            style={{ backgroundColor: info.backgroundColor }}
-            className={`flex flex-col rounded-md w-full px-2 py-1 line-clamp-1 text-[0.5rem] sm:text-[0.6rem] md:text-xs`}
-          >
-            <p className="font-semibold text-gray-950 line-clamp-1 w-11/12">
-              {event.title}
-            </p>
-
-            <p className="text-gray-800">{left}</p>
-            <p className="text-gray-800">{right}</p>
-          </div>
-        ) : (
-          <div className="flex flex-col space-y-0 text-[0.5rem] sm:text-[0.6rem] md:text-xs">
-            <p className="font-semibold w-full text-gray-950 line-clamp-1">
-              {event.title}
-            </p>
-            <p className="text-gray-800 line-clamp-1">{`${left} - ${right}`}</p>
-          </div>
-        )}
-      </div>
-    );
-  };
-
-  const DayHeader = ({ info }: DayHeaderProps) => {
-    const [weekday] = info.text.split(' ');
-
-    return (
-      <div className="flex items-center h-full overflow-hidden">
-        {info.view.type == 'timeGridDay' ? (
-          <div className="flex flex-col rounded-sm">
-            <p>
-              {info.date.toLocaleDateString('en-US', {
-                month: 'long',
-                day: 'numeric',
-                year: 'numeric',
-              })}
-            </p>
-          </div>
-        ) : info.view.type == 'timeGridWeek' ? (
-          <div className="flex flex-col space-y-0.5 rounded-sm items-center w-full text-xs sm:text-sm md:text-md">
-            <p className="flex font-semibold">{weekday}</p>
-            {info.isToday ? (
-              <div className="flex bg-black dark:bg-white h-6 w-6 rounded-full items-center justify-center text-xs sm:text-sm md:text-md">
-                <p className="font-light dark:text-black text-white">
-                  {info.date.getDate()}
-                </p>
-              </div>
-            ) : (
-              <div className="h-6 w-6 rounded-full items-center justify-center">
-                <p className="font-light">{info.date.getDate()}</p>
-              </div>
-            )}
-          </div>
-        ) : (
-          <div className="flex flex-col rounded-sm">
-            <p>{weekday}</p>
-          </div>
-        )}
-      </div>
-    );
-  };
-
-  const DayRender = ({ info }: DayRenderProps) => {
-    return (
-      <div className="flex">
-        {info.view.type == 'dayGridMonth' && info.isToday ? (
-          <div className="flex h-7 w-7 rounded-full bg-black dark:bg-white items-center justify-center text-sm text-white dark:text-black">
-            {info.dayNumberText}
-          </div>
-        ) : (
-          <div className="flex h-7 w-7 rounded-full items-center justify-center text-sm">
-            {info.dayNumberText}
-          </div>
-        )}
-      </div>
-    );
-  };
-
   const handleDateSelect = (info: DateSelectArg) => {
     setSelectedStart(info.start);
     setSelectedEnd(info.end);
   };
 
-  const earliestHour = getDateFromMinutes(earliestTime)
-    .getHours()
-    .toString()
-    .padStart(2, '0');
-  const earliestMin = getDateFromMinutes(earliestTime)
-    .getMinutes()
-    .toString()
-    .padStart(2, '0');
-  const latestHour = getDateFromMinutes(latestTime)
-    .getHours()
-    .toString()
-    .padStart(2, '0');
-  const latestMin = getDateFromMinutes(latestTime)
-    .getMinutes()
-    .toString()
-    .padStart(2, '0');
-
-  const calendarEarliestTime = `${earliestHour}:${earliestMin}`;
-  const calendarLatestTime = `${latestHour}:${latestMin}`;
-
   return (
     <div className="space-y-5">
-      <CalendarNav
+      <FullCalendarNav
         calendarRef={calendarRef}
         start={selectedStart}
         end={selectedEnd}
         viewedDate={viewedDate}
+        filters={
+          <FormWrapper form={filterForm} className="text-sm font-semibold">
+            <FormSelect
+              name="business"
+              control={filterForm.control}
+              options={businessOptions}
+              placeholder="Select a business"
+            />
+          </FormWrapper>
+        }
+        actions={
+          <>
+            <Button
+              endIcon="plus"
+              onClick={() => setIsAppointmentDialogOpen(true)}
+              disabled={!filterForm.watch('business')}
+            >
+              Add Event
+            </Button>
+            <AppointmentDialog />
+          </>
+        }
       />
 
       <Card className="p-3">
@@ -235,8 +143,8 @@ export function CalendarPage() {
           ]}
           initialView="timeGridWeek"
           headerToolbar={false}
-          slotMinTime={calendarEarliestTime}
-          slotMaxTime={calendarLatestTime}
+          // slotMinTime={calendarEarliestTime}
+          // slotMaxTime={calendarLatestTime}
           allDaySlot={false}
           firstDay={1}
           height={'32vh'}

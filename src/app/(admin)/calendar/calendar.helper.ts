@@ -20,3 +20,13 @@ export const AppointmentSchema: z.ZodType<Appointment> = z.object({
 });
 
 export type CreateAppointment = z.infer<typeof AppointmentSchema>;
+
+// TODO Replace this with the Appointment type
+export interface CalendarEvent {
+  id: string;
+  title: string;
+  start: Date;
+  end: Date;
+  backgroundColor?: string;
+  description: string;
+}
