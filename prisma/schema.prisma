@@ -220,8 +220,10 @@ model Appointment {
   customerName  String
   customerEmail String
   customerPhone String?
-  startTime     DateTime
-  endTime       DateTime
+  title         String
+  description   String?
+  start         DateTime
+  end           DateTime
   status        String   @default("confirmed") // confirmed, cancelled, completed, no-show
   notes         String?
   formData      Json? // Stores the form submission data
@@ -236,7 +238,7 @@ model Appointment {
   @@index([businessId])
   @@index([serviceId])
   @@index([teamMemberId])
-  @@index([startTime, endTime])
+  @@index([start, end])
   @@index([status])
   @@map("appointments")
 }

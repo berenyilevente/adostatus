@@ -492,10 +492,10 @@ async function main() {
         customerName: 'Alice Johnson',
         customerEmail: 'alice.johnson@example.com',
         customerPhone: '+1-555-0101',
-        startTime: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // 2 days from now
-        endTime: new Date(
-          Date.now() + 2 * 24 * 60 * 60 * 1000 + 60 * 60 * 1000
-        ), // 1 hour later
+        title: 'Dental Check-up',
+        description: 'Patient prefers morning appointments',
+        start: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // 2 days from now
+        end: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000 + 60 * 60 * 1000), // 1 hour later
         status: 'confirmed',
         notes: 'Patient prefers morning appointments',
         formData: {
@@ -515,10 +515,10 @@ async function main() {
         customerName: 'Bob Smith',
         customerEmail: 'bob.smith@example.com',
         customerPhone: '+1-555-0102',
-        startTime: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // 3 days from now
-        endTime: new Date(
-          Date.now() + 3 * 24 * 60 * 60 * 1000 + 45 * 60 * 1000
-        ), // 45 minutes later
+        title: 'Teeth Cleaning',
+        description: 'Regular cleaning appointment',
+        start: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // 3 days from now
+        end: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000 + 45 * 60 * 1000), // 45 minutes later
         status: 'confirmed',
         notes: 'Regular cleaning appointment',
         formData: {
@@ -538,10 +538,10 @@ async function main() {
         customerName: 'Carol Davis',
         customerEmail: 'carol.davis@example.com',
         customerPhone: '+1-555-0103',
-        startTime: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000), // 1 day from now
-        endTime: new Date(
-          Date.now() + 1 * 24 * 60 * 60 * 1000 + 60 * 60 * 1000
-        ), // 1 hour later
+        title: 'Haircut & Styling',
+        description: 'First time client',
+        start: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000), // 1 day from now
+        end: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000 + 60 * 60 * 1000), // 1 hour later
         status: 'confirmed',
         notes: 'First time client',
         formData: {
@@ -563,7 +563,7 @@ async function main() {
         appointmentId: appointments[0].id,
         reminderType: 'email',
         scheduledTime: new Date(
-          appointments[0].startTime.getTime() - 24 * 60 * 60 * 1000
+          appointments[0].start.getTime() - 24 * 60 * 60 * 1000
         ), // 24 hours before
         status: 'pending',
       },
@@ -573,7 +573,7 @@ async function main() {
         appointmentId: appointments[0].id,
         reminderType: 'sms',
         scheduledTime: new Date(
-          appointments[0].startTime.getTime() - 2 * 60 * 60 * 1000
+          appointments[0].start.getTime() - 2 * 60 * 60 * 1000
         ), // 2 hours before
         status: 'pending',
       },
@@ -583,7 +583,7 @@ async function main() {
         appointmentId: appointments[1].id,
         reminderType: 'email',
         scheduledTime: new Date(
-          appointments[1].startTime.getTime() - 24 * 60 * 60 * 1000
+          appointments[1].start.getTime() - 24 * 60 * 60 * 1000
         ),
         status: 'pending',
       },
