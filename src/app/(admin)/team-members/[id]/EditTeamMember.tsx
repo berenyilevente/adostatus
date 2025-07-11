@@ -55,8 +55,8 @@ const EditTeamMember = () => {
             size="sm"
             onClick={handleCancel}
             className="flex items-center space-x-2"
+            startIcon="arrowLeft"
           >
-            <ArrowLeft className="h-4 w-4" />
             <span>Back to Team Members</span>
           </Button>
         </div>

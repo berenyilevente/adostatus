@@ -13,7 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components';
-import { useShowBusiness } from '../show/[id]/use-show-business';
+import { useBusinessShow } from '../show/[id]/use-business-show';
 import { currencies } from '../business.helper';
 
 export const AddServiceDialog = () => {
@@ -22,15 +22,14 @@ export const AddServiceDialog = () => {
     setIsServicesModalOpen,
     servicesForm,
     onServicesSubmit,
-  } = useShowBusiness();
+  } = useBusinessShow();
 
   return (
     <Dialog open={isServicesModalOpen} onOpenChange={setIsServicesModalOpen}>
       <DialogTrigger asChild>
         <Button
-          size="icon"
+          size="sm"
           endIcon="plus"
-          fullWidth
           onClick={() => setIsServicesModalOpen(true)}
           variant="outline"
         >

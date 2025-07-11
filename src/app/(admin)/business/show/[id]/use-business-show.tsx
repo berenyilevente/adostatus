@@ -125,5 +125,5 @@ const useHook = ({ business, services }: HookProp) => {
   };
 };
 
-const [useShowBusiness, ShowBusinessProvider] = createAppContext(useHook);
-export { useShowBusiness, ShowBusinessProvider };
+const [useBusinessShow, BusinessShowProvider] = createAppContext(useHook);
+export { useBusinessShow, BusinessShowProvider };

@@ -4,21 +4,15 @@ import React from 'react';
 
 import { routes } from '@/lib/routes';
 
-import { ShowBusiness } from './ShowBusiness';
-import { ShowBusinessProvider } from './use-show-business';
+import { BusinessShow } from './BusinessShow';
+import { BusinessShowProvider } from './use-business-show';
 import {
   BusinessResponse,
   getBusiness,
   getServices,
 } from '../../actions/business.actions';
 import { PageTitle } from '../../../components';
-import {
-  BreakTime,
-  Business,
-  BusinessHours,
-  Form,
-  Service,
-} from '@/generated/prisma';
+import { Service } from '@/generated/prisma';
 
 export const metadata: Metadata = {
   title: 'Show Business',
@@ -55,9 +49,9 @@ const ShowBusinessPage = async (props: { params: Promise<{ id: string }> }) => {
         ]}
       />
       <div className="mt-5">
-        <ShowBusinessProvider business={business} services={services}>
-          <ShowBusiness />
-        </ShowBusinessProvider>
+        <BusinessShowProvider business={business} services={services}>
+          <BusinessShow />
+        </BusinessShowProvider>
       </div>
     </div>
   );

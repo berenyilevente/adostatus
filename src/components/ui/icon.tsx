@@ -56,6 +56,8 @@ import plus from '@iconify/icons-lucide/plus';
 import form from '@iconify/icons-lucide/clipboard-list';
 import business from '@iconify/icons-lucide/home';
 import archive from '@iconify/icons-lucide/archive';
+import clock from '@iconify/icons-lucide/clock';
+import arrowLeft from '@iconify/icons-lucide/arrow-left';
 
 export const iconMap = {
   mail,
@@ -111,6 +113,8 @@ export const iconMap = {
   form,
   business,
   archive,
+  clock,
+  arrowLeft,
 };
 
 export type IconType = keyof typeof iconMap;

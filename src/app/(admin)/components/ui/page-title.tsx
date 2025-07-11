@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode } from "react";
+import { ReactElement, ReactNode } from 'react';
 
 import {
   Breadcrumb,
@@ -7,7 +7,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
   IconType,
-} from "@/components";
+} from '@/components';
 
 type TBreadcrumbItem = {
   label: string;
@@ -28,7 +28,9 @@ const Breadcrumbs = ({
           <span className="flex items-center gap-2" key={label}>
             <BreadcrumbItem>
               {path ? (
-                <BreadcrumbLink href={path}>{label}</BreadcrumbLink>
+                <BreadcrumbLink className="hover:underline" href={path}>
+                  {label}
+                </BreadcrumbLink>
               ) : (
                 <span>{label}</span>
               )}

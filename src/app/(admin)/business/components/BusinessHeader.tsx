@@ -1,8 +1,8 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components';
-import { useShowBusiness } from '../show/[id]/use-show-business';
+import { useBusinessShow } from '../show/[id]/use-business-show';
 
 export const BusinessHeader = () => {
-  const { business } = useShowBusiness();
+  const { business } = useBusinessShow();
 
   return (
     <div className="flex items-center space-x-4">
