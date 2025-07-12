@@ -5,8 +5,8 @@ import { getAppointments } from './actions/calendar.actions';
 import { Appointment, Business } from '@/generated/prisma';
 import { notFound } from 'next/navigation';
 import { getBusinesses } from '../business/actions';
-import { BusinessHoursProvider } from '../(business-hours)/use-business-hours';
-import { BusinessHours } from '../(business-hours)/BusinessHours';
+import { BusinessHoursProvider } from '../business-hours/use-business-hours';
+import { BusinessHours } from '../business-hours/BusinessHours';
 
 export default async function Calendar() {
   let businesses: Business[] = [];

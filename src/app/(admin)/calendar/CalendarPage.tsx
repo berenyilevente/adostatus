@@ -26,7 +26,7 @@ import {
 } from '@/components';
 import { CalendarEvent } from './calendar.helper';
 import { AppointmentDialog } from './components/AppointmentDialog';
-import { useBusinessHours } from '../(business-hours)/use-business-hours';
+import { useBusinessHours } from '../business-hours/use-business-hours';
 
 export function CalendarPage() {
   const calendarRef = useRef<FullCalendar | null>(null);
