@@ -21,7 +21,7 @@ import {
 import { useCreateBusiness } from './use-create-business';
 import { Label } from '@radix-ui/react-label';
 import { FormMultiselect } from '@/components/form/form-multiselect';
-import { businessTypes, daysOfWeek } from '../business.helper';
+import { businessTypes } from '../business.helper';
 
 const CreateBusiness = () => {
   const { form, onSubmit, isLoading, handleChangeImage, handleCancel } =
@@ -39,14 +39,14 @@ const CreateBusiness = () => {
               <FormInput
                 control={form.control}
                 label="Business Name"
-                name="business.name"
+                name="name"
                 placeholder="Enter your business name"
               />
-              {form.watch('business.businessType') !== 'other' ? (
+              {form.watch('businessType') !== 'other' ? (
                 <FormSelect
                   control={form.control}
                   label="Business Type"
-                  name="business.businessType"
+                  name="businessType"
                   placeholder="Select your business type"
                   options={businessTypes}
                 />
@@ -54,14 +54,14 @@ const CreateBusiness = () => {
                 <FormInput
                   control={form.control}
                   label="Business Type"
-                  name="business.businessType"
+                  name="businessType"
                   placeholder="Enter your business type"
                 />
               )}
               <FormTextarea
                 control={form.control}
                 label="Description"
-                name="business.description"
+                name="description"
                 placeholder="Tell us about your business..."
                 className="resize-none"
               />
@@ -74,67 +74,12 @@ const CreateBusiness = () => {
               </div>
               <FormColorPicker
                 control={form.control}
-                name="business.primaryColor"
+                name="primaryColor"
                 label="Brand Color"
               />
             </div>
           </CardContent>
         </Card>
-
-        <div className="space-y-6">
-          {/* Hours */}
-          <Card className="bg-white">
-            <CardHeader>
-              <CardTitle>Business Hours</CardTitle>
-            </CardHeader>
-            <CardContent className="gap-0">
-              <div className="space-y-6 gap-0">
-                <div>
-                  <Label className="text-sm font-bold">Business Hours</Label>
-                  <FormMultiselect
-                    control={form.control}
-                    name="businessHours.dayOfWeek"
-                    options={daysOfWeek}
-                    placeholder="Days of the week"
-                  />
-                  <div className="flex flex-row gap-2">
-                    <FormTimepicker
-                      control={form.control}
-                      name="businessHours.openTime"
-                      placeholder="From"
-                    />
-                    <FormTimepicker
-                      control={form.control}
-                      name="businessHours.closeTime"
-                      placeholder="To"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <Label className="text-sm font-bold">Break Times</Label>
-                  <FormMultiselect
-                    control={form.control}
-                    name="breakTimes.dayOfWeek"
-                    options={daysOfWeek}
-                    placeholder="Days of the week"
-                  />
-                  <div className="flex flex-row gap-2 items-center">
-                    <FormTimepicker
-                      control={form.control}
-                      name="breakTimes.startTime"
-                      placeholder="From"
-                    />
-                    <FormTimepicker
-                      control={form.control}
-                      name="breakTimes.endTime"
-                      placeholder="To"
-                    />
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
       </div>
       <div className="flex justify-end gap-2">
         <Button

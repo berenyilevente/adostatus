@@ -23,28 +23,6 @@ export const BusinessSchema: z.ZodType<Business> = z.object({
 
 export type BusinessForm = z.infer<typeof BusinessSchema>;
 
-// Business Hours
-type BusinessHours = Omit<BusinessHoursTable, 'id' | 'createdAt' | 'updatedAt'>;
-
-export const BusinessHoursSchema: z.ZodType<BusinessHours> = z.object({
-  businessId: z.string(),
-  dayOfWeek: z.array(z.string()),
-  openTime: z.string(),
-  closeTime: z.string(),
-});
-
-export type BusinessHoursForm = z.infer<typeof BusinessHoursSchema>;
-
-// Break Times
-type BreakTimes = Omit<BreakTimeTable, 'id' | 'createdAt' | 'updatedAt'>;
-
-export const BreakTimesSchema: z.ZodType<BreakTimes> = z.object({
-  businessId: z.string(),
-  dayOfWeek: z.array(z.string()),
-  startTime: z.string(),
-  endTime: z.string(),
-});
-
 // TODO move this to team member
 // type TimeOff = Omit<TimeOffTable, 'id' | 'createdAt' | 'updatedAt'>;
 
@@ -75,25 +53,6 @@ export const ServicesSchema: z.ZodType<Services> = z.object({
 });
 
 export type ServicesForm = z.infer<typeof ServicesSchema>;
-
-// Create Business
-export const CreateBusinessSchema = z.object({
-  business: BusinessSchema,
-  businessHours: BusinessHoursSchema,
-  breakTimes: BreakTimesSchema,
-});
-
-export type CreateBusinessForm = z.infer<typeof CreateBusinessSchema>;
-
-export const daysOfWeek = [
-  { label: 'Monday', value: 'Monday' },
-  { label: 'Tuesday', value: 'Tuesday' },
-  { label: 'Wednesday', value: 'Wednesday' },
-  { label: 'Thursday', value: 'Thursday' },
-  { label: 'Friday', value: 'Friday' },
-  { label: 'Saturday', value: 'Saturday' },
-  { label: 'Sunday', value: 'Sunday' },
-];
 
 // TODO: create a supported currencies list
 export const currencies = [

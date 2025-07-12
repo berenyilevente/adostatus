@@ -4,7 +4,6 @@ import React from 'react';
 
 import {
   Button,
-  FileInput,
   FormInput,
   FormSelect,
   FormWrapper,
@@ -14,29 +13,16 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-  FormTimepicker,
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-  DialogClose,
-  CardDescription,
-  FormSwitch,
   AvatarInput,
 } from '@/components';
 
 import { useEditBusiness } from './use-edit-business';
-import { Label } from '@radix-ui/react-label';
-import { PlusIcon } from 'lucide-react';
-import { FormMultiselect } from '@/components/form/form-multiselect';
-import { businessTypes, daysOfWeek } from '../../business.helper';
+import { businessTypes } from '../../business.helper';
 import { useRouter } from 'next/navigation';
 
 const EditBusiness = () => {
   const router = useRouter();
-  const { businessForm, onBusinessSubmit, services } = useEditBusiness();
+  const { businessForm, onBusinessSubmit } = useEditBusiness();
 
   return (
     <FormWrapper form={businessForm} className="space-y-6">
@@ -50,14 +36,14 @@ const EditBusiness = () => {
               <FormInput
                 control={businessForm.control}
                 label="Business Name"
-                name="business.name"
+                name="name"
                 placeholder="Enter your business name"
               />
-              {businessForm.watch('business.businessType') !== 'other' ? (
+              {businessForm.watch('businessType') !== 'other' ? (
                 <FormSelect
                   control={businessForm.control}
                   label="Business Type"
-                  name="business.businessType"
+                  name="businessType"
                   placeholder="Select your business type"
                   options={businessTypes}
                 />
@@ -65,14 +51,14 @@ const EditBusiness = () => {
                 <FormInput
                   control={businessForm.control}
                   label="Business Type"
-                  name="business.businessType"
+                  name="businessType"
                   placeholder="Enter your business type"
                 />
               )}
               <FormTextarea
                 control={businessForm.control}
                 label="Description"
-                name="business.description"
+                name="description"
                 placeholder="Tell us about your business..."
                 className="resize-none"
               />
@@ -84,70 +70,12 @@ const EditBusiness = () => {
               </div>
               <FormColorPicker
                 control={businessForm.control}
-                name="business.primaryColor"
+                name="primaryColor"
                 label="Brand Color"
               />
             </div>
           </CardContent>
         </Card>
-
-        <div className="space-y-6">
-          <div className="space-y-6">
-            <Card className="bg-white">
-              <CardHeader>
-                <CardTitle>Hours</CardTitle>
-                <CardDescription>
-                  Configure your business hours and break times for each day of
-                  the week.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6 gap-0">
-                <div>
-                  <Label className="text-sm font-bold">Business Hours</Label>
-                  <FormMultiselect
-                    control={businessForm.control}
-                    name="businessHours.dayOfWeek"
-                    options={daysOfWeek}
-                    placeholder="Days of the week"
-                  />
-                  <div className="flex flex-row gap-2">
-                    <FormTimepicker
-                      control={businessForm.control}
-                      name="businessHours.openTime"
-                      placeholder="From"
-                    />
-                    <FormTimepicker
-                      control={businessForm.control}
-                      name="businessHours.closeTime"
-                      placeholder="To"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <Label className="text-sm font-bold">Break Times</Label>
-                  <FormMultiselect
-                    control={businessForm.control}
-                    name="breakTimes.dayOfWeek"
-                    options={daysOfWeek}
-                    placeholder="Days of the week"
-                  />
-                  <div className="flex flex-row gap-2 items-center">
-                    <FormTimepicker
-                      control={businessForm.control}
-                      name="breakTimes.startTime"
-                      placeholder="From"
-                    />
-                    <FormTimepicker
-                      control={businessForm.control}
-                      name="breakTimes.endTime"
-                      placeholder="To"
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
       </div>
       <div className="flex flex-row gap-6 justify-end">
         <Button

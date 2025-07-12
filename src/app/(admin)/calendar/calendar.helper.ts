@@ -1,4 +1,8 @@
-import { Appointment as AppointmentTable } from '@/generated/prisma';
+import {
+  Appointment as AppointmentTable,
+  BusinessHours as BusinessHoursTable,
+  BreakTime as BreakTimeTable,
+} from '@/generated/prisma';
 import { z } from 'zod';
 
 type Appointment = Omit<AppointmentTable, 'id' | 'createdAt' | 'updatedAt'>;
@@ -31,3 +35,42 @@ export interface CalendarEvent {
   backgroundColor?: string;
   description: string;
 }
+
+// Business Hours
+type BusinessHours = Omit<BusinessHoursTable, 'id' | 'createdAt' | 'updatedAt'>;
+
+export const BusinessHoursSchema: z.ZodType<BusinessHours> = z.object({
+  businessId: z.string(),
+  dayOfWeek: z.array(z.string()),
+  openTime: z.string(),
+  closeTime: z.string(),
+});
+
+export type BusinessHoursForm = z.infer<typeof BusinessHoursSchema>;
+
+// Break Times
+type BreakTimes = Omit<BreakTimeTable, 'id' | 'createdAt' | 'updatedAt'>;
+
+export const BreakTimesSchema: z.ZodType<BreakTimes> = z.object({
+  businessId: z.string(),
+  dayOfWeek: z.array(z.string()),
+  startTime: z.string(),
+  endTime: z.string(),
+});
+
+export const CreateBusinessHoursSchema = z.object({
+  businessHours: BusinessHoursSchema,
+  breakTimes: BreakTimesSchema,
+});
+
+export type CreateBusinessHoursForm = z.infer<typeof CreateBusinessHoursSchema>;
+
+export const daysOfWeek = [
+  { label: 'Monday', value: 'Monday' },
+  { label: 'Tuesday', value: 'Tuesday' },
+  { label: 'Wednesday', value: 'Wednesday' },
+  { label: 'Thursday', value: 'Thursday' },
+  { label: 'Friday', value: 'Friday' },
+  { label: 'Saturday', value: 'Saturday' },
+  { label: 'Sunday', value: 'Sunday' },
+];

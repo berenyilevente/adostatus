@@ -1,6 +1,6 @@
 'use client';
 
-import { Calendar, User, Clock, Phone, Mail, MapPin } from 'lucide-react';
+import { Calendar, User, Clock, MapPin } from 'lucide-react';
 import { useCalendar } from '../use-calendar';
 import {
   Button,
@@ -13,10 +13,7 @@ import {
   FormWrapper,
   FormDateTimePicker,
   FormSelect,
-  DialogDescription,
   Separator,
-  FormCheckbox,
-  FormSwitch,
   FormColorPicker,
 } from '@/components';
 
@@ -37,6 +34,7 @@ export const AppointmentDialog = () => {
     setIsAppointmentDialogOpen(false);
   };
 
+  // TODO: Add edit mode with compound components
   return (
     <Dialog
       open={isAppointmentDialogOpen}

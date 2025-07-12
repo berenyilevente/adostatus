@@ -70,14 +70,6 @@ const BusinessShow = () => {
             <span>Back to Businesses</span>
           </Button>
         </div>
-        <div className="flex items-center space-x-2">
-          <Button
-            size="sm"
-            onClick={() => router.push(`/business/edit/${business.id}`)}
-          >
-            Edit Business
-          </Button>
-        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -86,32 +78,37 @@ const BusinessShow = () => {
           {/* Business Details Card */}
           <div className="flex flex-row w-full gap-4">
             <Card className="w-full">
-              {/* <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle className="flex items-center space-x-2">
-                  <Shield className="h-5 w-5" />
-                  <span>Business Profile</span>
-                </CardTitle>
-              </CardHeader> */}
               <CardContent className="space-y-4 mt-4">
-                <div className="flex items-center space-x-4">
-                  <Avatar className="h-16 w-16">
-                    <AvatarImage src={business.logoUrl || undefined} />
-                    <AvatarFallback className="bg-blue-100 text-blue-600 text-lg">
-                      {business.name
-                        .split(' ')
-                        .map((n) => n[0])
-                        .join('')
-                        .toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <h3 className="text-base font-semibold text-gray-900">
-                      {business.name || 'Unnamed Business'}
-                    </h3>
-                    <p className="text-sm text-gray-500">
-                      {business.description || 'No description'}
-                    </p>
+                <div className="flex flex-row justify-between items-center gap-4">
+                  <div className="flex items-center space-x-4">
+                    <Avatar className="h-16 w-16">
+                      <AvatarImage src={business.logoUrl || undefined} />
+                      <AvatarFallback className="bg-blue-100 text-blue-600 text-lg">
+                        {business.name
+                          .split(' ')
+                          .map((n) => n[0])
+                          .join('')
+                          .toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <h3 className="text-base font-semibold text-gray-900">
+                        {business.name || 'Unnamed Business'}
+                      </h3>
+                      <p className="text-sm text-gray-500">
+                        {business.description || 'No description'}
+                      </p>
+                    </div>
                   </div>
+
+                  {/* TODO: Move edit business to a modal */}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => router.push(`/business/edit/${business.id}`)}
+                  >
+                    Edit Business
+                  </Button>
                 </div>
 
                 <div className="space-y-3 text-sm">
@@ -155,30 +152,7 @@ const BusinessShow = () => {
                 </div>
               </CardContent>
             </Card>
-            {/* <Card className="w-full">
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <Building2 className="h-5 w-5" />
-                  <span>Business Information</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <TextField
-                    label="Business Type"
-                    value={getBusinessTypeLabel(business.businessType)}
-                  />
-                  <StatusField
-                    value={business.isActive ? 'active' : 'inactive'}
-                  />
-                  <ColorField
-                    value={business.primaryColor || '#6B7280'}
-                    className="w-full"
-                  />
-                  <DateField value={business.createdAt} />
-                </div>
-              </CardContent>
-            </Card> */}
+
             <Card className="w-full">
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
@@ -355,15 +329,15 @@ const BusinessShow = () => {
                     <div className="flex items-start justify-between">
                       <div className="flex items-center space-x-3">
                         <div>
-                          <h3 className="font-semibold text-gray-900 text-base">
+                          <h3 className="font-semibold text-gray-900 text-sm">
                             {service.name}
                           </h3>
-                          <p className="text-sm text-gray-600">
+                          <p className="text-sm text-gray-600 text-muted-foreground">
                             {service.description || 'No description'}
                           </p>
                         </div>
                       </div>
-                      <div className="text-right text-base">
+                      <div className="text-right text-sm">
                         <CurrencyField
                           price={service.price}
                           currency={service.currency}

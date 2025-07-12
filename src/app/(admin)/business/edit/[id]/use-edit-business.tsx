@@ -8,10 +8,7 @@ import { useForm } from 'react-hook-form';
 
 import { createAppContext } from '@/hooks/use-create-app-context';
 
-import {
-  CreateBusinessForm,
-  CreateBusinessSchema,
-} from '../../business.helper';
+import { BusinessForm, BusinessSchema } from '../../business.helper';
 import { setImage } from '@/utils/image';
 import { Business, Service } from '@/generated/prisma';
 
@@ -25,17 +22,15 @@ const useHook = ({ business, services }: HookProp) => {
   const { id: businessId } = useParams();
   const [isLoading, setIsLoading] = useState(false);
 
-  const businessForm = useForm<CreateBusinessForm>({
-    resolver: zodResolver(CreateBusinessSchema),
+  const businessForm = useForm<BusinessForm>({
+    resolver: zodResolver(BusinessSchema),
     defaultValues: {
-      business: {
-        businessType: business.businessType ?? undefined,
-        name: business.name ?? undefined,
-        description: business.description ?? undefined,
-        logoUrl: business.logoUrl ?? undefined,
-        primaryColor: business.primaryColor ?? undefined,
-        isActive: business.isActive ?? true,
-      },
+      businessType: business.businessType ?? undefined,
+      name: business.name ?? undefined,
+      description: business.description ?? undefined,
+      logoUrl: business.logoUrl ?? undefined,
+      primaryColor: business.primaryColor ?? undefined,
+      isActive: business.isActive ?? true,
     },
   });
 

@@ -26,6 +26,7 @@ import {
 } from '@/components';
 import { CalendarEvent } from './calendar.helper';
 import { AppointmentDialog } from './components/AppointmentDialog';
+import { useBusinessHours } from '../(business-hours)/use-business-hours';
 
 export function CalendarPage() {
   const calendarRef = useRef<FullCalendar | null>(null);
@@ -47,6 +48,8 @@ export function CalendarPage() {
     businessOptions,
     setIsAppointmentDialogOpen,
   } = useCalendar();
+
+  const { setIsBusinessHoursDialogOpen } = useBusinessHours();
 
   const events = appointments.map((appointment) => ({
     id: appointment.id,
@@ -120,6 +123,13 @@ export function CalendarPage() {
         }
         actions={
           <>
+            <Button
+              variant="outline"
+              endIcon="clock"
+              onClick={() => setIsBusinessHoursDialogOpen(true)}
+            >
+              Set business hours
+            </Button>
             <Button
               endIcon="plus"
               onClick={() => setIsAppointmentDialogOpen(true)}

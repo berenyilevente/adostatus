@@ -53,7 +53,7 @@ export const FormTimepicker = <
       control={control}
       name={name}
       render={({ field, fieldState }) => (
-        <FormItem className="flex flex-col gap-1 mt-2 w-full">
+        <FormItem className="flex flex-col gap-1 w-full">
           {label && <FormLabel>{label}</FormLabel>}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

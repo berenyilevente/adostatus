@@ -3,10 +3,10 @@
 import { Response } from '@/types/action.types';
 
 import prisma from '@/lib/prisma/client';
-import { Appointment } from '@/generated/prisma';
+import { Appointment, BusinessHours } from '@/generated/prisma';
 import { isAuthenticated } from '@/utils/isAuthenticated';
 import { handleResponse } from '@/utils/handleResponse';
-import { CreateAppointment } from '../calendar.helper';
+import { CreateAppointment, CreateBusinessHoursForm } from '../calendar.helper';
 import { revalidatePath } from 'next/cache';
 
 export const getAppointments = async (
@@ -98,5 +98,31 @@ export const deleteAppointment = async (
     data: deletedAppointment,
     code: 200,
     error: 'Appointment deletion failed',
+  });
+};
+
+export const createBusinessHours = async (
+  businessId: string,
+  hours: CreateBusinessHoursForm
+): Promise<Response<BusinessHours>> => {
+  await isAuthenticated();
+
+  // TODO: upsert business hours and break times
+  const businessHours = await prisma.$transaction(async (tx) => {
+    const businessHours = await tx.businessHours.create({
+      data: { ...hours.businessHours, businessId },
+    });
+
+    const breakTimes = await tx.breakTime.createMany({
+      data: { ...hours.breakTimes, businessId },
+    });
+
+    return { businessHours, breakTimes };
+  });
+
+  return handleResponse<BusinessHours>({
+    data: businessHours.businessHours,
+    code: 201,
+    error: 'Business hours creation failed',
   });
 };

@@ -10,31 +10,23 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { createAppContext } from '@/hooks/use-create-app-context';
 import { setImage } from '@/utils/image';
 
-import { CreateBusinessForm, CreateBusinessSchema } from '../business.helper';
+import { BusinessForm, BusinessSchema } from '../business.helper';
 import { createBusiness } from '../actions/business.actions';
 
 const useHook = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const form = useForm<CreateBusinessForm>({
-    resolver: zodResolver(CreateBusinessSchema),
+  const form = useForm<BusinessForm>({
+    resolver: zodResolver(BusinessSchema),
     defaultValues: {
-      business: {
-        ownerId: '',
-        businessType: '',
-        name: '',
-        description: '',
-        logoUrl: '',
-        primaryColor: '#000000',
-        isActive: true,
-      },
-      businessHours: {
-        businessId: '',
-      },
-      breakTimes: {
-        businessId: '',
-      },
+      ownerId: '',
+      businessType: '',
+      name: '',
+      description: '',
+      logoUrl: '',
+      primaryColor: '#000000',
+      isActive: true,
     },
   });
 
