@@ -7,7 +7,10 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { createService } from './actions/business-services.actions';
+import {
+  createService,
+  updateService,
+} from './actions/business-services.actions';
 import { ServicesForm, ServicesSchema } from './business-services.helper';
 import { useRouter } from 'next/navigation';
 
@@ -43,11 +46,19 @@ const useHook = ({ business, services }: HookProp) => {
     },
   });
 
-  const onSubmitEditService = (service: Service) => {
-    setSelectedService(service);
+  const onSubmitEditService = servicesForm.handleSubmit(async (data) => {
+    if (!selectedService) {
+      return;
+    }
 
-    // await updateService(service.id, data);
+    await updateService(selectedService.id, data);
+
     router.refresh();
+  });
+
+  const handleEditService = (service: Service) => {
+    servicesForm.reset(service);
+    setIsServicesDialogOpen(true);
   };
 
   const onSubmitService = servicesForm.handleSubmit(async (data) => {
@@ -66,9 +77,12 @@ const useHook = ({ business, services }: HookProp) => {
     servicesForm,
     isServicesDialogOpen,
     services,
+    selectedService,
     onSubmitService,
+    handleEditService,
     handleClose,
     setIsServicesDialogOpen,
+    onSubmitEditService,
   };
 };
 

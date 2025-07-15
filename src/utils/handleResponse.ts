@@ -1,4 +1,3 @@
-import { revalidatePath } from 'next/cache';
 import { Response } from '@/types/action.types';
 
 type ResponseProps<T> = {

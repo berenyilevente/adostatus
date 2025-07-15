@@ -54,7 +54,6 @@ const ShowBusinessPage = async (props: { params: Promise<{ id: string }> }) => {
         <BusinessShowProvider business={business}>
           <BusinessServicesProvider business={business} services={services}>
             <BusinessShow />
-            <BusinessServicesDialog />
           </BusinessServicesProvider>
         </BusinessShowProvider>
       </div>

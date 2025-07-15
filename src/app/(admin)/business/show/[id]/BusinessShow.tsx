@@ -37,6 +37,7 @@ import { CurrencyField } from '@/components/ui/currency-field';
 import { EditServiceDialog } from '../../components/EditServiceDialog';
 import { cn } from '@/utils';
 import { useBusinessServices } from '@/app/(admin)/business-services/use-business-services';
+import { BusinessServicesDialog } from '@/app/(admin)/business-services/BusinessServicesDialog';
 
 const BusinessShow = () => {
   const router = useRouter();
@@ -49,7 +50,13 @@ const BusinessShow = () => {
     formatDuration,
   } = useBusinessShow();
 
-  const { services, setIsServicesDialogOpen } = useBusinessServices();
+  const {
+    services,
+    servicesForm,
+    selectedService,
+    handleEditService,
+    setIsServicesDialogOpen,
+  } = useBusinessServices();
 
   return (
     <div className="space-y-6">
@@ -66,7 +73,6 @@ const BusinessShow = () => {
           </Button>
         </div>
       </div>
-
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Main Business Information */}
         <div className="lg:col-span-2 space-y-6">
@@ -326,7 +332,9 @@ const BusinessShow = () => {
                   <div
                     key={service.id}
                     className="border rounded-lg p-4 hover:bg-gray-50 transition-colors cursor-pointer"
-                    // onClick={() => handleEditService(service)}
+                    onClick={() => {
+                      handleEditService(service);
+                    }}
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex items-center space-x-3">
@@ -366,6 +374,19 @@ const BusinessShow = () => {
           </CardContent>
         </Card>
       </div>
+      {servicesForm.watch('name') ? (
+        <BusinessServicesDialog>
+          <BusinessServicesDialog.EditServiceDialogHeader />
+          <BusinessServicesDialog.ServiceForm />
+          <BusinessServicesDialog.EditServiceDialogAction />
+        </BusinessServicesDialog>
+      ) : (
+        <BusinessServicesDialog>
+          <BusinessServicesDialog.CreateServiceDialogHeader />
+          <BusinessServicesDialog.ServiceForm />
+          <BusinessServicesDialog.CreateServiceDialogAction />
+        </BusinessServicesDialog>
+      )}
     </div>
   );
 };
