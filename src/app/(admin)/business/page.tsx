@@ -13,19 +13,19 @@ export const metadata: Metadata = {
 };
 
 const Business = async () => {
-  let business: BusinessType[] = [];
-  const rBusiness = await getBusinesses();
+  let businesses: BusinessType[] = [];
+  const rBusinesses = await getBusinesses();
 
-  if (rBusiness === null) {
+  if (rBusinesses === null) {
     return notFound();
   }
 
-  if (rBusiness.status === 'success' && rBusiness.data) {
-    business = rBusiness.data;
+  if (rBusinesses.status === 'success' && rBusinesses.data) {
+    businesses = rBusinesses.data;
   }
 
   return (
-    <BusinessProvider businessData={business}>
+    <BusinessProvider businesses={businesses}>
       <PageTitle
         title={'Business'}
         breadcrumbs={[{ label: 'Business', active: true }]}

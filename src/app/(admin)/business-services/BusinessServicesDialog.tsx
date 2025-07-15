@@ -1,42 +1,49 @@
+'use client';
+
+import { Calendar } from 'lucide-react';
 import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+  FormWrapper,
   FormInput,
   FormSelect,
   FormSwitch,
   FormTextarea,
-  FormWrapper,
-  Button,
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
 } from '@/components';
-import { useBusinessShow } from '../show/[id]/use-business-show';
-import { currencies } from '../business.helper';
+import { useBusinessServices } from './use-business-services';
+import { currencies } from './business-services.helper';
 
-export const AddServiceDialog = () => {
+export const BusinessServicesDialog = () => {
   const {
-    isServicesModalOpen,
-    setIsServicesModalOpen,
     servicesForm,
-    onServicesSubmit,
-  } = useBusinessShow();
+    isServicesDialogOpen,
+    businessName,
+    onSubmitService,
+    handleClose,
+    setIsServicesDialogOpen,
+  } = useBusinessServices();
 
   return (
-    <Dialog open={isServicesModalOpen} onOpenChange={setIsServicesModalOpen}>
-      <DialogTrigger asChild>
-        <Button
-          size="sm"
-          endIcon="plus"
-          onClick={() => setIsServicesModalOpen(true)}
-          variant="outline"
-        >
-          Add Service
-        </Button>
-      </DialogTrigger>
-      <DialogContent>
+    <Dialog open={isServicesDialogOpen} onOpenChange={setIsServicesDialogOpen}>
+      <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
+        <DialogHeader className="pb-4">
+          <DialogTitle className="flex items-center gap-3 text-xl">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+              <Calendar className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <div>Set your business hours</div>
+              <div className="text-sm font-normal text-muted-foreground">
+                {businessName}
+              </div>
+            </div>
+          </DialogTitle>
+        </DialogHeader>
+
         <FormWrapper form={servicesForm} className="space-y-6">
           <DialogHeader>
             <DialogTitle>Add Service</DialogTitle>
@@ -89,21 +96,25 @@ export const AddServiceDialog = () => {
             placeholder="Enter your service description"
             className="resize-none"
           />
-          <DialogFooter>
-            <DialogClose asChild>
+          <DialogFooter className="pt-6">
+            <div className="flex justify-end gap-2">
               <Button
+                type="button"
                 variant="outline"
-                onClick={() => {
-                  servicesForm.reset();
-                  setIsServicesModalOpen(false);
-                }}
+                size="sm"
+                onClick={handleClose}
               >
                 Cancel
               </Button>
-            </DialogClose>
-            <Button type="submit" onClick={onServicesSubmit}>
-              Add Service
-            </Button>
+              <Button
+                type="submit"
+                variant="default"
+                size="sm"
+                onClick={onSubmitService}
+              >
+                Save
+              </Button>
+            </div>
           </DialogFooter>
         </FormWrapper>
       </DialogContent>

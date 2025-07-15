@@ -10,14 +10,13 @@ import { createAppContext } from '@/hooks/use-create-app-context';
 
 import { BusinessForm, BusinessSchema } from '../../business.helper';
 import { setImage } from '@/utils/image';
-import { Business, Service } from '@/generated/prisma';
+import { Business } from '@/generated/prisma';
 
 type HookProp = {
   business: Business;
-  services: Service[];
 };
 
-const useHook = ({ business, services }: HookProp) => {
+const useHook = ({ business }: HookProp) => {
   const router = useRouter();
   const { id: businessId } = useParams();
   const [isLoading, setIsLoading] = useState(false);
@@ -58,11 +57,10 @@ const useHook = ({ business, services }: HookProp) => {
 
   return {
     businessForm,
+    isLoading,
     onBusinessSubmit,
     handleCancel,
     handleChangeImage,
-    isLoading,
-    services,
   };
 };
 

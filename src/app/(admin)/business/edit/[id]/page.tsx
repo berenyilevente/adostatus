@@ -9,6 +9,8 @@ import { EditBusinessProvider } from './use-edit-business';
 import { getBusiness, getServices } from '../../actions/business.actions';
 import { PageTitle } from '../../../components';
 import { Business, Service } from '@/generated/prisma';
+import { BusinessServicesProvider } from '@/app/(admin)/business-services/use-business-services';
+import { BusinessServicesDialog } from '@/app/(admin)/business-services/BusinessServicesDialog';
 
 export const metadata: Metadata = {
   title: 'Edit Business',
@@ -17,18 +19,10 @@ export const metadata: Metadata = {
 const EditBusinessPage = async (props: { params: Promise<{ id: string }> }) => {
   const params = await props.params;
   let business: Business | null = null;
-  let services: Service[] | null = null;
   const rBusiness = await getBusiness(params.id);
-  const rServices = await getServices(params.id);
 
   if (rBusiness.status === 'success' && rBusiness.data) {
     business = rBusiness.data;
-  } else {
-    notFound();
-  }
-
-  if (rServices.status === 'success' && rServices.data) {
-    services = rServices.data;
   } else {
     notFound();
   }
@@ -44,7 +38,7 @@ const EditBusinessPage = async (props: { params: Promise<{ id: string }> }) => {
         ]}
       />
       <div className="mt-5">
-        <EditBusinessProvider business={business} services={services}>
+        <EditBusinessProvider business={business}>
           <EditBusiness />
         </EditBusinessProvider>
       </div>

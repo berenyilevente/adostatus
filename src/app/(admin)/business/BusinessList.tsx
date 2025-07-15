@@ -26,7 +26,7 @@ import { UserIcon } from 'lucide-react';
 export const BusinessList = () => {
   const router = useRouter();
   const {
-    businessData,
+    businesses,
     filterForm,
     isDeleteDialogOpen,
     setIsDeleteDialogOpen,
@@ -35,7 +35,6 @@ export const BusinessList = () => {
     openDeleteDialog,
   } = useBusiness();
 
-  // TODO add a business show page, where the user can add services, edit business details, etc.
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between w-full items-center gap-1 ">
@@ -59,7 +58,7 @@ export const BusinessList = () => {
           Add Business
         </Button>
       </div>
-      {businessData.map((business) => (
+      {businesses.map((business) => (
         <Card className="bg-white" key={business.id}>
           <CardContent className="p-4">
             <div className="flex items-center justify-between gap-2">

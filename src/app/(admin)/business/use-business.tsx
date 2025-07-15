@@ -10,10 +10,10 @@ import { deleteBusiness } from './actions/business.actions';
 import { toast } from 'sonner';
 
 type HookProp = {
-  businessData: Business[];
+  businesses: Business[];
 };
 
-const useHook = ({ businessData }: HookProp) => {
+const useHook = ({ businesses }: HookProp) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedBusinessId, setSelectedBusinessId] = useState<string | null>(
@@ -58,7 +58,7 @@ const useHook = ({ businessData }: HookProp) => {
   const search = filterForm.watch('search');
 
   return {
-    businessData,
+    businesses,
     search,
     filterForm,
     isDeleteDialogOpen,

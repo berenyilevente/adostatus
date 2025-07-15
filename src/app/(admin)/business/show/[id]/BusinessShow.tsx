@@ -34,27 +34,22 @@ import { useBusinessShow } from './use-business-show';
 import { useRouter } from 'next/navigation';
 import { formatCurrency } from '@/utils/formatCurrency';
 import { CurrencyField } from '@/components/ui/currency-field';
-import { AddServiceDialog } from '../../components/AddServiceDialog';
 import { EditServiceDialog } from '../../components/EditServiceDialog';
-import { BusinessHeader } from '../../components/BusinessHeader';
 import { cn } from '@/utils';
+import { useBusinessServices } from '@/app/(admin)/business-services/use-business-services';
 
 const BusinessShow = () => {
   const router = useRouter();
   const {
     business,
-    services,
     handleCancel,
     getBusinessTypeLabel,
     formatTime,
     getDayLabel,
     formatDuration,
-    isEditServiceModalOpen,
-    setIsEditServiceModalOpen,
-    selectedService,
-    handleEditService,
-    handleServiceUpdated,
   } = useBusinessShow();
+
+  const { services, setIsServicesDialogOpen } = useBusinessServices();
 
   return (
     <div className="space-y-6">
@@ -309,7 +304,14 @@ const BusinessShow = () => {
                 <DollarSign className="h-5 w-5" />
                 <span>Services</span>
               </div>
-              <AddServiceDialog />
+              <Button
+                size="sm"
+                endIcon="plus"
+                onClick={() => setIsServicesDialogOpen(true)}
+                variant="outline"
+              >
+                Add Service
+              </Button>
             </CardTitle>
           </CardHeader>
           <CardContent className="overflow-y-auto max-h-[500px]">
@@ -324,7 +326,7 @@ const BusinessShow = () => {
                   <div
                     key={service.id}
                     className="border rounded-lg p-4 hover:bg-gray-50 transition-colors cursor-pointer"
-                    onClick={() => handleEditService(service)}
+                    // onClick={() => handleEditService(service)}
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex items-center space-x-3">
@@ -364,16 +366,6 @@ const BusinessShow = () => {
           </CardContent>
         </Card>
       </div>
-
-      {/* Edit Service Dialog */}
-      {selectedService && (
-        <EditServiceDialog
-          service={selectedService}
-          isOpen={isEditServiceModalOpen}
-          onOpenChange={setIsEditServiceModalOpen}
-          onServiceUpdated={handleServiceUpdated}
-        />
-      )}
     </div>
   );
 };

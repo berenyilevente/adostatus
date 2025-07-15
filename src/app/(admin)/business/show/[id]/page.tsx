@@ -13,6 +13,8 @@ import {
 } from '../../actions/business.actions';
 import { PageTitle } from '../../../components';
 import { Service } from '@/generated/prisma';
+import { BusinessServicesProvider } from '@/app/(admin)/business-services/use-business-services';
+import { BusinessServicesDialog } from '@/app/(admin)/business-services/BusinessServicesDialog';
 
 export const metadata: Metadata = {
   title: 'Show Business',
@@ -49,8 +51,11 @@ const ShowBusinessPage = async (props: { params: Promise<{ id: string }> }) => {
         ]}
       />
       <div className="mt-5">
-        <BusinessShowProvider business={business} services={services}>
-          <BusinessShow />
+        <BusinessShowProvider business={business}>
+          <BusinessServicesProvider business={business} services={services}>
+            <BusinessShow />
+            <BusinessServicesDialog />
+          </BusinessServicesProvider>
         </BusinessShowProvider>
       </div>
     </div>
