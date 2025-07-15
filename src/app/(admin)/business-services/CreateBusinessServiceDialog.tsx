@@ -13,7 +13,7 @@ import { useBusinessServices } from './use-business-services';
 import { BusinessServiceForm } from './BusinessServiceForm';
 
 const CreateServiceDialogAction = () => {
-  const { handleClose, onSubmitService } = useBusinessServices();
+  const { handleClose, onSubmitService, isLoading } = useBusinessServices();
 
   return (
     <DialogFooter>
@@ -26,6 +26,7 @@ const CreateServiceDialogAction = () => {
           variant="default"
           size="sm"
           onClick={onSubmitService}
+          isLoading={isLoading}
         >
           Save
         </Button>

@@ -3,7 +3,7 @@
 import { Business, Service } from '@/generated/prisma';
 
 import { createAppContext } from '@/hooks/use-create-app-context';
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -26,6 +26,7 @@ const useHook = ({ business, services }: HookProp) => {
   const [isEditServicesDialogOpen, setIsEditServicesDialogOpen] =
     useState(false);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const [isLoading, startTransition] = useTransition();
 
   const filterForm = useForm({
     defaultValues: { business: business.id },
@@ -51,17 +52,6 @@ const useHook = ({ business, services }: HookProp) => {
     defaultValues,
   });
 
-  const onSubmitEditService = servicesForm.handleSubmit(async (data) => {
-    if (!selectedService) {
-      return;
-    }
-
-    await updateService(selectedService.id, data);
-
-    router.refresh();
-    handleClose();
-  });
-
   const handleCreateService = () => {
     servicesForm.reset(defaultValues);
     setSelectedService(null);
@@ -75,8 +65,22 @@ const useHook = ({ business, services }: HookProp) => {
   };
 
   const onSubmitService = servicesForm.handleSubmit(async (data) => {
-    await createService(data);
-    handleClose();
+    startTransition(async () => {
+      await createService(data);
+      handleClose();
+    });
+  });
+
+  const onSubmitEditService = servicesForm.handleSubmit(async (data) => {
+    if (!selectedService) {
+      return;
+    }
+
+    startTransition(async () => {
+      await updateService(selectedService.id, data);
+      router.refresh();
+      handleClose();
+    });
   });
 
   const handleClose = () => {
@@ -95,6 +99,7 @@ const useHook = ({ business, services }: HookProp) => {
     services,
     selectedService,
     isEditServicesDialogOpen,
+    isLoading,
     setIsEditServicesDialogOpen,
     onSubmitService,
     handleEditService,

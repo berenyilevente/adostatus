@@ -32,7 +32,7 @@ const EditServiceDialogHeader = () => {
 };
 
 const EditServiceDialogAction = () => {
-  const { handleClose, onSubmitEditService } = useBusinessServices();
+  const { handleClose, onSubmitEditService, isLoading } = useBusinessServices();
 
   return (
     <DialogFooter>
@@ -54,6 +54,7 @@ const EditServiceDialogAction = () => {
             variant="default"
             size="sm"
             onClick={onSubmitEditService}
+            isLoading={isLoading}
           >
             Save
           </Button>
