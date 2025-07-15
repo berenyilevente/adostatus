@@ -37,7 +37,8 @@ import { CurrencyField } from '@/components/ui/currency-field';
 import { EditServiceDialog } from '../../components/EditServiceDialog';
 import { cn } from '@/utils';
 import { useBusinessServices } from '@/app/(admin)/business-services/use-business-services';
-import { BusinessServicesDialog } from '@/app/(admin)/business-services/BusinessServicesDialog';
+import { EditBusinessServicesDialog } from '@/app/(admin)/business-services/EditBusinessServiceDialog';
+import { CreateBusinessServicesDialog } from '@/app/(admin)/business-services/CreateBusinessServiceDialog';
 
 const BusinessShow = () => {
   const router = useRouter();
@@ -50,13 +51,8 @@ const BusinessShow = () => {
     formatDuration,
   } = useBusinessShow();
 
-  const {
-    services,
-    servicesForm,
-    selectedService,
-    handleEditService,
-    setIsServicesDialogOpen,
-  } = useBusinessServices();
+  const { services, handleEditService, handleCreateService } =
+    useBusinessServices();
 
   return (
     <div className="space-y-6">
@@ -313,7 +309,7 @@ const BusinessShow = () => {
               <Button
                 size="sm"
                 endIcon="plus"
-                onClick={() => setIsServicesDialogOpen(true)}
+                onClick={handleCreateService}
                 variant="outline"
               >
                 Add Service
@@ -332,9 +328,7 @@ const BusinessShow = () => {
                   <div
                     key={service.id}
                     className="border rounded-lg p-4 hover:bg-gray-50 transition-colors cursor-pointer"
-                    onClick={() => {
-                      handleEditService(service);
-                    }}
+                    onClick={() => handleEditService(service)}
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex items-center space-x-3">
@@ -374,19 +368,8 @@ const BusinessShow = () => {
           </CardContent>
         </Card>
       </div>
-      {servicesForm.watch('name') ? (
-        <BusinessServicesDialog>
-          <BusinessServicesDialog.EditServiceDialogHeader />
-          <BusinessServicesDialog.ServiceForm />
-          <BusinessServicesDialog.EditServiceDialogAction />
-        </BusinessServicesDialog>
-      ) : (
-        <BusinessServicesDialog>
-          <BusinessServicesDialog.CreateServiceDialogHeader />
-          <BusinessServicesDialog.ServiceForm />
-          <BusinessServicesDialog.CreateServiceDialogAction />
-        </BusinessServicesDialog>
-      )}
+      <CreateBusinessServicesDialog />
+      <EditBusinessServicesDialog />
     </div>
   );
 };

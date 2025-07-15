@@ -14,7 +14,6 @@ import {
 import { PageTitle } from '../../../components';
 import { Service } from '@/generated/prisma';
 import { BusinessServicesProvider } from '@/app/(admin)/business-services/use-business-services';
-import { BusinessServicesDialog } from '@/app/(admin)/business-services/BusinessServicesDialog';
 
 export const metadata: Metadata = {
   title: 'Show Business',

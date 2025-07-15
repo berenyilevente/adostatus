@@ -21,7 +21,10 @@ type HookProp = {
 
 const useHook = ({ business, services }: HookProp) => {
   const router = useRouter();
-  const [isServicesDialogOpen, setIsServicesDialogOpen] = useState(false);
+  const [isCreateServicesDialogOpen, setIsCreateServicesDialogOpen] =
+    useState(false);
+  const [isEditServicesDialogOpen, setIsEditServicesDialogOpen] =
+    useState(false);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
 
   const filterForm = useForm({
@@ -30,20 +33,22 @@ const useHook = ({ business, services }: HookProp) => {
 
   const businessName = business?.name;
 
+  const defaultValues = {
+    businessId: business.id,
+    name: '',
+    price: '',
+    currency: '',
+    isActive: false,
+    duration: '',
+    bufferTime: '',
+    description: '',
+    color: null,
+    formId: null,
+  };
+
   const servicesForm = useForm<ServicesForm>({
     resolver: zodResolver(ServicesSchema),
-    defaultValues: {
-      businessId: business.id,
-      name: '',
-      price: '',
-      currency: '',
-      isActive: false,
-      duration: '',
-      bufferTime: '',
-      description: '',
-      color: null,
-      formId: null,
-    },
+    defaultValues,
   });
 
   const onSubmitEditService = servicesForm.handleSubmit(async (data) => {
@@ -54,20 +59,31 @@ const useHook = ({ business, services }: HookProp) => {
     await updateService(selectedService.id, data);
 
     router.refresh();
+    handleClose();
   });
+
+  const handleCreateService = () => {
+    servicesForm.reset(defaultValues);
+    setSelectedService(null);
+    setIsCreateServicesDialogOpen(true);
+  };
 
   const handleEditService = (service: Service) => {
     servicesForm.reset(service);
-    setIsServicesDialogOpen(true);
+    setSelectedService(service);
+    setIsEditServicesDialogOpen(true);
   };
 
   const onSubmitService = servicesForm.handleSubmit(async (data) => {
     await createService(data);
+    handleClose();
   });
 
   const handleClose = () => {
     servicesForm.reset();
-    setIsServicesDialogOpen(false);
+    setIsCreateServicesDialogOpen(false);
+    setIsEditServicesDialogOpen(false);
+    setSelectedService(null);
   };
 
   return {
@@ -75,14 +91,17 @@ const useHook = ({ business, services }: HookProp) => {
     filterForm,
     businessName,
     servicesForm,
-    isServicesDialogOpen,
+    isCreateServicesDialogOpen,
     services,
     selectedService,
+    isEditServicesDialogOpen,
+    setIsEditServicesDialogOpen,
     onSubmitService,
     handleEditService,
     handleClose,
-    setIsServicesDialogOpen,
+    setIsCreateServicesDialogOpen,
     onSubmitEditService,
+    handleCreateService,
   };
 };
 

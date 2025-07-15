@@ -10,7 +10,7 @@ import { getBusiness, getServices } from '../../actions/business.actions';
 import { PageTitle } from '../../../components';
 import { Business, Service } from '@/generated/prisma';
 import { BusinessServicesProvider } from '@/app/(admin)/business-services/use-business-services';
-import { BusinessServicesDialog } from '@/app/(admin)/business-services/BusinessServicesDialog';
+import { BusinessServicesDialog } from '@/app/(admin)/business-services/CreateBusinessServiceDialog';
 
 export const metadata: Metadata = {
   title: 'Edit Business',
