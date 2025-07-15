@@ -1,10 +1,8 @@
 'use client';
 
-import { type ComponentProps, type ReactNode, useTransition } from 'react';
-import { Response } from '@/types/action.types';
+import { ComponentProps, ReactNode } from 'react';
 
 import { Button } from '@/components/ui/button';
-import { toast } from 'sonner';
 import {
   LoadingSwap,
   AlertDialog,
@@ -18,18 +16,20 @@ import {
   AlertDialogTrigger,
 } from '@/components';
 
-export const AlertButton = <T,>({
+interface AlertButtonProps extends ComponentProps<typeof Button> {
+  title?: string;
+  confirmActionDescription?: ReactNode;
+  isLoading?: boolean;
+  onSubmit: () => void;
+}
+
+export const AlertButton = ({
   title = 'Are you sure?',
   confirmActionDescription = 'This action cannot be undone.',
   isLoading = false,
   onSubmit,
   ...props
-}: ComponentProps<typeof Button> & {
-  title?: string;
-  confirmActionDescription?: ReactNode;
-  isLoading?: boolean;
-  onSubmit: () => void;
-}) => {
+}: AlertButtonProps) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
