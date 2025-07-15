@@ -9,6 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import {
   createService,
+  deleteService,
   updateService,
 } from './actions/business-services.actions';
 import { ServicesForm, ServicesSchema } from './business-services.helper';
@@ -90,6 +91,18 @@ const useHook = ({ business, services }: HookProp) => {
     setSelectedService(null);
   };
 
+  const onDeleteService = () => {
+    if (!selectedService) {
+      return;
+    }
+
+    startTransition(async () => {
+      await deleteService(selectedService.id, business.id);
+      router.refresh();
+      handleClose();
+    });
+  };
+
   return {
     business,
     filterForm,
@@ -107,6 +120,7 @@ const useHook = ({ business, services }: HookProp) => {
     setIsCreateServicesDialogOpen,
     onSubmitEditService,
     handleCreateService,
+    onDeleteService,
   };
 };
 

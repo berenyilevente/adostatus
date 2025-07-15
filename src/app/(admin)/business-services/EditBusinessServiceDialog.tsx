@@ -8,6 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
+  AlertButton,
 } from '@/components';
 import { useBusinessServices } from './use-business-services';
 import { BusinessServiceForm } from './BusinessServiceForm';
@@ -32,14 +33,29 @@ const EditServiceDialogHeader = () => {
 };
 
 const EditServiceDialogAction = () => {
-  const { handleClose, onSubmitEditService, isLoading } = useBusinessServices();
+  const {
+    selectedService,
+    handleClose,
+    onSubmitEditService,
+    isLoading,
+    onDeleteService,
+  } = useBusinessServices();
 
   return (
     <DialogFooter>
       <div className="flex justify-between pt-6 w-full">
-        <Button type="button" variant="destructive" size="sm">
+        <AlertButton
+          title="Are you sure?"
+          confirmActionDescription={`This action cannot be undone. This will permanently delete the
+            service "${selectedService?.name}".`}
+          isLoading={isLoading}
+          onSubmit={onDeleteService}
+          variant="destructive"
+          size="sm"
+        >
           Delete Service
-        </Button>
+        </AlertButton>
+
         <div className="flex justify-end gap-2">
           <Button
             type="button"
