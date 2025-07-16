@@ -49,7 +49,7 @@ export function CalendarPage() {
     setIsAppointmentDialogOpen,
   } = useCalendar();
 
-  const { openBusinessHoursDialog } = useBusinessHours();
+  const { openBusinessHoursDialog, businessHours } = useBusinessHours();
 
   const events = appointments.map((appointment) => ({
     id: appointment.id,
@@ -155,8 +155,8 @@ export function CalendarPage() {
           ]}
           initialView="timeGridWeek"
           headerToolbar={false}
-          // slotMinTime={calendarEarliestTime}
-          // slotMaxTime={calendarLatestTime}
+          slotMinTime="06:00:00"
+          slotMaxTime="20:00:00"
           allDaySlot={false}
           firstDay={1}
           height={''}
@@ -164,14 +164,14 @@ export function CalendarPage() {
           windowResizeDelay={0}
           events={events}
           slotLabelFormat={{
-            hour: 'numeric',
+            hour: '2-digit',
             minute: '2-digit',
-            hour12: true,
+            hour12: false,
           }}
           eventTimeFormat={{
-            hour: 'numeric',
+            hour: '2-digit',
             minute: '2-digit',
-            hour12: true,
+            hour12: false,
           }}
           eventBorderColor={'black'}
           contentHeight={'auto'}
