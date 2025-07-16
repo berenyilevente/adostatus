@@ -94,6 +94,26 @@ const getPastDateTimes = (count: number, date?: Date) => {
   return pastDateTimes;
 };
 
+const formatTime = (time: string) => {
+  return dayjs(new Date(`2000-01-01T${time}`)).format('h:mm a');
+};
+
+const formatDuration = (minutes: string | null) => {
+  if (!minutes) {
+    return 'Not specified';
+  }
+
+  const mins = parseInt(minutes);
+  if (mins < 60) {
+    return `${mins} min`;
+  }
+
+  const hours = Math.floor(mins / 60);
+  const remainingMins = mins % 60;
+
+  return remainingMins > 0 ? `${hours}h ${remainingMins}m` : `${hours}h`;
+};
+
 export const dateUtil = {
   formatted,
   minusDays,
@@ -107,4 +127,6 @@ export const dateUtil = {
   monthNames,
   getPastMonths,
   getPastDateTimes,
+  formatTime,
+  formatDuration,
 };

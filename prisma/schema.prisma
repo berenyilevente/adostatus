@@ -98,7 +98,7 @@ model TeamMember {
 model BusinessHours {
   id         String   @id @default(cuid())
   businessId String
-  dayOfWeek  String[] // 0-6 (Sunday-Saturday)
+  dayOfWeek  String[]
   openTime   String
   closeTime  String
   createdAt  DateTime @default(now())
@@ -106,6 +106,7 @@ model BusinessHours {
 
   business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
 
+  @@index([businessId, dayOfWeek])
   @@unique([businessId, dayOfWeek])
   @@map("business_hours")
 }
@@ -121,6 +122,8 @@ model BreakTime {
 
   business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
 
+  @@index([businessId, dayOfWeek])
+  @@unique([businessId, dayOfWeek])
   @@map("break_times")
 }
 

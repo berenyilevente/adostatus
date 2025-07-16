@@ -1,17 +1,25 @@
 'use client';
 
-import { Business } from '@/generated/prisma';
+import { BreakTime, Business, BusinessHours } from '@/generated/prisma';
 
 import { createAppContext } from '@/hooks/use-create-app-context';
-import { useState } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { upsertBusinessHours } from './actions/business-hours.actions';
 import {
-  CreateBusinessHoursForm,
-  CreateBusinessHoursSchema,
+  getBreakTimes,
+  getBusinessHours,
+  upsertBreakTimes,
+  upsertBusinessHours,
+} from './actions/business-hours.actions';
+import {
+  BreakTimesForm,
+  BreakTimesSchema,
+  BusinessHoursForm,
+  BusinessHoursSchema,
 } from './business-hours.helper';
+import { toast } from 'sonner';
 
 type HookProp = {
   businesses: Business[];
@@ -20,41 +28,113 @@ type HookProp = {
 const useHook = ({ businesses }: HookProp) => {
   const [isBusinessHoursDialogOpen, setIsBusinessHoursDialogOpen] =
     useState(false);
+  const [businessHours, setBusinessHours] = useState<BusinessHours[]>([]);
+  const [breakTimes, setBreakTimes] = useState<BreakTime[]>([]);
+  const [isLoading, startTransition] = useTransition();
 
   const filterForm = useForm({
     defaultValues: {
-      business: businesses[0].id,
+      business: businesses[0].id, // TODO get the actual business id from the url
     },
   });
+
+  // TODO: use react query to fetch business hours and break times
+  useEffect(() => {
+    const fetchBusinessHours = async () => {
+      const rBusinessHours = await getBusinessHours({
+        businessId: businesses[0].id,
+      });
+      setBusinessHours(rBusinessHours.data ?? []);
+    };
+
+    const fetchBreakTimes = async () => {
+      const rBreakTimes = await getBreakTimes({ businessId: businesses[0].id });
+      setBreakTimes(rBreakTimes.data ?? []);
+    };
+
+    fetchBusinessHours();
+    fetchBreakTimes();
+  }, []);
 
   const businessId = filterForm.watch('business');
   const business = businesses.find((business) => business.id === businessId);
   const businessName = business?.name;
 
-  const businessHoursForm = useForm<CreateBusinessHoursForm>({
-    resolver: zodResolver(CreateBusinessHoursSchema),
+  const businessHoursForm = useForm<BusinessHoursForm>({
+    resolver: zodResolver(BusinessHoursSchema),
     defaultValues: {
-      businessHours: {
-        businessId: '',
-      },
-      breakTimes: {
-        businessId: '',
-      },
+      businessId: businessId,
+      dayOfWeek: [],
+      openTime: '',
+      closeTime: '',
+    },
+  });
+
+  const breakTimesForm = useForm<BreakTimesForm>({
+    resolver: zodResolver(BreakTimesSchema),
+    defaultValues: {
+      businessId: businessId,
+      dayOfWeek: [],
+      startTime: '',
+      endTime: '',
     },
   });
 
   const onSubmitBusinessHours = businessHoursForm.handleSubmit(async (data) => {
-    await upsertBusinessHours(businessId, data);
+    startTransition(async () => {
+      const res = await upsertBusinessHours(businessId, data);
+      if (res.status === 'success') {
+        closeBusinessHoursDialog();
+        toast.success('Business hours updated');
+        return;
+      }
+      if (res.status === 'error') {
+        toast.error(res.error);
+        return;
+      }
+    });
   });
 
+  const onSubmitBreakTimes = breakTimesForm.handleSubmit(async (data) => {
+    startTransition(async () => {
+      const res = await upsertBreakTimes(businessId, data);
+      if (res.status === 'success') {
+        closeBusinessHoursDialog();
+        toast.success('Break times updated');
+        return;
+      }
+      if (res.status === 'error') {
+        toast.error(res.error);
+        return;
+      }
+    });
+  });
+
+  const openBusinessHoursDialog = () => {
+    setIsBusinessHoursDialogOpen(true);
+  };
+
+  const closeBusinessHoursDialog = () => {
+    businessHoursForm.reset();
+    breakTimesForm.reset();
+    setIsBusinessHoursDialogOpen(false);
+  };
+
   return {
+    businessHours,
+    breakTimes,
     businesses,
     filterForm,
     businessName,
     businessHoursForm,
+    breakTimesForm,
     isBusinessHoursDialogOpen,
+    openBusinessHoursDialog,
     onSubmitBusinessHours,
+    onSubmitBreakTimes,
+    closeBusinessHoursDialog,
     setIsBusinessHoursDialogOpen,
+    isLoading,
   };
 };
 

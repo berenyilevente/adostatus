@@ -24,9 +24,4 @@ export const BreakTimesSchema: z.ZodType<BreakTimes> = z.object({
   endTime: z.string(),
 });
 
-export const CreateBusinessHoursSchema = z.object({
-  businessHours: BusinessHoursSchema,
-  breakTimes: BreakTimesSchema,
-});
-
-export type CreateBusinessHoursForm = z.infer<typeof CreateBusinessHoursSchema>;
+export type BreakTimesForm = z.infer<typeof BreakTimesSchema>;

@@ -49,7 +49,7 @@ export function CalendarPage() {
     setIsAppointmentDialogOpen,
   } = useCalendar();
 
-  const { setIsBusinessHoursDialogOpen } = useBusinessHours();
+  const { openBusinessHoursDialog } = useBusinessHours();
 
   const events = appointments.map((appointment) => ({
     id: appointment.id,
@@ -126,7 +126,7 @@ export function CalendarPage() {
             <Button
               variant="outline"
               endIcon="clock"
-              onClick={() => setIsBusinessHoursDialogOpen(true)}
+              onClick={openBusinessHoursDialog}
             >
               Set business hours
             </Button>

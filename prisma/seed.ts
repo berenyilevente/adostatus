@@ -206,27 +206,19 @@ async function main() {
   console.log('👥 Created team members');
 
   // Create business hours
-  const businessHours = await Promise.all([
+  await Promise.all([
     prisma.businessHours.create({
       data: {
         businessId: businesses[0].id,
-        dayOfWeek: ['1', '2', '3', '4', '5'], // Monday to Friday
+        dayOfWeek: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'],
         openTime: '09:00',
         closeTime: '17:00',
       },
     }),
     prisma.businessHours.create({
       data: {
-        businessId: businesses[0].id,
-        dayOfWeek: ['6'], // Saturday
-        openTime: '09:00',
-        closeTime: '15:00',
-      },
-    }),
-    prisma.businessHours.create({
-      data: {
         businessId: businesses[1].id,
-        dayOfWeek: ['1', '2', '3', '4', '5', '6'], // Monday to Saturday
+        dayOfWeek: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'],
         openTime: '10:00',
         closeTime: '19:00',
       },
@@ -236,11 +228,11 @@ async function main() {
   console.log('🕐 Created business hours');
 
   // Create break times
-  const breakTimes = await Promise.all([
+  await Promise.all([
     prisma.breakTime.create({
       data: {
         businessId: businesses[0].id,
-        dayOfWeek: ['1', '2', '3', '4', '5'],
+        dayOfWeek: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'],
         startTime: '12:00',
         endTime: '13:00',
       },
@@ -248,7 +240,7 @@ async function main() {
     prisma.breakTime.create({
       data: {
         businessId: businesses[1].id,
-        dayOfWeek: ['1', '2', '3', '4', '5', '6'],
+        dayOfWeek: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'],
         startTime: '13:00',
         endTime: '14:00',
       },

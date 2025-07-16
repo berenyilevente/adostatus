@@ -58,6 +58,7 @@ import business from '@iconify/icons-lucide/home';
 import archive from '@iconify/icons-lucide/archive';
 import clock from '@iconify/icons-lucide/clock';
 import arrowLeft from '@iconify/icons-lucide/arrow-left';
+import edit from '@iconify/icons-lucide/edit';
 
 export const iconMap = {
   mail,
@@ -115,6 +116,7 @@ export const iconMap = {
   archive,
   clock,
   arrowLeft,
+  edit,
 };
 
 export type IconType = keyof typeof iconMap;

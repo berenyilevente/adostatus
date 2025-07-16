@@ -6,7 +6,11 @@ import { Appointment, Business } from '@/generated/prisma';
 import { notFound } from 'next/navigation';
 import { getBusinesses } from '../business/actions';
 import { BusinessHoursProvider } from '../business-hours/use-business-hours';
-import { BusinessHours } from '../business-hours/BusinessHours';
+import { BusinessHours } from '../business-hours/BusinessHoursDialog';
+import {
+  getBreakTimes,
+  getBusinessHours,
+} from '../business-hours/actions/business-hours.actions';
 
 export default async function Calendar() {
   let businesses: Business[] = [];

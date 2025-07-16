@@ -3,33 +3,85 @@
 import { Response } from '@/types/action.types';
 
 import prisma from '@/lib/prisma/client';
-import { BusinessHours } from '@/generated/prisma';
+import { BreakTime, BusinessHours } from '@/generated/prisma';
 import { isAuthenticated } from '@/utils/isAuthenticated';
 import { handleResponse } from '@/utils/handleResponse';
-import { CreateBusinessHoursForm } from '../business-hours.helper';
+import { BreakTimesForm, BusinessHoursForm } from '../business-hours.helper';
+import { revalidatePath } from 'next/cache';
 
 export const upsertBusinessHours = async (
   businessId: string,
-  hours: CreateBusinessHoursForm
+  hours: BusinessHoursForm
 ): Promise<Response<BusinessHours>> => {
   await isAuthenticated();
 
-  // TODO: upsert business hours and break times
-  const businessHours = await prisma.$transaction(async (tx) => {
-    const businessHours = await tx.businessHours.create({
-      data: { ...hours.businessHours, businessId },
-    });
-
-    const breakTimes = await tx.breakTime.createMany({
-      data: { ...hours.breakTimes, businessId },
-    });
-
-    return { businessHours, breakTimes };
+  const businessHours = await prisma.businessHours.upsert({
+    where: {
+      businessId_dayOfWeek: { businessId, dayOfWeek: hours.dayOfWeek },
+    },
+    update: { ...hours },
+    create: { ...hours, businessId },
   });
+  revalidatePath('/calendar');
 
   return handleResponse<BusinessHours>({
-    data: businessHours.businessHours,
+    data: businessHours,
     code: 201,
     error: 'Business hours creation failed',
+  });
+};
+
+export const upsertBreakTimes = async (
+  businessId: string,
+  breaks: BreakTimesForm
+): Promise<Response<BreakTime>> => {
+  await isAuthenticated();
+
+  const breakTimes = await prisma.breakTime.upsert({
+    where: {
+      businessId_dayOfWeek: { businessId, dayOfWeek: breaks.dayOfWeek },
+    },
+    update: { ...breaks },
+    create: { ...breaks, businessId },
+  });
+
+  return handleResponse<BreakTime>({
+    data: breakTimes,
+    code: 201,
+    error: 'Break times creation failed',
+  });
+};
+
+export const getBusinessHours = async ({
+  businessId,
+}: {
+  businessId: string;
+}): Promise<Response<BusinessHours[]>> => {
+  await isAuthenticated();
+
+  const businessHours = await prisma.businessHours.findMany({
+    where: { businessId },
+  });
+
+  return handleResponse<BusinessHours[]>({
+    data: businessHours,
+    code: 200,
+  });
+};
+
+export const getBreakTimes = async ({
+  businessId,
+}: {
+  businessId: string;
+}): Promise<Response<BreakTime[]>> => {
+  await isAuthenticated();
+
+  const breakTimes = await prisma.breakTime.findMany({
+    where: { businessId },
+  });
+
+  return handleResponse<BreakTime[]>({
+    data: breakTimes,
+    code: 200,
   });
 };

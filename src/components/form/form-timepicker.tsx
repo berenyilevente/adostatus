@@ -1,11 +1,8 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { CalendarIcon, ClockIcon, CheckIcon } from 'lucide-react';
-import { format } from 'date-fns';
-import { useRef, useState } from 'react';
-import { Control, FieldPath, FieldValues, useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { ClockIcon, CheckIcon } from 'lucide-react';
+
+import { Control, FieldPath, FieldValues } from 'react-hook-form';
 
 import {
   Button,
@@ -46,8 +43,6 @@ export const FormTimepicker = <
   description,
   placeholder,
 }: FormTimepickerProps<TField, TName>) => {
-  const [time, setTime] = useState<string>();
-
   return (
     <FormField
       control={control}
@@ -67,7 +62,7 @@ export const FormTimepicker = <
                     { 'border-red-500': fieldState.error }
                   )}
                 >
-                  {field.value ? time : <span>{placeholder}</span>}
+                  {field.value ?? <span>{placeholder}</span>}
                   <ClockIcon className="ml-auto h-4 w-4 opacity-50" />
                 </Button>
               </FormControl>
@@ -86,10 +81,7 @@ export const FormTimepicker = <
                       <DropdownMenuItem
                         key={i}
                         className="cursor-pointer"
-                        onClick={() => {
-                          field.onChange(timeValue);
-                          setTime(timeValue);
-                        }}
+                        onClick={() => field.onChange(timeValue)}
                       >
                         {timeValue}
                         {isSelected && (
