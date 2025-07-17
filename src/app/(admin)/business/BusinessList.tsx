@@ -3,6 +3,7 @@
 import React from 'react';
 
 import {
+  Badge,
   Avatar,
   AvatarFallback,
   AvatarImage,
@@ -21,7 +22,17 @@ import {
 
 import { useBusiness } from './use-business';
 import { useRouter } from 'next/navigation';
-import { UserIcon } from 'lucide-react';
+import {
+  Calendar,
+  Edit,
+  Mail,
+  Phone,
+  Trash2,
+  User,
+  UserIcon,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { formatDate } from 'date-fns';
 
 export const BusinessList = () => {
   const router = useRouter();
@@ -58,45 +69,96 @@ export const BusinessList = () => {
           Add Business
         </Button>
       </div>
-      {businesses.map((business) => (
-        <Card className="bg-white" key={business.id}>
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between gap-2">
-              <div className="flex items-center gap-2">
-                <Avatar>
-                  <AvatarImage src={business.logoUrl || ''} />
-                  <AvatarFallback>
-                    <UserIcon className="w-4 h-4" />
-                  </AvatarFallback>
-                </Avatar>
-                <div className="flex flex-col">
-                  <p className="text-sm font-medium">{business.name}</p>
-                  <p className="text-xs text-gray-500">
-                    {business.description}
-                  </p>
+      {businesses.length === 0 ? (
+        <div className="text-center py-12">
+          <User className="h-12 w-12 mx-auto text-gray-300 mb-4" />
+          <h3 className="text-lg font-medium text-gray-900 mb-2">
+            No businesses
+          </h3>
+          <p className="text-gray-500 mb-4">
+            Get started by adding your first business.
+          </p>
+          <Button
+            onClick={() => router.push('/business/create')}
+            variant="outline"
+          >
+            Add Business
+          </Button>
+        </div>
+      ) : (
+        businesses.map((business) => (
+          <Card className="bg-white" key={business.id}>
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <Avatar className="h-12 w-12">
+                    <AvatarImage src={business.logoUrl || undefined} />
+                    <AvatarFallback className="bg-blue-100 text-blue-600">
+                      {business.name
+                        .split(' ')
+                        .map((n) => n[0])
+                        .join('')}
+                    </AvatarFallback>
+                  </Avatar>
+
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center space-x-2">
+                      <h3 className="text-base font-semibold text-gray-900 truncate">
+                        {business.name || 'Unnamed Business'}
+                      </h3>
+                      <Badge
+                        variant="outline"
+                        className={cn(business.primaryColor)}
+                      >
+                        {business.businessType}
+                      </Badge>
+                      {!business.isActive && (
+                        <Badge
+                          variant="secondary"
+                          className="bg-gray-100 text-gray-600"
+                        >
+                          Inactive
+                        </Badge>
+                      )}
+                    </div>
+
+                    <div className="mt-1 flex items-center space-x-4 text-sm text-gray-500">
+                      {business.description && (
+                        <div className="flex items-center space-x-1">
+                          <span>{business.description}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => router.push(`/business/edit/${business.id}`)}
+                    className="flex items-center space-x-1"
+                  >
+                    <Edit className="h-4 w-4" />
+                    <span>Edit</span>
+                  </Button>
+
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => openDeleteDialog(business.id)}
+                    className="flex items-center space-x-1 text-red-600 hover:text-red-700 hover:bg-red-50"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                    <span>Delete</span>
+                  </Button>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
-                <Button
-                  size="sm"
-                  endIcon="eye"
-                  variant="outline"
-                  fullWidth
-                  onClick={() => router.push(`/business/show/${business.id}`)}
-                >
-                  Details
-                </Button>
-                <Button
-                  size="icon"
-                  endIcon="trash"
-                  variant="ghost"
-                  onClick={() => openDeleteDialog(business.id)}
-                />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      ))}{' '}
+            </CardContent>
+          </Card>
+        ))
+      )}
+
       {/* Delete Confirmation Dialog */}
       <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
         <DialogContent>

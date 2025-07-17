@@ -22,75 +22,87 @@ import { useRouter } from 'next/navigation';
 
 const EditBusiness = () => {
   const router = useRouter();
-  const { businessForm, onBusinessSubmit } = useEditBusiness();
+  const { businessForm, onBusinessSubmit, handleCancel, isLoading } =
+    useEditBusiness();
 
   return (
-    <FormWrapper form={businessForm} className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card className="bg-white">
-          <CardHeader>
-            <CardTitle>Basic Information</CardTitle>
-          </CardHeader>
-          <CardContent className="gap-0">
-            <div className="space-y-6">
-              <FormInput
-                control={businessForm.control}
-                label="Business Name"
-                name="name"
-                placeholder="Enter your business name"
-              />
-              {businessForm.watch('businessType') !== 'other' ? (
-                <FormSelect
-                  control={businessForm.control}
-                  label="Business Type"
-                  name="businessType"
-                  placeholder="Select your business type"
-                  options={businessTypes}
-                />
-              ) : (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-4">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleCancel}
+            className="flex items-center space-x-2"
+            startIcon="arrowLeft"
+          >
+            <span>Back to Businesses</span>
+          </Button>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Button
+            onClick={onBusinessSubmit}
+            className="w-full"
+            disabled={isLoading}
+          >
+            {isLoading ? 'Saving...' : 'Save Changes'}
+          </Button>
+        </div>
+      </div>
+      <FormWrapper form={businessForm} className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <Card className="bg-white">
+            <CardHeader>
+              <CardTitle>Basic Information</CardTitle>
+            </CardHeader>
+            <CardContent className="gap-0">
+              <div className="space-y-6">
                 <FormInput
                   control={businessForm.control}
-                  label="Business Type"
-                  name="businessType"
-                  placeholder="Enter your business type"
+                  label="Business Name"
+                  name="name"
+                  placeholder="Enter your business name"
                 />
-              )}
-              <FormTextarea
-                control={businessForm.control}
-                label="Description"
-                name="description"
-                placeholder="Tell us about your business..."
-                className="resize-none"
-              />
-              <div>
-                <AvatarInput
-                  onupdatefiles={() => {}}
-                  labelIdle="Add your business logo"
+                {businessForm.watch('businessType') !== 'other' ? (
+                  <FormSelect
+                    control={businessForm.control}
+                    label="Business Type"
+                    name="businessType"
+                    placeholder="Select your business type"
+                    options={businessTypes}
+                  />
+                ) : (
+                  <FormInput
+                    control={businessForm.control}
+                    label="Business Type"
+                    name="businessType"
+                    placeholder="Enter your business type"
+                  />
+                )}
+                <FormTextarea
+                  control={businessForm.control}
+                  label="Description"
+                  name="description"
+                  placeholder="Tell us about your business..."
+                  className="resize-none"
+                />
+                <div>
+                  <AvatarInput
+                    onupdatefiles={() => {}}
+                    labelIdle="Add your business logo"
+                  />
+                </div>
+                <FormColorPicker
+                  control={businessForm.control}
+                  name="primaryColor"
+                  label="Brand Color"
                 />
               </div>
-              <FormColorPicker
-                control={businessForm.control}
-                name="primaryColor"
-                label="Brand Color"
-              />
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-      <div className="flex flex-row gap-6 justify-end">
-        <Button
-          variant="outline"
-          startIcon="chevronLeft"
-          type="button"
-          onClick={() => router.back()}
-        >
-          Back
-        </Button>
-        <Button startIcon="check" onClick={onBusinessSubmit}>
-          Save
-        </Button>
-      </div>
-    </FormWrapper>
+            </CardContent>
+          </Card>
+        </div>
+      </FormWrapper>
+    </div>
   );
 };
 

@@ -116,65 +116,63 @@ const EditTeamMember = () => {
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-6">
-            {/* Team Member Profile */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <Shield className="h-5 w-5" />
-                  <span>Profile</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center space-x-4">
-                  <Avatar className="h-16 w-16">
-                    <AvatarImage src={teamMember.user?.image || undefined} />
-                    <AvatarFallback className="bg-blue-100 text-blue-600 text-lg">
-                      {getInitials(teamMember.user?.name)}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900">
-                      {teamMember.user?.name || 'Unnamed User'}
-                    </h3>
-                    <p className="text-sm text-gray-500">
-                      {teamMember.user?.email || 'No email'}
-                    </p>
-                    <div className="mt-2">
-                      <Badge className={getRoleColor(teamMember.role)}>
-                        {getRoleLabel(teamMember.role)}
-                      </Badge>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-gray-500">Status:</span>
-                    <Badge
-                      variant={teamMember.isActive ? 'default' : 'secondary'}
-                    >
-                      {teamMember.isActive ? 'Active' : 'Inactive'}
+          {/* Team Member Profile */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <Shield className="h-5 w-5" />
+                <span>Profile</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex items-center space-x-4">
+                <Avatar className="h-16 w-16">
+                  <AvatarImage src={teamMember.user?.image || undefined} />
+                  <AvatarFallback className="bg-blue-100 text-blue-600 text-lg">
+                    {getInitials(teamMember.user?.name)}
+                  </AvatarFallback>
+                </Avatar>
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    {teamMember.user?.name || 'Unnamed User'}
+                  </h3>
+                  <p className="text-sm text-gray-500">
+                    {teamMember.user?.email || 'No email'}
+                  </p>
+                  <div className="mt-2">
+                    <Badge className={getRoleColor(teamMember.role)}>
+                      {getRoleLabel(teamMember.role)}
                     </Badge>
                   </div>
+                </div>
+              </div>
+
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Status:</span>
+                  <Badge
+                    variant={teamMember.isActive ? 'default' : 'secondary'}
+                  >
+                    {teamMember.isActive ? 'Active' : 'Inactive'}
+                  </Badge>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Joined:</span>
+                  <span className="text-gray-900">
+                    {new Date(teamMember.createdAt).toLocaleDateString()}
+                  </span>
+                </div>
+                {teamMember.user?.phone && (
                   <div className="flex justify-between">
-                    <span className="text-gray-500">Joined:</span>
+                    <span className="text-gray-500">Phone:</span>
                     <span className="text-gray-900">
-                      {new Date(teamMember.createdAt).toLocaleDateString()}
+                      {teamMember.user.phone}
                     </span>
                   </div>
-                  {teamMember.user?.phone && (
-                    <div className="flex justify-between">
-                      <span className="text-gray-500">Phone:</span>
-                      <span className="text-gray-900">
-                        {teamMember.user.phone}
-                      </span>
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </FormWrapper>
     </div>

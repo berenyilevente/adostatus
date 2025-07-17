@@ -52,7 +52,11 @@ function useEditBookingFormHook({ formsData, businessData }: HookProp) {
   const addFieldToRow = (rowIdx: number, fieldType: string) => {
     setEditorFields((prev) => {
       const newField: EditorField = {
-        ...createEmptyField(fieldType, prev[rowIdx]?.length || 0),
+        ...createEmptyField(
+          fieldType,
+          prev[rowIdx]?.length || 0,
+          formsData?.id || ''
+        ),
         id: `${fieldType}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
       };
       const newRows = [...prev];
@@ -64,7 +68,7 @@ function useEditBookingFormHook({ formsData, businessData }: HookProp) {
 
   const addRowWithField = (fieldType: string) => {
     const newField: EditorField = {
-      ...createEmptyField(fieldType, 0),
+      ...createEmptyField(fieldType, 0, formsData?.id || ''),
       id: `${fieldType}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
     };
     setEditorFields((prev) => [...prev, [newField]]);
@@ -115,7 +119,7 @@ function useEditBookingFormHook({ formsData, businessData }: HookProp) {
       const idx = row.findIndex((f) => f.id === afterId);
       if (idx === -1) return prev;
       const newField: EditorField = {
-        ...createEmptyField(fieldType, idx + 1),
+        ...createEmptyField(fieldType, idx + 1, formsData?.id || ''),
         id: `${fieldType}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
       };
       const newRow = [

@@ -61,12 +61,11 @@ export const EditBookingForm = (): ReactElement => {
     modalOpen,
     closeModal,
     availableFields,
-    createForm,
-    businessOptions,
-    serviceOptions,
   } = useEditBookingForm();
 
   const [modalForm, setModalForm] = useState<any>(null);
+
+  console.log(editorFields);
 
   const previewForm = useForm({
     mode: 'onChange',
@@ -157,7 +156,25 @@ export const EditBookingForm = (): ReactElement => {
   };
 
   return (
-    <div>
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-4">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => router.push('/booking-forms')}
+            className="flex items-center space-x-2"
+            startIcon="arrowLeft"
+          >
+            <span>Back to Booking Forms</span>
+          </Button>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Button onClick={() => {}} className="w-full">
+            Save Changes
+          </Button>
+        </div>
+      </div>
       <div className="grid grid-cols-5 gap-4">
         <Card className="col-span-1">
           <CardHeader>
@@ -259,36 +276,29 @@ export const EditBookingForm = (): ReactElement => {
               form={previewForm}
               className="flex w-full flex-col gap-4"
             >
-              <>
-                {editorFields.map((row, rowIdx) => (
-                  <div
-                    key={rowIdx}
-                    className="flex gap-4 w-full items-center flex-row"
-                  >
-                    {row.map((field) => renderPreviewField(field))}
-                  </div>
-                ))}
-              </>
-              <Button type="submit" variant="default" className="mt-4">
-                Submit
-              </Button>
+              {editorFields.length > 0 ? (
+                <>
+                  {editorFields.map((row, rowIdx) => (
+                    <div
+                      key={rowIdx}
+                      className="flex gap-4 w-full items-center flex-row"
+                    >
+                      {row.map((field) => renderPreviewField(field))}
+                    </div>
+                  ))}
+                  <Button type="submit" variant="default" className="mt-4">
+                    Submit
+                  </Button>
+                </>
+              ) : (
+                <div className="flex justify-center items-center h-full">
+                  <p className="text-sm text-gray-500">No fields added yet.</p>
+                </div>
+              )}
             </FormWrapper>
           </CardContent>
         </Card>
-        <div className="col-span-5 flex justify-end gap-2">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => {
-              router.push('/booking-forms');
-            }}
-          >
-            Cancel
-          </Button>
-          <Button type="submit" variant="default">
-            Save
-          </Button>
-        </div>
+
         <Dialog open={modalOpen} onOpenChange={closeModal}>
           <DialogContent>
             <DialogHeader>

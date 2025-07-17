@@ -59,7 +59,8 @@ type CreateFormField = Omit<FormField, 'id' | 'createdAt' | 'updatedAt'>;
 
 export const createEmptyField = (
   fieldType: string,
-  order: number
+  order: number,
+  formId: string
 ): CreateFormField => {
   return {
     fieldType: fieldType as any,
@@ -71,6 +72,6 @@ export const createEmptyField = (
     defaultValue: '',
     options: [],
     validationRules: [],
-    formId: '',
+    formId,
   };
 };

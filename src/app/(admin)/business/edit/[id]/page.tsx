@@ -6,11 +6,9 @@ import { routes } from '@/lib/routes';
 
 import { EditBusiness } from './EditBusiness';
 import { EditBusinessProvider } from './use-edit-business';
-import { getBusiness, getServices } from '../../actions/business.actions';
+import { getBusiness } from '../../actions/business.actions';
 import { PageTitle } from '../../../components';
-import { Business, Service } from '@/generated/prisma';
-import { BusinessServicesProvider } from '@/app/(admin)/business-services/use-business-services';
-import { BusinessServicesDialog } from '@/app/(admin)/business-services/CreateBusinessServiceDialog';
+import { Business } from '@/generated/prisma';
 
 export const metadata: Metadata = {
   title: 'Edit Business',
