@@ -12,20 +12,51 @@ import { revalidatePath } from 'next/cache';
 export const upsertBusinessHours = async (
   businessId: string,
   hours: BusinessHoursForm
-): Promise<Response<BusinessHours>> => {
+): Promise<Response<BusinessHours[]>> => {
   await isAuthenticated();
 
-  const businessHours = await prisma.businessHours.upsert({
+  // Find existing records that contain any of the days being updated
+  const existingRecords = await prisma.businessHours.findMany({
     where: {
-      businessId_dayOfWeek: { businessId, dayOfWeek: hours.dayOfWeek },
+      businessId,
+      dayOfWeek: { hasSome: hours.dayOfWeek },
     },
-    update: { ...hours },
-    create: { ...hours, businessId },
   });
+
+  // Remove the days being updated from existing records
+  for (const record of existingRecords) {
+    const remainingDays = record.dayOfWeek.filter(
+      (day) => !hours.dayOfWeek.includes(day)
+    );
+
+    if (remainingDays.length > 0) {
+      // Update the record to keep the remaining days
+      await prisma.businessHours.update({
+        where: { id: record.id },
+        data: { dayOfWeek: remainingDays },
+      });
+    } else {
+      // Delete the record if no days remain
+      await prisma.businessHours.delete({
+        where: { id: record.id },
+      });
+    }
+  }
+
+  // Create new record with the updated days
+  const businessHours = await prisma.businessHours.create({
+    data: { ...hours, businessId },
+  });
+
+  // Fetch all records for this business to return
+  const allBusinessHours = await prisma.businessHours.findMany({
+    where: { businessId },
+  });
+
   revalidatePath('/calendar');
 
-  return handleResponse<BusinessHours>({
-    data: businessHours,
+  return handleResponse<BusinessHours[]>({
+    data: allBusinessHours,
     code: 201,
     error: 'Business hours creation failed',
   });
@@ -34,19 +65,49 @@ export const upsertBusinessHours = async (
 export const upsertBreakTimes = async (
   businessId: string,
   breaks: BreakTimesForm
-): Promise<Response<BreakTime>> => {
+): Promise<Response<BreakTime[]>> => {
   await isAuthenticated();
 
-  const breakTimes = await prisma.breakTime.upsert({
+  // Find existing records that contain any of the days being updated
+  const existingRecords = await prisma.breakTime.findMany({
     where: {
-      businessId_dayOfWeek: { businessId, dayOfWeek: breaks.dayOfWeek },
+      businessId,
+      dayOfWeek: { hasSome: breaks.dayOfWeek },
     },
-    update: { ...breaks },
-    create: { ...breaks, businessId },
   });
 
-  return handleResponse<BreakTime>({
-    data: breakTimes,
+  // Remove the days being updated from existing records
+  for (const record of existingRecords) {
+    const remainingDays = record.dayOfWeek.filter(
+      (day) => !breaks.dayOfWeek.includes(day)
+    );
+
+    if (remainingDays.length > 0) {
+      // Update the record to keep the remaining days
+      await prisma.breakTime.update({
+        where: { id: record.id },
+        data: { dayOfWeek: remainingDays },
+      });
+    } else {
+      // Delete the record if no days remain
+      await prisma.breakTime.delete({
+        where: { id: record.id },
+      });
+    }
+  }
+
+  // Create new record with the updated days
+  const breakTimes = await prisma.breakTime.create({
+    data: { ...breaks, businessId },
+  });
+
+  // Fetch all records for this business to return
+  const allBreakTimes = await prisma.breakTime.findMany({
+    where: { businessId },
+  });
+
+  return handleResponse<BreakTime[]>({
+    data: allBreakTimes,
     code: 201,
     error: 'Break times creation failed',
   });
