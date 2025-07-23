@@ -6,15 +6,12 @@ import { routes } from '@/lib/routes';
 
 import { BusinessShow } from './BusinessShow';
 import { BusinessShowProvider } from './use-business-show';
-import {
-  BusinessResponse,
-  getBusiness,
-  getServices,
-} from '../../actions/business.actions';
+import { BusinessResponse, getBusiness } from '../../actions/business.actions';
 import { PageTitle } from '../../../components';
 import { Service } from '@/generated/prisma';
 import { BusinessServicesProvider } from '@/app/(admin)/business-services/use-business-services';
 import { BusinessHoursProvider } from '@/app/(admin)/business-hours/use-business-hours';
+import { getServices } from '@/app/(admin)/business-services/actions/business-services.actions';
 
 export const metadata: Metadata = {
   title: 'Show Business',

@@ -19,7 +19,7 @@ import {
   CreateBusinessHoursForm,
   CreateBusinessHoursSchema,
 } from './calendar.helper';
-import { getServices } from '../business/actions/business.actions';
+import { getServices } from '../business-services/actions/business-services.actions';
 import { getTeamMembers } from '../team-members/actions/teamMember.actions';
 import { TeamMemberWithUser } from '../team-members/teamMember.helper';
 

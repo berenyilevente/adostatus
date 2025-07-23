@@ -9,7 +9,7 @@ import {
   fields as availableFields,
 } from '../booking-form.helper';
 import { useForm } from 'react-hook-form';
-import { getServices } from '../../business/actions/business.actions';
+import { getServices } from '../../business-services/actions/business-services.actions';
 
 export type EditorField = ReturnType<typeof createEmptyField> & { id: string };
 

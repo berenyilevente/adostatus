@@ -99,81 +99,6 @@ export const getBusinesses = async (): Promise<Response<Business[]>> => {
   });
 };
 
-export const getServices = async (
-  businessId: string
-): Promise<Response<Service[]>> => {
-  await isAuthenticated();
-
-  const services = await prisma.service.findMany({
-    where: {
-      businessId: businessId,
-    },
-  });
-
-  return handleResponse<Service[]>({
-    data: services,
-    code: 404,
-    error: 'Services not found',
-  });
-};
-
-export const createService = async (
-  service: any
-): Promise<Response<Service>> => {
-  await isAuthenticated();
-
-  const serviceResult = await prisma.service.create({
-    data: service,
-  });
-
-  revalidatePath(`/business/${service.businessId}`);
-
-  return handleResponse<Service>({
-    data: serviceResult,
-    code: 404,
-    error: 'Service creation failed',
-  });
-};
-
-export const updateService = async (
-  id: string,
-  service: any
-): Promise<Response<Service>> => {
-  await isAuthenticated();
-
-  const serviceResult = await prisma.service.update({
-    where: { id },
-    data: service,
-  });
-
-  revalidatePath(`/business/${service.businessId}`);
-
-  return handleResponse<Service>({
-    data: serviceResult,
-    code: 404,
-    error: 'Service update failed',
-  });
-};
-
-export const deleteService = async (
-  id: string,
-  businessId: string
-): Promise<Response<Service>> => {
-  await isAuthenticated();
-
-  const serviceResult = await prisma.service.delete({
-    where: { id },
-  });
-
-  revalidatePath(`/business/${businessId}`);
-
-  return handleResponse<Service>({
-    data: serviceResult,
-    code: 404,
-    error: 'Service deletion failed',
-  });
-};
-
 export const deleteBusiness = async (
   id: string
 ): Promise<Response<Business>> => {
@@ -189,5 +114,25 @@ export const deleteBusiness = async (
     data: businessResult,
     code: 404,
     error: 'Business deletion failed',
+  });
+};
+
+export const updateBusiness = async (
+  id: string,
+  business: BusinessForm
+): Promise<Response<Business>> => {
+  await isAuthenticated();
+
+  const businessResult = await prisma.business.update({
+    where: { id },
+    data: business,
+  });
+
+  revalidatePath(`/business/${id}`);
+
+  return handleResponse<Business>({
+    data: businessResult,
+    code: 404,
+    error: 'Business update failed',
   });
 };

@@ -6,7 +6,7 @@ import { Business, Form, Service } from '@/generated/prisma';
 
 import { createAppContext } from '@/hooks/use-create-app-context';
 import { useEffect, useState } from 'react';
-import { getServices } from '../business/actions/business.actions';
+import { getServices } from '../business-services/actions/business-services.actions';
 import {
   createBookingForm,
   deleteBookingForm,

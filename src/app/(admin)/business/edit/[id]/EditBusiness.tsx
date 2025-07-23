@@ -14,6 +14,7 @@ import {
   CardHeader,
   CardTitle,
   AvatarInput,
+  FileInput,
 } from '@/components';
 
 import { useEditBusiness } from './use-edit-business';
@@ -22,7 +23,7 @@ import { useRouter } from 'next/navigation';
 
 const EditBusiness = () => {
   const router = useRouter();
-  const { businessForm, onBusinessSubmit, handleCancel, isLoading } =
+  const { businessForm, onBusinessSave, handleCancel, isLoading } =
     useEditBusiness();
 
   return (
@@ -41,11 +42,14 @@ const EditBusiness = () => {
         </div>
         <div className="flex items-center space-x-2">
           <Button
-            onClick={onBusinessSubmit}
+            onClick={onBusinessSave}
             className="w-full"
+            size="sm"
+            type="button"
             disabled={isLoading}
+            isLoading={isLoading}
           >
-            {isLoading ? 'Saving...' : 'Save Changes'}
+            Save Changes
           </Button>
         </div>
       </div>
@@ -86,18 +90,25 @@ const EditBusiness = () => {
                   placeholder="Tell us about your business..."
                   className="resize-none"
                 />
-                <div>
-                  <AvatarInput
-                    onupdatefiles={() => {}}
-                    labelIdle="Add your business logo"
-                  />
-                </div>
-                <FormColorPicker
-                  control={businessForm.control}
-                  name="primaryColor"
-                  label="Brand Color"
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Branding</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div>
+                <FileInput
+                  onupdatefiles={() => {}}
+                  labelIdle="Add your business logo"
                 />
               </div>
+              <FormColorPicker
+                control={businessForm.control}
+                name="primaryColor"
+                label="Brand Color"
+              />{' '}
             </CardContent>
           </Card>
         </div>

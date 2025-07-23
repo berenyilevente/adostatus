@@ -11,6 +11,8 @@ import { createAppContext } from '@/hooks/use-create-app-context';
 import { BusinessForm, BusinessSchema } from '../../business.helper';
 import { setImage } from '@/utils/image';
 import { Business } from '@/generated/prisma';
+import { updateBusiness } from '../../actions/business.actions';
+import { toast } from 'sonner';
 
 type HookProp = {
   business: Business;
@@ -30,6 +32,7 @@ const useHook = ({ business }: HookProp) => {
       logoUrl: business.logoUrl ?? undefined,
       primaryColor: business.primaryColor ?? undefined,
       isActive: business.isActive ?? true,
+      ownerId: business.ownerId ?? undefined,
     },
   });
 
@@ -41,14 +44,24 @@ const useHook = ({ business }: HookProp) => {
     });
   };
 
-  const onBusinessSubmit = businessForm.handleSubmit(async (data) => {
+  console.log('businessForm.formState.errors', businessForm.formState.errors);
+  const onBusinessSave = businessForm.handleSubmit(async (data) => {
     if (!businessId) {
       return;
     }
 
     setIsLoading(true);
+    const response = await updateBusiness(businessId.toString(), data);
+    if (response.status === 'success') {
+      toast.success('Business updated successfully');
+      setIsLoading(false);
+      return;
+    }
 
-    setIsLoading(false);
+    if (response.status === 'error') {
+      setIsLoading(false);
+      toast.error(response.error);
+    }
   });
 
   const handleCancel = () => {
@@ -58,7 +71,7 @@ const useHook = ({ business }: HookProp) => {
   return {
     businessForm,
     isLoading,
-    onBusinessSubmit,
+    onBusinessSave,
     handleCancel,
     handleChangeImage,
   };
