@@ -3,13 +3,26 @@
 import { Business, Form, Service } from '@/generated/prisma';
 
 import { createAppContext } from '@/hooks/use-create-app-context';
-import { useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import {
   createEmptyField,
   fields as availableFields,
 } from '../booking-form.helper';
 import { useForm } from 'react-hook-form';
-import { getServices } from '../../business-services/actions/business-services.actions';
+import {
+  FormCheckbox,
+  FormCombobox,
+  FormSelect,
+  FormDatepicker,
+  FormTextarea,
+  FormSwitch,
+  FormMultiselect,
+  FormColorPicker,
+  FormTagInput,
+  FormTimepicker,
+  FormInput,
+} from '@/components';
+import React from 'react';
 
 export type EditorField = ReturnType<typeof createEmptyField> & { id: string };
 
@@ -20,7 +33,6 @@ type HookProp = {
 
 function useEditBookingFormHook({ formsData, businessData }: HookProp) {
   const [editorFields, setEditorFields] = useState<EditorField[][]>([]);
-  const [services, setServices] = useState<Service[]>([]);
   const [selectedFieldId, setSelectedFieldId] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -36,16 +48,6 @@ function useEditBookingFormHook({ formsData, businessData }: HookProp) {
       allowCancellation: formsData?.allowCancellation || true,
     },
   });
-
-  const businessOptions = businessData.map((business) => ({
-    label: business.name,
-    value: business.id,
-  }));
-
-  const serviceOptions = services.map((service) => ({
-    label: service.name,
-    value: service.id,
-  }));
 
   const businessId = createForm.watch('business');
 
@@ -96,19 +98,6 @@ function useEditBookingFormHook({ formsData, businessData }: HookProp) {
     );
   };
 
-  const getServicesFromBusiness = async (businessId: string) => {
-    const response = await getServices(businessId);
-    if (response.status === 'success' && response.data) {
-      setServices(response.data);
-    }
-  };
-
-  useEffect(() => {
-    if (businessId) {
-      getServicesFromBusiness(businessId);
-    }
-  }, [businessId]);
-
   const addFieldAfter = (
     rowIdx: number,
     afterId: string,
@@ -139,6 +128,72 @@ function useEditBookingFormHook({ formsData, businessData }: HookProp) {
   const selectedField =
     editorFields.flat().find((f) => f.id === selectedFieldId) || null;
 
+  const [modalForm, setModalForm] = useState<any>(null);
+
+  const previewForm = useForm({
+    mode: 'onChange',
+    defaultValues: React.useMemo(() => {
+      const values: Record<string, any> = {};
+      editorFields.flat().forEach((field) => {
+        values[field.id] = field.defaultValue || '';
+      });
+      return values;
+    }, [editorFields]),
+  });
+
+  useEffect(() => {
+    if (selectedField) {
+      setModalForm({ ...selectedField });
+    }
+  }, [selectedField, modalOpen]);
+
+  const handleModalChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setModalForm((prev: any) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSaveModal = () => {
+    if (selectedFieldId && modalForm) {
+      editField(selectedFieldId, modalForm);
+      closeModal();
+    }
+  };
+
+  const renderPreviewField = (field: any) => {
+    const commonProps = {
+      control: previewForm.control,
+      name: field.id,
+      label: field.label,
+      description: field.helpText,
+      placeholder: field.placeholder,
+      options: field.options || [],
+      required: !!field.isRequired,
+      disabled: !!field.disabled,
+      className: 'w-full',
+    };
+
+    const fieldTypeMap: Record<string, ReactElement> = {
+      'text-input': <FormInput {...commonProps} key={field.id} />,
+      checkbox: <FormCheckbox {...commonProps} key={field.id} />,
+      combobox: <FormCombobox {...commonProps} key={field.id} />,
+      select: <FormSelect {...commonProps} key={field.id} />,
+      datepicker: <FormDatepicker {...commonProps} key={field.id} />,
+      textarea: <FormTextarea {...commonProps} key={field.id} />,
+      switch: <FormSwitch {...commonProps} key={field.id} />,
+      multiselect: <FormMultiselect {...commonProps} key={field.id} />,
+      'color-picker': <FormColorPicker {...commonProps} key={field.id} />,
+      'tag-input': <FormTagInput {...commonProps} key={field.id} />,
+      timepicker: <FormTimepicker {...commonProps} key={field.id} />,
+    };
+
+    return fieldTypeMap[field.fieldType];
+  };
+
   return {
     editorFields,
     addFieldToRow,
@@ -153,9 +208,13 @@ function useEditBookingFormHook({ formsData, businessData }: HookProp) {
     openModal,
     closeModal,
     availableFields,
-    businessOptions,
     createForm,
-    serviceOptions,
+    previewForm,
+    renderPreviewField,
+    modalForm,
+    handleSaveModal,
+    handleModalChange,
+    setModalForm,
   };
 }
 

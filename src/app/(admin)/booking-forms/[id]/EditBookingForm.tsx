@@ -20,6 +20,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
+  FormWrapper,
 } from '@/components';
 import { useEditBookingForm } from './use-edit-booking-form';
 import {
@@ -30,22 +31,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components';
-import { useForm } from 'react-hook-form';
-import {
-  FormInput,
-  FormCheckbox,
-  FormCombobox,
-  FormSelect,
-  FormDatepicker,
-  FormRadioGroup,
-  FormTextarea,
-  FormSwitch,
-  FormMultiselect,
-  FormColorPicker,
-  FormTagInput,
-  FormTimepicker,
-  FormWrapper,
-} from '@/components';
 
 export const EditBookingForm = (): ReactElement => {
   const router = useRouter();
@@ -54,106 +39,17 @@ export const EditBookingForm = (): ReactElement => {
     addFieldToRow,
     addRowWithField,
     selectField,
-    editField,
     removeField,
-    selectedField,
-    selectedFieldId,
     modalOpen,
     closeModal,
     availableFields,
+    previewForm,
+    renderPreviewField,
+    modalForm,
+    handleSaveModal,
+    handleModalChange,
+    setModalForm,
   } = useEditBookingForm();
-
-  const [modalForm, setModalForm] = useState<any>(null);
-
-  console.log(editorFields);
-
-  const previewForm = useForm({
-    mode: 'onChange',
-    defaultValues: React.useMemo(() => {
-      const values: Record<string, any> = {};
-      editorFields.flat().forEach((field) => {
-        values[field.id] = field.defaultValue || '';
-      });
-      return values;
-    }, [editorFields]),
-  });
-
-  useEffect(() => {
-    if (selectedField) {
-      setModalForm({ ...selectedField });
-    }
-  }, [selectedField, modalOpen]);
-
-  const handleModalChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setModalForm((prev: any) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSaveModal = () => {
-    if (selectedFieldId && modalForm) {
-      editField(selectedFieldId, modalForm);
-      closeModal();
-    }
-  };
-
-  const renderPreviewField = (field: any) => {
-    const commonProps = {
-      control: previewForm.control,
-      name: field.id,
-      label: field.label,
-      description: field.helpText,
-      placeholder: field.placeholder,
-      options: field.options || [],
-      required: !!field.isRequired,
-      disabled: !!field.disabled,
-      className: 'w-full',
-    };
-    switch (field.fieldType) {
-      case 'text-input':
-        return <FormInput {...commonProps} key={field.id} />;
-      case 'checkbox':
-        return <FormCheckbox {...commonProps} key={field.id} />;
-      case 'combobox':
-        return <FormCombobox {...commonProps} key={field.id} />;
-      case 'select':
-        return <FormSelect {...commonProps} key={field.id} />;
-      case 'datepicker':
-        return <FormDatepicker {...commonProps} key={field.id} />;
-      case 'radio-group':
-        return (
-          <FormRadioGroup
-            control={previewForm.control}
-            name={field.id}
-            items={field.options || []}
-            label={field.label}
-            description={field.helpText}
-            key={field.id}
-            required={!!field.isRequired}
-            disabled={!!field.disabled}
-            value={field.defaultValue}
-          />
-        );
-      case 'textarea':
-        return <FormTextarea {...commonProps} key={field.id} />;
-      case 'switch':
-        return <FormSwitch {...commonProps} key={field.id} />;
-      case 'multiselect':
-        return <FormMultiselect {...commonProps} key={field.id} />;
-      case 'color-picker':
-        return <FormColorPicker {...commonProps} key={field.id} />;
-      case 'tag-input':
-        return <FormTagInput {...commonProps} key={field.id} />;
-      case 'timepicker':
-        return <FormTimepicker {...commonProps} key={field.id} />;
-      default:
-        return null;
-    }
-  };
 
   return (
     <div className="space-y-6">
