@@ -28,7 +28,6 @@ export const fields = [
   { key: 'combobox', label: 'Combobox' },
   { key: 'datepicker', label: 'Datepicker' },
   { key: 'text-input', label: 'Text Input' },
-  { key: 'radio-group', label: 'Radio Group' },
   { key: 'select', label: 'Select' },
   { key: 'switch', label: 'Switch' },
   { key: 'textarea', label: 'Textarea' },
@@ -55,7 +54,7 @@ export const FormFieldSchema = z.object({
 
 export type FormFieldSchemaType = z.infer<typeof FormFieldSchema>;
 
-type CreateFormField = Omit<FormField, 'id' | 'createdAt' | 'updatedAt'>;
+export type CreateFormField = Omit<FormField, 'id' | 'createdAt' | 'updatedAt'>;
 
 export const createEmptyField = (
   fieldType: string,
@@ -70,8 +69,8 @@ export const createEmptyField = (
     isRequired: false,
     fieldOrder: order,
     defaultValue: '',
-    options: [],
-    validationRules: [],
+    options: null,
+    validationRules: null,
     formId,
   };
 };

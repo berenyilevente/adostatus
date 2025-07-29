@@ -4,7 +4,8 @@ import prisma from '@/lib/prisma/client';
 import { isAuthenticated } from '@/lib/auth';
 import { handleResponse } from '@/utils/handleResponse';
 import { revalidatePath } from 'next/cache';
-import { CreateBookingForm } from '../booking-form.helper';
+import { CreateBookingForm, CreateFormField } from '../booking-form.helper';
+import { FormField } from '@/generated/prisma';
 
 export const getBookingForms = async () => {
   await isAuthenticated();
@@ -105,6 +106,42 @@ export const archiveBookingForm = async (id: string) => {
   return handleResponse({
     data: form,
     error: 'Form archiving failed',
+    code: 404,
+  });
+};
+
+export const createBookingFormFields = async (
+  fields: CreateFormField[]
+): Promise<any> => {
+  await isAuthenticated();
+
+  const formFields = await prisma.formField.createMany({
+    data: fields.map((field) => ({
+      ...field,
+      options: field.options || undefined,
+      validationRules: field.validationRules || undefined,
+    })),
+  });
+
+  revalidatePath('/booking-forms');
+
+  return handleResponse({
+    data: formFields,
+    error: 'Form fields creation failed',
+    code: 404,
+  });
+};
+
+export const getFormFields = async (formId: string) => {
+  await isAuthenticated();
+
+  const formFields = await prisma.formField.findMany({
+    where: { formId },
+  });
+
+  return handleResponse({
+    data: formFields,
+    error: 'Form fields not found',
     code: 404,
   });
 };

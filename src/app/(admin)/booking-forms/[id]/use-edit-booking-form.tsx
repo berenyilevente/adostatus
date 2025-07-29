@@ -1,12 +1,13 @@
 'use client';
 
-import { Business, Form, Service } from '@/generated/prisma';
+import { Business, Form, FormField, Service } from '@/generated/prisma';
 
 import { createAppContext } from '@/hooks/use-create-app-context';
 import { ReactElement, useEffect, useState } from 'react';
 import {
   createEmptyField,
   fields as availableFields,
+  CreateFormField,
 } from '../booking-form.helper';
 import { useForm } from 'react-hook-form';
 import {
@@ -23,18 +24,21 @@ import {
   FormInput,
 } from '@/components';
 import React from 'react';
+import { createBookingFormFields } from '../actions/booking-form.actions';
+import { toast } from 'sonner';
 
 export type EditorField = ReturnType<typeof createEmptyField> & { id: string };
 
 type HookProp = {
   formsData: Form | null;
-  businessData: Business[];
+  formFields: FormField[] | null;
 };
 
-function useEditBookingFormHook({ formsData, businessData }: HookProp) {
+function useEditBookingFormHook({ formsData, formFields }: HookProp) {
   const [editorFields, setEditorFields] = useState<EditorField[][]>([]);
   const [selectedFieldId, setSelectedFieldId] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalForm, setModalForm] = useState<any>(null);
 
   const createForm = useForm({
     defaultValues: {
@@ -49,7 +53,39 @@ function useEditBookingFormHook({ formsData, businessData }: HookProp) {
     },
   });
 
-  const businessId = createForm.watch('business');
+  const previewForm = useForm({
+    mode: 'onChange',
+  });
+
+  const remapFormFields = (fields: FormField[]): EditorField[][] => {
+    if (!fields?.length) {
+      return [];
+    }
+
+    // Sort fields by fieldOrder to ensure correct positioning
+    const sortedFields = [...fields].sort(
+      (a, b) => a.fieldOrder - b.fieldOrder
+    );
+
+    // Group fields into rows (assuming 1 field per row for now)
+    // You can modify this logic if you want multiple fields per row
+    return sortedFields.map((field) => [
+      {
+        ...field,
+        id: `${field.fieldType}_${field.id}`, // Create a unique ID for the editor
+        options: field.options || [],
+        validationRules: field.validationRules || [],
+      },
+    ]);
+  };
+
+  useEffect(() => {
+    if (!formFields?.length) {
+      return;
+    }
+
+    setEditorFields(remapFormFields(formFields));
+  }, [formFields]);
 
   const addFieldToRow = (rowIdx: number, fieldType: string) => {
     setEditorFields((prev) => {
@@ -98,48 +134,11 @@ function useEditBookingFormHook({ formsData, businessData }: HookProp) {
     );
   };
 
-  const addFieldAfter = (
-    rowIdx: number,
-    afterId: string,
-    fieldType: string
-  ) => {
-    setEditorFields((prev) => {
-      const row = prev[rowIdx] || [];
-      const idx = row.findIndex((f) => f.id === afterId);
-      if (idx === -1) return prev;
-      const newField: EditorField = {
-        ...createEmptyField(fieldType, idx + 1, formsData?.id || ''),
-        id: `${fieldType}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-      };
-      const newRow = [
-        ...row.slice(0, idx + 1),
-        newField,
-        ...row.slice(idx + 1),
-      ];
-      const newRows = [...prev];
-      newRows[rowIdx] = newRow;
-      return newRows;
-    });
-  };
-
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
 
   const selectedField =
     editorFields.flat().find((f) => f.id === selectedFieldId) || null;
-
-  const [modalForm, setModalForm] = useState<any>(null);
-
-  const previewForm = useForm({
-    mode: 'onChange',
-    defaultValues: React.useMemo(() => {
-      const values: Record<string, any> = {};
-      editorFields.flat().forEach((field) => {
-        values[field.id] = field.defaultValue || '';
-      });
-      return values;
-    }, [editorFields]),
-  });
 
   useEffect(() => {
     if (selectedField) {
@@ -194,11 +193,51 @@ function useEditBookingFormHook({ formsData, businessData }: HookProp) {
     return fieldTypeMap[field.fieldType];
   };
 
+  const flattenFields = (editorFields: EditorField[][]): CreateFormField[] => {
+    if (!formsData?.id) {
+      toast.error('Form ID not found');
+      return [];
+    }
+
+    return editorFields.flat().map((field) => ({
+      formId: formsData.id,
+      fieldType: field.fieldType,
+      label: field?.label,
+      placeholder: field?.placeholder,
+      helpText: field?.helpText,
+      isRequired: field?.isRequired,
+      defaultValue: field?.defaultValue,
+      options: field?.options,
+      validationRules: field?.validationRules,
+      fieldOrder: field?.fieldOrder,
+    }));
+  };
+
+  const createFormField: CreateFormField[] = flattenFields(editorFields);
+
+  const onSubmit = async () => {
+    if (!formsData?.id) {
+      toast.error('Form ID not found');
+      return;
+    }
+
+    const response = await createBookingFormFields(createFormField);
+
+    if (response.status === 'success') {
+      toast.success('Form fields saved successfully');
+      return;
+    }
+
+    if (response.error) {
+      toast.error('Error saving form fields');
+      return;
+    }
+  };
+
   return {
     editorFields,
     addFieldToRow,
     addRowWithField,
-    addFieldAfter,
     selectField,
     editField,
     removeField,
@@ -215,6 +254,7 @@ function useEditBookingFormHook({ formsData, businessData }: HookProp) {
     handleSaveModal,
     handleModalChange,
     setModalForm,
+    onSubmit,
   };
 }
 

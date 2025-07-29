@@ -6,8 +6,8 @@ import { EditBookingForm } from './EditBookingForm';
 import { routes } from '@/lib/routes';
 import { getBusinesses } from '../../business/actions/business.actions';
 import { notFound } from 'next/navigation';
-import { getForm } from '../actions';
-import { Business, Form } from '@/generated/prisma';
+import { getForm, getFormFields } from '../actions';
+import { Business, Form, FormField } from '@/generated/prisma';
 
 export const metadata: Metadata = {
   title: 'Forms',
@@ -17,27 +17,24 @@ const CreateBookingFormPage = async (props: {
   params: Promise<{ id: string }>;
 }) => {
   const params = await props.params;
+  const formId = params.id;
 
-  let businessData: Business[] = [];
   let formData: Form | null = null;
+  let formFields: FormField[] = [];
 
-  const rBusiness = await getBusinesses();
-  const rForm = await getForm(params.id);
-
-  if (rBusiness.data === null) {
-    return notFound();
-  }
-
-  if (rBusiness.status === 'success' && rBusiness.data) {
-    businessData = rBusiness.data;
-  }
+  const rForm = await getForm(formId);
+  const rFormFields = await getFormFields(formId);
 
   if (rForm.status === 'success' && rForm.data) {
     formData = rForm.data;
   }
 
+  if (rFormFields.status === 'success' && rFormFields.data) {
+    formFields = rFormFields.data;
+  }
+
   return (
-    <EditBookingFormProvider formsData={formData} businessData={businessData}>
+    <EditBookingFormProvider formsData={formData} formFields={formFields}>
       <PageTitle
         title="Form Editor"
         breadcrumbs={[

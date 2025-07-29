@@ -49,11 +49,12 @@ export const EditBookingForm = (): ReactElement => {
     handleSaveModal,
     handleModalChange,
     setModalForm,
+    onSubmit,
   } = useEditBookingForm();
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div>
+      <div className="flex items-center justify-between mb-4">
         <div className="flex items-center space-x-4">
           <Button
             variant="outline"
@@ -66,7 +67,7 @@ export const EditBookingForm = (): ReactElement => {
           </Button>
         </div>
         <div className="flex items-center space-x-2">
-          <Button onClick={() => {}} className="w-full">
+          <Button onClick={onSubmit} className="w-full" size="sm" type="button">
             Save Changes
           </Button>
         </div>
