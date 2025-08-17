@@ -3,6 +3,7 @@ import { z } from 'zod';
 import {
   Form as FormTable,
   FormField,
+  Prisma,
   FormFieldOption,
 } from '@/generated/prisma';
 
@@ -58,12 +59,7 @@ export const FormFieldSchema = z.object({
 
 export type FormFieldSchemaType = z.infer<typeof FormFieldSchema>;
 
-export type CreateFormField = Omit<
-  FormField,
-  'id' | 'createdAt' | 'updatedAt'
-> & {
-  options: FormFieldOption[];
-};
+export type CreateFormField = Omit<FormField, 'id' | 'createdAt' | 'updatedAt'>;
 
 type CreateEmptyFormFieldProps = {
   fieldType: string;
@@ -87,7 +83,6 @@ export const createEmptyFormField = ({
     fieldOrder,
     defaultValue: '',
     validationRules: null,
-    options: [],
     formId,
   };
 };

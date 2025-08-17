@@ -118,7 +118,6 @@ export const createBookingFormFields = async (
   const formFields = await prisma.formField.createMany({
     data: fields.map((field) => ({
       ...field,
-      options: field.options || undefined,
       validationRules: field.validationRules || undefined,
     })),
   });

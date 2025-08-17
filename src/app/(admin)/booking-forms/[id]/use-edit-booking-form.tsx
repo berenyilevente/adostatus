@@ -107,7 +107,7 @@ function useEditBookingFormHook({ formsData, formFieldsData }: HookProp) {
       label: field.label,
       description: field.helpText || '',
       placeholder: field.placeholder || '',
-      options: field.options || [],
+      options: [], // TODO: add options
       required: !!field.isRequired,
       className: 'w-full',
     };
@@ -120,13 +120,7 @@ function useEditBookingFormHook({ formsData, formFieldsData }: HookProp) {
       datepicker: <FormDatepicker {...commonProps} key={field.label} />,
       textarea: <FormTextarea {...commonProps} key={field.label} />,
       switch: <FormSwitch {...commonProps} key={field.label} />,
-      multiselect: (
-        <FormMultiselect
-          {...commonProps}
-          options={field.options || []}
-          key={field.label}
-        />
-      ),
+      multiselect: <FormMultiselect {...commonProps} key={field.label} />,
       'color-picker': <FormColorPicker {...commonProps} key={field.label} />,
       'tag-input': <FormTagInput {...commonProps} key={field.label} />,
       timepicker: <FormTimepicker {...commonProps} key={field.label} />,
@@ -151,7 +145,6 @@ function useEditBookingFormHook({ formsData, formFieldsData }: HookProp) {
       helpText: field?.helpText,
       isRequired: field?.isRequired,
       defaultValue: field?.defaultValue,
-      options: field?.options,
       validationRules: field?.validationRules,
       fieldOrder: field?.fieldOrder,
     }));
