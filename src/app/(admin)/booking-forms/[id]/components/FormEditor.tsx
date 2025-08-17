@@ -17,15 +17,13 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components';
+import { useEditFieldProperties } from '../contexts/use-edit-field-properties';
 
 export const FormEditor = () => {
-  const {
-    editorFields,
-    addFieldToRow,
-    selectField,
-    removeField,
-    availableFields,
-  } = useEditBookingForm();
+  const { editorFields, addFieldToRow, removeField, availableFields } =
+    useEditBookingForm();
+
+  const { selectField } = useEditFieldProperties();
 
   return (
     <Card className="col-span-2">
@@ -39,11 +37,11 @@ export const FormEditor = () => {
         <div className="flex flex-col gap-4 overflow-x-auto">
           {editorFields.map((row, rowIdx) => (
             <div key={rowIdx} className="flex gap-2 items-stretch">
-              {row.map((field) => (
+              {row.map((field, index) => (
                 <div
-                  key={field.id}
+                  key={`${field.label}${index}`}
                   className="w-full flex items-center justify-between rounded-xl border px-4 shadow-sm bg-white min-w-[200px]"
-                  onClick={() => selectField(field.id)}
+                  onClick={() => selectField(field.tempId)}
                   style={{ cursor: 'pointer' }}
                 >
                   <div className="flex-1 text-sm font-normal">
@@ -55,7 +53,7 @@ export const FormEditor = () => {
                       size="icon"
                       onClick={(e) => {
                         e.stopPropagation();
-                        selectField(field.id);
+                        selectField(field.tempId);
                       }}
                       endIcon="pencil"
                     />
@@ -64,7 +62,7 @@ export const FormEditor = () => {
                       size="icon"
                       onClick={(e) => {
                         e.stopPropagation();
-                        removeField(field.id);
+                        removeField(field.tempId);
                       }}
                       endIcon="trash"
                     />

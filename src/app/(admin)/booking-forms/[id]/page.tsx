@@ -4,10 +4,8 @@ import { PageTitle } from '../../components';
 import { EditBookingFormProvider } from './use-edit-booking-form';
 import { EditBookingForm } from './EditBookingForm';
 import { routes } from '@/lib/routes';
-import { getBusinesses } from '../../business/actions/business.actions';
-import { notFound } from 'next/navigation';
 import { getForm, getFormFields } from '../actions';
-import { Business, Form, FormField } from '@/generated/prisma';
+import { Form, FormField } from '@/generated/prisma';
 
 export const metadata: Metadata = {
   title: 'Forms',
@@ -34,7 +32,7 @@ const CreateBookingFormPage = async (props: {
   }
 
   return (
-    <EditBookingFormProvider formsData={formData} formFields={formFields}>
+    <EditBookingFormProvider formsData={formData} formFieldsData={formFields}>
       <PageTitle
         title="Form Editor"
         breadcrumbs={[

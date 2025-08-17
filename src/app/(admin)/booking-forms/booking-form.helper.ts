@@ -1,6 +1,10 @@
 import { z } from 'zod';
 
-import { Form as FormTable, FormField, Prisma } from '@/generated/prisma';
+import {
+  Form as FormTable,
+  FormField,
+  FormFieldOption,
+} from '@/generated/prisma';
 
 export type CreateBookingForm = Omit<
   FormTable,
@@ -54,23 +58,36 @@ export const FormFieldSchema = z.object({
 
 export type FormFieldSchemaType = z.infer<typeof FormFieldSchema>;
 
-export type CreateFormField = Omit<FormField, 'id' | 'createdAt' | 'updatedAt'>;
+export type CreateFormField = Omit<
+  FormField,
+  'id' | 'createdAt' | 'updatedAt'
+> & {
+  options: FormFieldOption[];
+};
 
-export const createEmptyField = (
-  fieldType: string,
-  order: number,
-  formId: string
-): CreateFormField => {
+type CreateEmptyFormFieldProps = {
+  fieldType: string;
+  fieldOrder: number;
+  formId: string;
+};
+
+export const createEmptyFormField = ({
+  fieldType,
+  fieldOrder,
+  formId,
+}: CreateEmptyFormFieldProps): CreateFormField => {
+  const label = fieldType.charAt(0).toUpperCase() + fieldType.slice(1);
+
   return {
-    fieldType: fieldType as any,
-    label: `${fieldType.charAt(0).toUpperCase() + fieldType.slice(1)}`,
+    fieldType,
+    label,
     placeholder: '',
     helpText: '',
     isRequired: false,
-    fieldOrder: order,
+    fieldOrder,
     defaultValue: '',
-    options: null,
     validationRules: null,
+    options: [],
     formId,
   };
 };

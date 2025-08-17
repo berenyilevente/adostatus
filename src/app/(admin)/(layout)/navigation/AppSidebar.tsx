@@ -65,6 +65,7 @@ const SidebarItem = ({ item }: { item: IMenuItem }) => {
   );
 };
 
+// TODO store sidebar state in local storage
 export const AppSidebar = (): ReactElement => {
   return (
     <Sidebar>

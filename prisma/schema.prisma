@@ -171,6 +171,19 @@ model Form {
   @@map("forms")
 }
 
+model FormFieldOption {
+  id         String   @id @default(cuid())
+  formFieldId String
+  label      String
+  value      String
+
+  formField FormField @relation(fields: [formFieldId], references: [id], onDelete: Cascade)
+  
+  @@index([formFieldId])
+  @@map("form_field_options")
+  FormField FormField[] @relation("FormFieldOptions")
+}
+
 model FormField {
   id              String   @id @default(cuid())
   formId          String
@@ -181,15 +194,16 @@ model FormField {
   isRequired      Boolean  @default(false)
   fieldOrder      Int
   defaultValue    String?
-  options         Json? // For select, radio, checkbox options
   validationRules Json? // JSON with validation rules
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+  options FormFieldOption[] @relation("FormFieldOptions") 
 
   form Form @relation(fields: [formId], references: [id], onDelete: Cascade)
 
   @@index([formId])
   @@map("form_fields")
+  FormFieldOption FormFieldOption[]
 }
 
 model Service {

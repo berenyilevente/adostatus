@@ -8,11 +8,12 @@ import { useEditBookingForm } from './use-edit-booking-form';
 import { FormElementList } from './components/FormElementList';
 import { FormEditor } from './components/FormEditor';
 import { FormPreview } from './components/FormPreview';
-import { FormElementDialog } from './components/FormElementDialog';
+import { EditFieldPropertiesDialog } from './components/EditFieldPropertiesDialog';
+import { EditFieldPropertiesProvider } from './contexts/use-edit-field-properties';
 
 export const EditBookingForm = (): ReactElement => {
   const router = useRouter();
-  const { onSubmit } = useEditBookingForm();
+  const { onSubmit, selectedField } = useEditBookingForm();
 
   return (
     <div>
@@ -35,10 +36,12 @@ export const EditBookingForm = (): ReactElement => {
         </div>
       </div>
       <div className="grid grid-cols-5 gap-4">
-        <FormElementList />
-        <FormEditor />
-        <FormPreview />
-        <FormElementDialog />
+        <EditFieldPropertiesProvider field={selectedField}>
+          <FormElementList />
+          <FormEditor />
+          <FormPreview />
+          <EditFieldPropertiesDialog />
+        </EditFieldPropertiesProvider>
       </div>
     </div>
   );

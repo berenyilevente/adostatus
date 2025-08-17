@@ -1,11 +1,11 @@
 'use client';
 
-import { Business, Form, FormField, Service } from '@/generated/prisma';
+import { Form, FormField } from '@/generated/prisma';
 
 import { createAppContext } from '@/hooks/use-create-app-context';
-import { ReactElement, useEffect, useState } from 'react';
+import { ReactElement, useState } from 'react';
 import {
-  createEmptyField,
+  createEmptyFormField,
   fields as availableFields,
   CreateFormField,
 } from '../booking-form.helper';
@@ -27,18 +27,21 @@ import React from 'react';
 import { createBookingFormFields } from '../actions/booking-form.actions';
 import { toast } from 'sonner';
 
-export type EditorField = ReturnType<typeof createEmptyField> & { id: string };
+export type FormFieldItem = ReturnType<typeof createEmptyFormField> & {
+  tempId: string;
+};
 
 type HookProp = {
   formsData: Form | null;
-  formFields: FormField[] | null;
+  formFieldsData: FormField[] | null;
 };
 
-function useEditBookingFormHook({ formsData, formFields }: HookProp) {
-  const [editorFields, setEditorFields] = useState<EditorField[][]>([]);
-  const [selectedFieldId, setSelectedFieldId] = useState<string | null>(null);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalForm, setModalForm] = useState<any>(null);
+function useEditBookingFormHook({ formsData, formFieldsData }: HookProp) {
+  const [editorFields, setEditorFields] = useState<FormFieldItem[][]>([]);
+  const [selectedFieldTempId, setSelectedFieldTempId] = useState<string | null>(
+    null
+  );
+  const formId = formsData?.id;
 
   const createForm = useForm({
     defaultValues: {
@@ -57,143 +60,84 @@ function useEditBookingFormHook({ formsData, formFields }: HookProp) {
     mode: 'onChange',
   });
 
-  const remapFormFields = (fields: FormField[]): EditorField[][] => {
-    if (!fields?.length) {
-      return [];
-    }
+  const addFieldToRow = (rowIdx: number, fieldType: string) => {};
 
-    // Sort fields by fieldOrder to ensure correct positioning
-    const sortedFields = [...fields].sort(
-      (a, b) => a.fieldOrder - b.fieldOrder
-    );
-
-    // Group fields into rows (assuming 1 field per row for now)
-    // You can modify this logic if you want multiple fields per row
-    return sortedFields.map((field) => [
-      {
-        ...field,
-        id: `${field.fieldType}_${field.id}`, // Create a unique ID for the editor
-        options: field.options || [],
-        validationRules: field.validationRules || [],
-      },
-    ]);
-  };
-
-  useEffect(() => {
-    if (!formFields?.length) {
+  const addField = (fieldType: string) => {
+    if (!formId) {
       return;
     }
 
-    setEditorFields(remapFormFields(formFields));
-  }, [formFields]);
-
-  const addFieldToRow = (rowIdx: number, fieldType: string) => {
-    setEditorFields((prev) => {
-      const newField: EditorField = {
-        ...createEmptyField(
-          fieldType,
-          prev[rowIdx]?.length || 0,
-          formsData?.id || ''
-        ),
-        id: `${fieldType}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-      };
-      const newRows = [...prev];
-      if (!newRows[rowIdx]) newRows[rowIdx] = [];
-      newRows[rowIdx] = [...newRows[rowIdx], newField];
-      return newRows;
-    });
-  };
-
-  const addRowWithField = (fieldType: string) => {
-    const newField: EditorField = {
-      ...createEmptyField(fieldType, 0, formsData?.id || ''),
-      id: `${fieldType}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+    const newField: FormFieldItem = {
+      ...createEmptyFormField({ fieldType, fieldOrder: 0, formId }),
+      tempId: crypto.randomUUID(),
     };
     setEditorFields((prev) => [...prev, [newField]]);
   };
 
-  const removeField = (id: string) => {
+  const removeField = (tempId: string) => {
     setEditorFields((prev) =>
       prev
-        .map((row) => row.filter((f) => f.id !== id))
+        .map((row) => row.filter((field) => field.tempId !== tempId))
         .filter((row) => row.length > 0)
     );
-    if (selectedFieldId === id) setSelectedFieldId(null);
+
+    if (selectedFieldTempId === tempId) {
+      setSelectedFieldTempId(null);
+    }
   };
 
-  const selectField = (id: string) => {
-    setSelectedFieldId(id);
-    setModalOpen(true);
-  };
-
-  const editField = (id: string, updates: Partial<EditorField>) => {
+  const editField = (tempId: string, updates: Partial<FormFieldItem>) => {
     setEditorFields((prev) =>
       prev.map((row) =>
-        row.map((f) => (f.id === id ? { ...f, ...updates } : f))
+        row.map((field) =>
+          field.tempId === tempId ? { ...field, ...updates } : field
+        )
       )
     );
   };
 
-  const openModal = () => setModalOpen(true);
-  const closeModal = () => setModalOpen(false);
-
   const selectedField =
-    editorFields.flat().find((f) => f.id === selectedFieldId) || null;
+    editorFields.flat().find((field) => field.tempId === selectedFieldTempId) ||
+    null;
 
-  useEffect(() => {
-    if (selectedField) {
-      setModalForm({ ...selectedField });
-    }
-  }, [selectedField, modalOpen]);
-
-  const handleModalChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setModalForm((prev: any) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSaveModal = () => {
-    if (selectedFieldId && modalForm) {
-      editField(selectedFieldId, modalForm);
-      closeModal();
-    }
-  };
-
-  const renderPreviewField = (field: any) => {
+  const renderPreviewField = (field: FormFieldItem) => {
     const commonProps = {
       control: previewForm.control,
-      name: field.id,
+      name: field.label,
       label: field.label,
-      description: field.helpText,
-      placeholder: field.placeholder,
+      description: field.helpText || '',
+      placeholder: field.placeholder || '',
       options: field.options || [],
       required: !!field.isRequired,
-      disabled: !!field.disabled,
       className: 'w-full',
     };
 
     const fieldTypeMap: Record<string, ReactElement> = {
-      'text-input': <FormInput {...commonProps} key={field.id} />,
-      checkbox: <FormCheckbox {...commonProps} key={field.id} />,
-      combobox: <FormCombobox {...commonProps} key={field.id} />,
-      select: <FormSelect {...commonProps} key={field.id} />,
-      datepicker: <FormDatepicker {...commonProps} key={field.id} />,
-      textarea: <FormTextarea {...commonProps} key={field.id} />,
-      switch: <FormSwitch {...commonProps} key={field.id} />,
-      multiselect: <FormMultiselect {...commonProps} key={field.id} />,
-      'color-picker': <FormColorPicker {...commonProps} key={field.id} />,
-      'tag-input': <FormTagInput {...commonProps} key={field.id} />,
-      timepicker: <FormTimepicker {...commonProps} key={field.id} />,
+      'text-input': <FormInput {...commonProps} key={field.label} />,
+      checkbox: <FormCheckbox {...commonProps} key={field.label} />,
+      combobox: <FormCombobox {...commonProps} key={field.label} />,
+      select: <FormSelect {...commonProps} key={field.label} />,
+      datepicker: <FormDatepicker {...commonProps} key={field.label} />,
+      textarea: <FormTextarea {...commonProps} key={field.label} />,
+      switch: <FormSwitch {...commonProps} key={field.label} />,
+      multiselect: (
+        <FormMultiselect
+          {...commonProps}
+          options={field.options || []}
+          key={field.label}
+        />
+      ),
+      'color-picker': <FormColorPicker {...commonProps} key={field.label} />,
+      'tag-input': <FormTagInput {...commonProps} key={field.label} />,
+      timepicker: <FormTimepicker {...commonProps} key={field.label} />,
     };
 
     return fieldTypeMap[field.fieldType];
   };
 
-  const flattenFields = (editorFields: EditorField[][]): CreateFormField[] => {
+  const createFormFieldPayload = (
+    editorFields: FormFieldItem[][]
+  ): CreateFormField[] => {
     if (!formsData?.id) {
       toast.error('Form ID not found');
       return [];
@@ -213,7 +157,7 @@ function useEditBookingFormHook({ formsData, formFields }: HookProp) {
     }));
   };
 
-  const createFormField: CreateFormField[] = flattenFields(editorFields);
+  const formFields: CreateFormField[] = createFormFieldPayload(editorFields);
 
   const onSubmit = async () => {
     if (!formsData?.id) {
@@ -221,7 +165,7 @@ function useEditBookingFormHook({ formsData, formFields }: HookProp) {
       return;
     }
 
-    const response = await createBookingFormFields(createFormField);
+    const response = await createBookingFormFields(formFields);
 
     if (response.status === 'success') {
       toast.success('Form fields saved successfully');
@@ -237,24 +181,17 @@ function useEditBookingFormHook({ formsData, formFields }: HookProp) {
   return {
     editorFields,
     addFieldToRow,
-    addRowWithField,
-    selectField,
+    addField,
     editField,
     removeField,
     selectedField,
-    selectedFieldId,
-    modalOpen,
-    openModal,
-    closeModal,
+    selectedFieldTempId,
     availableFields,
     createForm,
     previewForm,
     renderPreviewField,
-    modalForm,
-    handleSaveModal,
-    handleModalChange,
-    setModalForm,
     onSubmit,
+    setSelectedFieldTempId,
   };
 }
 

@@ -13,7 +13,7 @@ import {
 } from '@/components';
 
 export const FormElementList = (): ReactElement => {
-  const { addRowWithField, availableFields } = useEditBookingForm();
+  const { addField, availableFields } = useEditBookingForm();
 
   return (
     <Card className="col-span-1">
@@ -30,7 +30,7 @@ export const FormElementList = (): ReactElement => {
               className="cursor-pointer text-sm font-normal"
               variant="outline"
               key={field.key}
-              onClick={() => addRowWithField(field.key)}
+              onClick={() => addField(field.key)}
             >
               {field.label}
             </Badge>

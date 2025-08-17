@@ -1,7 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import React, { ReactElement, useState, useEffect } from 'react';
 import {
   Button,
   Icon,
@@ -16,17 +14,17 @@ import {
   Checkbox,
   Label,
 } from '@/components';
-import { useEditBookingForm } from '../use-edit-booking-form';
+import { useEditFieldProperties } from '../contexts/use-edit-field-properties';
 
-export const FormElementDialog = () => {
+export const EditFieldPropertiesDialog = () => {
   const {
     modalOpen,
     closeModal,
-    modalForm,
+    fieldToEdit,
     handleSaveModal,
-    handleModalChange,
-    setModalForm,
-  } = useEditBookingForm();
+    handleEditFieldOnChange,
+    setFieldToEdit,
+  } = useEditFieldProperties();
 
   return (
     <Dialog open={modalOpen} onOpenChange={closeModal}>
@@ -37,7 +35,7 @@ export const FormElementDialog = () => {
             Edit the properties of your field below.
           </DialogDescription>
         </DialogHeader>
-        {modalForm && (
+        {fieldToEdit && (
           <form
             className="flex flex-col gap-4"
             onSubmit={(e) => {
@@ -49,43 +47,43 @@ export const FormElementDialog = () => {
               <Label htmlFor="label">Label</Label>
               <Input
                 name="label"
-                value={modalForm.label || ''}
-                onChange={handleModalChange}
+                value={fieldToEdit.label || ''}
+                onChange={handleEditFieldOnChange}
               />
             </div>
             <div>
               <Label htmlFor="helpText">Description</Label>
               <Textarea
                 name="helpText"
-                value={modalForm.helpText || ''}
-                onChange={handleModalChange}
+                value={fieldToEdit.helpText || ''}
+                onChange={handleEditFieldOnChange}
               />
             </div>
             <div>
               <Label htmlFor="placeholder">Placeholder</Label>
               <Input
                 name="placeholder"
-                value={modalForm.placeholder || ''}
-                onChange={handleModalChange}
+                value={fieldToEdit.placeholder || ''}
+                onChange={handleEditFieldOnChange}
               />
             </div>
             {/* Options editor for select/combobox */}
-            {(modalForm.fieldType === 'select' ||
-              modalForm.fieldType === 'combobox') && (
+            {(fieldToEdit.fieldType === 'select' ||
+              fieldToEdit.fieldType === 'combobox') && (
               <div className="flex flex-col gap-2">
                 <Label>Options</Label>
-                {(modalForm.options || []).map((opt: any, idx: number) => (
+                {(fieldToEdit.options || []).map((opt: any, idx: number) => (
                   <div key={idx} className="flex gap-2 items-center">
                     <Input
                       placeholder="Label"
                       value={opt.label}
                       onChange={(e) => {
-                        const newOptions = [...(modalForm.options || [])];
+                        const newOptions = [...(fieldToEdit.options || [])];
                         newOptions[idx] = {
                           ...newOptions[idx],
                           label: e.target.value,
                         };
-                        setModalForm((prev: any) => ({
+                        setFieldToEdit((prev: any) => ({
                           ...prev,
                           options: newOptions,
                         }));
@@ -96,12 +94,12 @@ export const FormElementDialog = () => {
                       placeholder="Value"
                       value={opt.value}
                       onChange={(e) => {
-                        const newOptions = [...(modalForm.options || [])];
+                        const newOptions = [...(fieldToEdit.options || [])];
                         newOptions[idx] = {
                           ...newOptions[idx],
                           value: e.target.value,
                         };
-                        setModalForm((prev: any) => ({
+                        setFieldToEdit((prev: any) => ({
                           ...prev,
                           options: newOptions,
                         }));
@@ -113,9 +111,9 @@ export const FormElementDialog = () => {
                       variant="ghost"
                       size="icon"
                       onClick={() => {
-                        const newOptions = [...(modalForm.options || [])];
+                        const newOptions = [...(fieldToEdit.options || [])];
                         newOptions.splice(idx, 1);
-                        setModalForm((prev: any) => ({
+                        setFieldToEdit((prev: any) => ({
                           ...prev,
                           options: newOptions,
                         }));
@@ -130,7 +128,7 @@ export const FormElementDialog = () => {
                   variant="outline"
                   size="sm"
                   onClick={() => {
-                    setModalForm((prev: any) => ({
+                    setFieldToEdit((prev: any) => ({
                       ...prev,
                       options: [
                         ...(prev.options || []),
@@ -147,9 +145,9 @@ export const FormElementDialog = () => {
               <label className="flex items-center gap-2">
                 <Checkbox
                   name="isRequired"
-                  checked={!!modalForm.isRequired}
+                  checked={!!fieldToEdit.isRequired}
                   onCheckedChange={(checked) =>
-                    setModalForm((prev: any) => ({
+                    setFieldToEdit((prev: any) => ({
                       ...prev,
                       isRequired: !!checked,
                     }))
@@ -160,9 +158,8 @@ export const FormElementDialog = () => {
               <label className="flex items-center gap-2">
                 <Checkbox
                   name="disabled"
-                  checked={!!modalForm.disabled}
                   onCheckedChange={(checked) =>
-                    setModalForm((prev: any) => ({
+                    setFieldToEdit((prev: any) => ({
                       ...prev,
                       disabled: !!checked,
                     }))
