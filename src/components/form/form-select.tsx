@@ -64,12 +64,12 @@ export const FormSelect = <
               </SelectTrigger>
             </FormControl>
             <SelectContent>
-              {actionButton && actionButton}
               {options.map((option) => (
                 <SelectItem key={option.value} value={option.value}>
                   {option.label}
                 </SelectItem>
               ))}
+              {actionButton && options.length === 0 && actionButton}
             </SelectContent>
           </Select>
           {description && <FormDescription>{description}</FormDescription>}

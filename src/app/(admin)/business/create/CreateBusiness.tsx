@@ -84,19 +84,25 @@ const CreateBusiness = () => {
                   placeholder="Tell us about your business..."
                   className="resize-none"
                 />
-                <div className="w-full">
-                  <Label className="text-sm font-semibold">Logo</Label>
-                  <FileInput
-                    onupdatefiles={handleChangeImage}
-                    labelIdle={'Add your business logo'}
-                  />
-                </div>
-                <FormColorPicker
-                  control={form.control}
-                  name="primaryColor"
-                  label="Brand Color"
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Branding</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div>
+                <FileInput
+                  onupdatefiles={() => {}}
+                  labelIdle="Add your business logo"
                 />
               </div>
+              <FormColorPicker
+                control={form.control}
+                name="primaryColor"
+                label="Brand Color"
+              />{' '}
             </CardContent>
           </Card>
         </div>

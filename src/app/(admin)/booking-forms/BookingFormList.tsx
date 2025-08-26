@@ -49,6 +49,7 @@ export const BookingFormList = (): ReactElement => {
     confirmDelete,
     cancelDelete,
     serviceOptions,
+    toggleCreateFormSheet,
   } = useBookingForms();
 
   const statusColorMap = {
@@ -80,7 +81,7 @@ export const BookingFormList = (): ReactElement => {
             options={statusOptions}
           />
         </FormWrapper>
-        <Sheet>
+        <Sheet modal>
           <SheetTrigger asChild id="create-booking-form-trigger">
             <Button startIcon="plus" size="sm" iconSize="xs" color="primary">
               Create a new booking form
@@ -158,9 +159,7 @@ export const BookingFormList = (): ReactElement => {
           <EmptyList.Description description="Get started by creating your first booking form." />
           <EmptyList.Action
             label="Create a new booking form"
-            onClick={() =>
-              document.getElementById('create-booking-form-trigger')?.click()
-            }
+            onClick={toggleCreateFormSheet}
           />
         </EmptyList>
       ) : (
