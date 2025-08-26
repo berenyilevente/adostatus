@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import React from "react";
+import React from 'react';
 
 import {
   Button,
@@ -10,60 +10,55 @@ import {
   CardHeader,
   FormWrapper,
   ButtonLink,
-} from "@/components";
+} from '@/components';
 
-import { useCreateTeamMember } from "./use-create-teamMember";
+import { useCreateTeamMember } from './use-create-teamMember';
 
 const CreateTeamMember = () => {
-  const { form, onSubmit, isLoading } = useCreateTeamMember();
+  const { form, onSubmit, isLoading, handleCancel } = useCreateTeamMember();
 
   return (
-    <FormWrapper form={form}>
-      <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
-        <Card className="bg-white">
-          <CardHeader>
-            <CardTitle>Title here</CardTitle>
-          </CardHeader>
-          <CardContent className="gap-0">
-            <div>
-              Content here
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-white">
-          <CardHeader>
-            <CardTitle>Title here</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div>
-             Content Here
-            </div>
-          </CardContent>
-        </Card>
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-4">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleCancel}
+            className="flex items-center space-x-2"
+            startIcon="arrowLeft"
+          >
+            <span>Back to Team Members</span>
+          </Button>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Button onClick={onSubmit} className="w-full" disabled={isLoading}>
+            {isLoading ? 'Saving...' : 'Save Changes'}
+          </Button>
+        </div>
       </div>
-
-      <div className="mt-6 flex justify-end gap-6">
-        <ButtonLink
-          href="/teamMembers"
-          variant="outline"
-          size="sm"
-          className="bg-base-content/10"
-          startIcon="close"
-        >
-          Cancel
-        </ButtonLink>
-        <Button
-          color="primary"
-          size="sm"
-          onClick={onSubmit}
-          startIcon="check"
-          isLoading={isLoading}
-        >
-          Save
-        </Button>
-      </div>
-    </FormWrapper>
+      <FormWrapper form={form}>
+        <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
+          <Card className="bg-white">
+            <CardHeader>
+              <CardTitle>Title here</CardTitle>
+            </CardHeader>
+            <CardContent className="gap-0">
+              <div>Content here</div>
+            </CardContent>
+          </Card>
+          <Card className="bg-white">
+            <CardHeader>
+              <CardTitle>Title here</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div>Content Here</div>
+            </CardContent>
+          </Card>
+        </div>
+      </FormWrapper>
+    </div>
   );
 };
 
-export { CreateTeamMember }; 
+export { CreateTeamMember };

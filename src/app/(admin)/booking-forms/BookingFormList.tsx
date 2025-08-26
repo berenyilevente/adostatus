@@ -27,6 +27,7 @@ import {
 import { useRouter } from 'next/navigation';
 import { useBookingForms } from './use-booking-forms';
 import { cn } from '@/utils/combineClassNames';
+import { EmptyList } from '../components/ui/empty-list';
 
 export const BookingFormList = (): ReactElement => {
   const router = useRouter();
@@ -41,13 +42,13 @@ export const BookingFormList = (): ReactElement => {
     onSubmitEditForm,
     isEditSheetOpen,
     setIsEditSheetOpen,
-    editingForm,
     handleEditForm,
     handleDeleteForm,
     isDeleteDialogOpen,
     setIsDeleteDialogOpen,
     confirmDelete,
     cancelDelete,
+    serviceOptions,
   } = useBookingForms();
 
   const statusColorMap = {
@@ -80,7 +81,7 @@ export const BookingFormList = (): ReactElement => {
           />
         </FormWrapper>
         <Sheet>
-          <SheetTrigger asChild>
+          <SheetTrigger asChild id="create-booking-form-trigger">
             <Button startIcon="plus" size="sm" iconSize="xs" color="primary">
               Create a new booking form
             </Button>
@@ -103,13 +104,35 @@ export const BookingFormList = (): ReactElement => {
                 name="businessId"
                 placeholder="Select business..."
                 options={businessOptions}
+                actionButton={
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    fullWidth
+                    onClick={() => router.push('/business/create')}
+                    endIcon="plus"
+                  >
+                    Create a new business
+                  </Button>
+                }
               />
               {/* <FormSelect
                 control={createForm.control}
                 label="Service"
-                name="service"
+                name="serviceId"
                 placeholder="Select service..."
                 options={serviceOptions}
+                actionButton={
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    fullWidth
+                    onClick={() => router.push('/services/create')}
+                    endIcon="plus"
+                  >
+                    Create a new service
+                  </Button>
+                }
               /> */}
               <FormInput
                 control={createForm.control}
@@ -128,56 +151,70 @@ export const BookingFormList = (): ReactElement => {
           </SheetContent>
         </Sheet>
       </div>
-      {bookingForms.map((bookingForm) => (
-        <Card className="bg-white" key={bookingForm.id}>
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between gap-4">
-              <div className="flex items-center gap-4">
-                <Badge
-                  className={cn(
-                    statusColorMap[
-                      bookingForm.status as keyof typeof statusColorMap
-                    ],
-                    'hover:cursor-pointer'
-                  )}
-                >
-                  {bookingForm.status}
-                </Badge>
-                <div className="flex flex-col">
-                  <p className="text-sm font-medium">{bookingForm.name}</p>
-                  <p className="text-xs text-gray-500">
-                    {bookingForm.description}
-                  </p>
+      {bookingForms.length === 0 ? (
+        <EmptyList>
+          <EmptyList.Icon icon="form" />
+          <EmptyList.Title title="No booking forms" />
+          <EmptyList.Description description="Get started by creating your first booking form." />
+          <EmptyList.Action
+            label="Create a new booking form"
+            onClick={() =>
+              document.getElementById('create-booking-form-trigger')?.click()
+            }
+          />
+        </EmptyList>
+      ) : (
+        bookingForms.map((bookingForm) => (
+          <Card className="bg-white" key={bookingForm.id}>
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex items-center gap-4">
+                  <Badge
+                    className={cn(
+                      statusColorMap[
+                        bookingForm.status as keyof typeof statusColorMap
+                      ],
+                      'hover:cursor-pointer'
+                    )}
+                  >
+                    {bookingForm.status}
+                  </Badge>
+                  <div className="flex flex-col">
+                    <p className="text-sm font-medium">{bookingForm.name}</p>
+                    <p className="text-xs text-gray-500">
+                      {bookingForm.description}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() =>
+                      router.push(`/booking-forms/${bookingForm.id}`)
+                    }
+                    endIcon="form"
+                  >
+                    Open form editor
+                  </Button>
+                  <Button
+                    size="icon"
+                    endIcon="pencil"
+                    variant="ghost"
+                    onClick={() => handleEditForm(bookingForm)}
+                  />
+                  <Button
+                    size="icon"
+                    endIcon="trash"
+                    variant="ghost"
+                    onClick={() => handleDeleteForm(bookingForm.id)}
+                  />
                 </div>
               </div>
-              <div className="flex items-center gap-2">
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={() =>
-                    router.push(`/booking-forms/${bookingForm.id}`)
-                  }
-                  endIcon="form"
-                >
-                  Open form editor
-                </Button>
-                <Button
-                  size="icon"
-                  endIcon="pencil"
-                  variant="ghost"
-                  onClick={() => handleEditForm(bookingForm)}
-                />
-                <Button
-                  size="icon"
-                  endIcon="trash"
-                  variant="ghost"
-                  onClick={() => handleDeleteForm(bookingForm.id)}
-                />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      ))}
+            </CardContent>
+          </Card>
+        ))
+      )}
 
       {/* Edit Sheet */}
       <Sheet open={isEditSheetOpen} onOpenChange={setIsEditSheetOpen}>

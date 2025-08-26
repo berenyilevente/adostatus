@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Control, FieldPath, FieldValues } from 'react-hook-form';
 
 import {
@@ -34,6 +34,7 @@ interface FormSelectProps<
   label?: string;
   description?: string;
   className?: string;
+  actionButton?: ReactNode;
 }
 
 export const FormSelect = <
@@ -47,6 +48,7 @@ export const FormSelect = <
   label,
   description,
   className,
+  actionButton,
 }: FormSelectProps<TField, TName>) => {
   return (
     <FormField
@@ -62,6 +64,7 @@ export const FormSelect = <
               </SelectTrigger>
             </FormControl>
             <SelectContent>
+              {actionButton && actionButton}
               {options.map((option) => (
                 <SelectItem key={option.value} value={option.value}>
                   {option.label}

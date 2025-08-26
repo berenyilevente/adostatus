@@ -25,6 +25,7 @@ import {
 import { useTeamMembers } from './use-teamMembers';
 import { formatDate } from 'date-fns';
 import { cn } from '@/lib/utils';
+import { EmptyList } from '../components/ui/empty-list';
 
 export const TeamMemberList = () => {
   const router = useRouter();
@@ -66,21 +67,15 @@ export const TeamMemberList = () => {
         </Button>
       </div>
       {teamMembers.length === 0 ? (
-        <div className="text-center py-12">
-          <User className="h-12 w-12 mx-auto text-gray-300 mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">
-            No team members
-          </h3>
-          <p className="text-gray-500 mb-4">
-            Get started by adding your first team member.
-          </p>
-          <Button
+        <EmptyList>
+          <EmptyList.Icon icon="user" />
+          <EmptyList.Title title="No team members" />
+          <EmptyList.Description description="Get started by adding your first team member." />
+          <EmptyList.Action
+            label="Add Team Member"
             onClick={() => router.push('/team-members/create')}
-            variant="outline"
-          >
-            Add Team Member
-          </Button>
-        </div>
+          />
+        </EmptyList>
       ) : (
         teamMembers.map((teamMember) => (
           <Card className="bg-white" key={teamMember.id}>

@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-import { createAppContext } from "@/hooks/use-create-app-context";
+import { createAppContext } from '@/hooks/use-create-app-context';
 
-import { TeamMemberSchemaType, TeamMemberSchema } from "../teamMember.helper";
+import { TeamMemberSchemaType, TeamMemberSchema } from '../teamMember.helper';
 
 const useHook = () => {
   const router = useRouter();
@@ -27,11 +27,12 @@ const useHook = () => {
   });
 
   const handleCancel = () => {
-    router.push("/teamMembers");
+    router.push('/team-members');
   };
 
   return { onSubmit, handleCancel, isLoading, form };
 };
 
-const [useCreateTeamMember, CreateTeamMemberProvider] = createAppContext(useHook);
-export { useCreateTeamMember, CreateTeamMemberProvider }; 
+const [useCreateTeamMember, CreateTeamMemberProvider] =
+  createAppContext(useHook);
+export { useCreateTeamMember, CreateTeamMemberProvider };
