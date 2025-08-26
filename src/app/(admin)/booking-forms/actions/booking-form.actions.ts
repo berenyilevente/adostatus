@@ -110,16 +110,36 @@ export const archiveBookingForm = async (id: string) => {
   });
 };
 
-export const createBookingFormFields = async (
+export const upsertBookingFormFields = async (
   fields: CreateFormField[]
 ): Promise<any> => {
   await isAuthenticated();
 
-  const formFields = await prisma.formField.createMany({
-    data: fields.map((field) => ({
-      ...field,
-      validationRules: field.validationRules || undefined,
-    })),
+  if (!fields.length) {
+    return handleResponse({
+      data: [],
+      error: 'No fields provided',
+      code: 400,
+    });
+  }
+
+  const formId = fields[0].formId;
+
+  const formFields = await prisma.$transaction(async (tx) => {
+    // Delete existing form fields
+    await tx.formField.deleteMany({
+      where: {
+        formId: formId,
+      },
+    });
+
+    // Create new form fields
+    return await tx.formField.createMany({
+      data: fields.map((field) => ({
+        ...field,
+        validationRules: field.validationRules || undefined,
+      })),
+    });
   });
 
   revalidatePath('/booking-forms');

@@ -24,7 +24,7 @@ import {
   FormInput,
 } from '@/components';
 import React from 'react';
-import { createBookingFormFields } from '../actions/booking-form.actions';
+import { upsertBookingFormFields } from '../actions/booking-form.actions';
 import { toast } from 'sonner';
 
 export type FormFieldItem = ReturnType<typeof createEmptyFormField> & {
@@ -37,11 +37,22 @@ type HookProp = {
 };
 
 function useEditBookingFormHook({ formsData, formFieldsData }: HookProp) {
-  const [editorFields, setEditorFields] = useState<FormFieldItem[][]>([]);
+  const defaultEditorFields = formFieldsData?.map((field) => [
+    {
+      ...field,
+      tempId: crypto.randomUUID(),
+    },
+  ]);
+  const [editorFields, setEditorFields] = useState<FormFieldItem[][]>(
+    defaultEditorFields || []
+  );
   const [selectedFieldTempId, setSelectedFieldTempId] = useState<string | null>(
     null
   );
   const formId = formsData?.id;
+  const selectedField =
+    editorFields.flat().find((field) => field.tempId === selectedFieldTempId) ||
+    null;
 
   const createForm = useForm({
     defaultValues: {
@@ -95,10 +106,6 @@ function useEditBookingFormHook({ formsData, formFieldsData }: HookProp) {
       )
     );
   };
-
-  const selectedField =
-    editorFields.flat().find((field) => field.tempId === selectedFieldTempId) ||
-    null;
 
   const renderPreviewField = (field: FormFieldItem) => {
     const commonProps = {
@@ -158,7 +165,7 @@ function useEditBookingFormHook({ formsData, formFieldsData }: HookProp) {
       return;
     }
 
-    const response = await createBookingFormFields(formFields);
+    const response = await upsertBookingFormFields(formFields);
 
     if (response.status === 'success') {
       toast.success('Form fields saved successfully');
