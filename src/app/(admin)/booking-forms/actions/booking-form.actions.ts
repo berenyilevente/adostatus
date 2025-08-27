@@ -145,6 +145,7 @@ export const upsertBookingFormFields = async (
       data: fields.map((field) => ({
         ...field,
         validationRules: field.validationRules || undefined,
+        options: field.options || undefined,
       })),
     });
   });

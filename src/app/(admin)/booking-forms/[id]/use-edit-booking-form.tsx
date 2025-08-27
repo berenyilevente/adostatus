@@ -4,7 +4,11 @@ import { FieldVariant, Form, FormField } from '@/generated/prisma';
 
 import { createAppContext } from '@/hooks/use-create-app-context';
 import { ReactElement, useState } from 'react';
-import { createEmptyFormField, CreateFormField } from '../booking-form.helper';
+import {
+  createEmptyFormField,
+  CreateFormField,
+  FormFieldOption,
+} from '../booking-form.helper';
 import { useForm } from 'react-hook-form';
 import {
   FormCheckbox,
@@ -37,6 +41,7 @@ function useEditBookingFormHook({ formsData, formFieldsData }: HookProp) {
     {
       ...field,
       tempId: crypto.randomUUID(),
+      options: field.options as FormFieldOption[],
     },
   ]);
   const [editorFields, setEditorFields] = useState<FormFieldItem[][]>(
@@ -110,8 +115,8 @@ function useEditBookingFormHook({ formsData, formFieldsData }: HookProp) {
       label: field.label,
       description: field.helpText || '',
       placeholder: field.placeholder || '',
-      options: [], // TODO: add options
-      required: !!field.isRequired,
+      options: field.options,
+      required: field.isRequired,
       className: 'w-full',
     };
 
@@ -150,6 +155,7 @@ function useEditBookingFormHook({ formsData, formFieldsData }: HookProp) {
       defaultValue: field?.defaultValue,
       validationRules: field?.validationRules,
       fieldOrder: field?.fieldOrder,
+      options: field?.options,
     }));
   };
 

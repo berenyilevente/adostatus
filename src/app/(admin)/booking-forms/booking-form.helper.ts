@@ -53,7 +53,15 @@ export const FormFieldSchema = z.object({
 
 export type FormFieldSchemaType = z.infer<typeof FormFieldSchema>;
 
-export type CreateFormField = Omit<FormField, 'id' | 'createdAt' | 'updatedAt'>;
+export type FormFieldOption = {
+  label: string;
+  value: string;
+};
+
+export type CreateFormField = Omit<
+  FormField,
+  'id' | 'createdAt' | 'updatedAt' | 'options'
+> & { options: FormFieldOption[] };
 
 type CreateEmptyFormFieldProps = {
   fieldVariant: FieldVariant;
@@ -78,5 +86,6 @@ export const createEmptyFormField = ({
     defaultValue: '',
     validationRules: null,
     formId,
+    options: [],
   };
 };

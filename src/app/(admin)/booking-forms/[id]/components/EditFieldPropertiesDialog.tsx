@@ -13,6 +13,7 @@ import {
   Textarea,
   Checkbox,
   Label,
+  FormWrapper,
 } from '@/components';
 import { useEditFieldProperties } from '../contexts/use-edit-field-properties';
 
@@ -26,6 +27,33 @@ export const EditFieldPropertiesDialog = () => {
     setFieldToEdit,
   } = useEditFieldProperties();
 
+  const onEditFieldOption =
+    (idx: number, key: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+
+      const newOptions = [...(fieldToEdit?.options || [])];
+      newOptions[idx] = {
+        ...newOptions[idx],
+        [key]: value,
+      };
+    };
+
+  const onRemoveFieldOption = (idx: number) => () => {
+    const newOptions = [...(fieldToEdit?.options || [])];
+    newOptions.splice(idx, 1);
+    setFieldToEdit((prev: any) => ({
+      ...prev,
+      options: newOptions,
+    }));
+  };
+
+  const onAddFieldOption = () => {
+    setFieldToEdit((prev: any) => ({
+      ...prev,
+      options: [...(prev.options || []), { label: '', value: '' }],
+    }));
+  };
+
   return (
     <Dialog open={modalOpen} onOpenChange={closeModal}>
       <DialogContent>
@@ -36,13 +64,7 @@ export const EditFieldPropertiesDialog = () => {
           </DialogDescription>
         </DialogHeader>
         {fieldToEdit && (
-          <form
-            className="flex flex-col gap-4"
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleSaveModal();
-            }}
-          >
+          <div className="flex flex-col gap-4">
             <div>
               <Label htmlFor="label">Label</Label>
               <Input
@@ -93,31 +115,14 @@ export const EditFieldPropertiesDialog = () => {
                     <Input
                       placeholder="Value"
                       value={opt.value}
-                      onChange={(e) => {
-                        const newOptions = [...(fieldToEdit.options || [])];
-                        newOptions[idx] = {
-                          ...newOptions[idx],
-                          value: e.target.value,
-                        };
-                        setFieldToEdit((prev: any) => ({
-                          ...prev,
-                          options: newOptions,
-                        }));
-                      }}
+                      onChange={onEditFieldOption(idx, 'value')}
                       className="w-1/2"
                     />
                     <Button
                       type="button"
                       variant="ghost"
                       size="icon"
-                      onClick={() => {
-                        const newOptions = [...(fieldToEdit.options || [])];
-                        newOptions.splice(idx, 1);
-                        setFieldToEdit((prev: any) => ({
-                          ...prev,
-                          options: newOptions,
-                        }));
-                      }}
+                      onClick={onRemoveFieldOption(idx)}
                     >
                       <Icon icon="trash" size="sm" />
                     </Button>
@@ -127,15 +132,7 @@ export const EditFieldPropertiesDialog = () => {
                   type="button"
                   variant="outline"
                   size="sm"
-                  onClick={() => {
-                    setFieldToEdit((prev: any) => ({
-                      ...prev,
-                      options: [
-                        ...(prev.options || []),
-                        { label: '', value: '' },
-                      ],
-                    }));
-                  }}
+                  onClick={onAddFieldOption}
                 >
                   Add Option
                 </Button>
@@ -169,11 +166,11 @@ export const EditFieldPropertiesDialog = () => {
               </label>
             </div>
             <DialogFooter>
-              <Button type="submit" variant="default">
+              <Button type="submit" variant="default" onClick={handleSaveModal}>
                 Save changes
               </Button>
             </DialogFooter>
-          </form>
+          </div>
         )}
       </DialogContent>
     </Dialog>
