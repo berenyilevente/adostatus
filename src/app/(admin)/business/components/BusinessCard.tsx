@@ -57,7 +57,7 @@ export const BusinessCard = ({ business }: { business: Business }) => {
             <Button
               variant="outline"
               size="sm"
-              onClick={() => router.push(`/business/edit/${business.id}`)}
+              onClick={() => router.push(`/business/show/${business.id}`)}
               className="flex items-center space-x-1"
             >
               <Edit className="h-4 w-4" />

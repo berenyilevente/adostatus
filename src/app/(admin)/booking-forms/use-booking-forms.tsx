@@ -5,13 +5,9 @@ import { useForm } from 'react-hook-form';
 import { Business, Form, Service } from '@/generated/prisma';
 
 import { createAppContext } from '@/hooks/use-create-app-context';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { getServices } from '../business-services/actions/business-services.actions';
-import {
-  createBookingForm,
-  deleteBookingForm,
-  updateBookingForm,
-} from './actions';
+import { deleteBookingForm, updateBookingForm } from './actions';
 import { CreateBookingForm } from './booking-form.helper';
 
 type HookProp = {
@@ -31,20 +27,6 @@ const useHook = ({ bookingForms, businessData }: HookProp) => {
       search: '',
       business: '',
       status: '',
-    },
-  });
-
-  const createForm = useForm<CreateBookingForm>({
-    defaultValues: {
-      businessId: '',
-      name: '',
-      description: '',
-      isTemplate: false,
-      templateType: '',
-      confirmationMessage: '',
-      redirectUrl: '',
-      allowCancellation: true,
-      cancellationNoticeHours: 24,
     },
   });
 
@@ -69,21 +51,12 @@ const useHook = ({ bookingForms, businessData }: HookProp) => {
     { label: 'All', value: 'all' },
   ];
 
+  const search = filterForm.watch('search');
+
   const businessOptions = businessData.map((business) => ({
     label: business.name,
     value: business.id,
   }));
-
-  // If add service, render the create service form below the select
-  const serviceOptions = [
-    ...services.map((service) => ({
-      label: service.name,
-      value: service.id,
-    })),
-  ];
-
-  const search = filterForm.watch('search');
-  const businessId = createForm.watch('businessId');
 
   const toggleCreateFormSheet = () => {
     document.getElementById('create-booking-form-trigger')?.click();
@@ -95,18 +68,6 @@ const useHook = ({ bookingForms, businessData }: HookProp) => {
       setServices(response.data);
     }
   };
-
-  useEffect(() => {
-    if (businessId) {
-      getServicesFromBusiness(businessId);
-    }
-  }, [businessId]);
-
-  const onSubmitBookingForm = createForm.handleSubmit(
-    async (data: CreateBookingForm) => {
-      await createBookingForm(data);
-    }
-  );
 
   const onSubmitEditForm = editForm.handleSubmit(
     async (data: CreateBookingForm) => {
@@ -157,12 +118,8 @@ const useHook = ({ bookingForms, businessData }: HookProp) => {
     search,
     filterForm,
     businessData,
-    createForm,
     editForm,
-    serviceOptions,
-    businessOptions,
     statusOptions,
-    onSubmitBookingForm,
     onSubmitEditForm,
     toggleCreateFormSheet,
     isEditSheetOpen,
@@ -174,6 +131,7 @@ const useHook = ({ bookingForms, businessData }: HookProp) => {
     setIsDeleteDialogOpen,
     confirmDelete,
     cancelDelete,
+    businessOptions,
   };
 };
 

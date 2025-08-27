@@ -64,7 +64,7 @@ const useHook = ({ business }: HookProp) => {
     }
   });
 
-  const handleCancel = () => {
+  const handleBack = () => {
     router.back();
   };
 
@@ -72,7 +72,7 @@ const useHook = ({ business }: HookProp) => {
     businessForm,
     isLoading,
     onBusinessSave,
-    handleCancel,
+    handleBack,
     handleChangeImage,
   };
 };

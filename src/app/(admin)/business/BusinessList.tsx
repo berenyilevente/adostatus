@@ -69,6 +69,7 @@ export const BusinessList = () => {
         ))
       )}
 
+      {/* TODO: send confirmation email, deleting a business should cascade to all forms and services, theese should be listed in the dialog and confirmation email */}
       <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
         <DialogContent>
           <DialogHeader>

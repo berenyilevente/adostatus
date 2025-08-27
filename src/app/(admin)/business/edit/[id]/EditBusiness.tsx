@@ -23,7 +23,7 @@ import { useRouter } from 'next/navigation';
 
 const EditBusiness = () => {
   const router = useRouter();
-  const { businessForm, onBusinessSave, handleCancel, isLoading } =
+  const { businessForm, onBusinessSave, handleBack, isLoading } =
     useEditBusiness();
 
   return (
@@ -33,11 +33,11 @@ const EditBusiness = () => {
           <Button
             variant="outline"
             size="sm"
-            onClick={handleCancel}
+            onClick={handleBack}
             className="flex items-center space-x-2"
             startIcon="arrowLeft"
           >
-            <span>Back to Businesses</span>
+            <span>Back</span>
           </Button>
         </div>
         <div className="flex items-center space-x-2">
@@ -108,7 +108,7 @@ const EditBusiness = () => {
                 control={businessForm.control}
                 name="primaryColor"
                 label="Brand Color"
-              />{' '}
+              />
             </CardContent>
           </Card>
         </div>

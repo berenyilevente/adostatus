@@ -34,6 +34,7 @@ model User {
   calendarIntegrations CalendarIntegration[]
   subscriptions        Subscription[]
   sentInvitations      TeamMemberInvitation[] @relation("Inviter")
+  forms                Form[]
 
   @@map("users")
 }
@@ -148,6 +149,7 @@ model TimeOff {
 model Form {
   id                      String   @id @default(cuid())
   businessId              String
+  userId                  String?
   name                    String
   description             String?
   isTemplate              Boolean  @default(false)
@@ -162,6 +164,7 @@ model Form {
   status                  String   @default("draft") // draft, live, archived
 
   business     Business             @relation(fields: [businessId], references: [id])
+  user         User?                @relation(fields: [userId], references: [id])
   fields       FormField[]
   services     Service[]
   integrations WebsiteIntegration[]

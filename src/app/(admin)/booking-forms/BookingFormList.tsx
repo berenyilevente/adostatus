@@ -10,7 +10,6 @@ import {
   FormInput,
   FormSelect,
   Sheet,
-  SheetTrigger,
   SheetContent,
   SheetDescription,
   SheetTitle,
@@ -28,17 +27,19 @@ import { useRouter } from 'next/navigation';
 import { useBookingForms } from './use-booking-forms';
 import { cn } from '@/utils/combineClassNames';
 import { EmptyList } from '../components/ui/empty-list';
+import {
+  CreateBookingFormProvider,
+  useCreateBookingForm,
+} from './create/use-create-booking-form';
+import { CreateBookingForm } from './create/CreateBookingForm';
 
 export const BookingFormList = (): ReactElement => {
   const router = useRouter();
   const {
     bookingForms,
     filterForm,
-    createForm,
     editForm,
-    businessOptions,
     statusOptions,
-    onSubmitBookingForm,
     onSubmitEditForm,
     isEditSheetOpen,
     setIsEditSheetOpen,
@@ -48,8 +49,8 @@ export const BookingFormList = (): ReactElement => {
     setIsDeleteDialogOpen,
     confirmDelete,
     cancelDelete,
-    serviceOptions,
     toggleCreateFormSheet,
+    businessOptions,
   } = useBookingForms();
 
   const statusColorMap = {
@@ -81,76 +82,9 @@ export const BookingFormList = (): ReactElement => {
             options={statusOptions}
           />
         </FormWrapper>
-        <Sheet modal>
-          <SheetTrigger asChild id="create-booking-form-trigger">
-            <Button startIcon="plus" size="sm" iconSize="xs" color="primary">
-              Create a new booking form
-            </Button>
-          </SheetTrigger>
-          <SheetContent className="h-full w-[500px]">
-            <SheetHeader>
-              <SheetTitle>Create a new booking form</SheetTitle>
-              <SheetDescription>
-                Create a new booking form by selecting a business and a service
-                and then giving it a name.
-              </SheetDescription>
-            </SheetHeader>
-            <FormWrapper
-              form={createForm}
-              className="flex gap-4 flex-col w-full mt-6"
-            >
-              <FormSelect
-                control={createForm.control}
-                label="Business"
-                name="businessId"
-                placeholder="Select business..."
-                options={businessOptions}
-                actionButton={
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    fullWidth
-                    onClick={() => router.push('/business/create')}
-                    endIcon="plus"
-                  >
-                    Create a new business
-                  </Button>
-                }
-              />
-              {/* <FormSelect
-                control={createForm.control}
-                label="Service"
-                name="serviceId"
-                placeholder="Select service..."
-                options={serviceOptions}
-                actionButton={
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    fullWidth
-                    onClick={() => router.push('/services/create')}
-                    endIcon="plus"
-                  >
-                    Create a new service
-                  </Button>
-                }
-              /> */}
-              <FormInput
-                control={createForm.control}
-                label="Name"
-                name="name"
-                placeholder="Enter form name"
-              />
-              <FormTextarea
-                control={createForm.control}
-                label="Description"
-                name="description"
-                placeholder="Enter form description"
-              />
-              <Button onClick={onSubmitBookingForm}>Create form</Button>
-            </FormWrapper>
-          </SheetContent>
-        </Sheet>
+        <CreateBookingFormProvider>
+          <CreateBookingForm />
+        </CreateBookingFormProvider>
       </div>
       {bookingForms.length === 0 ? (
         <EmptyList>

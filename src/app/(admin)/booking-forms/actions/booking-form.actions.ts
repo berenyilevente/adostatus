@@ -7,9 +7,13 @@ import { revalidatePath } from 'next/cache';
 import { CreateBookingForm, CreateFormField } from '../booking-form.helper';
 
 export const getBookingForms = async () => {
-  await isAuthenticated();
+  const { user } = await isAuthenticated();
 
-  const bookingForms = await prisma.form.findMany();
+  const bookingForms = await prisma.form.findMany({
+    where: {
+      userId: user.id,
+    },
+  });
 
   return handleResponse({
     data: bookingForms,
@@ -19,11 +23,12 @@ export const getBookingForms = async () => {
 };
 
 export const getForm = async (id: string) => {
-  await isAuthenticated();
+  const { user } = await isAuthenticated();
 
   const form = await prisma.form.findUnique({
     where: {
       id,
+      userId: user.id,
     },
   });
 
@@ -37,10 +42,13 @@ export const getForm = async (id: string) => {
 export const createBookingForm = async (
   data: CreateBookingForm
 ): Promise<any> => {
-  await isAuthenticated();
+  const { user } = await isAuthenticated();
 
   const form = await prisma.form.create({
-    data,
+    data: {
+      ...data,
+      userId: user.id,
+    },
   });
 
   revalidatePath('/booking-forms');
