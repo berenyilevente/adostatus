@@ -34,7 +34,7 @@ const useHook = ({ businesses }: HookProp) => {
 
   const filterForm = useForm({
     defaultValues: {
-      business: businesses[0].id, // TODO get the actual business id from the url
+      business: businesses[0]?.id, // TODO get the actual business id from the url
     },
   });
 
@@ -42,13 +42,15 @@ const useHook = ({ businesses }: HookProp) => {
   useEffect(() => {
     const fetchBusinessHours = async () => {
       const rBusinessHours = await getBusinessHours({
-        businessId: businesses[0].id,
+        businessId: businesses[0]?.id,
       });
       setBusinessHours(rBusinessHours.data ?? []);
     };
 
     const fetchBreakTimes = async () => {
-      const rBreakTimes = await getBreakTimes({ businessId: businesses[0].id });
+      const rBreakTimes = await getBreakTimes({
+        businessId: businesses[0]?.id,
+      });
       setBreakTimes(rBreakTimes.data ?? []);
     };
 

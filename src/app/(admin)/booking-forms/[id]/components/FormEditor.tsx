@@ -18,10 +18,10 @@ import {
   CardTitle,
 } from '@/components';
 import { useEditFieldProperties } from '../contexts/use-edit-field-properties';
+import { fields as availableFields } from '../../booking-form.helper';
 
 export const FormEditor = () => {
-  const { editorFields, addFieldToRow, removeField, availableFields } =
-    useEditBookingForm();
+  const { editorFields, addFieldToRow, removeField } = useEditBookingForm();
 
   const { selectField } = useEditFieldProperties();
 

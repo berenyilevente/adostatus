@@ -1,6 +1,7 @@
 'use client';
 
 import React, { ReactElement } from 'react';
+import { fields as availableFields } from '../../booking-form.helper';
 
 import { useEditBookingForm } from '../use-edit-booking-form';
 import {
@@ -13,7 +14,7 @@ import {
 } from '@/components';
 
 export const FormElementList = (): ReactElement => {
-  const { addField, availableFields } = useEditBookingForm();
+  const { addField } = useEditBookingForm();
 
   return (
     <Card className="col-span-1">

@@ -85,6 +85,10 @@ const useHook = ({ bookingForms, businessData }: HookProp) => {
   const search = filterForm.watch('search');
   const businessId = createForm.watch('businessId');
 
+  const toggleCreateFormSheet = () => {
+    document.getElementById('create-booking-form-trigger')?.click();
+  };
+
   const getServicesFromBusiness = async (businessId: string) => {
     const response = await getServices(businessId);
     if (response.status === 'success' && response.data) {
@@ -160,6 +164,7 @@ const useHook = ({ bookingForms, businessData }: HookProp) => {
     statusOptions,
     onSubmitBookingForm,
     onSubmitEditForm,
+    toggleCreateFormSheet,
     isEditSheetOpen,
     setIsEditSheetOpen,
     editingForm,

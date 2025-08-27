@@ -68,8 +68,8 @@ export const EditFieldPropertiesDialog = () => {
               />
             </div>
             {/* Options editor for select/combobox */}
-            {(fieldToEdit.fieldType === 'select' ||
-              fieldToEdit.fieldType === 'combobox') && (
+            {(fieldToEdit.fieldVariant === 'SELECT' ||
+              fieldToEdit.fieldVariant === 'COMBOBOX') && (
               <div className="flex flex-col gap-2">
                 <Label>Options</Label>
                 {(fieldToEdit.options || []).map((opt: any, idx: number) => (

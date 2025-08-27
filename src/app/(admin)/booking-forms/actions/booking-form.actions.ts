@@ -5,7 +5,6 @@ import { isAuthenticated } from '@/lib/auth';
 import { handleResponse } from '@/utils/handleResponse';
 import { revalidatePath } from 'next/cache';
 import { CreateBookingForm, CreateFormField } from '../booking-form.helper';
-import { FormField } from '@/generated/prisma';
 
 export const getBookingForms = async () => {
   await isAuthenticated();

@@ -35,7 +35,7 @@ const useHook = ({ businesses }: HookProp) => {
 
   const filterForm = useForm({
     defaultValues: {
-      business: businesses[0].id,
+      business: businesses?.[0]?.id,
     },
   });
 
@@ -61,17 +61,17 @@ const useHook = ({ businesses }: HookProp) => {
     },
   });
 
-  const businessOptions = businesses.map((business) => ({
+  const businessOptions = businesses?.map((business) => ({
     label: business.name,
     value: business.id,
   }));
 
-  const serviceOptions = services.map((service) => ({
+  const serviceOptions = services?.map((service) => ({
     label: service.name,
     value: service.id,
   }));
 
-  const teamMemberOptions = teamMembers.map((teamMember) => ({
+  const teamMemberOptions = teamMembers?.map((teamMember) => ({
     // TODO: Handle case where user is null
     label: teamMember.user.name ?? '',
     value: teamMember.id,

@@ -184,10 +184,25 @@ model FormFieldOption {
   FormField FormField[] @relation("FormFieldOptions")
 }
 
+
+enum FieldVariant {
+  CHECKBOX
+  COMBOBOX
+  DATEPICKER
+  TEXT_INPUT
+  SELECT
+  SWITCH
+  TEXTAREA
+  TIMEPICKER
+  COLOR_PICKER
+  TAG_INPUT
+  MULTISELECT
+}
+
 model FormField {
   id              String   @id @default(cuid())
   formId          String
-  fieldType       String // text, email, phone, select, radio, checkbox, date, time, etc.
+  fieldVariant    FieldVariant
   label           String
   placeholder     String?
   helpText        String?

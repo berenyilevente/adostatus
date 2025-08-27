@@ -1,11 +1,6 @@
 import { z } from 'zod';
 
-import {
-  Form as FormTable,
-  FormField,
-  Prisma,
-  FormFieldOption,
-} from '@/generated/prisma';
+import { Form as FormTable, FormField, FieldVariant } from '@/generated/prisma';
 
 export type CreateBookingForm = Omit<
   FormTable,
@@ -28,19 +23,18 @@ export const FormSchema = z.object({
 
 export type FormSchemaType = z.infer<typeof FormSchema>;
 
-export const fields = [
-  { key: 'checkbox', label: 'Checkbox' },
-  { key: 'combobox', label: 'Combobox' },
-  { key: 'datepicker', label: 'Datepicker' },
-  { key: 'text-input', label: 'Text Input' },
-  { key: 'select', label: 'Select' },
-  { key: 'switch', label: 'Switch' },
-  { key: 'textarea', label: 'Textarea' },
-  { key: 'timepicker', label: 'Timepicker' },
-  { key: 'color-picker', label: 'Color Picker' },
-  { key: 'tag-input', label: 'Tag Input' },
-  { key: 'multiselect', label: 'Multiselect' },
-  { key: 'file-input', label: 'File Input' },
+export const fields: { key: FieldVariant; label: string }[] = [
+  { key: 'CHECKBOX', label: 'Checkbox' },
+  { key: 'COMBOBOX', label: 'Combobox' },
+  { key: 'DATEPICKER', label: 'Datepicker' },
+  { key: 'TEXT_INPUT', label: 'Text Input' },
+  { key: 'SELECT', label: 'Select' },
+  { key: 'SWITCH', label: 'Switch' },
+  { key: 'TEXTAREA', label: 'Textarea' },
+  { key: 'TIMEPICKER', label: 'Timepicker' },
+  { key: 'COLOR_PICKER', label: 'Color Picker' },
+  { key: 'TAG_INPUT', label: 'Tag Input' },
+  { key: 'MULTISELECT', label: 'Multiselect' },
 ] as const;
 
 export const FormFieldSchema = z.object({
@@ -62,20 +56,20 @@ export type FormFieldSchemaType = z.infer<typeof FormFieldSchema>;
 export type CreateFormField = Omit<FormField, 'id' | 'createdAt' | 'updatedAt'>;
 
 type CreateEmptyFormFieldProps = {
-  fieldType: string;
+  fieldVariant: FieldVariant;
   fieldOrder: number;
   formId: string;
 };
 
 export const createEmptyFormField = ({
-  fieldType,
+  fieldVariant,
   fieldOrder,
   formId,
 }: CreateEmptyFormFieldProps): CreateFormField => {
-  const label = fieldType.charAt(0).toUpperCase() + fieldType.slice(1);
+  const label = fieldVariant.charAt(0).toUpperCase() + fieldVariant.slice(1);
 
   return {
-    fieldType,
+    fieldVariant,
     label,
     placeholder: '',
     helpText: '',

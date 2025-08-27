@@ -1,14 +1,10 @@
 'use client';
 
-import { Form, FormField } from '@/generated/prisma';
+import { FieldVariant, Form, FormField } from '@/generated/prisma';
 
 import { createAppContext } from '@/hooks/use-create-app-context';
 import { ReactElement, useState } from 'react';
-import {
-  createEmptyFormField,
-  fields as availableFields,
-  CreateFormField,
-} from '../booking-form.helper';
+import { createEmptyFormField, CreateFormField } from '../booking-form.helper';
 import { useForm } from 'react-hook-form';
 import {
   FormCheckbox,
@@ -73,13 +69,13 @@ function useEditBookingFormHook({ formsData, formFieldsData }: HookProp) {
 
   const addFieldToRow = (rowIdx: number, fieldType: string) => {};
 
-  const addField = (fieldType: string) => {
+  const addField = (fieldVariant: FieldVariant) => {
     if (!formId) {
       return;
     }
 
     const newField: FormFieldItem = {
-      ...createEmptyFormField({ fieldType, fieldOrder: 0, formId }),
+      ...createEmptyFormField({ fieldVariant, fieldOrder: 0, formId }),
       tempId: crypto.randomUUID(),
     };
     setEditorFields((prev) => [...prev, [newField]]);
@@ -119,21 +115,21 @@ function useEditBookingFormHook({ formsData, formFieldsData }: HookProp) {
       className: 'w-full',
     };
 
-    const fieldTypeMap: Record<string, ReactElement> = {
-      'text-input': <FormInput {...commonProps} key={field.label} />,
-      checkbox: <FormCheckbox {...commonProps} key={field.label} />,
-      combobox: <FormCombobox {...commonProps} key={field.label} />,
-      select: <FormSelect {...commonProps} key={field.label} />,
-      datepicker: <FormDatepicker {...commonProps} key={field.label} />,
-      textarea: <FormTextarea {...commonProps} key={field.label} />,
-      switch: <FormSwitch {...commonProps} key={field.label} />,
-      multiselect: <FormMultiselect {...commonProps} key={field.label} />,
-      'color-picker': <FormColorPicker {...commonProps} key={field.label} />,
-      'tag-input': <FormTagInput {...commonProps} key={field.label} />,
-      timepicker: <FormTimepicker {...commonProps} key={field.label} />,
+    const fieldVariantMap: Record<FieldVariant, ReactElement> = {
+      TEXT_INPUT: <FormInput {...commonProps} key={field.label} />,
+      CHECKBOX: <FormCheckbox {...commonProps} key={field.label} />,
+      COMBOBOX: <FormCombobox {...commonProps} key={field.label} />,
+      SELECT: <FormSelect {...commonProps} key={field.label} />,
+      DATEPICKER: <FormDatepicker {...commonProps} key={field.label} />,
+      TEXTAREA: <FormTextarea {...commonProps} key={field.label} />,
+      SWITCH: <FormSwitch {...commonProps} key={field.label} />,
+      MULTISELECT: <FormMultiselect {...commonProps} key={field.label} />,
+      COLOR_PICKER: <FormColorPicker {...commonProps} key={field.label} />,
+      TAG_INPUT: <FormTagInput {...commonProps} key={field.label} />,
+      TIMEPICKER: <FormTimepicker {...commonProps} key={field.label} />,
     };
 
-    return fieldTypeMap[field.fieldType];
+    return fieldVariantMap[field.fieldVariant];
   };
 
   const createFormFieldPayload = (
@@ -146,7 +142,7 @@ function useEditBookingFormHook({ formsData, formFieldsData }: HookProp) {
 
     return editorFields.flat().map((field) => ({
       formId: formsData.id,
-      fieldType: field.fieldType,
+      fieldVariant: field.fieldVariant,
       label: field?.label,
       placeholder: field?.placeholder,
       helpText: field?.helpText,
@@ -186,7 +182,6 @@ function useEditBookingFormHook({ formsData, formFieldsData }: HookProp) {
     removeField,
     selectedField,
     selectedFieldTempId,
-    availableFields,
     createForm,
     previewForm,
     renderPreviewField,
