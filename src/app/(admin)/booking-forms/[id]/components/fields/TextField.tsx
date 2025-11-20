@@ -136,7 +136,9 @@ const PropertiesComponent = ({
                   }}
                 />
               </FormControl>
-              {<FormDescription>Help text</FormDescription>}
+              <FormDescription>
+                Label to display above the field
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -155,7 +157,9 @@ const PropertiesComponent = ({
                   }}
                 />
               </FormControl>
-              <FormDescription>Placeholder for the text field</FormDescription>
+              <FormDescription>
+                Placeholder text to display in the field
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -174,7 +178,9 @@ const PropertiesComponent = ({
                   }}
                 />
               </FormControl>
-              <FormDescription>Help text for the text field</FormDescription>
+              <FormDescription>
+                Help text to display below the field
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -186,7 +192,7 @@ const PropertiesComponent = ({
             <FormItem className="flex rounded-lg border p-3 shadow-sm items-center justify-between">
               <div className="space-y-0.5">
                 <FormLabel>Required</FormLabel>
-                <FormDescription>Help text for the text field</FormDescription>
+                <FormDescription>Set if the field is required</FormDescription>
               </div>
               <FormControl>
                 <Switch
