@@ -162,13 +162,14 @@ model Form {
   createdAt               DateTime @default(now())
   updatedAt               DateTime @updatedAt
   status                  String   @default("draft") // draft, live, archived
+  content                 String   @default("[]")
 
   business     Business             @relation(fields: [businessId], references: [id])
   user         User?                @relation(fields: [userId], references: [id])
   fields       FormField[]
   services     Service[]
   integrations WebsiteIntegration[]
-
+  submissions  FormSubmission[]
   @@index([businessId])
   @@index([isTemplate, templateType])
   @@map("forms")
@@ -207,6 +208,16 @@ model FormField {
 
   @@index([formId])
   @@map("form_fields")
+}
+
+model FormSubmission {
+  id String @id @default(cuid())
+  formId String
+  submissionData Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  form Form @relation(fields: [formId], references: [id], onDelete: Cascade)
 }
 
 model Service {

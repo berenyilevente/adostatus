@@ -19,6 +19,7 @@ export const FormSchema = z.object({
   allowCancellation: z.boolean().default(true),
   cancellationNoticeHours: z.number().int().default(24),
   isActive: z.boolean().default(true),
+  content: z.string().default('[]'),
 });
 
 export type FormSchemaType = z.infer<typeof FormSchema>;

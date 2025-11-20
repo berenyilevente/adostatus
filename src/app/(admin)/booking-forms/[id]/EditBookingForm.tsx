@@ -5,15 +5,12 @@ import React, { ReactElement } from 'react';
 import { Button } from '@/components';
 import { useEditBookingForm } from './use-edit-booking-form';
 
-import { FormElementList } from './components/FormElementList';
-import { FormEditor } from './components/FormEditor';
-import { FormPreview } from './components/FormPreview';
-import { EditFieldPropertiesDialog } from './components/EditFieldPropertiesDialog';
-import { EditFieldPropertiesProvider } from './contexts/use-edit-field-properties';
+import { FormBuilder } from './components/FormBuilder';
+import { PreviewDialogButton } from './components/PreviewDialogButton';
 
 export const EditBookingForm = (): ReactElement => {
   const router = useRouter();
-  const { onSubmit, selectedField } = useEditBookingForm();
+  const { onSubmit } = useEditBookingForm();
 
   return (
     <div>
@@ -30,19 +27,16 @@ export const EditBookingForm = (): ReactElement => {
           </Button>
         </div>
         <div className="flex items-center space-x-2">
+          <PreviewDialogButton />
           <Button onClick={onSubmit} className="w-full" size="sm" type="button">
             Save Changes
           </Button>
+          <Button className="w-full" size="sm" type="button">
+            Publish
+          </Button>
         </div>
       </div>
-      <div className="grid grid-cols-5 gap-4">
-        <EditFieldPropertiesProvider field={selectedField}>
-          <FormElementList />
-          <FormEditor />
-          <FormPreview />
-          <EditFieldPropertiesDialog />
-        </EditFieldPropertiesProvider>
-      </div>
+      <FormBuilder />
     </div>
   );
 };
