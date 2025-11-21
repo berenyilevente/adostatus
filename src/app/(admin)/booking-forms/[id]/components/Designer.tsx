@@ -17,8 +17,13 @@ const idGenerator = () => {
 };
 
 export const Designer = () => {
-  const { elements, addElement, selectedElement, setSelectedElement } =
-    useDesignerContext();
+  const {
+    elements,
+    addElement,
+    selectedElement,
+    setSelectedElement,
+    removeElement,
+  } = useDesignerContext();
   const droppable = useDroppable({
     id: 'designer-drop-area',
     data: {
@@ -36,11 +41,86 @@ export const Designer = () => {
 
       const isDesignerButtonElement =
         active.data.current?.isDesignerButtonElement;
+      const isDroppingOverDesignerDropArea =
+        over.data.current?.isDesignerDropArea;
 
-      if (isDesignerButtonElement) {
+      // First scenario: Dropping a button element over the designer drop area
+      const droppingSidebarButtonOverDesignerDropArea =
+        isDesignerButtonElement && isDroppingOverDesignerDropArea;
+
+      if (droppingSidebarButtonOverDesignerDropArea) {
         const type: ElementsType = active.data.current?.type;
         const newElement = FormElements[type].construct(idGenerator());
-        addElement(0, newElement);
+        addElement(elements.length, newElement);
+      }
+
+      // Second scenario: Dropping an element over the designer drop area
+      const droppingElementOverDesignerElementTopHalf =
+        over.data.current?.isTopHalfDesignerElement;
+
+      const droppingElementOverDesignerElementBottomHalf =
+        over.data.current?.isBottomHalfDesignerElement;
+
+      const isDroppingOverDesignerElement =
+        droppingElementOverDesignerElementTopHalf ||
+        droppingElementOverDesignerElementBottomHalf;
+
+      const droppingElementOverDesignerElement =
+        isDesignerButtonElement && isDroppingOverDesignerElement;
+
+      if (droppingElementOverDesignerElement) {
+        const type: ElementsType = active.data.current?.type;
+        const newElement = FormElements[type].construct(idGenerator());
+        const overId = over.data.current?.elementId;
+
+        const overElementIndex = elements.findIndex(
+          (element) => element.id === overId
+        );
+
+        if (overElementIndex === -1) {
+          throw new Error('Over element not found');
+        }
+
+        let indexForNewElement = overElementIndex; // Assuming I am on top half
+        if (droppingElementOverDesignerElementBottomHalf) {
+          indexForNewElement = overElementIndex + 1;
+        }
+
+        addElement(indexForNewElement, newElement);
+        return;
+      }
+
+      const isDraggingDesignerElement = active.data.current?.isDesignerElement;
+
+      // Third scenario: Dragging a designer element over another designer element
+      const draggingDesignerElementOverAnotherDesignerElement =
+        isDroppingOverDesignerElement && isDraggingDesignerElement;
+
+      if (draggingDesignerElementOverAnotherDesignerElement) {
+        const activeId = active.data.current?.elementId;
+        const overId = over.data.current?.elementId;
+
+        const activeElementIndex = elements.findIndex(
+          (element) => element.id === activeId
+        );
+
+        const overElementIndex = elements.findIndex(
+          (element) => element.id === overId
+        );
+
+        if (activeElementIndex === -1 || overElementIndex === -1) {
+          throw new Error('Active or over element not found');
+        }
+
+        const activeElement = { ...elements[activeElementIndex] };
+
+        let indexForNewElement = overElementIndex; // Assuming I am on top half
+        if (droppingElementOverDesignerElementBottomHalf) {
+          indexForNewElement = overElementIndex + 1;
+        }
+
+        removeElement(activeElement.id);
+        addElement(indexForNewElement, activeElement);
       }
     },
   });
@@ -59,7 +139,7 @@ export const Designer = () => {
           ref={droppable.setNodeRef}
           className={cn(
             'max-w-3/4 h-full m-auto flex flex-col flex-grow items-center flex-1 overflow-y-auto w-full',
-            droppable.isOver && 'ring ring-secondary'
+            droppable.isOver && 'ring ring-primary rounded-md'
           )}
         >
           {!droppable.isOver && elements.length === 0 && (
