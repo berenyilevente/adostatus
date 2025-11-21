@@ -9,9 +9,16 @@ import {
 } from '@dnd-kit/core';
 import { Designer } from './Designer';
 import { DragOverlayWrapper } from './DragOverlayWrapper';
-import { DesignerContextProvider } from './context/DesignerContext';
+import {
+  DesignerContextProvider,
+  useDesignerContext,
+} from './context/DesignerContext';
+import { useEffect } from 'react';
+import { useEditBookingForm } from '../use-edit-booking-form';
 
 export const FormBuilder = () => {
+  const { formData } = useEditBookingForm();
+  const { setElements } = useDesignerContext();
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: {
       distance: 10,
@@ -26,6 +33,16 @@ export const FormBuilder = () => {
   });
 
   const sensors = useSensors(mouseSensor, touchSensor);
+
+  useEffect(() => {
+    if (!formData?.content) {
+      return;
+    }
+
+    const elements = JSON.parse(formData?.content);
+    setElements(elements);
+  }, [formData?.content, setElements]);
+
   return (
     <DndContext sensors={sensors}>
       <main className="flex flex-col w-full">
