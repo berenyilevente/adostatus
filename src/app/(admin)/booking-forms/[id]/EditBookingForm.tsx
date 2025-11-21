@@ -7,13 +7,14 @@ import { useEditBookingForm } from './use-edit-booking-form';
 
 import { FormBuilder } from './components/FormBuilder';
 import { PreviewDialogButton } from './components/PreviewDialogButton';
+import { DesignerContextProvider } from './components/context/DesignerContext';
 
 export const EditBookingForm = (): ReactElement => {
   const router = useRouter();
   const { onSubmit } = useEditBookingForm();
 
   return (
-    <div>
+    <DesignerContextProvider>
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center space-x-4">
           <Button
@@ -37,6 +38,6 @@ export const EditBookingForm = (): ReactElement => {
         </div>
       </div>
       <FormBuilder />
-    </div>
+    </DesignerContextProvider>
   );
 };

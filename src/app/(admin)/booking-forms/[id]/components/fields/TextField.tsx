@@ -52,7 +52,7 @@ export const TextFieldFormElement: FormElement = {
     label: 'Text Field',
   },
   designerComponent: (props) => <DesignerComponent {...props} />,
-  formComponent: () => <div>TextFieldForm</div>,
+  formComponent: (props) => <FormComponent {...props} />,
   propertiesComponent: (props) => <PropertiesComponent {...props} />,
 };
 
@@ -74,7 +74,11 @@ const DesignerComponent = ({
           <span className="text-red-500 pl-1">*</span>
         )}
       </Label>
-      <Input placeholder={element.extraAttributes.placeholder} disabled />
+      <Input
+        placeholder={element.extraAttributes.placeholder}
+        readOnly
+        disabled
+      />
       <p className="text-xs text-muted-foreground">
         {element.extraAttributes.helpText}
       </p>
@@ -206,5 +210,27 @@ const PropertiesComponent = ({
         />
       </form>
     </Form>
+  );
+};
+
+const FormComponent = ({
+  elementInstance,
+}: {
+  elementInstance: FormElementInstance;
+}) => {
+  const element = elementInstance as CustomInstance;
+  return (
+    <div className="p-2 w-full">
+      <Label className="text-sm font-medium text-gray-500">
+        {element.extraAttributes.label}
+        {element.extraAttributes.required && (
+          <span className="text-red-500 pl-1">*</span>
+        )}
+      </Label>
+      <Input placeholder={element.extraAttributes.placeholder} />
+      <p className="text-xs text-muted-foreground">
+        {element.extraAttributes.helpText}
+      </p>
+    </div>
   );
 };

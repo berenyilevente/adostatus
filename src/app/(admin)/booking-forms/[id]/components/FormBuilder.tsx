@@ -28,14 +28,12 @@ export const FormBuilder = () => {
   const sensors = useSensors(mouseSensor, touchSensor);
   return (
     <DndContext sensors={sensors}>
-      <DesignerContextProvider>
-        <main className="flex flex-col w-full">
-          <div className="flex w-full flex-grow items-center justify-center relative overflow-y-auto h-full bg-accent">
-            <Designer />
-          </div>
-        </main>
-        <DragOverlayWrapper />
-      </DesignerContextProvider>
+      <main className="flex flex-col w-full">
+        <div className="flex w-full flex-grow items-center justify-center relative overflow-y-auto h-full bg-accent">
+          <Designer />
+        </div>
+      </main>
+      <DragOverlayWrapper />
     </DndContext>
   );
 };
