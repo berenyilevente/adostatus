@@ -172,3 +172,20 @@ export const getFormFields = async (formId: string) => {
     code: 404,
   });
 };
+
+export const updateFormContent = async (formId: string, content: string) => {
+  await isAuthenticated();
+
+  const form = await prisma.form.update({
+    where: { id: formId },
+    data: { content },
+  });
+
+  revalidatePath('/booking-forms');
+
+  return handleResponse({
+    data: form,
+    error: 'Form content update failed',
+    code: 404,
+  });
+};

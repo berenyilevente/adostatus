@@ -8,10 +8,10 @@ import { useEditBookingForm } from './use-edit-booking-form';
 import { FormBuilder } from './components/FormBuilder';
 import { PreviewDialogButton } from './components/PreviewDialogButton';
 import { DesignerContextProvider } from './components/context/DesignerContext';
+import { SaveFormButton } from './components/SaveFormButton';
 
 export const EditBookingForm = (): ReactElement => {
   const router = useRouter();
-  const { onSubmit } = useEditBookingForm();
 
   return (
     <DesignerContextProvider>
@@ -29,9 +29,7 @@ export const EditBookingForm = (): ReactElement => {
         </div>
         <div className="flex items-center space-x-2">
           <PreviewDialogButton />
-          <Button onClick={onSubmit} className="w-full" size="sm" type="button">
-            Save Changes
-          </Button>
+          <SaveFormButton />
           <Button className="w-full" size="sm" type="button">
             Publish
           </Button>
