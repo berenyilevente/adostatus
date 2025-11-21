@@ -6,7 +6,7 @@ import { toast } from 'sonner';
 import { useTransition } from 'react';
 
 export const SaveFormButton = () => {
-  const { onSubmit, formData } = useEditBookingForm();
+  const { formData } = useEditBookingForm();
   const { elements } = useDesignerContext();
   const [loading, startTransition] = useTransition();
 
@@ -30,6 +30,10 @@ export const SaveFormButton = () => {
       }
     } catch (error) {}
   };
+
+  if (formData?.status === 'live') {
+    return null;
+  }
 
   return (
     <Button

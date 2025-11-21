@@ -3,12 +3,12 @@
 import { useRouter } from 'next/navigation';
 import React, { ReactElement } from 'react';
 import { Button } from '@/components';
-import { useEditBookingForm } from './use-edit-booking-form';
 
 import { FormBuilder } from './components/FormBuilder';
 import { PreviewDialogButton } from './components/PreviewDialogButton';
 import { DesignerContextProvider } from './components/context/DesignerContext';
 import { SaveFormButton } from './components/SaveFormButton';
+import { PublishButton } from './components/PublishButton';
 
 export const EditBookingForm = (): ReactElement => {
   const router = useRouter();
@@ -30,9 +30,7 @@ export const EditBookingForm = (): ReactElement => {
         <div className="flex items-center space-x-2">
           <PreviewDialogButton />
           <SaveFormButton />
-          <Button className="w-full" size="sm" type="button">
-            Publish
-          </Button>
+          <PublishButton />
         </div>
       </div>
       <FormBuilder />

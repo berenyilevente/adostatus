@@ -189,3 +189,20 @@ export const updateFormContent = async (formId: string, content: string) => {
     code: 404,
   });
 };
+
+export const publishForm = async (formId: string) => {
+  await isAuthenticated();
+
+  const form = await prisma.form.update({
+    where: { id: formId },
+    data: { status: 'live', isActive: true },
+  });
+
+  revalidatePath('/booking-forms');
+
+  return handleResponse({
+    data: form,
+    error: 'Form publishing failed',
+    code: 404,
+  });
+};

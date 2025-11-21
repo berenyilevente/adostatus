@@ -23,7 +23,7 @@ import { config } from '@/config';
 
 import { adminMenuItems as menuItems } from './menu-items';
 import { IMenuItem } from '../types/menu.types';
-import { ChevronDownIcon, ChevronRightIcon } from 'lucide-react';
+import { ChevronDownIcon } from 'lucide-react';
 
 const SidebarItem = ({ item }: { item: IMenuItem }) => {
   if (item.collapsible && item.children) {

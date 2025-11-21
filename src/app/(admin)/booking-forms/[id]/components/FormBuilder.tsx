@@ -15,6 +15,7 @@ import {
 } from './context/DesignerContext';
 import { useEffect } from 'react';
 import { useEditBookingForm } from '../use-edit-booking-form';
+import { cn } from '@/utils';
 
 export const FormBuilder = () => {
   const { formData } = useEditBookingForm();
@@ -45,7 +46,12 @@ export const FormBuilder = () => {
 
   return (
     <DndContext sensors={sensors}>
-      <main className="flex flex-col w-full">
+      <main
+        className={cn(
+          'flex flex-col w-full',
+          formData?.status === 'live' && 'opacity-50 pointer-events-none'
+        )}
+      >
         <div className="flex w-full flex-grow items-center justify-center relative overflow-y-auto h-full bg-accent">
           <Designer />
         </div>
