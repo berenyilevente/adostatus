@@ -7,6 +7,7 @@
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
+  previewFeatures = ["views"]
 }
 
 datasource db {
@@ -161,7 +162,7 @@ model Form {
   isTemplate              Boolean  @default(false)
   templateType            String?
   confirmationMessage     String?
-  url                     String?
+  url                     String?  @unique
   allowCancellation       Boolean  @default(true)
   cancellationNoticeHours Int      @default(24)
   createdAt               DateTime @default(now())
@@ -385,4 +386,13 @@ model TeamMemberInvitation {
   @@index([email])
   @@index([token])
   @@map("team_member_invitations")
+}
+
+// TODO: Add a view to migrations
+view VwFormsPublic {
+  id     String  @unique
+  content  Json  
+  url      String   @unique
+
+  @@map("vw_forms_public")
 }
