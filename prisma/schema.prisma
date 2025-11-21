@@ -146,6 +146,12 @@ model TimeOff {
   @@map("time_off")
 }
 
+enum FormStatus {
+  DRAFT
+  LIVE
+  ARCHIVED
+}
+
 model Form {
   id                      String   @id @default(cuid())
   businessId              String
@@ -155,13 +161,12 @@ model Form {
   isTemplate              Boolean  @default(false)
   templateType            String?
   confirmationMessage     String?
-  redirectUrl             String?
+  url                     String?
   allowCancellation       Boolean  @default(true)
   cancellationNoticeHours Int      @default(24)
-  isActive                Boolean  @default(true)
   createdAt               DateTime @default(now())
   updatedAt               DateTime @updatedAt
-  status                  String   @default("draft") // draft, live, archived
+  status                  FormStatus   @default(DRAFT)
   content                 String   @default("[]")
 
   business     Business             @relation(fields: [businessId], references: [id])
@@ -218,6 +223,7 @@ model FormSubmission {
   updatedAt DateTime @updatedAt
 
   form Form @relation(fields: [formId], references: [id], onDelete: Cascade)
+  @@map("form_submissions")
 }
 
 model Service {

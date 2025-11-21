@@ -5,6 +5,8 @@ import { isAuthenticated } from '@/lib/auth';
 import { handleResponse } from '@/utils/handleResponse';
 import { revalidatePath } from 'next/cache';
 import { CreateBookingForm, CreateFormField } from '../booking-form.helper';
+import { config } from '@/config';
+import { FormStatus } from '@/generated/prisma';
 
 export const getBookingForms = async () => {
   const { user } = await isAuthenticated();
@@ -105,7 +107,7 @@ export const archiveBookingForm = async (id: string) => {
 
   const form = await prisma.form.update({
     where: { id },
-    data: { status: 'archived', isActive: false },
+    data: { status: FormStatus.ARCHIVED },
   });
 
   revalidatePath('/booking-forms');
@@ -191,11 +193,22 @@ export const updateFormContent = async (formId: string, content: string) => {
 };
 
 export const publishForm = async (formId: string) => {
-  await isAuthenticated();
+  const { user } = await isAuthenticated();
+
+  const business = await prisma.business.findFirst({
+    where: {
+      ownerId: user.id,
+    },
+  });
+
+  const businessName = business?.name?.toLowerCase().replace(/ /g, '-').trim();
 
   const form = await prisma.form.update({
     where: { id: formId },
-    data: { status: 'live', isActive: true },
+    data: {
+      status: FormStatus.LIVE,
+      url: `${config.app.domain}/${businessName}/${formId}`,
+    },
   });
 
   revalidatePath('/booking-forms');
