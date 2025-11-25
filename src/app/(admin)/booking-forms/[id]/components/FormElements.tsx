@@ -2,8 +2,20 @@
 
 import { Control } from 'react-hook-form';
 import { TextFieldFormElement } from './fields/TextField';
+import { TitleFieldFormElement } from './fields/TitleField';
+import { IconType } from '@/components/ui/icon';
+import { SubtitleFieldFormElement } from './fields/SubtitleField';
+import { ParagraphFieldFormElement } from './fields/ParagraphField';
+import { SeperatorFieldFormElement } from './fields/SeperatorField';
+import { SpacerFieldFormElement } from './fields/SpacerField';
 
-export type ElementsType = 'TextField';
+export type ElementsType =
+  | 'TextField'
+  | 'TitleField'
+  | 'SubtitleField'
+  | 'ParagraphField'
+  | 'SeperatorField'
+  | 'SpacerField';
 
 export type SubmitFunction = (key: string, value: string) => void;
 
@@ -13,7 +25,7 @@ export type FormElement = {
   construct: (id: string) => FormElementInstance;
 
   designerButtonElement: {
-    icon: React.ElementType;
+    icon: IconType;
     label: string;
   };
 
@@ -41,4 +53,9 @@ export type FormElementInstance = {
 
 export const FormElements: FormElementsType = {
   TextField: TextFieldFormElement,
+  TitleField: TitleFieldFormElement,
+  SubtitleField: SubtitleFieldFormElement,
+  ParagraphField: ParagraphFieldFormElement,
+  SeperatorField: SeperatorFieldFormElement,
+  SpacerField: SpacerFieldFormElement,
 };

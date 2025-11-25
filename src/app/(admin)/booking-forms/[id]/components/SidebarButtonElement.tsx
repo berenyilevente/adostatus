@@ -2,13 +2,14 @@ import { Button } from '@/components/ui/button';
 import { FormElement } from './FormElements';
 import { useDraggable } from '@dnd-kit/core';
 import { cn } from '@/lib/utils';
+import { Icon } from '@/components';
 
 export const SidebarButtonElement = ({
   formElement,
 }: {
   formElement: FormElement;
 }) => {
-  const { label, icon: Icon } = formElement.designerButtonElement;
+  const { label, icon } = formElement.designerButtonElement;
 
   const draggable = useDraggable({
     id: `designer-button-${formElement.type}`,
@@ -25,8 +26,8 @@ export const SidebarButtonElement = ({
       {...draggable.listeners}
       {...draggable.attributes}
       className={cn(draggable.isDragging && 'ring-2 ring-primary')}
+      startIcon={icon}
     >
-      <Icon icon="form" />
       <p className="text-xs">{label}</p>
     </Button>
   );
@@ -37,11 +38,10 @@ export const SidebarButtonElementDragOverlay = ({
 }: {
   formElement: FormElement;
 }) => {
-  const { label, icon: Icon } = formElement.designerButtonElement;
+  const { label, icon } = formElement.designerButtonElement;
 
   return (
-    <Button variant="outline" size="sm">
-      <Icon icon="form" />
+    <Button variant="outline" size="sm" startIcon={icon}>
       <p className="text-xs">{label}</p>
     </Button>
   );

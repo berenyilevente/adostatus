@@ -59,6 +59,12 @@ import archive from '@iconify/icons-lucide/archive';
 import clock from '@iconify/icons-lucide/clock';
 import arrowLeft from '@iconify/icons-lucide/arrow-left';
 import edit from '@iconify/icons-lucide/edit';
+import text from '@iconify/icons-lucide/type';
+import heading from '@iconify/icons-lucide/heading-1';
+import subtitle from '@iconify/icons-lucide/heading-2';
+import paragraph from '@iconify/icons-lucide/clipboard-type';
+import seperator from '@iconify/icons-lucide/minus';
+import spacer from '@iconify/icons-lucide/unfold-vertical';
 
 export const iconMap = {
   mail,
@@ -117,6 +123,12 @@ export const iconMap = {
   clock,
   arrowLeft,
   edit,
+  text,
+  heading,
+  subtitle,
+  paragraph,
+  seperator,
+  spacer,
 };
 
 export type IconType = keyof typeof iconMap;

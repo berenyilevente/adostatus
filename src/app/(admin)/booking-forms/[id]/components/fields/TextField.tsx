@@ -49,7 +49,7 @@ export const TextFieldFormElement: FormElement = {
     };
   },
   designerButtonElement: {
-    icon: Icon,
+    icon: 'text',
     label: 'Text Field',
   },
   designerComponent: (props) => <DesignerComponent {...props} />,
