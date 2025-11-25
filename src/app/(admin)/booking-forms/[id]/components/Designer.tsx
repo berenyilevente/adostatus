@@ -151,7 +151,7 @@ export const Designer = () => {
           )}
           {droppable.isOver && elements.length === 0 && (
             <div className="p-1 w-full">
-              <div className="h-[120px] rounded-md bg-primary/20"></div>
+              <div className=" rounded-md bg-primary/20"></div>
             </div>
           )}
           {elements &&
@@ -174,7 +174,6 @@ const DesignerElementWrapper = ({
   const { removeElement, selectedElement, setSelectedElement } =
     useDesignerContext();
   const [isMouseOver, setIsMouseOver] = useState(false);
-  const form = useForm<any>();
   const topHalf = useDroppable({
     id: element.id + '-top',
     data: {
@@ -219,7 +218,7 @@ const DesignerElementWrapper = ({
         setSelectedElement(element);
       }}
       ref={draggable.setNodeRef}
-      className="relative w-full h-[120px] flex flex-col text-foreground hover:cursor-pointer ring-1 ring-accent ring-inset"
+      className="relative w-full  flex flex-col text-foreground hover:cursor-pointer ring-1 ring-accent ring-inset"
     >
       <div
         ref={topHalf.setNodeRef}
@@ -254,7 +253,7 @@ const DesignerElementWrapper = ({
       )}
       <div
         className={cn(
-          'flex h-[120px] items-center rounded-md bg-accent/40 px-4 py-2 pointer-events-none',
+          'flex  items-center rounded-md bg-accent/40 px-4 py-2 pointer-events-none',
           isMouseOver && 'opacity-40'
         )}
       >

@@ -68,18 +68,14 @@ const DesignerComponent = ({
 }) => {
   const element = elementInstance as CustomInstance;
   return (
-    <div className="border-2 border-dashed rounded-md p-2 w-full">
+    <div className="border border-dashed rounded-md p-2 w-full">
       <Label className="text-sm font-medium text-gray-500">
         {element.extraAttributes.label}
         {element.extraAttributes.required && (
           <span className="text-red-500 pl-1">*</span>
         )}
       </Label>
-      <Input
-        placeholder={element.extraAttributes.placeholder}
-        readOnly
-        disabled
-      />
+      <Input placeholder={element.extraAttributes.placeholder} readOnly />
       <p className="text-xs text-muted-foreground">
         {element.extraAttributes.helpText}
       </p>

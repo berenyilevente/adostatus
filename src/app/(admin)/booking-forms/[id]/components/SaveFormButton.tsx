@@ -38,12 +38,12 @@ export const SaveFormButton = () => {
 
   return (
     <Button
-      className="w-full"
       size="sm"
       type="button"
       disabled={loading}
       isLoading={loading}
       onClick={() => startTransition(() => updateFormContent())}
+      fullWidth
     >
       Save Changes
     </Button>
