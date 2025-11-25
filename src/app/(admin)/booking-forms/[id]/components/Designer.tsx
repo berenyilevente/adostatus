@@ -11,6 +11,8 @@ import {
 } from './FormElements';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { useForm } from 'react-hook-form';
+import { FormWrapper } from '@/components';
 
 const idGenerator = () => {
   return Math.floor(Math.random() * 1000000).toString();
@@ -172,7 +174,7 @@ const DesignerElementWrapper = ({
   const { removeElement, selectedElement, setSelectedElement } =
     useDesignerContext();
   const [isMouseOver, setIsMouseOver] = useState(false);
-
+  const form = useForm<any>();
   const topHalf = useDroppable({
     id: element.id + '-top',
     data: {
@@ -205,8 +207,6 @@ const DesignerElementWrapper = ({
   if (draggable.isDragging) {
     return null;
   }
-
-  console.log(selectedElement);
 
   return (
     <div

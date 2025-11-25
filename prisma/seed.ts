@@ -1,4 +1,8 @@
-import { PrismaClient } from '../src/generated/prisma';
+import {
+  FieldVariant,
+  FormStatus,
+  PrismaClient,
+} from '../src/generated/prisma';
 
 const prisma = new PrismaClient();
 
@@ -259,11 +263,10 @@ async function main() {
         isTemplate: false,
         confirmationMessage:
           'Thank you for booking your dental appointment! We will send you a confirmation email shortly.',
-        redirectUrl: 'https://downtowndental.com/thank-you',
+        url: 'https://downtowndental.com/thank-you',
         allowCancellation: true,
         cancellationNoticeHours: 24,
-        isActive: true,
-        status: 'live',
+        status: FormStatus.LIVE,
       },
     }),
     prisma.form.create({
@@ -274,11 +277,10 @@ async function main() {
         isTemplate: false,
         confirmationMessage:
           'Your hair consultation has been booked! See you soon.',
-        redirectUrl: 'https://beautysalon.com/confirmation',
+        url: 'https://beautysalon.com/confirmation',
         allowCancellation: true,
         cancellationNoticeHours: 12,
-        isActive: true,
-        status: 'live',
+        status: FormStatus.LIVE,
       },
     }),
   ]);
@@ -291,7 +293,7 @@ async function main() {
     prisma.formField.create({
       data: {
         formId: forms[0].id,
-        fieldType: 'text',
+        fieldVariant: FieldVariant.TEXT_INPUT,
         label: 'Full Name',
         placeholder: 'Enter your full name',
         isRequired: true,
@@ -301,7 +303,7 @@ async function main() {
     prisma.formField.create({
       data: {
         formId: forms[0].id,
-        fieldType: 'email',
+        fieldVariant: FieldVariant.EMAIL_INPUT,
         label: 'Email Address',
         placeholder: 'Enter your email address',
         isRequired: true,
@@ -311,7 +313,7 @@ async function main() {
     prisma.formField.create({
       data: {
         formId: forms[0].id,
-        fieldType: 'phone',
+        fieldVariant: FieldVariant.PHONE_INPUT,
         label: 'Phone Number',
         placeholder: 'Enter your phone number',
         isRequired: true,
@@ -321,7 +323,7 @@ async function main() {
     prisma.formField.create({
       data: {
         formId: forms[0].id,
-        fieldType: 'select',
+        fieldVariant: FieldVariant.SELECT,
         label: 'Appointment Type',
         placeholder: 'Select appointment type',
         isRequired: true,
@@ -338,7 +340,7 @@ async function main() {
     prisma.formField.create({
       data: {
         formId: forms[0].id,
-        fieldType: 'textarea',
+        fieldVariant: FieldVariant.TEXTAREA,
         label: 'Additional Notes',
         placeholder: 'Any special requests or concerns?',
         isRequired: false,
@@ -349,7 +351,7 @@ async function main() {
     prisma.formField.create({
       data: {
         formId: forms[1].id,
-        fieldType: 'text',
+        fieldVariant: FieldVariant.TEXT_INPUT,
         label: 'Full Name',
         placeholder: 'Enter your full name',
         isRequired: true,
@@ -359,7 +361,7 @@ async function main() {
     prisma.formField.create({
       data: {
         formId: forms[1].id,
-        fieldType: 'email',
+        fieldVariant: FieldVariant.EMAIL_INPUT,
         label: 'Email Address',
         placeholder: 'Enter your email address',
         isRequired: true,
@@ -369,7 +371,7 @@ async function main() {
     prisma.formField.create({
       data: {
         formId: forms[1].id,
-        fieldType: 'select',
+        fieldVariant: FieldVariant.SELECT,
         label: 'Service Type',
         placeholder: 'Select service type',
         isRequired: true,
@@ -386,7 +388,7 @@ async function main() {
     prisma.formField.create({
       data: {
         formId: forms[1].id,
-        fieldType: 'textarea',
+        fieldVariant: FieldVariant.TEXTAREA,
         label: 'Hair Description',
         placeholder:
           "Describe your current hair style, length, and what you'd like to achieve",

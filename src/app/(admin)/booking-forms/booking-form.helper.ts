@@ -15,7 +15,7 @@ export const FormSchema = z.object({
   isTemplate: z.boolean().default(false),
   templateType: z.string().optional(),
   confirmationMessage: z.string().optional(),
-  redirectUrl: z.string().url().optional().or(z.literal('')),
+  url: z.string().url().optional().or(z.literal('')),
   allowCancellation: z.boolean().default(true),
   cancellationNoticeHours: z.number().int().default(24),
   isActive: z.boolean().default(true),

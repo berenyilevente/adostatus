@@ -93,7 +93,14 @@ export const FormInput = <
       name={name}
       render={({ field, fieldState }) => (
         <FormItem className={cn('relative flex flex-col', className)}>
-          {label && <FormLabel>{label}</FormLabel>}
+          {label && (
+            <FormLabel>
+              {label}
+              <span className="text-red-500 pl-1">
+                {props.required ? '*' : ''}
+              </span>
+            </FormLabel>
+          )}
           <StartIcon startIcon={startIcon} label={!!label} />
           <FormControl>
             <Input

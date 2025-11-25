@@ -9,9 +9,11 @@ import { PreviewDialogButton } from './components/PreviewDialogButton';
 import { DesignerContextProvider } from './components/context/DesignerContext';
 import { SaveFormButton } from './components/SaveFormButton';
 import { PublishButton } from './components/PublishButton';
+import { useEditBookingForm } from './use-edit-booking-form';
 
 export const EditBookingForm = (): ReactElement => {
   const router = useRouter();
+  const { formData } = useEditBookingForm();
 
   return (
     <DesignerContextProvider>

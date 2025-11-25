@@ -54,9 +54,9 @@ export const BookingFormList = (): ReactElement => {
   } = useBookingForms();
 
   const statusColorMap = {
-    draft: 'bg-slate-500 text-white',
-    live: 'bg-green-500 text-white',
-    archived: 'bg-yellow-500 text-white',
+    DRAFT: 'bg-primary text-white hover:bg-primary',
+    LIVE: 'bg-green-600 text-white hover:bg-green-600',
+    ARCHIVED: 'bg-yellow-500 text-white hover:bg-yellow-500',
   };
 
   return (
@@ -106,8 +106,7 @@ export const BookingFormList = (): ReactElement => {
                     className={cn(
                       statusColorMap[
                         bookingForm.status as keyof typeof statusColorMap
-                      ],
-                      'hover:cursor-pointer'
+                      ]
                     )}
                   >
                     {bookingForm.status}

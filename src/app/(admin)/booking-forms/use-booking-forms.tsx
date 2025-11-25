@@ -2,11 +2,10 @@
 
 import { useForm } from 'react-hook-form';
 
-import { Business, Form, Service } from '@/generated/prisma';
+import { Business, Form } from '@/generated/prisma';
 
 import { createAppContext } from '@/hooks/use-create-app-context';
 import { useState } from 'react';
-import { getServices } from '../business-services/actions/business-services.actions';
 import { deleteBookingForm, updateBookingForm } from './actions';
 import { CreateBookingForm } from './booking-form.helper';
 
@@ -16,7 +15,6 @@ type HookProp = {
 };
 
 const useHook = ({ bookingForms, businessData }: HookProp) => {
-  const [services, setServices] = useState<Service[]>([]);
   const [isEditSheetOpen, setIsEditSheetOpen] = useState(false);
   const [editingForm, setEditingForm] = useState<Form | null>(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -38,7 +36,7 @@ const useHook = ({ bookingForms, businessData }: HookProp) => {
       isTemplate: false,
       templateType: '',
       confirmationMessage: '',
-      redirectUrl: '',
+      url: '',
       allowCancellation: true,
       cancellationNoticeHours: 24,
     },
@@ -62,13 +60,6 @@ const useHook = ({ bookingForms, businessData }: HookProp) => {
     document.getElementById('create-booking-form-trigger')?.click();
   };
 
-  const getServicesFromBusiness = async (businessId: string) => {
-    const response = await getServices(businessId);
-    if (response.status === 'success' && response.data) {
-      setServices(response.data);
-    }
-  };
-
   const onSubmitEditForm = editForm.handleSubmit(
     async (data: CreateBookingForm) => {
       if (editingForm) {
@@ -88,7 +79,7 @@ const useHook = ({ bookingForms, businessData }: HookProp) => {
       isTemplate: form.isTemplate,
       templateType: form.templateType || '',
       confirmationMessage: form.confirmationMessage || '',
-      redirectUrl: form.redirectUrl || '',
+      url: form.url || '',
       allowCancellation: form.allowCancellation,
       cancellationNoticeHours: form.cancellationNoticeHours,
     });
@@ -137,4 +128,4 @@ const useHook = ({ bookingForms, businessData }: HookProp) => {
 
 const [useBookingForms, BookingFormsProvider] = createAppContext(useHook);
 
-export { useBookingForms, BookingFormsProvider };
+export { BookingFormsProvider, useBookingForms };

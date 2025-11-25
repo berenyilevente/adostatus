@@ -1,15 +1,16 @@
 'use client';
 
-import { Icon, Input, Label, Switch } from '@/components';
+import { FormInput, Icon, Input, Label, Switch } from '@/components';
 import {
   ElementsType,
   FormElement,
   FormElementInstance,
+  SubmitFunction,
 } from '../FormElements';
 import { z } from 'zod';
-import { useForm } from 'react-hook-form';
+import { Control, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { useDesignerContext } from '../context/DesignerContext';
 
 import {
@@ -67,7 +68,7 @@ const DesignerComponent = ({
 }) => {
   const element = elementInstance as CustomInstance;
   return (
-    <div className="border-2 rounded-md p-2 w-full">
+    <div className="border-2 border-dashed rounded-md p-2 w-full">
       <Label className="text-sm font-medium text-gray-500">
         {element.extraAttributes.label}
         {element.extraAttributes.required && (
@@ -213,24 +214,25 @@ const PropertiesComponent = ({
   );
 };
 
-const FormComponent = ({
-  elementInstance,
-}: {
-  elementInstance: FormElementInstance;
-}) => {
-  const element = elementInstance as CustomInstance;
-  return (
-    <div className="p-2 w-full">
-      <Label className="text-sm font-medium text-gray-500">
-        {element.extraAttributes.label}
-        {element.extraAttributes.required && (
-          <span className="text-red-500 pl-1">*</span>
-        )}
-      </Label>
-      <Input placeholder={element.extraAttributes.placeholder} />
-      <p className="text-xs text-muted-foreground">
-        {element.extraAttributes.helpText}
-      </p>
-    </div>
-  );
-};
+const FormComponent = memo(
+  ({
+    elementInstance,
+    control,
+  }: {
+    elementInstance: FormElementInstance;
+    control: Control<any>;
+  }) => {
+    const element = elementInstance as CustomInstance;
+    return (
+      <FormInput
+        control={control}
+        name={element.id}
+        value={element.extraAttributes.value}
+        placeholder={element.extraAttributes.placeholder}
+        label={element.extraAttributes.label}
+        description={element.extraAttributes.helpText}
+        required={element.extraAttributes.required}
+      />
+    );
+  }
+);

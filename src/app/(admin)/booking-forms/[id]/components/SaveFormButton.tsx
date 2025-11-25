@@ -4,6 +4,7 @@ import { useDesignerContext } from './context/DesignerContext';
 import { updateFormContent as updateFormContentAction } from '../../actions';
 import { toast } from 'sonner';
 import { useTransition } from 'react';
+import { FormStatus } from '@/generated/prisma';
 
 export const SaveFormButton = () => {
   const { formData } = useEditBookingForm();
@@ -31,7 +32,7 @@ export const SaveFormButton = () => {
     } catch (error) {}
   };
 
-  if (formData?.status === 'live') {
+  if (formData?.status === FormStatus.LIVE) {
     return null;
   }
 

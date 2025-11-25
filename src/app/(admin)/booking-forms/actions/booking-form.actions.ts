@@ -69,9 +69,7 @@ export const updateBookingForm = async (
   await isAuthenticated();
 
   const form = await prisma.form.update({
-    where: {
-      id,
-    },
+    where: { id },
     data,
   });
 
@@ -88,9 +86,7 @@ export const deleteBookingForm = async (id: string) => {
   await isAuthenticated();
 
   const form = await prisma.form.delete({
-    where: {
-      id,
-    },
+    where: { id },
   });
 
   revalidatePath('/booking-forms');
@@ -115,48 +111,6 @@ export const archiveBookingForm = async (id: string) => {
   return handleResponse({
     data: form,
     error: 'Form archiving failed',
-    code: 404,
-  });
-};
-
-export const upsertBookingFormFields = async (
-  fields: CreateFormField[]
-): Promise<any> => {
-  await isAuthenticated();
-
-  if (!fields.length) {
-    return handleResponse({
-      data: [],
-      error: 'No fields provided',
-      code: 400,
-    });
-  }
-
-  const formId = fields[0].formId;
-
-  const formFields = await prisma.$transaction(async (tx) => {
-    // Delete existing form fields
-    await tx.formField.deleteMany({
-      where: {
-        formId: formId,
-      },
-    });
-
-    // Create new form fields
-    return await tx.formField.createMany({
-      data: fields.map((field) => ({
-        ...field,
-        validationRules: field.validationRules || undefined,
-        options: field.options || undefined,
-      })),
-    });
-  });
-
-  revalidatePath('/booking-forms');
-
-  return handleResponse({
-    data: formFields,
-    error: 'Form fields creation failed',
     code: 404,
   });
 };
@@ -196,19 +150,14 @@ export const publishForm = async (formId: string) => {
   const { user } = await isAuthenticated();
 
   const business = await prisma.business.findFirst({
-    where: {
-      ownerId: user.id,
-    },
+    where: { ownerId: user.id },
   });
 
-  const businessName = business?.name?.toLowerCase().replace(/ /g, '-').trim();
+  const url = `${config.app.domain}/${formId}`;
 
   const form = await prisma.form.update({
     where: { id: formId },
-    data: {
-      status: FormStatus.LIVE,
-      url: `${config.app.domain}/${businessName}/${formId}`,
-    },
+    data: { status: FormStatus.LIVE, url },
   });
 
   revalidatePath('/booking-forms');

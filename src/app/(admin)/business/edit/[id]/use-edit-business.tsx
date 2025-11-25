@@ -44,7 +44,6 @@ const useHook = ({ business }: HookProp) => {
     });
   };
 
-  console.log('businessForm.formState.errors', businessForm.formState.errors);
   const onBusinessSave = businessForm.handleSubmit(async (data) => {
     if (!businessId) {
       return;

@@ -16,7 +16,7 @@ const useHook = () => {
       isTemplate: false,
       templateType: '',
       confirmationMessage: '',
-      redirectUrl: '',
+      url: '',
       allowCancellation: true,
       cancellationNoticeHours: 24,
     },

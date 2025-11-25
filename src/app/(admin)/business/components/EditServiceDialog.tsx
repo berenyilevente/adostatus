@@ -18,9 +18,12 @@ import { currencies } from '../business.helper';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ServicesForm, ServicesSchema } from '../business.helper';
-import { updateService, deleteService } from '../actions/business.actions';
 import { useState } from 'react';
 import { Trash2 } from 'lucide-react';
+import {
+  deleteService,
+  updateService,
+} from '../../business-services/actions/business-services.actions';
 
 interface EditServiceDialogProps {
   service: Service;

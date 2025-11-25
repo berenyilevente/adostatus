@@ -15,6 +15,7 @@ import { useEditBookingForm } from '../use-edit-booking-form';
 import { toast } from 'sonner';
 import { publishForm as publishFormAction } from '../../actions';
 import { useRouter } from 'next/navigation';
+import { FormStatus } from '@/generated/prisma';
 
 export const PublishButton = () => {
   const [loading, startTransition] = useTransition();
@@ -39,7 +40,7 @@ export const PublishButton = () => {
     }
   };
 
-  if (formData?.status === 'live') {
+  if (formData?.status === FormStatus.LIVE) {
     return null;
   }
 

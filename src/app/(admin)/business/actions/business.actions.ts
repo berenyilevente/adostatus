@@ -13,6 +13,7 @@ import { isAuthenticated } from '@/utils/isAuthenticated';
 import { handleResponse } from '@/utils/handleResponse';
 import { revalidatePath } from 'next/cache';
 import { BusinessForm } from '../business.helper';
+import { config } from '@/config';
 
 export const createBusiness = async (
   business: BusinessForm

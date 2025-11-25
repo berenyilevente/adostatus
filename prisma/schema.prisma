@@ -193,6 +193,9 @@ enum FieldVariant {
   COLOR_PICKER
   TAG_INPUT
   MULTISELECT
+  NUMBER_INPUT
+  EMAIL_INPUT
+  PHONE_INPUT
 }
 
 model FormField {

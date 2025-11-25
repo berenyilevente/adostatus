@@ -2,15 +2,17 @@ import {
   Button,
   Dialog,
   DialogContent,
-  DialogHeader,
   DialogTitle,
   DialogTrigger,
+  FormWrapper,
 } from '@/components';
 import { useDesignerContext } from './context/DesignerContext';
 import { FormElements } from './FormElements';
+import { useForm } from 'react-hook-form';
 
 export const PreviewDialogButton = () => {
   const { elements } = useDesignerContext();
+  const form = useForm<any>();
 
   return (
     <Dialog>
@@ -29,14 +31,26 @@ export const PreviewDialogButton = () => {
           </p>
         </div>
         <div className="bg-accent flex-col flex flex-grow items-center justify-center p-4 overflow-y-auto">
-          <div className="max-w-[620px] flex flex-col gap-4 flex-grow bg-background h-full w-full rounded-2xl p-8 overflow-y-auto">
-            {elements.map((element) => {
-              const FormComponent = FormElements[element.type].formComponent;
-              return (
-                <FormComponent key={element.id} elementInstance={element} />
-              );
-            })}
-          </div>
+          <FormWrapper
+            form={form}
+            className="max-w-[620px] flex flex-col gap-4 flex-grow bg-background h-full w-full rounded-2xl p-8 overflow-y-auto"
+          >
+            <div className="w-full">
+              {elements.map((element) => {
+                const FormComponent = FormElements[element.type].formComponent;
+                return (
+                  <FormComponent
+                    key={element.id}
+                    elementInstance={element}
+                    control={form.control}
+                  />
+                );
+              })}
+              <Button type="submit" fullWidth>
+                Submit
+              </Button>
+            </div>
+          </FormWrapper>
         </div>
       </DialogContent>
     </Dialog>
