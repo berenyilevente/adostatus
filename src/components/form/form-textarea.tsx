@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { ReactElement } from "react";
-import { Control, FieldPath, FieldValues } from "react-hook-form";
+import { ReactElement } from 'react';
+import { Control, FieldPath, FieldValues } from 'react-hook-form';
 
 import {
   FormItem,
@@ -11,7 +11,7 @@ import {
   FormLabel,
   FormField,
   Textarea,
-} from "@/components";
+} from '@/components';
 
 interface FormTextareaProps<
   TField extends FieldValues = FieldValues,
@@ -22,6 +22,7 @@ interface FormTextareaProps<
   label?: string;
   description?: string;
   placeholder?: string;
+  rows?: number;
 }
 
 export const FormTextarea = <
@@ -33,6 +34,7 @@ export const FormTextarea = <
   label,
   description,
   placeholder,
+  rows,
   ...props
 }: FormTextareaProps<TField, TName>): ReactElement => {
   return (
@@ -43,7 +45,12 @@ export const FormTextarea = <
         <FormItem>
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <Textarea {...field} {...props} placeholder={placeholder} />
+            <Textarea
+              {...field}
+              {...props}
+              rows={rows}
+              placeholder={placeholder}
+            />
           </FormControl>
           {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />
@@ -52,4 +59,4 @@ export const FormTextarea = <
     />
   );
 };
-FormTextarea.displayName = "FormTextarea";
+FormTextarea.displayName = 'FormTextarea';

@@ -345,7 +345,7 @@ const TimePicker = () => {
   }, []);
 
   return (
-    <div className="space-y-2 pr-3 py-3 relative ">
+    <div className="space-y-2 pr-3 py-3 relative">
       <h3 className="text-sm font-medium ">Time</h3>
       <ScrollArea
         onKeyDown={handleKeydown}
@@ -432,7 +432,9 @@ const TimePicker = () => {
                     }),
                     'h-8 px-3 w-full text-sm focus-visible:outline-0 outline-0 focus-visible:border-0 cursor-default ring-0'
                   )}
-                  onClick={() => handleClick(i, part, PM_AM, trueIndex)}
+                  onClick={(e) => {
+                    handleClick(i, part, PM_AM, trueIndex);
+                  }}
                   onFocus={() => isSuggested && setActiveIndex(trueIndex)}
                 >
                   {currentValue}
@@ -600,6 +602,11 @@ const DateTimeLocalInput = ({
     <Popover modal={modal}>
       <PopoverTrigger asChild>
         <div className="flex items-center gap-1 w-full cursor-pointer">
+          <NaturalLanguageInput
+            placeholder={placeholder}
+            disabled={typeof disabled === 'boolean' ? disabled : false}
+            ref={ref}
+          />
           <Button
             disabled={typeof disabled === 'boolean' ? disabled : false}
             variant={'ghost'}
@@ -608,15 +615,11 @@ const DateTimeLocalInput = ({
               'size-9 flex items-center justify-center font-normal',
               !value && 'text-muted-foreground'
             )}
+            type="button"
           >
-            <CalendarIcon className="size-4" />
             <span className="sr-only">calender</span>
+            <CalendarIcon className="size-4" />
           </Button>
-          <NaturalLanguageInput
-            placeholder={placeholder}
-            disabled={typeof disabled === 'boolean' ? disabled : false}
-            ref={ref}
-          />
         </div>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" sideOffset={8}>

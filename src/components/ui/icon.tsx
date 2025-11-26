@@ -65,6 +65,8 @@ import subtitle from '@iconify/icons-lucide/heading-2';
 import paragraph from '@iconify/icons-lucide/clipboard-type';
 import seperator from '@iconify/icons-lucide/minus';
 import spacer from '@iconify/icons-lucide/unfold-vertical';
+import number from '@iconify/icons-lucide/list-ordered';
+import textarea from '@iconify/icons-lucide/text-quote';
 
 export const iconMap = {
   mail,
@@ -129,6 +131,8 @@ export const iconMap = {
   paragraph,
   seperator,
   spacer,
+  number,
+  textarea,
 };
 
 export type IconType = keyof typeof iconMap;

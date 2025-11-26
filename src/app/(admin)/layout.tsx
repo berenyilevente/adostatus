@@ -13,7 +13,7 @@ import NextTopLoader from 'nextjs-toploader';
 const EXCLUDED_PAGES = ['/onboard-user'];
 
 const Layout = ({ children }: { children: any }) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   const pathname = usePathname();
   const shouldExcludeFromAdminLayout = EXCLUDED_PAGES.includes(pathname);
