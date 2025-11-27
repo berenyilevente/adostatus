@@ -13,7 +13,7 @@ export default async function Page({
   const form = await findBookingForm(id);
 
   const formFields: FormElementInstance[] = form.data
-    ?.content as FormElementInstance[];
+    ?.content as unknown as FormElementInstance[];
 
   return (
     <BookingProvider formFields={formFields} formId={id}>

@@ -16,20 +16,18 @@ export const SaveFormButton = () => {
       throw new Error('Form ID not found');
     }
 
-    try {
-      const JsonElements = JSON.stringify(elements);
+    const JsonElements = JSON.stringify(elements);
 
-      const response = await updateFormContentAction(formData.id, JsonElements);
-      if (response.status === 'success') {
-        toast.success('Form content updated successfully');
-        return;
-      }
+    const response = await updateFormContentAction(formData.id, JsonElements);
+    if (response.status === 'success') {
+      toast.success('Form content updated successfully');
+      return;
+    }
 
-      if (response.status === 'error') {
-        toast.error(response.error);
-        return;
-      }
-    } catch (error) {}
+    if (response.status === 'error') {
+      toast.error(response.error);
+      return;
+    }
   };
 
   if (formData?.status === FormStatus.LIVE) {

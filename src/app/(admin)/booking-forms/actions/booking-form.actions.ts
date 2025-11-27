@@ -147,11 +147,7 @@ export const updateFormContent = async (formId: string, content: string) => {
 };
 
 export const publishForm = async (formId: string) => {
-  const { user } = await isAuthenticated();
-
-  const business = await prisma.business.findFirst({
-    where: { ownerId: user.id },
-  });
+  await isAuthenticated();
 
   const url = `${config.app.domain}/${formId}`;
 

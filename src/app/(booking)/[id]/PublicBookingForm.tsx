@@ -5,7 +5,7 @@ import { Button, FormWrapper } from '@/components';
 import { useBooking } from './use-booking';
 
 export const PublicBookingForm = () => {
-  const { formFields, onSubmit, form } = useBooking();
+  const { formFields, onSubmit, form, transition } = useBooking();
 
   return (
     <FormWrapper form={form} className="space-y-4">
@@ -20,7 +20,7 @@ export const PublicBookingForm = () => {
             />
           );
         })}
-        <Button type="submit" onClick={onSubmit}>
+        <Button type="submit" onClick={onSubmit} isLoading={transition}>
           Submit
         </Button>
       </div>
