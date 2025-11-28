@@ -11,6 +11,10 @@ import { z } from 'zod';
 import { createBooking } from '../actions/booking.actions';
 
 const createSchema = (formFields: FormElementInstance[]) => {
+  if (!formFields?.length) {
+    return {} as Record<string, z.ZodSchema>;
+  }
+
   return formFields.reduce(
     (acc, formField) => {
       if (formField.extraAttributes?.required === false) {

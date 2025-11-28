@@ -7,6 +7,10 @@ import { useBooking } from './use-booking';
 export const PublicBookingForm = () => {
   const { formFields, onSubmit, form, transition } = useBooking();
 
+  if (!formFields?.length) {
+    return <div>No form fields found</div>;
+  }
+
   return (
     <FormWrapper form={form} className="space-y-4">
       <div>

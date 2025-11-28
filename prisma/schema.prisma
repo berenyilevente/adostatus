@@ -181,37 +181,16 @@ model Form {
   @@map("forms")
 }
 
-enum FieldVariant {
-  CHECKBOX
-  COMBOBOX
-  DATEPICKER
-  TEXT_INPUT
-  SELECT
-  SWITCH
-  TEXTAREA
-  TIMEPICKER
-  COLOR_PICKER
-  TAG_INPUT
-  MULTISELECT
-  NUMBER_INPUT
-  EMAIL_INPUT
-  PHONE_INPUT
-}
+
 
 model FormField {
   id              String   @id @default(cuid())
-  formId          String
-  fieldVariant    FieldVariant
-  label           String
-  placeholder     String?
-  helpText        String?
-  isRequired      Boolean  @default(false)
-  fieldOrder      Int
-  defaultValue    String?
-  validationRules Json?
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
-  options         Json[]
+  formId          String
+  type            String
+  extraAttributes Json?
+  order           Int
 
   form Form @relation(fields: [formId], references: [id], onDelete: Cascade)
 

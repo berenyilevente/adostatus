@@ -28,9 +28,7 @@ export const Designer = () => {
   } = useDesignerContext();
   const droppable = useDroppable({
     id: 'designer-drop-area',
-    data: {
-      isDesignerDropArea: true,
-    },
+    data: { isDesignerDropArea: true },
   });
 
   useDndMonitor({
@@ -151,7 +149,7 @@ export const Designer = () => {
           )}
           {droppable.isOver && elements.length === 0 && (
             <div className="p-1 w-full">
-              <div className=" rounded-md bg-primary/20"></div>
+              <div className="rounded-md bg-primary/20"></div>
             </div>
           )}
           {elements &&
@@ -171,8 +169,7 @@ const DesignerElementWrapper = ({
 }: {
   element: FormElementInstance;
 }) => {
-  const { removeElement, selectedElement, setSelectedElement } =
-    useDesignerContext();
+  const { removeElement, setSelectedElement } = useDesignerContext();
   const [isMouseOver, setIsMouseOver] = useState(false);
   const topHalf = useDroppable({
     id: element.id + '-top',
@@ -218,7 +215,7 @@ const DesignerElementWrapper = ({
         setSelectedElement(element);
       }}
       ref={draggable.setNodeRef}
-      className="relative w-full  flex flex-col text-foreground hover:cursor-pointer ring-1 ring-accent ring-inset"
+      className="relative w-full rounded-md my-1 flex flex-col text-foreground hover:cursor-pointer ring-1 ring-accent ring-inset"
     >
       <div
         ref={topHalf.setNodeRef}
@@ -226,7 +223,7 @@ const DesignerElementWrapper = ({
       />
       <div
         ref={bottomHalf.setNodeRef}
-        className="absolute  w-full h-1/2 bottom-0 rounded-b-md"
+        className="absolute w-full h-1/2 bottom-0 rounded-b-md"
       />
       {isMouseOver && (
         <div className="flex items-center justify-between absolute w-full top-1/2 -translate-y-1/2">
@@ -253,7 +250,7 @@ const DesignerElementWrapper = ({
       )}
       <div
         className={cn(
-          'flex  items-center rounded-md bg-accent/40 px-4 py-2 pointer-events-none',
+          'flex items-center rounded-md px-4 py-2 pointer-events-none',
           isMouseOver && 'opacity-40'
         )}
       >

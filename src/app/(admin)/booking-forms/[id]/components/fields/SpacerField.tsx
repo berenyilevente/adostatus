@@ -61,7 +61,7 @@ const DesignerComponent = ({
 }) => {
   const element = elementInstance as CustomInstance;
   return (
-    <div className="border-2 border-dashed rounded-md p-2 w-full">
+    <div className="p-1 w-full">
       <Label className="text-sm font-medium text-gray-500">
         Spacer height: {element.extraAttributes.height} px
       </Label>

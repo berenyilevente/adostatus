@@ -46,7 +46,7 @@ export const DragOverlayWrapper = () => {
     } else {
       const DesignerElement = FormElements[element.type].designerComponent;
       node = (
-        <div className="flex h-[120px] bg-accent rounded-md px-4 py-2 pointer-events-none">
+        <div className="flex rounded-md px-4 py-2 pointer-events-none">
           <DesignerElement elementInstance={element} />
         </div>
       );

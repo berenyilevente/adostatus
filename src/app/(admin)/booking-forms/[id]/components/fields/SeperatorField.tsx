@@ -19,7 +19,7 @@ export const SeperatorFieldFormElement: FormElement = {
 
 const DesignerComponent = () => {
   return (
-    <div className="border-2 border-dashed rounded-md p-2 w-full">
+    <div className="p-1 w-full">
       <Label className="text-sm font-medium text-gray-500">
         <Separator />
       </Label>
