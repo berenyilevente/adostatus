@@ -54,7 +54,7 @@ export const FormBuilder = () => {
             'opacity-50 pointer-events-none'
         )}
       >
-        <div className="flex w-full flex-grow items-center justify-center relative overflow-y-auto h-full rounded-md">
+        <div className="flex w-full flex-grow items-center justify-center relative overflow-y-auto h-full rounded-md border border-dashed">
           <Designer />
         </div>
       </main>
