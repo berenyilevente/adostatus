@@ -17,9 +17,9 @@ import { publishForm as publishFormAction } from '../../actions';
 import { useRouter } from 'next/navigation';
 import { FormStatus } from '@/generated/prisma';
 
-export const PublishButton = () => {
+export const PublishFormButton = () => {
   const [loading, startTransition] = useTransition();
-  const { formData } = useEditBookingForm();
+  const { formData, elements } = useEditBookingForm();
   const router = useRouter();
 
   const publishForm = async () => {
@@ -27,7 +27,19 @@ export const PublishButton = () => {
       throw new Error('Form ID not found');
     }
 
+    if (elements.length === 0) {
+      toast.error('Form must have at least one element');
+      return;
+    }
+
+    // todo: handle start and end date field validation
+    if (!elements.some((element) => element.type === 'DateField')) {
+      toast.error('Form must have a start and end date field');
+      return;
+    }
+
     const response = await publishFormAction(formData.id);
+
     if (response.status === 'success') {
       toast.success('Your form is now published and ready to use.');
       router.refresh();

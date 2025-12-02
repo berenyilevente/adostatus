@@ -10,7 +10,7 @@ import { ElementsType, FormElements } from '../edit-form.helper';
 import { useForm } from 'react-hook-form';
 import { useEditBookingForm } from '../use-edit-booking-form';
 
-export const PreviewDialogButton = () => {
+export const PreviewFormButton = () => {
   const { elements } = useEditBookingForm();
   const form = useForm<any>();
 

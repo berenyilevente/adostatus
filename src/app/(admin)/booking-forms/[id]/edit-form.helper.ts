@@ -12,7 +12,7 @@ import {
   NumberFieldFormElement,
   TextAreaFieldFormElement,
   DateFieldFormElement,
-  DateTimeFieldFormElement,
+  TimeFieldFormElement,
 } from './components/fields';
 
 export type ElementsType =
@@ -25,7 +25,7 @@ export type ElementsType =
   | 'NumberField'
   | 'TextAreaField'
   | 'DateField'
-  | 'DateTimeField';
+  | 'TimeField';
 
 export type SubmitFunction = (key: string, value: string) => void;
 
@@ -71,5 +71,5 @@ export const FormElements: FormElementsType = {
   NumberField: NumberFieldFormElement,
   TextAreaField: TextAreaFieldFormElement,
   DateField: DateFieldFormElement,
-  DateTimeField: DateTimeFieldFormElement,
+  TimeField: TimeFieldFormElement,
 };

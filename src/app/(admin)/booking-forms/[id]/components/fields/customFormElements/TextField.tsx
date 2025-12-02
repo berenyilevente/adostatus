@@ -1,6 +1,6 @@
 'use client';
 
-import { FormInput, Input, Label, Switch } from '@/components';
+import { FormInput, FormSwitch, Input, Label, Switch } from '@/components';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { memo, useEffect } from 'react';
 import { Control, useForm, UseFormReturn } from 'react-hook-form';
@@ -27,9 +27,9 @@ const type: ElementsType = 'TextField';
 
 const extraAttributes = {
   label: 'Text Field',
-  helpText: 'This is a text field',
+  helpText: '',
   required: false,
-  placeholder: 'Enter text...',
+  placeholder: '',
   name: 'text_field',
 };
 
@@ -127,6 +127,10 @@ const PropertiesComponent = ({
     });
   };
 
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') e.currentTarget.blur();
+  };
+
   return (
     <Form {...form}>
       <form
@@ -134,90 +138,35 @@ const PropertiesComponent = ({
         className="space-y-3"
         onSubmit={(e) => e.preventDefault()}
       >
-        <FormField
+        <FormInput
           control={form.control}
           name="label"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Label</FormLabel>
-              <FormControl>
-                <Input
-                  {...field}
-                  onChange={(e) => {
-                    field.onChange(e);
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') e.currentTarget.blur();
-                  }}
-                />
-              </FormControl>
-              <FormDescription>
-                Label to display above the field
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
+          label="Label"
+          description="Label to display above the field"
+          onChange={(e) => {
+            form.setValue('label', e.target.value);
+            form.setValue('name', getName(e.target.value));
+          }}
+          onKeyDown={onKeyDown}
         />
-        <FormField
+        <FormInput
           control={form.control}
           name="placeholder"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Placeholder</FormLabel>
-              <FormControl>
-                <Input
-                  {...field}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') e.currentTarget.blur();
-                  }}
-                />
-              </FormControl>
-              <FormDescription>
-                Placeholder text to display in the field
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
+          label="Placeholder"
+          description="Placeholder text to display in the field"
+          onKeyDown={onKeyDown}
         />
-        <FormField
+        <FormInput
           control={form.control}
           name="helpText"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Help Text</FormLabel>
-              <FormControl>
-                <Input
-                  {...field}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') e.currentTarget.blur();
-                  }}
-                />
-              </FormControl>
-              <FormDescription>
-                Help text to display below the field
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
+          description="Help text to display below the field"
+          onKeyDown={onKeyDown}
         />
-        <FormField
+        <FormSwitch
           control={form.control}
           name="required"
-          render={({ field }) => (
-            <FormItem className="flex rounded-lg border p-3 shadow-sm items-center justify-between">
-              <div className="space-y-0.5">
-                <FormLabel>Required</FormLabel>
-                <FormDescription>Set if the field is required</FormDescription>
-              </div>
-              <FormControl>
-                <Switch
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          label="Required"
+          description="Set if the field is required"
         />
       </form>
     </Form>

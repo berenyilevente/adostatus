@@ -3,10 +3,8 @@
 import { Form } from '@/generated/prisma';
 
 import { createAppContext } from '@/hooks/use-create-app-context';
-import { updateFormContent as updateFormContentAction } from '../actions';
 
-import { useState, useTransition } from 'react';
-import { toast } from 'sonner';
+import { useState } from 'react';
 import { FormElementInstance } from './edit-form.helper';
 
 type HookProp = {
@@ -40,33 +38,9 @@ function useEditBookingFormHook({ formData }: HookProp) {
       return newElements;
     });
   };
-  const [loading, startTransition] = useTransition();
-
-  const saveForm = async () => {
-    if (!formData?.id) {
-      throw new Error('Form ID not found');
-    }
-
-    const JsonElements = JSON.stringify(elements);
-
-    const response = await updateFormContentAction(formData.id, JsonElements);
-    if (response.status === 'success') {
-      toast.success('Form content updated successfully');
-      setSelectedElement(null);
-      return;
-    }
-
-    if (response.status === 'error') {
-      toast.error(response.error);
-      return;
-    }
-  };
 
   return {
     formData,
-    saveForm,
-    loading,
-    startTransition,
     elements,
     setElements,
     selectedElement,

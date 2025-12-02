@@ -1,45 +1,46 @@
 'use client';
 
-import { FormDateTimePicker, Input, Label, Switch } from '@/components';
+import {
+  FormInput,
+  FormSelect,
+  FormSwitch,
+  FormTimepicker,
+  Input,
+  Label,
+} from '@/components';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { memo, useEffect } from 'react';
 import { Control, useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { useEditBookingForm } from '../../../use-edit-booking-form';
 import {
   ElementsType,
   FormElement,
   FormElementInstance,
 } from '../../../edit-form.helper';
+import { useEditBookingForm } from '../../../use-edit-booking-form';
 
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
+import { Form } from '@/components/ui/form';
 import { getName } from '../fields.helper';
 
-const type: ElementsType = 'DateTimeField';
+const type: ElementsType = 'TimeField';
 
 const extraAttributes = {
-  label: 'Date Time Field',
-  helpText: 'Pick a date and time',
+  label: 'Time Field',
+  helpText: '',
   required: false,
-  name: 'date_time_field',
+  name: 'time_field',
+  timeType: 'startTime' as const,
 };
 
 const propertiesSchema = z.object({
   label: z.string().min(1),
-  helpText: z.string().min(1),
+  helpText: z.string(),
   required: z.boolean(),
   name: z.string(),
+  timeType: z.enum(['startTime', 'endTime']),
 });
 
-export const DateTimeFieldFormElement: FormElement = {
+export const TimeFieldFormElement: FormElement = {
   type,
   construct: (id: string) => {
     return {
@@ -50,7 +51,7 @@ export const DateTimeFieldFormElement: FormElement = {
   },
   designerButtonElement: {
     icon: 'clock',
-    label: 'Date Time Field',
+    label: 'Time Field',
   },
   designerComponent: (props) => <DesignerComponent {...props} />,
   formComponent: (props) => <FormComponent {...props} />,
@@ -68,14 +69,14 @@ const DesignerComponent = ({
 }) => {
   const element = elementInstance as CustomInstance;
   return (
-    <div className="p-1 w-full">
+    <div className="rounded-md p-2 w-full">
       <Label className="text-sm font-medium text-gray-500">
         {element.extraAttributes.label}
         {element.extraAttributes.required && (
           <span className="text-red-500 pl-1">*</span>
         )}
       </Label>
-      <Input readOnly />
+      <Input placeholder={element.extraAttributes.placeholder} readOnly />
       <p className="text-xs text-muted-foreground">
         {element.extraAttributes.helpText}
       </p>
@@ -99,6 +100,7 @@ const PropertiesComponent = ({
       label: element.extraAttributes.label,
       helpText: element.extraAttributes.helpText,
       required: element.extraAttributes.required,
+      timeType: element.extraAttributes.timeType,
     },
   });
 
@@ -108,12 +110,16 @@ const PropertiesComponent = ({
   }, [element, form]);
 
   const applyChanges = (values: PropertiesFormSchemaType) => {
-    const { label, helpText, required, name } = values;
+    const { label, helpText, required, name, timeType } = values;
 
     updateElement(element.id, {
       ...element,
-      extraAttributes: { label, helpText, required, name },
+      extraAttributes: { label, helpText, required, name, timeType },
     });
+  };
+
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') e.currentTarget.blur();
   };
 
   return (
@@ -123,70 +129,39 @@ const PropertiesComponent = ({
         className="space-y-3"
         onSubmit={(e) => e.preventDefault()}
       >
-        <FormField
+        <FormInput
           control={form.control}
           name="label"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Label</FormLabel>
-              <FormControl>
-                <Input
-                  {...field}
-                  onChange={(e) => {
-                    field.onChange(e);
-                    form.setValue('name', getName(e.target.value));
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') e.currentTarget.blur();
-                  }}
-                />
-              </FormControl>
-              <FormDescription>
-                Label to display above the field
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
+          label="Label"
+          description="Label to display above the field"
+          onChange={(e) => {
+            form.setValue('label', e.target.value);
+            form.setValue('name', getName(e.target.value));
+          }}
+          onKeyDown={onKeyDown}
         />
-        <FormField
+        <FormInput
           control={form.control}
           name="helpText"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Help Text</FormLabel>
-              <FormControl>
-                <Input
-                  {...field}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') e.currentTarget.blur();
-                  }}
-                />
-              </FormControl>
-              <FormDescription>
-                Help text to display below the field
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
+          label="Help Text"
+          description="Help text to display below the field"
+          onKeyDown={onKeyDown}
         />
-        <FormField
+        <FormSelect
+          control={form.control}
+          name="timeType"
+          label="Time Type"
+          description="Set if the field is the start time or end time of the booking"
+          options={[
+            { label: 'Start Time', value: 'startTime' },
+            { label: 'End Time', value: 'endTime' },
+          ]}
+        />
+        <FormSwitch
           control={form.control}
           name="required"
-          render={({ field }) => (
-            <FormItem className="flex rounded-lg border p-3 shadow-sm items-center justify-between">
-              <div className="space-y-0.5">
-                <FormLabel>Required</FormLabel>
-                <FormDescription>Set if the field is required</FormDescription>
-              </div>
-              <FormControl>
-                <Switch
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          label="Required"
+          description="Set if the field is required"
         />
       </form>
     </Form>
@@ -202,9 +177,8 @@ const FormComponent = memo(
     control: Control<any>;
   }) => {
     const element = elementInstance as CustomInstance;
-
     return (
-      <FormDateTimePicker
+      <FormTimepicker
         control={control}
         name={element.extraAttributes.name}
         label={element.extraAttributes.label}

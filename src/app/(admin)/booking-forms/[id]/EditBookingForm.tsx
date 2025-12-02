@@ -16,8 +16,8 @@ import {
 import { useEffect } from 'react';
 import { DesignerDropArea } from './components/DesignerDropArea';
 import { DragOverlayWrapper } from './components/DragOverlayWrapper';
-import { PreviewDialogButton } from './components/PreviewDialogButton';
-import { PublishButton } from './components/PublishButton';
+import { PreviewFormButton } from './components/PreviewDialogButton';
+import { PublishFormButton } from './components/PublishFormButton';
 import { SaveFormButton } from './components/SaveFormButton';
 import { useEditBookingForm } from './use-edit-booking-form';
 import { DesignerSidebar } from './components/sidebar/DesignerSidebar';
@@ -64,9 +64,9 @@ export const EditBookingForm = (): ReactElement => {
           </Button>
         </div>
         <div className="flex items-center space-x-2">
-          <PreviewDialogButton />
+          <PreviewFormButton />
           <SaveFormButton />
-          <PublishButton />
+          <PublishFormButton />
         </div>
       </div>
       <DndContext sensors={sensors}>
