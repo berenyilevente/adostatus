@@ -1,17 +1,19 @@
 'use client';
 
 import { Control } from 'react-hook-form';
-import { TextFieldFormElement } from './fields/TextField';
-import { TitleFieldFormElement } from './fields/TitleField';
 import { IconType } from '@/components/ui/icon';
-import { SubtitleFieldFormElement } from './fields/SubtitleField';
-import { ParagraphFieldFormElement } from './fields/ParagraphField';
-import { SeperatorFieldFormElement } from './fields/SeperatorField';
-import { SpacerFieldFormElement } from './fields/SpacerField';
-import { NumberFieldFormElement } from './fields/NumberField';
-import { TextAreaFieldFormElement } from './fields/TextAreaField';
-import { DateFieldFormElement } from './fields/DateField';
-import { DateTimeFieldFormElement } from './fields/DateTimeField';
+import {
+  TextFieldFormElement,
+  TitleFieldFormElement,
+  SubtitleFieldFormElement,
+  ParagraphFieldFormElement,
+  SeperatorFieldFormElement,
+  SpacerFieldFormElement,
+  NumberFieldFormElement,
+  TextAreaFieldFormElement,
+  DateFieldFormElement,
+  DateTimeFieldFormElement,
+} from './components/fields';
 
 export type ElementsType =
   | 'TextField'

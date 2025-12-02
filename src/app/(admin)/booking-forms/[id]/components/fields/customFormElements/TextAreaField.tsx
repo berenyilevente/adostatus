@@ -1,17 +1,16 @@
 'use client';
 
-import { FormInput, Icon, Input, Label, Switch } from '@/components';
+import { FormTextarea, Input, Label, Switch, Textarea } from '@/components';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { memo, useEffect } from 'react';
+import { Control, useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { useEditBookingForm } from '../../../use-edit-booking-form';
 import {
   ElementsType,
   FormElement,
   FormElementInstance,
-  SubmitFunction,
-} from '../FormElements';
-import { z } from 'zod';
-import { Control, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { memo, useEffect, useState } from 'react';
-import { useDesignerContext } from '../context/DesignerContext';
+} from '../../../edit-form.helper';
 
 import {
   Form,
@@ -22,14 +21,18 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { Slider } from '@/components/ui/slider';
+import { getName } from '../fields.helper';
 
-const type: ElementsType = 'NumberField';
+const type: ElementsType = 'TextAreaField';
 
 const extraAttributes = {
-  label: 'Number Field',
-  helpText: 'This is a number field',
+  label: 'Text Area Field',
+  helpText: 'This is a text area field',
   required: false,
-  placeholder: '0',
+  placeholder: 'Enter text...',
+  rows: 3,
+  name: 'text_area_field',
 };
 
 const propertiesSchema = z.object({
@@ -37,9 +40,11 @@ const propertiesSchema = z.object({
   helpText: z.string().min(1),
   required: z.boolean(),
   placeholder: z.string().min(1),
+  rows: z.number().min(1).max(10),
+  name: z.string(),
 });
 
-export const NumberFieldFormElement: FormElement = {
+export const TextAreaFieldFormElement: FormElement = {
   type,
   construct: (id: string) => {
     return {
@@ -49,8 +54,8 @@ export const NumberFieldFormElement: FormElement = {
     };
   },
   designerButtonElement: {
-    icon: 'number',
-    label: 'Number Field',
+    icon: 'textarea',
+    label: 'Text Area Field',
   },
   designerComponent: (props) => <DesignerComponent {...props} />,
   formComponent: (props) => <FormComponent {...props} />,
@@ -75,11 +80,7 @@ const DesignerComponent = ({
           <span className="text-red-500 pl-1">*</span>
         )}
       </Label>
-      <Input
-        placeholder={element.extraAttributes.placeholder}
-        type="number"
-        readOnly
-      />
+      <Textarea placeholder={element.extraAttributes.placeholder} readOnly />
       <p className="text-xs text-muted-foreground">
         {element.extraAttributes.helpText}
       </p>
@@ -94,7 +95,7 @@ const PropertiesComponent = ({
 }: {
   elementInstance: FormElementInstance;
 }) => {
-  const { updateElement } = useDesignerContext();
+  const { updateElement } = useEditBookingForm();
   const element = elementInstance as CustomInstance;
   const form = useForm<PropertiesFormSchemaType>({
     resolver: zodResolver(propertiesSchema),
@@ -104,19 +105,21 @@ const PropertiesComponent = ({
       helpText: element.extraAttributes.helpText,
       required: element.extraAttributes.required,
       placeholder: element.extraAttributes.placeholder,
+      rows: element.extraAttributes.rows,
     },
   });
 
   useEffect(() => {
     form.reset(element.extraAttributes);
+    form.setValue('name', getName(element.extraAttributes.label));
   }, [element, form]);
 
   const applyChanges = (values: PropertiesFormSchemaType) => {
-    const { label, helpText, required, placeholder } = values;
+    const { label, helpText, required, placeholder, rows, name } = values;
 
     updateElement(element.id, {
       ...element,
-      extraAttributes: { label, helpText, required, placeholder },
+      extraAttributes: { label, helpText, required, placeholder, rows, name },
     });
   };
 
@@ -136,6 +139,10 @@ const PropertiesComponent = ({
               <FormControl>
                 <Input
                   {...field}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    form.setValue('name', getName(e.target.value));
+                  }}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') e.currentTarget.blur();
                   }}
@@ -209,6 +216,25 @@ const PropertiesComponent = ({
             </FormItem>
           )}
         />
+        <FormField
+          control={form.control}
+          name="rows"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Rows: {field.value}</FormLabel>
+              <FormControl>
+                <Slider
+                  value={[field.value]}
+                  min={1}
+                  max={10}
+                  step={1}
+                  onValueChange={(value) => field.onChange(value[0])}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
       </form>
     </Form>
   );
@@ -224,15 +250,13 @@ const FormComponent = memo(
   }) => {
     const element = elementInstance as CustomInstance;
     return (
-      <FormInput
-        type="number"
+      <FormTextarea
         control={control}
-        name={element.id}
-        value={element.extraAttributes.value}
+        name={element.extraAttributes.name}
         placeholder={element.extraAttributes.placeholder}
         label={element.extraAttributes.label}
         description={element.extraAttributes.helpText}
-        required={element.extraAttributes.required}
+        rows={element.extraAttributes.rows}
       />
     );
   }

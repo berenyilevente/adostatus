@@ -1,17 +1,16 @@
 'use client';
 
-import { FormInput, Icon, Input, Label, Switch } from '@/components';
+import { Input, Label } from '@/components';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { memo, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { useEditBookingForm } from '../../../use-edit-booking-form';
 import {
   ElementsType,
   FormElement,
   FormElementInstance,
-  SubmitFunction,
-} from '../FormElements';
-import { z } from 'zod';
-import { Control, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { memo, useEffect, useState } from 'react';
-import { useDesignerContext } from '../context/DesignerContext';
+} from '../../../edit-form.helper';
 
 import {
   Form,
@@ -23,17 +22,17 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 
-const type: ElementsType = 'SubtitleField';
+const type: ElementsType = 'TitleField';
 
 const extraAttributes = {
-  subtitle: 'Subtitle Field',
+  title: 'Title Field',
 };
 
 const propertiesSchema = z.object({
-  subtitle: z.string().min(1),
+  title: z.string().min(1),
 });
 
-export const SubtitleFieldFormElement: FormElement = {
+export const TitleFieldFormElement: FormElement = {
   type,
   construct: (id: string) => {
     return {
@@ -43,8 +42,8 @@ export const SubtitleFieldFormElement: FormElement = {
     };
   },
   designerButtonElement: {
-    icon: 'subtitle',
-    label: 'Subtitle Field',
+    icon: 'heading',
+    label: 'Title Field',
   },
   designerComponent: (props) => <DesignerComponent {...props} />,
   formComponent: (props) => <FormComponent {...props} />,
@@ -64,7 +63,7 @@ const DesignerComponent = ({
   return (
     <div className="p-1 w-full">
       <Label className="text-sm font-medium text-gray-500">
-        {element.extraAttributes.subtitle}
+        {element.extraAttributes.title}
       </Label>
     </div>
   );
@@ -77,13 +76,13 @@ const PropertiesComponent = ({
 }: {
   elementInstance: FormElementInstance;
 }) => {
-  const { updateElement } = useDesignerContext();
+  const { updateElement } = useEditBookingForm();
   const element = elementInstance as CustomInstance;
   const form = useForm<PropertiesFormSchemaType>({
     resolver: zodResolver(propertiesSchema),
     mode: 'onBlur',
     defaultValues: {
-      subtitle: element.extraAttributes.subtitle,
+      title: element.extraAttributes.title,
     },
   });
 
@@ -92,11 +91,11 @@ const PropertiesComponent = ({
   }, [element, form]);
 
   const applyChanges = (values: PropertiesFormSchemaType) => {
-    const { subtitle } = values;
+    const { title } = values;
 
     updateElement(element.id, {
       ...element,
-      extraAttributes: { subtitle },
+      extraAttributes: { title },
     });
   };
 
@@ -109,10 +108,10 @@ const PropertiesComponent = ({
       >
         <FormField
           control={form.control}
-          name="subtitle"
+          name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Subtitle</FormLabel>
+              <FormLabel>Title</FormLabel>
               <FormControl>
                 <Input
                   {...field}
@@ -122,7 +121,7 @@ const PropertiesComponent = ({
                 />
               </FormControl>
               <FormDescription>
-                Subtitle to display below the title
+                Title to display at the top of the form
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -136,10 +135,6 @@ const PropertiesComponent = ({
 const FormComponent = memo(
   ({ elementInstance }: { elementInstance: FormElementInstance }) => {
     const element = elementInstance as CustomInstance;
-    return (
-      <div className="text-sm text-muted-foreground">
-        {element.extraAttributes.subtitle}
-      </div>
-    );
+    return <div className="text-xl">{element.extraAttributes.title}</div>;
   }
 );

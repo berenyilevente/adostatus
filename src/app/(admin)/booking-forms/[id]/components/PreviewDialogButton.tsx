@@ -6,12 +6,12 @@ import {
   DialogTrigger,
   FormWrapper,
 } from '@/components';
-import { useDesignerContext } from './context/DesignerContext';
-import { FormElements } from './FormElements';
+import { ElementsType, FormElements } from '../edit-form.helper';
 import { useForm } from 'react-hook-form';
+import { useEditBookingForm } from '../use-edit-booking-form';
 
 export const PreviewDialogButton = () => {
-  const { elements } = useDesignerContext();
+  const { elements } = useEditBookingForm();
   const form = useForm<any>();
 
   return (
@@ -35,7 +35,9 @@ export const PreviewDialogButton = () => {
           >
             <div className="w-full space-y-4">
               {elements.map((element) => {
-                const FormComponent = FormElements[element.type].formComponent;
+                const ElementType: ElementsType = element.type;
+
+                const FormComponent = FormElements[ElementType].formComponent;
                 return (
                   <FormComponent
                     key={element.id}

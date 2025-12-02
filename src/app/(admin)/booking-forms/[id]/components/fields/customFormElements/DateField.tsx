@@ -1,25 +1,16 @@
 'use client';
 
-import {
-  FormDatepicker,
-  FormDateTimePicker,
-  FormInput,
-  Icon,
-  Input,
-  Label,
-  Switch,
-} from '@/components';
+import { FormDatepicker, Input, Label, Switch } from '@/components';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { memo, useEffect } from 'react';
+import { Control, useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { useEditBookingForm } from '../../../use-edit-booking-form';
 import {
   ElementsType,
   FormElement,
   FormElementInstance,
-  SubmitFunction,
-} from '../FormElements';
-import { z } from 'zod';
-import { Control, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { memo, useEffect, useState } from 'react';
-import { useDesignerContext } from '../context/DesignerContext';
+} from '../../../edit-form.helper';
 
 import {
   Form,
@@ -30,22 +21,25 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { getName } from '../fields.helper';
 
-const type: ElementsType = 'DateTimeField';
+const type: ElementsType = 'DateField';
 
 const extraAttributes = {
-  label: 'Date Time Field',
-  helpText: 'Pick a date and time',
+  label: 'Date Field',
+  helpText: 'Pick a date',
   required: false,
+  name: 'date_field',
 };
 
 const propertiesSchema = z.object({
   label: z.string().min(1),
   helpText: z.string().min(1),
   required: z.boolean(),
+  name: z.string(),
 });
 
-export const DateTimeFieldFormElement: FormElement = {
+export const DateFieldFormElement: FormElement = {
   type,
   construct: (id: string) => {
     return {
@@ -55,8 +49,8 @@ export const DateTimeFieldFormElement: FormElement = {
     };
   },
   designerButtonElement: {
-    icon: 'clock',
-    label: 'Date Time Field',
+    icon: 'calendar',
+    label: 'Date Field',
   },
   designerComponent: (props) => <DesignerComponent {...props} />,
   formComponent: (props) => <FormComponent {...props} />,
@@ -74,14 +68,14 @@ const DesignerComponent = ({
 }) => {
   const element = elementInstance as CustomInstance;
   return (
-    <div className="p-1 w-full">
+    <div className="rounded-md p-2 w-full">
       <Label className="text-sm font-medium text-gray-500">
         {element.extraAttributes.label}
         {element.extraAttributes.required && (
           <span className="text-red-500 pl-1">*</span>
         )}
       </Label>
-      <Input placeholder="e.g. 2025-12-31 12:00" readOnly />
+      <Input placeholder={element.extraAttributes.placeholder} readOnly />
       <p className="text-xs text-muted-foreground">
         {element.extraAttributes.helpText}
       </p>
@@ -96,7 +90,7 @@ const PropertiesComponent = ({
 }: {
   elementInstance: FormElementInstance;
 }) => {
-  const { updateElement } = useDesignerContext();
+  const { updateElement } = useEditBookingForm();
   const element = elementInstance as CustomInstance;
   const form = useForm<PropertiesFormSchemaType>({
     resolver: zodResolver(propertiesSchema),
@@ -110,14 +104,15 @@ const PropertiesComponent = ({
 
   useEffect(() => {
     form.reset(element.extraAttributes);
+    form.setValue('name', getName(element.extraAttributes.label));
   }, [element, form]);
 
   const applyChanges = (values: PropertiesFormSchemaType) => {
-    const { label, helpText, required } = values;
+    const { label, helpText, required, name } = values;
 
     updateElement(element.id, {
       ...element,
-      extraAttributes: { label, helpText, required },
+      extraAttributes: { label, helpText, required, name },
     });
   };
 
@@ -137,6 +132,10 @@ const PropertiesComponent = ({
               <FormControl>
                 <Input
                   {...field}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    form.setValue('name', getName(e.target.value));
+                  }}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') e.currentTarget.blur();
                   }}
@@ -204,9 +203,9 @@ const FormComponent = memo(
   }) => {
     const element = elementInstance as CustomInstance;
     return (
-      <FormDateTimePicker
+      <FormDatepicker
         control={control}
-        name={element.id}
+        name={element.extraAttributes.name}
         label={element.extraAttributes.label}
         description={element.extraAttributes.helpText}
       />

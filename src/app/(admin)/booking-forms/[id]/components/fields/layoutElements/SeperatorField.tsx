@@ -2,7 +2,7 @@
 
 import { Label, Separator } from '@/components';
 import { memo } from 'react';
-import { ElementsType, FormElement } from '../FormElements';
+import { ElementsType, FormElement } from '../../../edit-form.helper';
 
 const type: ElementsType = 'SeperatorField';
 

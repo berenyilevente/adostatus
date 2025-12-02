@@ -1,30 +1,80 @@
 'use client';
 
-import { Form, FormField } from '@/generated/prisma';
+import { Form } from '@/generated/prisma';
 
 import { createAppContext } from '@/hooks/use-create-app-context';
-import { createEmptyFormField } from '../booking-form.helper';
+import { updateFormContent as updateFormContentAction } from '../actions';
 
+import { useState, useTransition } from 'react';
 import { toast } from 'sonner';
-
-export type FormFieldItem = ReturnType<typeof createEmptyFormField> & {
-  tempId: string;
-};
+import { FormElementInstance } from './edit-form.helper';
 
 type HookProp = {
   formData: Form | null;
-  formFieldsData: FormField[] | null;
 };
 
-function useEditBookingFormHook({ formData, formFieldsData }: HookProp) {
-  const onSubmit = async () => {
+function useEditBookingFormHook({ formData }: HookProp) {
+  const [elements, setElements] = useState<FormElementInstance[]>([]);
+  const [selectedElement, setSelectedElement] =
+    useState<FormElementInstance | null>(null);
+
+  const addElement = (index: number, element: FormElementInstance) => {
+    setElements((prev) => {
+      const newElements = [...prev];
+      newElements.splice(index, 0, element);
+      return newElements;
+    });
+  };
+
+  const removeElement = (id: string) => {
+    setSelectedElement(null);
+    setElements((prev) => prev.filter((element) => element.id !== id));
+  };
+
+  const updateElement = (id: string, element: FormElementInstance) => {
+    setElements((prev) => {
+      const newElements = [...prev];
+      const index = newElements.findIndex((e) => e.id === id);
+      newElements[index] = element;
+
+      return newElements;
+    });
+  };
+  const [loading, startTransition] = useTransition();
+
+  const saveForm = async () => {
     if (!formData?.id) {
-      toast.error('Form ID not found');
+      throw new Error('Form ID not found');
+    }
+
+    const JsonElements = JSON.stringify(elements);
+
+    const response = await updateFormContentAction(formData.id, JsonElements);
+    if (response.status === 'success') {
+      toast.success('Form content updated successfully');
+      setSelectedElement(null);
+      return;
+    }
+
+    if (response.status === 'error') {
+      toast.error(response.error);
       return;
     }
   };
 
-  return { formData, onSubmit };
+  return {
+    formData,
+    saveForm,
+    loading,
+    startTransition,
+    elements,
+    setElements,
+    selectedElement,
+    setSelectedElement,
+    addElement,
+    removeElement,
+    updateElement,
+  };
 }
 
 export const [useEditBookingForm, EditBookingFormProvider] = createAppContext(

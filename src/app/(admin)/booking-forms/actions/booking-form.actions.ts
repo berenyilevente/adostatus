@@ -4,7 +4,7 @@ import prisma from '@/lib/prisma/client';
 import { isAuthenticated } from '@/lib/auth';
 import { handleResponse } from '@/utils/handleResponse';
 import { revalidatePath } from 'next/cache';
-import { CreateBookingForm, CreateFormField } from '../booking-form.helper';
+import { CreateBookingForm } from '../booking-form.helper';
 import { config } from '@/config';
 import { FormStatus } from '@/generated/prisma';
 

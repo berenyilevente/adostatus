@@ -1,33 +1,29 @@
 'use client';
 
-import { Appointment, Business, Service, TeamMember } from '@/generated/prisma';
+import {
+  Appointment,
+  Business,
+  FormSubmission,
+  Service,
+} from '@/generated/prisma';
 
 import { createAppContext } from '@/hooks/use-create-app-context';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 
-import {
-  getAppointments,
-  createAppointment,
-  createBusinessHours,
-} from './actions/calendar.actions';
-import {
-  AppointmentSchema,
-  BusinessHoursForm,
-  CreateAppointment,
-  CreateBusinessHoursForm,
-  CreateBusinessHoursSchema,
-} from './calendar.helper';
 import { getServices } from '../business-services/actions/business-services.actions';
 import { getTeamMembers } from '../team-members/actions/teamMember.actions';
 import { TeamMemberWithUser } from '../team-members/teamMember.helper';
+import { createAppointment, getAppointments } from './actions/calendar.actions';
+import { AppointmentSchema, CreateAppointment } from './calendar.helper';
 
 type HookProp = {
   businesses: Business[];
+  formSubmissions: FormSubmission[];
 };
 
-const useHook = ({ businesses }: HookProp) => {
+const useHook = ({ businesses, formSubmissions }: HookProp) => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [services, setServices] = useState<Service[]>([]);
   const [teamMembers, setTeamMembers] = useState<TeamMemberWithUser[]>([]);
@@ -125,9 +121,10 @@ const useHook = ({ businesses }: HookProp) => {
     serviceOptions,
     statusOptions,
     businessName,
+    formSubmissions,
   };
 };
 
 const [useCalendar, CalendarProvider] = createAppContext(useHook);
 
-export { useCalendar, CalendarProvider };
+export { CalendarProvider, useCalendar };

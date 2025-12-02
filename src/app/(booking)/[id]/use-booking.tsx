@@ -17,15 +17,17 @@ const createSchema = (formFields: FormElementInstance[]) => {
 
   return formFields.reduce(
     (acc, formField) => {
-      if (formField.extraAttributes?.required === false) {
-        acc[formField.id] = z.string().optional();
+      if (
+        formField.type === 'TextField' &&
+        formField.extraAttributes?.required
+      ) {
+        acc[formField.extraAttributes?.name] = z.string().min(1);
         return acc;
       }
 
-      acc[formField.id] = z.string().min(1);
       return acc;
     },
-    {} as Record<string, z.ZodSchema>
+    {} as Record<string, z.ZodSchema<any>>
   );
 };
 
@@ -45,10 +47,16 @@ const useHook = ({ formFields, formId }: HookProp) => {
   });
 
   const onSubmit = form.handleSubmit(async (data: FormSchema) => {
-    const dataWithFieldTypes = Object.entries(data).map(([key, value]) => ({
-      [key]: value,
-      type: formFields.find((field) => field.id === key)?.type,
-    }));
+    const dataWithFieldTypes = Object.entries(data).map(([key, value]) => {
+      return {
+        value: value,
+        type: formFields.find((field) => field.extraAttributes?.name === key)
+          ?.type,
+        name: key,
+        label: formFields.find((field) => field.extraAttributes?.name === key)
+          ?.extraAttributes?.label,
+      };
+    });
 
     startTransition(async () => {
       const response = await createBooking({

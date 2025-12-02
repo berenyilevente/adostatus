@@ -1,17 +1,16 @@
 'use client';
 
-import { FormInput, Icon, Input, Label, Switch, Textarea } from '@/components';
+import { Label, Textarea } from '@/components';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { memo, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { useEditBookingForm } from '../../../use-edit-booking-form';
 import {
   ElementsType,
   FormElement,
   FormElementInstance,
-  SubmitFunction,
-} from '../FormElements';
-import { z } from 'zod';
-import { Control, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { memo, useEffect, useState } from 'react';
-import { useDesignerContext } from '../context/DesignerContext';
+} from '../../../edit-form.helper';
 
 import {
   Form,
@@ -77,7 +76,7 @@ const PropertiesComponent = ({
 }: {
   elementInstance: FormElementInstance;
 }) => {
-  const { updateElement } = useDesignerContext();
+  const { updateElement } = useEditBookingForm();
   const element = elementInstance as CustomInstance;
   const form = useForm<PropertiesFormSchemaType>({
     resolver: zodResolver(propertiesSchema),

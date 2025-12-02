@@ -1,21 +1,22 @@
-import { CalendarProvider } from './use-calendar';
-import { CalendarPage } from './CalendarPage';
-import { PageTitle } from '../components';
-import { getAppointments } from './actions/calendar.actions';
-import { Appointment, Business } from '@/generated/prisma';
+import { Appointment, Business, FormSubmission } from '@/generated/prisma';
 import { notFound } from 'next/navigation';
-import { getBusinesses } from '../business/actions';
-import { BusinessHoursProvider } from '../business-hours/use-business-hours';
 import { BusinessHours } from '../business-hours/BusinessHoursDialog';
+import { BusinessHoursProvider } from '../business-hours/use-business-hours';
+import { getBusinesses } from '../business/actions';
+import { PageTitle } from '../components';
+import { CalendarPage } from './CalendarPage';
 import {
-  getBreakTimes,
-  getBusinessHours,
-} from '../business-hours/actions/business-hours.actions';
+  getAppointments,
+  getFormSubmissions,
+} from './actions/calendar.actions';
+import { CalendarProvider } from './use-calendar';
 
 export default async function Calendar() {
   let businesses: Business[] = [];
   let appointments: Appointment[] = [];
+  let formSubmissions: FormSubmission[] = [];
   const rBusinesses = await getBusinesses();
+  const rFormSubmissions = await getFormSubmissions();
 
   if (rBusinesses === null) {
     return notFound();
@@ -37,8 +38,12 @@ export default async function Calendar() {
     appointments = rAppointments.data;
   }
 
+  if (rFormSubmissions.status === 'success' && rFormSubmissions.data) {
+    formSubmissions = rFormSubmissions.data;
+  }
+
   return (
-    <CalendarProvider businesses={businesses}>
+    <CalendarProvider businesses={businesses} formSubmissions={formSubmissions}>
       <BusinessHoursProvider businesses={businesses}>
         <PageTitle
           title={'Calendar'}

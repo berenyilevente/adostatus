@@ -1,39 +1,38 @@
 'use client';
 
-import { FormInput, Icon, Input, Label, Switch } from '@/components';
+import { Label } from '@/components';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { memo, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { useEditBookingForm } from '../../../use-edit-booking-form';
 import {
   ElementsType,
   FormElement,
   FormElementInstance,
-  SubmitFunction,
-} from '../FormElements';
-import { z } from 'zod';
-import { Control, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { memo, useEffect, useState } from 'react';
-import { useDesignerContext } from '../context/DesignerContext';
+} from '../../../edit-form.helper';
 
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { Slider } from '@/components/ui/slider';
 
-const type: ElementsType = 'TitleField';
+const type: ElementsType = 'SpacerField';
 
 const extraAttributes = {
-  title: 'Title Field',
+  height: 20, // in pixels
 };
 
 const propertiesSchema = z.object({
-  title: z.string().min(1),
+  height: z.number().min(1).max(200),
 });
 
-export const TitleFieldFormElement: FormElement = {
+export const SpacerFieldFormElement: FormElement = {
   type,
   construct: (id: string) => {
     return {
@@ -43,8 +42,8 @@ export const TitleFieldFormElement: FormElement = {
     };
   },
   designerButtonElement: {
-    icon: 'heading',
-    label: 'Title Field',
+    icon: 'spacer',
+    label: 'Spacer Field',
   },
   designerComponent: (props) => <DesignerComponent {...props} />,
   formComponent: (props) => <FormComponent {...props} />,
@@ -64,7 +63,7 @@ const DesignerComponent = ({
   return (
     <div className="p-1 w-full">
       <Label className="text-sm font-medium text-gray-500">
-        {element.extraAttributes.title}
+        Spacer height: {element.extraAttributes.height} px
       </Label>
     </div>
   );
@@ -77,13 +76,13 @@ const PropertiesComponent = ({
 }: {
   elementInstance: FormElementInstance;
 }) => {
-  const { updateElement } = useDesignerContext();
+  const { updateElement } = useEditBookingForm();
   const element = elementInstance as CustomInstance;
   const form = useForm<PropertiesFormSchemaType>({
     resolver: zodResolver(propertiesSchema),
     mode: 'onBlur',
     defaultValues: {
-      title: element.extraAttributes.title,
+      height: element.extraAttributes.height,
     },
   });
 
@@ -92,11 +91,11 @@ const PropertiesComponent = ({
   }, [element, form]);
 
   const applyChanges = (values: PropertiesFormSchemaType) => {
-    const { title } = values;
+    const { height } = values;
 
     updateElement(element.id, {
       ...element,
-      extraAttributes: { title },
+      extraAttributes: { height },
     });
   };
 
@@ -109,21 +108,19 @@ const PropertiesComponent = ({
       >
         <FormField
           control={form.control}
-          name="title"
+          name="height"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Title</FormLabel>
-              <FormControl>
-                <Input
-                  {...field}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') e.currentTarget.blur();
-                  }}
+              <FormLabel>Height: {field.value} px</FormLabel>
+              <FormControl className="pt-2">
+                <Slider
+                  defaultValue={[field.value]}
+                  min={5}
+                  max={200}
+                  step={1}
+                  onValueChange={(value) => field.onChange(value[0])}
                 />
               </FormControl>
-              <FormDescription>
-                Title to display at the top of the form
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -136,6 +133,11 @@ const PropertiesComponent = ({
 const FormComponent = memo(
   ({ elementInstance }: { elementInstance: FormElementInstance }) => {
     const element = elementInstance as CustomInstance;
-    return <div className="text-xl">{element.extraAttributes.title}</div>;
+    return (
+      <div
+        className="text-sm text-muted-foreground"
+        style={{ height: `${element.extraAttributes.height}px`, width: '100%' }}
+      />
+    );
   }
 );

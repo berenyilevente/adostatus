@@ -1,17 +1,16 @@
 import { ReactElement } from 'react';
-import { useDesignerContext } from './context/DesignerContext';
-import { FormElements } from './FormElements';
+import { useEditBookingForm } from '../../use-edit-booking-form';
+import { ElementsType, FormElements } from '../../edit-form.helper';
 import { Button, Separator } from '@/components';
 
 export const PropertiesFormSidebar = (): ReactElement => {
-  const { selectedElement, setSelectedElement } = useDesignerContext();
+  const { selectedElement, setSelectedElement } = useEditBookingForm();
 
   if (!selectedElement) {
     return <></>;
   }
-
-  const PropertiesForm = FormElements[selectedElement.type].propertiesComponent;
-
+  const ElementType: ElementsType = selectedElement.type;
+  const PropertiesForm = FormElements[ElementType].propertiesComponent;
   return (
     <div className="flex flex-col p-2">
       <div className="flex justify-between items-center">

@@ -3,7 +3,7 @@
 import { Response } from '@/types/action.types';
 
 import prisma from '@/lib/prisma/client';
-import { Appointment, BusinessHours } from '@/generated/prisma';
+import { Appointment, BusinessHours, FormSubmission } from '@/generated/prisma';
 import { isAuthenticated } from '@/utils/isAuthenticated';
 import { handleResponse } from '@/utils/handleResponse';
 import { CreateAppointment, CreateBusinessHoursForm } from '../calendar.helper';
@@ -124,5 +124,25 @@ export const createBusinessHours = async (
     data: businessHours.businessHours,
     code: 201,
     error: 'Business hours creation failed',
+  });
+};
+
+export const getFormSubmissions = async (
+  businessId: string
+): Promise<Response<FormSubmission[]>> => {
+  await isAuthenticated();
+
+  const formSubmissions = await prisma.formSubmission.findMany({
+    where: {
+      form: {
+        businessId,
+      },
+    },
+  });
+
+  return handleResponse<FormSubmission[]>({
+    data: formSubmissions,
+    code: 200,
+    error: 'Form submissions not found',
   });
 };

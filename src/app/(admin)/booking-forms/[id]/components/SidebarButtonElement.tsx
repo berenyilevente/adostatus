@@ -1,8 +1,7 @@
 import { Button } from '@/components/ui/button';
-import { FormElement } from './FormElements';
+import { FormElement } from '../edit-form.helper';
 import { useDraggable } from '@dnd-kit/core';
 import { cn } from '@/lib/utils';
-import { Icon } from '@/components';
 
 export const SidebarButtonElement = ({
   formElement,

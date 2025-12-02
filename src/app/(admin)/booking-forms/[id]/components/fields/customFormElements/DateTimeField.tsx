@@ -1,17 +1,16 @@
 'use client';
 
-import { FormInput, Icon, Input, Label, Switch } from '@/components';
+import { FormDateTimePicker, Input, Label, Switch } from '@/components';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { memo, useEffect } from 'react';
+import { Control, useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { useEditBookingForm } from '../../../use-edit-booking-form';
 import {
   ElementsType,
   FormElement,
   FormElementInstance,
-  SubmitFunction,
-} from '../FormElements';
-import { z } from 'zod';
-import { Control, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { memo, useEffect, useState } from 'react';
-import { useDesignerContext } from '../context/DesignerContext';
+} from '../../../edit-form.helper';
 
 import {
   Form,
@@ -22,24 +21,25 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { getName } from '../fields.helper';
 
-const type: ElementsType = 'TextField';
+const type: ElementsType = 'DateTimeField';
 
 const extraAttributes = {
-  label: 'Text Field',
-  helpText: 'This is a text field',
+  label: 'Date Time Field',
+  helpText: 'Pick a date and time',
   required: false,
-  placeholder: 'Enter text...',
+  name: 'date_time_field',
 };
 
 const propertiesSchema = z.object({
   label: z.string().min(1),
   helpText: z.string().min(1),
   required: z.boolean(),
-  placeholder: z.string().min(1),
+  name: z.string(),
 });
 
-export const TextFieldFormElement: FormElement = {
+export const DateTimeFieldFormElement: FormElement = {
   type,
   construct: (id: string) => {
     return {
@@ -49,8 +49,8 @@ export const TextFieldFormElement: FormElement = {
     };
   },
   designerButtonElement: {
-    icon: 'text',
-    label: 'Text Field',
+    icon: 'clock',
+    label: 'Date Time Field',
   },
   designerComponent: (props) => <DesignerComponent {...props} />,
   formComponent: (props) => <FormComponent {...props} />,
@@ -75,7 +75,7 @@ const DesignerComponent = ({
           <span className="text-red-500 pl-1">*</span>
         )}
       </Label>
-      <Input placeholder={element.extraAttributes.placeholder} readOnly />
+      <Input readOnly />
       <p className="text-xs text-muted-foreground">
         {element.extraAttributes.helpText}
       </p>
@@ -90,7 +90,7 @@ const PropertiesComponent = ({
 }: {
   elementInstance: FormElementInstance;
 }) => {
-  const { updateElement } = useDesignerContext();
+  const { updateElement } = useEditBookingForm();
   const element = elementInstance as CustomInstance;
   const form = useForm<PropertiesFormSchemaType>({
     resolver: zodResolver(propertiesSchema),
@@ -99,20 +99,20 @@ const PropertiesComponent = ({
       label: element.extraAttributes.label,
       helpText: element.extraAttributes.helpText,
       required: element.extraAttributes.required,
-      placeholder: element.extraAttributes.placeholder,
     },
   });
 
   useEffect(() => {
     form.reset(element.extraAttributes);
+    form.setValue('name', getName(element.extraAttributes.label));
   }, [element, form]);
 
   const applyChanges = (values: PropertiesFormSchemaType) => {
-    const { label, helpText, required, placeholder } = values;
+    const { label, helpText, required, name } = values;
 
     updateElement(element.id, {
       ...element,
-      extraAttributes: { label, helpText, required, placeholder },
+      extraAttributes: { label, helpText, required, name },
     });
   };
 
@@ -132,6 +132,10 @@ const PropertiesComponent = ({
               <FormControl>
                 <Input
                   {...field}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    form.setValue('name', getName(e.target.value));
+                  }}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') e.currentTarget.blur();
                   }}
@@ -139,27 +143,6 @@ const PropertiesComponent = ({
               </FormControl>
               <FormDescription>
                 Label to display above the field
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="placeholder"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Placeholder</FormLabel>
-              <FormControl>
-                <Input
-                  {...field}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') e.currentTarget.blur();
-                  }}
-                />
-              </FormControl>
-              <FormDescription>
-                Placeholder text to display in the field
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -219,15 +202,13 @@ const FormComponent = memo(
     control: Control<any>;
   }) => {
     const element = elementInstance as CustomInstance;
+
     return (
-      <FormInput
+      <FormDateTimePicker
         control={control}
-        name={element.id}
-        value={element.extraAttributes.value}
-        placeholder={element.extraAttributes.placeholder}
+        name={element.extraAttributes.name}
         label={element.extraAttributes.label}
         description={element.extraAttributes.helpText}
-        required={element.extraAttributes.required}
       />
     );
   }

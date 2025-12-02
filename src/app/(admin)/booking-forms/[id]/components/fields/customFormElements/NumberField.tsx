@@ -1,24 +1,16 @@
 'use client';
 
-import {
-  FormDatepicker,
-  FormInput,
-  Icon,
-  Input,
-  Label,
-  Switch,
-} from '@/components';
+import { FormInput, Input, Label, Switch } from '@/components';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { memo, useEffect } from 'react';
+import { Control, useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { useEditBookingForm } from '../../../use-edit-booking-form';
 import {
   ElementsType,
   FormElement,
   FormElementInstance,
-  SubmitFunction,
-} from '../FormElements';
-import { z } from 'zod';
-import { Control, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { memo, useEffect, useState } from 'react';
-import { useDesignerContext } from '../context/DesignerContext';
+} from '../../../edit-form.helper';
 
 import {
   Form,
@@ -29,22 +21,27 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { getName } from '../fields.helper';
 
-const type: ElementsType = 'DateField';
+const type: ElementsType = 'NumberField';
 
 const extraAttributes = {
-  label: 'Date Field',
-  helpText: 'Pick a date',
+  label: 'Number Field',
+  helpText: 'This is a number field',
   required: false,
+  placeholder: '0',
+  name: 'number_field',
 };
 
 const propertiesSchema = z.object({
   label: z.string().min(1),
   helpText: z.string().min(1),
   required: z.boolean(),
+  placeholder: z.string().min(1),
+  name: z.string(),
 });
 
-export const DateFieldFormElement: FormElement = {
+export const NumberFieldFormElement: FormElement = {
   type,
   construct: (id: string) => {
     return {
@@ -54,8 +51,8 @@ export const DateFieldFormElement: FormElement = {
     };
   },
   designerButtonElement: {
-    icon: 'calendar',
-    label: 'Date Field',
+    icon: 'number',
+    label: 'Number Field',
   },
   designerComponent: (props) => <DesignerComponent {...props} />,
   formComponent: (props) => <FormComponent {...props} />,
@@ -73,14 +70,18 @@ const DesignerComponent = ({
 }) => {
   const element = elementInstance as CustomInstance;
   return (
-    <div className="rounded-md p-2 w-full">
+    <div className="p-1 w-full">
       <Label className="text-sm font-medium text-gray-500">
         {element.extraAttributes.label}
         {element.extraAttributes.required && (
           <span className="text-red-500 pl-1">*</span>
         )}
       </Label>
-      <Input placeholder={element.extraAttributes.placeholder} readOnly />
+      <Input
+        placeholder={element.extraAttributes.placeholder}
+        type="number"
+        readOnly
+      />
       <p className="text-xs text-muted-foreground">
         {element.extraAttributes.helpText}
       </p>
@@ -95,7 +96,7 @@ const PropertiesComponent = ({
 }: {
   elementInstance: FormElementInstance;
 }) => {
-  const { updateElement } = useDesignerContext();
+  const { updateElement } = useEditBookingForm();
   const element = elementInstance as CustomInstance;
   const form = useForm<PropertiesFormSchemaType>({
     resolver: zodResolver(propertiesSchema),
@@ -104,19 +105,21 @@ const PropertiesComponent = ({
       label: element.extraAttributes.label,
       helpText: element.extraAttributes.helpText,
       required: element.extraAttributes.required,
+      placeholder: element.extraAttributes.placeholder,
     },
   });
 
   useEffect(() => {
     form.reset(element.extraAttributes);
+    form.setValue('name', getName(element.extraAttributes.label));
   }, [element, form]);
 
   const applyChanges = (values: PropertiesFormSchemaType) => {
-    const { label, helpText, required } = values;
+    const { label, helpText, required, placeholder, name } = values;
 
     updateElement(element.id, {
       ...element,
-      extraAttributes: { label, helpText, required },
+      extraAttributes: { label, helpText, required, placeholder, name },
     });
   };
 
@@ -136,6 +139,10 @@ const PropertiesComponent = ({
               <FormControl>
                 <Input
                   {...field}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    form.setValue('name', getName(e.target.value));
+                  }}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') e.currentTarget.blur();
                   }}
@@ -143,6 +150,27 @@ const PropertiesComponent = ({
               </FormControl>
               <FormDescription>
                 Label to display above the field
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="placeholder"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Placeholder</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') e.currentTarget.blur();
+                  }}
+                />
+              </FormControl>
+              <FormDescription>
+                Placeholder text to display in the field
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -203,11 +231,15 @@ const FormComponent = memo(
   }) => {
     const element = elementInstance as CustomInstance;
     return (
-      <FormDatepicker
+      <FormInput
+        type="number"
         control={control}
-        name={element.id}
+        name={element.extraAttributes.name}
+        value={element.extraAttributes.value}
+        placeholder={element.extraAttributes.placeholder}
         label={element.extraAttributes.label}
         description={element.extraAttributes.helpText}
+        required={element.extraAttributes.required}
       />
     );
   }

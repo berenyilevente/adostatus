@@ -1,38 +1,38 @@
 'use client';
 
-import { Label } from '@/components';
+import { Input, Label } from '@/components';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { memo, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { useDesignerContext } from '../context/DesignerContext';
+import { useEditBookingForm } from '../../../use-edit-booking-form';
 import {
   ElementsType,
   FormElement,
   FormElementInstance,
-} from '../FormElements';
+} from '../../../edit-form.helper';
 
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { Slider } from '@/components/ui/slider';
 
-const type: ElementsType = 'SpacerField';
+const type: ElementsType = 'SubtitleField';
 
 const extraAttributes = {
-  height: 20, // in pixels
+  subtitle: 'Subtitle Field',
 };
 
 const propertiesSchema = z.object({
-  height: z.number().min(1).max(200),
+  subtitle: z.string().min(1),
 });
 
-export const SpacerFieldFormElement: FormElement = {
+export const SubtitleFieldFormElement: FormElement = {
   type,
   construct: (id: string) => {
     return {
@@ -42,8 +42,8 @@ export const SpacerFieldFormElement: FormElement = {
     };
   },
   designerButtonElement: {
-    icon: 'spacer',
-    label: 'Spacer Field',
+    icon: 'subtitle',
+    label: 'Subtitle Field',
   },
   designerComponent: (props) => <DesignerComponent {...props} />,
   formComponent: (props) => <FormComponent {...props} />,
@@ -63,7 +63,7 @@ const DesignerComponent = ({
   return (
     <div className="p-1 w-full">
       <Label className="text-sm font-medium text-gray-500">
-        Spacer height: {element.extraAttributes.height} px
+        {element.extraAttributes.subtitle}
       </Label>
     </div>
   );
@@ -76,13 +76,13 @@ const PropertiesComponent = ({
 }: {
   elementInstance: FormElementInstance;
 }) => {
-  const { updateElement } = useDesignerContext();
+  const { updateElement } = useEditBookingForm();
   const element = elementInstance as CustomInstance;
   const form = useForm<PropertiesFormSchemaType>({
     resolver: zodResolver(propertiesSchema),
     mode: 'onBlur',
     defaultValues: {
-      height: element.extraAttributes.height,
+      subtitle: element.extraAttributes.subtitle,
     },
   });
 
@@ -91,11 +91,11 @@ const PropertiesComponent = ({
   }, [element, form]);
 
   const applyChanges = (values: PropertiesFormSchemaType) => {
-    const { height } = values;
+    const { subtitle } = values;
 
     updateElement(element.id, {
       ...element,
-      extraAttributes: { height },
+      extraAttributes: { subtitle },
     });
   };
 
@@ -108,19 +108,21 @@ const PropertiesComponent = ({
       >
         <FormField
           control={form.control}
-          name="height"
+          name="subtitle"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Height: {field.value} px</FormLabel>
-              <FormControl className="pt-2">
-                <Slider
-                  defaultValue={[field.value]}
-                  min={5}
-                  max={200}
-                  step={1}
-                  onValueChange={(value) => field.onChange(value[0])}
+              <FormLabel>Subtitle</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') e.currentTarget.blur();
+                  }}
                 />
               </FormControl>
+              <FormDescription>
+                Subtitle to display below the title
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -134,10 +136,9 @@ const FormComponent = memo(
   ({ elementInstance }: { elementInstance: FormElementInstance }) => {
     const element = elementInstance as CustomInstance;
     return (
-      <div
-        className="text-sm text-muted-foreground"
-        style={{ height: `${element.extraAttributes.height}px`, width: '100%' }}
-      />
+      <div className="text-sm text-muted-foreground">
+        {element.extraAttributes.subtitle}
+      </div>
     );
   }
 );

@@ -32,7 +32,7 @@ const CreateBookingFormPage = async (props: {
   }
 
   return (
-    <EditBookingFormProvider formData={formData} formFieldsData={formFields}>
+    <EditBookingFormProvider formData={formData}>
       <PageTitle
         title="Form Editor"
         breadcrumbs={[
