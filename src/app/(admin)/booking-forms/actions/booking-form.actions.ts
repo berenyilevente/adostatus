@@ -146,14 +146,14 @@ export const updateFormContent = async (formId: string, content: string) => {
   });
 };
 
-export const publishForm = async (formId: string) => {
+export const publishForm = async (formId: string, content: string) => {
   await isAuthenticated();
 
   const url = `${config.app.domain}/${formId}`;
 
   const form = await prisma.form.update({
     where: { id: formId },
-    data: { status: FormStatus.LIVE, url },
+    data: { status: FormStatus.LIVE, url, content },
   });
 
   revalidatePath('/booking-forms');

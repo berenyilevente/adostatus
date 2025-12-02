@@ -16,6 +16,44 @@ import { toast } from 'sonner';
 import { publishForm as publishFormAction } from '../../actions';
 import { useRouter } from 'next/navigation';
 import { FormStatus } from '@/generated/prisma';
+import { FormElementInstance } from '../edit-form.helper';
+
+const validateForm = (elements: FormElementInstance[]): boolean => {
+  if (elements.length === 0) {
+    toast.error('Form must have at least one element');
+    return false;
+  }
+
+  const hasDateField = elements.some(
+    (element) =>
+      element?.type === 'DateField' || element?.type === 'BookingDateField'
+  );
+
+  const hasStartTimeField = elements.some(
+    (element) => element?.extraAttributes?.timeType === 'startTime'
+  );
+
+  const hasEndTimeField = elements.some(
+    (element) => element?.extraAttributes?.timeType === 'endTime'
+  );
+
+  if (!hasDateField) {
+    toast.error('Form must have a date field');
+    return false;
+  }
+
+  if (!hasStartTimeField) {
+    toast.error('Form must have a start time field');
+    return false;
+  }
+
+  if (!hasEndTimeField) {
+    toast.error('Form must have an end time field');
+    return false;
+  }
+
+  return true;
+};
 
 export const PublishFormButton = () => {
   const [loading, startTransition] = useTransition();
@@ -27,18 +65,10 @@ export const PublishFormButton = () => {
       throw new Error('Form ID not found');
     }
 
-    if (elements.length === 0) {
-      toast.error('Form must have at least one element');
-      return;
-    }
-
-    // todo: handle start and end date field validation
-    // if (!elements.some((element) => element.type === 'DateField')) {
-    //   toast.error('Form must have a start and end date field');
-    //   return;
-    // }
-
-    const response = await publishFormAction(formData.id);
+    const response = await publishFormAction(
+      formData.id,
+      JSON.stringify(elements)
+    );
 
     if (response.status === 'success') {
       toast.success('Your form is now published and ready to use.');
@@ -56,10 +86,22 @@ export const PublishFormButton = () => {
     return null;
   }
 
+  const onDialogOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!validateForm(elements)) {
+      e.preventDefault();
+      return;
+    }
+  };
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button className="w-full" size="sm" type="button">
+        <Button
+          className="w-full"
+          size="sm"
+          type="button"
+          onClick={onDialogOpen}
+        >
           Publish
         </Button>
       </AlertDialogTrigger>
