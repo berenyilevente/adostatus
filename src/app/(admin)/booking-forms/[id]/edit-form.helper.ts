@@ -11,28 +11,16 @@ import {
   SpacerFieldFormElement,
   NumberFieldFormElement,
   TextAreaFieldFormElement,
-  DateFieldFormElement,
-  TimeFieldFormElement,
+  FirstNameFieldFormElement,
+  LastNameFieldFormElement,
+  EmailFieldFormElement,
+  PhoneNumberFieldFormElement,
+  StartTimeFieldFormElement,
+  EndTimeFieldFormElement,
+  BookingDateFieldFormElement,
 } from './components/fields';
-import { FirstNameFieldFormElement } from './components/fields/defaultFormElements/FirstNameField';
-import { LastNameFieldFormElement } from './components/fields/defaultFormElements/LastNameField';
-import { EmailFieldFormElement } from './components/fields/defaultFormElements/EmailField';
-import { PhoneNumberFieldFormElement } from './components/fields/defaultFormElements/PhoneNumberField';
-import { StartTimeFieldFormElement } from './components/fields/defaultFormElements/StartTimeField';
-import { EndTimeFieldFormElement } from './components/fields/defaultFormElements/EndTime';
-import { BookingDateFieldFormElement } from './components/fields/defaultFormElements/BookingDateField';
 
-export type ElementsType =
-  | 'TextField'
-  | 'TitleField'
-  | 'SubtitleField'
-  | 'ParagraphField'
-  | 'SeperatorField'
-  | 'SpacerField'
-  | 'NumberField'
-  | 'TextAreaField'
-  | 'DateField'
-  | 'TimeField'
+type DefaultFormElements =
   | 'FirstNameField'
   | 'LastNameField'
   | 'EmailField'
@@ -40,6 +28,21 @@ export type ElementsType =
   | 'StartTimeField'
   | 'EndTimeField'
   | 'BookingDateField';
+
+type LayoutElements =
+  | 'TextField'
+  | 'TitleField'
+  | 'SubtitleField'
+  | 'ParagraphField'
+  | 'SeperatorField'
+  | 'SpacerField';
+
+type CustomFormElements = 'NumberField' | 'TextAreaField' | 'TextField';
+
+export type ElementsType =
+  | CustomFormElements
+  | DefaultFormElements
+  | LayoutElements;
 
 export type SubmitFunction = (key: string, value: string) => void;
 
@@ -69,23 +72,40 @@ type FormElementsType = {
   [key in ElementsType]: FormElement;
 };
 
+type LayoutElementsType = {
+  [key in LayoutElements]: FormElement;
+};
+
+type CustomFormElementsType = {
+  [key in CustomFormElements]: FormElement;
+};
+
+type DefaultFormElementsType = {
+  [key in DefaultFormElements]: FormElement;
+};
+
 export type FormElementInstance = {
   id: string;
   type: ElementsType;
   extraAttributes?: Record<string, any>;
 };
 
-export const FormElements: FormElementsType = {
+export const LayoutElements: LayoutElementsType = {
   TextField: TextFieldFormElement,
   TitleField: TitleFieldFormElement,
   SubtitleField: SubtitleFieldFormElement,
   ParagraphField: ParagraphFieldFormElement,
   SeperatorField: SeperatorFieldFormElement,
   SpacerField: SpacerFieldFormElement,
+};
+
+export const CustomFormElements: CustomFormElementsType = {
   NumberField: NumberFieldFormElement,
   TextAreaField: TextAreaFieldFormElement,
-  DateField: DateFieldFormElement,
-  TimeField: TimeFieldFormElement,
+  TextField: TextFieldFormElement,
+};
+
+export const DefaultFormElements: DefaultFormElementsType = {
   FirstNameField: FirstNameFieldFormElement,
   LastNameField: LastNameFieldFormElement,
   EmailField: EmailFieldFormElement,
@@ -93,4 +113,10 @@ export const FormElements: FormElementsType = {
   StartTimeField: StartTimeFieldFormElement,
   EndTimeField: EndTimeFieldFormElement,
   BookingDateField: BookingDateFieldFormElement,
+};
+
+export const FormElements: FormElementsType = {
+  ...LayoutElements,
+  ...CustomFormElements,
+  ...DefaultFormElements,
 };

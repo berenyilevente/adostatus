@@ -22,14 +22,14 @@ import { useEditBookingForm } from '../../../use-edit-booking-form';
 import { Form } from '@/components/ui/form';
 import { getName } from '../fields.helper';
 
-const type: ElementsType = 'TimeField';
+const type: ElementsType = 'EndTimeField';
 
 const extraAttributes = {
-  label: 'Time Field',
+  label: 'End Time',
   helpText: '',
   required: false,
-  name: 'time_field',
-  timeType: 'startTime' as const,
+  name: 'end_time',
+  timeType: 'endTime' as const,
 };
 
 const propertiesSchema = z.object({
@@ -40,7 +40,7 @@ const propertiesSchema = z.object({
   timeType: z.enum(['startTime', 'endTime']),
 });
 
-export const TimeFieldFormElement: FormElement = {
+export const EndTimeFieldFormElement: FormElement = {
   type,
   construct: (id: string) => {
     return {
@@ -51,7 +51,7 @@ export const TimeFieldFormElement: FormElement = {
   },
   designerButtonElement: {
     icon: 'clock',
-    label: 'Time Field',
+    label: 'End Time',
   },
   designerComponent: (props) => <DesignerComponent {...props} />,
   formComponent: (props) => <FormComponent {...props} />,
@@ -134,10 +134,6 @@ const PropertiesComponent = ({
           name="label"
           label="Label"
           description="Label to display above the field"
-          onChange={(e) => {
-            form.setValue('label', e.target.value);
-            form.setValue('name', getName(e.target.value));
-          }}
           onKeyDown={onKeyDown}
         />
         <FormInput

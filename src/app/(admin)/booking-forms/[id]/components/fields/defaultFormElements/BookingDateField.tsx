@@ -130,10 +130,6 @@ const PropertiesComponent = ({
           name="label"
           label="Label"
           description="Label to display above the field"
-          onChange={(e) => {
-            form.setValue('label', e.target.value);
-            form.setValue('name', getName(e.target.value));
-          }}
           onKeyDown={onKeyDown}
         />
         <FormInput

@@ -19,7 +19,7 @@ export const FormElementsSidebar = () => {
         <SidebarButtonElement formElement={FormElements.SeperatorField} />
         <SidebarButtonElement formElement={FormElements.SpacerField} />
         <div className="col-span-2 text-sm text-foreground/70 text-start mt-3">
-          Default form elements
+          Form elements
         </div>
         <SidebarButtonElement formElement={FormElements.FirstNameField} />
         <SidebarButtonElement formElement={FormElements.LastNameField} />
@@ -34,8 +34,6 @@ export const FormElementsSidebar = () => {
         <SidebarButtonElement formElement={FormElements.TextField} />
         <SidebarButtonElement formElement={FormElements.NumberField} />
         <SidebarButtonElement formElement={FormElements.TextAreaField} />
-        <SidebarButtonElement formElement={FormElements.DateField} />
-        <SidebarButtonElement formElement={FormElements.TimeField} />
       </div>
     </>
   );

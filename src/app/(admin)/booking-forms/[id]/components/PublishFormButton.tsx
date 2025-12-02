@@ -25,8 +25,7 @@ const validateForm = (elements: FormElementInstance[]): boolean => {
   }
 
   const hasDateField = elements.some(
-    (element) =>
-      element?.type === 'DateField' || element?.type === 'BookingDateField'
+    (element) => element?.type === 'BookingDateField'
   );
 
   const hasStartTimeField = elements.some(
