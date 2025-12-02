@@ -1,8 +1,11 @@
 'use client';
 
-import { FormElements } from '@/app/(admin)/booking-forms/[id]/components/FormElements';
 import { Button, FormWrapper } from '@/components';
 import { useBooking } from './use-booking';
+import {
+  ElementsType,
+  FormElements,
+} from '@/app/(admin)/booking-forms/[id]/edit-form.helper';
 
 export const PublicBookingForm = () => {
   const { formFields, onSubmit, form, transition } = useBooking();
@@ -15,7 +18,8 @@ export const PublicBookingForm = () => {
     <FormWrapper form={form} className="space-y-4">
       <div>
         {formFields.map((element) => {
-          const FormComponent = FormElements[element.type].formComponent;
+          const ElementType: ElementsType = element.type;
+          const FormComponent = FormElements[ElementType].formComponent;
           return (
             <FormComponent
               key={element.id}

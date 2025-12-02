@@ -17,6 +17,7 @@ export const SidebarButtonElement = ({
       isDesignerButtonElement: true,
     },
   });
+
   return (
     <Button
       variant="outline"

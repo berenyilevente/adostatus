@@ -14,6 +14,13 @@ import {
   DateFieldFormElement,
   TimeFieldFormElement,
 } from './components/fields';
+import { FirstNameFieldFormElement } from './components/fields/defaultFormElements/FirstNameField';
+import { LastNameFieldFormElement } from './components/fields/defaultFormElements/LastNameField';
+import { EmailFieldFormElement } from './components/fields/defaultFormElements/EmailField';
+import { PhoneNumberFieldFormElement } from './components/fields/defaultFormElements/PhoneNumberField';
+import { StartTimeFieldFormElement } from './components/fields/defaultFormElements/StartTimeField';
+import { EndTimeFieldFormElement } from './components/fields/defaultFormElements/EndTime';
+import { BookingDateFieldFormElement } from './components/fields/defaultFormElements/BookingDateField';
 
 export type ElementsType =
   | 'TextField'
@@ -25,7 +32,14 @@ export type ElementsType =
   | 'NumberField'
   | 'TextAreaField'
   | 'DateField'
-  | 'TimeField';
+  | 'TimeField'
+  | 'FirstNameField'
+  | 'LastNameField'
+  | 'EmailField'
+  | 'PhoneNumberField'
+  | 'StartTimeField'
+  | 'EndTimeField'
+  | 'BookingDateField';
 
 export type SubmitFunction = (key: string, value: string) => void;
 
@@ -72,4 +86,11 @@ export const FormElements: FormElementsType = {
   TextAreaField: TextAreaFieldFormElement,
   DateField: DateFieldFormElement,
   TimeField: TimeFieldFormElement,
+  FirstNameField: FirstNameFieldFormElement,
+  LastNameField: LastNameFieldFormElement,
+  EmailField: EmailFieldFormElement,
+  PhoneNumberField: PhoneNumberFieldFormElement,
+  StartTimeField: StartTimeFieldFormElement,
+  EndTimeField: EndTimeFieldFormElement,
+  BookingDateField: BookingDateFieldFormElement,
 };

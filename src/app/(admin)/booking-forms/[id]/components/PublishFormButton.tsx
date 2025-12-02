@@ -33,10 +33,10 @@ export const PublishFormButton = () => {
     }
 
     // todo: handle start and end date field validation
-    if (!elements.some((element) => element.type === 'DateField')) {
-      toast.error('Form must have a start and end date field');
-      return;
-    }
+    // if (!elements.some((element) => element.type === 'DateField')) {
+    //   toast.error('Form must have a start and end date field');
+    //   return;
+    // }
 
     const response = await publishFormAction(formData.id);
 

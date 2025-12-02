@@ -12,8 +12,9 @@ import {
   FormMessage,
 } from '@/components';
 import { cn } from '@/utils';
+import { PhoneInput } from '../ui/phone-input';
 
-type FormCheckboxProps<
+type FormPhoneInputProps<
   TField extends FieldValues = FieldValues,
   TName extends FieldPath<TField> = FieldPath<TField>,
 > = {
@@ -26,7 +27,7 @@ type FormCheckboxProps<
   className?: string;
 };
 
-export const FormCheckbox = <
+export const FormPhoneInput = <
   TField extends FieldValues = FieldValues,
   TName extends FieldPath<TField> = FieldPath<TField>,
 >({
@@ -38,35 +39,22 @@ export const FormCheckbox = <
   linkText,
   className,
   ...props
-}: FormCheckboxProps<TField, TName>) => {
+}: FormPhoneInputProps<TField, TName>) => {
   return (
     <FormField
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem
-          className={cn(
-            'flex w-full flex-row items-center space-x-3 space-y-0 rounded-md border px-4 py-[10px] cursor-pointer',
-            className
-          )}
-        >
+        <FormItem>
+          {label && <FormLabel className="!cursor-pointer">{label}</FormLabel>}
           <FormControl>
-            <Checkbox
-              checked={field.value}
-              onCheckedChange={field.onChange}
-              {...props}
-            />
+            <PhoneInput {...field} />
           </FormControl>
-          <div className="space-y-1 leading-none">
-            {label && (
-              <FormLabel className="!cursor-pointer">{label}</FormLabel>
-            )}
-            {description && <FormDescription>{description}</FormDescription>}
-            <FormMessage />
-          </div>
+          {description && <FormDescription>{description}</FormDescription>}
+          <FormMessage />
         </FormItem>
       )}
     />
   );
 };
-FormCheckbox.displayName = 'FormCheckbox';
+FormPhoneInput.displayName = 'FormPhoneInput';

@@ -1,7 +1,5 @@
 'use client';
 
-import { FormElementInstance } from '@/app/(admin)/booking-forms/[id]/components/FormElements';
-
 import { createAppContext } from '@/hooks/use-create-app-context';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTransition } from 'react';
@@ -9,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 import { createBooking } from '../actions/booking.actions';
+import { FormElementInstance } from '@/app/(admin)/booking-forms/[id]/edit-form.helper';
 
 const createSchema = (formFields: FormElementInstance[]) => {
   if (!formFields?.length) {
@@ -40,11 +39,10 @@ const useHook = ({ formFields, formId }: HookProp) => {
   const schema = z.object(createSchema(formFields));
   type FormSchema = z.infer<typeof schema>;
 
-  const [transition, startTransition] = useTransition();
+  // TODO schema validation
+  const form = useForm<FormSchema>();
 
-  const form = useForm<FormSchema>({
-    resolver: zodResolver(schema),
-  });
+  const [transition, startTransition] = useTransition();
 
   const onSubmit = form.handleSubmit(async (data: FormSchema) => {
     const dataWithFieldTypes = Object.entries(data).map(([key, value]) => {

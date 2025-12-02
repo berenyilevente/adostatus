@@ -1,16 +1,9 @@
 'use client';
 
-import {
-  FormInput,
-  FormSlider,
-  FormSwitch,
-  FormTextarea,
-  Label,
-  Textarea,
-} from '@/components';
+import { FormInput, FormSwitch, Input, Label } from '@/components';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { memo, useEffect } from 'react';
-import { Control, useForm } from 'react-hook-form';
+import { Control, useForm, UseFormReturn } from 'react-hook-form';
 import { z } from 'zod';
 import {
   ElementsType,
@@ -22,15 +15,14 @@ import { useEditBookingForm } from '../../../use-edit-booking-form';
 import { Form } from '@/components/ui/form';
 import { getName } from '../fields.helper';
 
-const type: ElementsType = 'TextAreaField';
+const type: ElementsType = 'LastNameField';
 
 const extraAttributes = {
-  label: 'Text Area Field',
+  label: 'Last Name',
   helpText: '',
   required: false,
   placeholder: '',
-  rows: 3,
-  name: 'text_area_field',
+  name: 'last_name',
 };
 
 const propertiesSchema = z.object({
@@ -38,11 +30,10 @@ const propertiesSchema = z.object({
   helpText: z.string(),
   required: z.boolean(),
   placeholder: z.string(),
-  rows: z.number().min(1).max(10),
   name: z.string(),
 });
 
-export const TextAreaFieldFormElement: FormElement = {
+export const LastNameFieldFormElement: FormElement = {
   type,
   construct: (id: string) => {
     return {
@@ -52,8 +43,8 @@ export const TextAreaFieldFormElement: FormElement = {
     };
   },
   designerButtonElement: {
-    icon: 'textarea',
-    label: 'Text Area Field',
+    icon: 'user',
+    label: 'Last Name',
   },
   designerComponent: (props) => <DesignerComponent {...props} />,
   formComponent: (props) => <FormComponent {...props} />,
@@ -78,7 +69,7 @@ const DesignerComponent = ({
           <span className="text-red-500 pl-1">*</span>
         )}
       </Label>
-      <Textarea placeholder={element.extraAttributes.placeholder} readOnly />
+      <Input placeholder={element.extraAttributes.placeholder} readOnly />
       <p className="text-xs text-muted-foreground">
         {element.extraAttributes.helpText}
       </p>
@@ -95,17 +86,18 @@ const PropertiesComponent = ({
 }) => {
   const { updateElement } = useEditBookingForm();
   const element = elementInstance as CustomInstance;
-  const form = useForm<PropertiesFormSchemaType>({
-    resolver: zodResolver(propertiesSchema),
-    mode: 'onBlur',
-    defaultValues: {
-      label: element.extraAttributes.label,
-      helpText: element.extraAttributes.helpText,
-      required: element.extraAttributes.required,
-      placeholder: element.extraAttributes.placeholder,
-      rows: element.extraAttributes.rows,
-    },
-  });
+
+  const form: UseFormReturn<PropertiesFormSchemaType> =
+    useForm<PropertiesFormSchemaType>({
+      resolver: zodResolver(propertiesSchema),
+      mode: 'onBlur',
+      defaultValues: {
+        label: element.extraAttributes.label,
+        required: element.extraAttributes.required,
+        placeholder: element.extraAttributes.placeholder,
+        helpText: element.extraAttributes.helpText,
+      },
+    });
 
   useEffect(() => {
     form.reset(element.extraAttributes);
@@ -113,11 +105,17 @@ const PropertiesComponent = ({
   }, [element, form]);
 
   const applyChanges = (values: PropertiesFormSchemaType) => {
-    const { label, helpText, required, placeholder, rows, name } = values;
+    const { label, helpText, required, placeholder, name } = values;
 
     updateElement(element.id, {
       ...element,
-      extraAttributes: { label, helpText, required, placeholder, rows, name },
+      extraAttributes: {
+        label,
+        helpText,
+        required,
+        placeholder,
+        name,
+      },
     });
   };
 
@@ -162,15 +160,6 @@ const PropertiesComponent = ({
           label="Required"
           description="Set if the field is required"
         />
-        <FormSlider
-          control={form.control}
-          name="rows"
-          label={`Rows: ${form.watch('rows')}`}
-          description="Number of rows to display in the field"
-          min={1}
-          max={10}
-          step={1}
-        />
       </form>
     </Form>
   );
@@ -186,13 +175,14 @@ const FormComponent = memo(
   }) => {
     const element = elementInstance as CustomInstance;
     return (
-      <FormTextarea
+      <FormInput
         control={control}
-        name={element.extraAttributes.name}
+        name={element.extraAttributes.name || element.id}
+        value={element.extraAttributes.value}
         placeholder={element.extraAttributes.placeholder}
         label={element.extraAttributes.label}
         description={element.extraAttributes.helpText}
-        rows={element.extraAttributes.rows}
+        required={element.extraAttributes.required}
       />
     );
   }

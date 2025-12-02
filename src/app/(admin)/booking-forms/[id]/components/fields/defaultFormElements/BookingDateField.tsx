@@ -1,12 +1,11 @@
 'use client';
 
 import {
+  FormDatepicker,
   FormInput,
-  FormSlider,
   FormSwitch,
-  FormTextarea,
+  Input,
   Label,
-  Textarea,
 } from '@/components';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { memo, useEffect } from 'react';
@@ -22,27 +21,23 @@ import { useEditBookingForm } from '../../../use-edit-booking-form';
 import { Form } from '@/components/ui/form';
 import { getName } from '../fields.helper';
 
-const type: ElementsType = 'TextAreaField';
+const type: ElementsType = 'BookingDateField';
 
 const extraAttributes = {
-  label: 'Text Area Field',
+  label: 'Booking Date',
   helpText: '',
   required: false,
-  placeholder: '',
-  rows: 3,
-  name: 'text_area_field',
+  name: 'booking_date',
 };
 
 const propertiesSchema = z.object({
   label: z.string().min(1),
   helpText: z.string(),
   required: z.boolean(),
-  placeholder: z.string(),
-  rows: z.number().min(1).max(10),
   name: z.string(),
 });
 
-export const TextAreaFieldFormElement: FormElement = {
+export const BookingDateFieldFormElement: FormElement = {
   type,
   construct: (id: string) => {
     return {
@@ -52,8 +47,8 @@ export const TextAreaFieldFormElement: FormElement = {
     };
   },
   designerButtonElement: {
-    icon: 'textarea',
-    label: 'Text Area Field',
+    icon: 'calendar',
+    label: 'Booking Date',
   },
   designerComponent: (props) => <DesignerComponent {...props} />,
   formComponent: (props) => <FormComponent {...props} />,
@@ -71,14 +66,14 @@ const DesignerComponent = ({
 }) => {
   const element = elementInstance as CustomInstance;
   return (
-    <div className="p-1 w-full">
+    <div className="rounded-md p-2 w-full">
       <Label className="text-sm font-medium text-gray-500">
         {element.extraAttributes.label}
         {element.extraAttributes.required && (
           <span className="text-red-500 pl-1">*</span>
         )}
       </Label>
-      <Textarea placeholder={element.extraAttributes.placeholder} readOnly />
+      <Input placeholder={element.extraAttributes.placeholder} readOnly />
       <p className="text-xs text-muted-foreground">
         {element.extraAttributes.helpText}
       </p>
@@ -102,8 +97,6 @@ const PropertiesComponent = ({
       label: element.extraAttributes.label,
       helpText: element.extraAttributes.helpText,
       required: element.extraAttributes.required,
-      placeholder: element.extraAttributes.placeholder,
-      rows: element.extraAttributes.rows,
     },
   });
 
@@ -113,11 +106,11 @@ const PropertiesComponent = ({
   }, [element, form]);
 
   const applyChanges = (values: PropertiesFormSchemaType) => {
-    const { label, helpText, required, placeholder, rows, name } = values;
+    const { label, helpText, required, name } = values;
 
     updateElement(element.id, {
       ...element,
-      extraAttributes: { label, helpText, required, placeholder, rows, name },
+      extraAttributes: { label, helpText, required, name },
     });
   };
 
@@ -145,13 +138,6 @@ const PropertiesComponent = ({
         />
         <FormInput
           control={form.control}
-          name="placeholder"
-          label="Placeholder"
-          description="Placeholder text to display in the field"
-          onKeyDown={onKeyDown}
-        />
-        <FormInput
-          control={form.control}
           name="helpText"
           description="Help text to display below the field"
           onKeyDown={onKeyDown}
@@ -161,15 +147,6 @@ const PropertiesComponent = ({
           name="required"
           label="Required"
           description="Set if the field is required"
-        />
-        <FormSlider
-          control={form.control}
-          name="rows"
-          label={`Rows: ${form.watch('rows')}`}
-          description="Number of rows to display in the field"
-          min={1}
-          max={10}
-          step={1}
         />
       </form>
     </Form>
@@ -186,13 +163,11 @@ const FormComponent = memo(
   }) => {
     const element = elementInstance as CustomInstance;
     return (
-      <FormTextarea
+      <FormDatepicker
         control={control}
         name={element.extraAttributes.name}
-        placeholder={element.extraAttributes.placeholder}
         label={element.extraAttributes.label}
         description={element.extraAttributes.helpText}
-        rows={element.extraAttributes.rows}
       />
     );
   }

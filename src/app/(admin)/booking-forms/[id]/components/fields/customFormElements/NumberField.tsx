@@ -1,26 +1,18 @@
 'use client';
 
-import { FormInput, FormSwitch, Input, Label, Switch } from '@/components';
+import { FormInput, FormSwitch, Input, Label } from '@/components';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { memo, useEffect } from 'react';
 import { Control, useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { useEditBookingForm } from '../../../use-edit-booking-form';
 import {
   ElementsType,
   FormElement,
   FormElementInstance,
 } from '../../../edit-form.helper';
+import { useEditBookingForm } from '../../../use-edit-booking-form';
 
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
+import { Form } from '@/components/ui/form';
 import { getName } from '../fields.helper';
 
 const type: ElementsType = 'NumberField';
