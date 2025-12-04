@@ -24,6 +24,10 @@ const validateForm = (elements: FormElementInstance[]): boolean => {
     return false;
   }
 
+  const hasTitleField = elements.some(
+    (element) => element?.type === 'TitleField'
+  );
+
   const hasDateField = elements.some(
     (element) => element?.type === 'BookingDateField'
   );
@@ -48,6 +52,11 @@ const validateForm = (elements: FormElementInstance[]): boolean => {
 
   if (!hasEndTimeField) {
     toast.error('Form must have an end time field');
+    return false;
+  }
+
+  if (!hasTitleField) {
+    toast.error('Form must have a title field');
     return false;
   }
 

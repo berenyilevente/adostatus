@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 
-import { PageTitle } from '../../components';
-import { EditBookingFormProvider } from './use-edit-booking-form';
-import { EditBookingForm } from './EditBookingForm';
+import { Form } from '@/generated/prisma';
 import { routes } from '@/lib/routes';
-import { getForm, getFormFields } from '../actions';
-import { Form, FormField } from '@/generated/prisma';
+import { PageTitle } from '../../components';
+import { getForm } from '../actions';
+import { EditBookingForm } from './EditBookingForm';
+import { EditBookingFormProvider } from './use-edit-booking-form';
 
 export const metadata: Metadata = {
   title: 'Forms',
@@ -18,17 +18,11 @@ const CreateBookingFormPage = async (props: {
   const formId = params.id;
 
   let formData: Form | null = null;
-  let formFields: FormField[] = [];
 
   const rForm = await getForm(formId);
-  const rFormFields = await getFormFields(formId);
 
   if (rForm.status === 'success' && rForm.data) {
     formData = rForm.data;
-  }
-
-  if (rFormFields.status === 'success' && rFormFields.data) {
-    formFields = rFormFields.data;
   }
 
   return (

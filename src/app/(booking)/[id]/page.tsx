@@ -1,8 +1,8 @@
-import { FormElementInstance } from '@/app/(admin)/booking-forms/[id]/components/FormElements';
 import { PublicBookingForm } from './PublicBookingForm';
 import { findBookingForm } from '../actions/booking.actions';
 import { PageTitle } from '@/app/(admin)/components';
 import { BookingProvider } from './use-booking';
+import { VwFormsPublic } from '@/generated/prisma';
 
 export default async function Page({
   params,
@@ -10,15 +10,15 @@ export default async function Page({
   params: { name: string; id: string };
 }) {
   const { id } = await params;
-  const form = await findBookingForm(id);
+  const rform = await findBookingForm(id);
 
-  const formFields: FormElementInstance[] = form.data
-    ?.content as unknown as FormElementInstance[];
+  if (rform.status === 'error') {
+    return <div>Error: {rform.error}</div>;
+  }
 
   return (
-    <BookingProvider formFields={formFields} formId={id}>
+    <BookingProvider vwForm={rform.data as VwFormsPublic}>
       <div className="max-w-2xl mx-auto mt-16">
-        <PageTitle title="Booking Form" />
         <PublicBookingForm />
       </div>
     </BookingProvider>

@@ -115,20 +115,6 @@ export const archiveBookingForm = async (id: string) => {
   });
 };
 
-export const getFormFields = async (formId: string) => {
-  await isAuthenticated();
-
-  const formFields = await prisma.formField.findMany({
-    where: { formId },
-  });
-
-  return handleResponse({
-    data: formFields,
-    error: 'Form fields not found',
-    code: 404,
-  });
-};
-
 export const updateFormContent = async (formId: string, content: string) => {
   await isAuthenticated();
 

@@ -30,7 +30,6 @@ type DefaultFormElements =
   | 'BookingDateField';
 
 type LayoutElements =
-  | 'TextField'
   | 'TitleField'
   | 'SubtitleField'
   | 'ParagraphField'
@@ -91,7 +90,6 @@ export type FormElementInstance = {
 };
 
 export const LayoutElements: LayoutElementsType = {
-  TextField: TextFieldFormElement,
   TitleField: TitleFieldFormElement,
   SubtitleField: SubtitleFieldFormElement,
   ParagraphField: ParagraphFieldFormElement,
