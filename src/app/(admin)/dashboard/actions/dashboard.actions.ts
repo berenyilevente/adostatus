@@ -1,18 +1,18 @@
-import prisma from "@/lib/prisma/client";
-import { useIsAuthenticated } from "@/hooks/use-is-authenticated";
-import { Response } from "@/types/action.types";
+import prisma from '@/lib/prisma/client';
+import { isAuthenticated } from '@/lib/auth/isAuthenticated';
+import { Response } from '@/types/action.types';
 
 export const getUsers = async (): Promise<Response<any[]>> => {
-  const session = await useIsAuthenticated();
+  const session = await isAuthenticated();
 
   const currentUserEmail = session?.user?.email;
 
   if (!currentUserEmail) {
     return {
-      status: "error",
+      status: 'error',
       data: undefined,
       code: 404,
-      errors: "Current user not found",
+      error: 'Current user not found',
     };
   }
 
@@ -25,9 +25,9 @@ export const getUsers = async (): Promise<Response<any[]>> => {
   });
 
   return {
-    status: "success",
+    status: 'success',
     data: users,
     code: 200,
-    errors: undefined,
+    error: undefined,
   };
 };

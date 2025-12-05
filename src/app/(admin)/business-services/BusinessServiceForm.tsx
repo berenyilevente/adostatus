@@ -15,34 +15,24 @@ export const BusinessServiceForm = () => {
 
   return (
     <FormWrapper form={servicesForm} className="space-y-6">
-      <FormInput
-        control={servicesForm.control}
-        label="Service Name"
-        name="name"
-        placeholder="Enter your service name"
-      />
-      <div className="grid grid-cols-2 gap-2">
+      <div className="flex w-full justify-between gap-4">
+        <FormInput
+          control={servicesForm.control}
+          label="Service Name"
+          name="name"
+          className="w-full"
+          placeholder="Enter your service name"
+        />
         <FormInput
           control={servicesForm.control}
           label="Price"
           name="price"
           type="number"
+          className="w-full"
           placeholder="Enter your service price"
         />
-        <FormSelect
-          control={servicesForm.control}
-          label="Currency"
-          name="currency"
-          placeholder="Select your currency"
-          options={currencies}
-        />
       </div>
-      <div className="grid grid-cols-2 gap-2">
-        <FormSwitch
-          control={servicesForm.control}
-          label="Is Active"
-          name="isActive"
-        />
+      <div className="grid grid-cols-2 gap-4">
         <FormInput
           control={servicesForm.control}
           label="Duration"
@@ -54,6 +44,20 @@ export const BusinessServiceForm = () => {
           label="Buffer Time"
           name="bufferTime"
           placeholder="Enter your service buffer time"
+        />
+      </div>
+      <div className="grid grid-cols-2 gap-4">
+        <FormSwitch
+          control={servicesForm.control}
+          label="Is Active"
+          name="isActive"
+        />
+        <FormSelect
+          control={servicesForm.control}
+          label="Currency"
+          name="currency"
+          placeholder="Select your currency"
+          options={currencies}
         />
       </div>
       <FormTextarea

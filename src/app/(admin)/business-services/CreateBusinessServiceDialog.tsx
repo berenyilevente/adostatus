@@ -46,7 +46,7 @@ const CreateServiceDialogHeader = () => {
         <div>
           <div>Add a new service</div>
           <div className="text-sm font-normal text-muted-foreground">
-            {businessName}
+            Business: {businessName}
           </div>
         </div>
       </DialogTitle>
