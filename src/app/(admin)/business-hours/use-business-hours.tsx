@@ -20,6 +20,7 @@ import {
   BusinessHoursSchema,
 } from './business-hours.helper';
 import { toast } from 'sonner';
+import { useParams } from 'next/navigation';
 
 type HookProp = {
   businesses: Business[];
@@ -31,26 +32,17 @@ const useHook = ({ businesses }: HookProp) => {
   const [businessHours, setBusinessHours] = useState<BusinessHours[]>([]);
   const [breakTimes, setBreakTimes] = useState<BreakTime[]>([]);
   const [isLoading, startTransition] = useTransition();
-
-  const filterForm = useForm({
-    defaultValues: {
-      business: businesses[0]?.id, // TODO get the actual business id from the url
-    },
-  });
+  const { id: businessId } = useParams<{ readonly id: string }>();
 
   // TODO: use react query to fetch business hours and break times
   useEffect(() => {
     const fetchBusinessHours = async () => {
-      const rBusinessHours = await getBusinessHours({
-        businessId: businesses[0]?.id,
-      });
+      const rBusinessHours = await getBusinessHours({ businessId });
       setBusinessHours(rBusinessHours.data ?? []);
     };
 
     const fetchBreakTimes = async () => {
-      const rBreakTimes = await getBreakTimes({
-        businessId: businesses[0]?.id,
-      });
+      const rBreakTimes = await getBreakTimes({ businessId });
       setBreakTimes(rBreakTimes.data ?? []);
     };
 
@@ -58,7 +50,6 @@ const useHook = ({ businesses }: HookProp) => {
     fetchBreakTimes();
   }, []);
 
-  const businessId = filterForm.watch('business');
   const business = businesses.find((business) => business.id === businessId);
   const businessName = business?.name;
 
@@ -126,7 +117,6 @@ const useHook = ({ businesses }: HookProp) => {
     businessHours,
     breakTimes,
     businesses,
-    filterForm,
     businessName,
     businessHoursForm,
     breakTimesForm,

@@ -19,10 +19,8 @@ import {
 
 import { useEditBusiness } from './use-edit-business';
 import { businessTypes } from '../../business.helper';
-import { useRouter } from 'next/navigation';
 
 const EditBusiness = () => {
-  const router = useRouter();
   const { businessForm, onBusinessSave, handleBack, isLoading } =
     useEditBusiness();
 

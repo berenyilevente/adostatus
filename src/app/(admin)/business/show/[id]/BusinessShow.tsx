@@ -27,12 +27,15 @@ import { CreateBusinessServicesDialog } from '@/app/(admin)/business-services/Cr
 import { BusinessHoursCard } from '@/app/(admin)/business-hours/BusinessHoursCard';
 import { BreakTimesCard } from '@/app/(admin)/business-hours/BreakTimesCard';
 import { BusinessServicesCard } from '@/app/(admin)/business-services/BusinessServicesCard';
+import { useBusinessHours } from '@/app/(admin)/business-hours/use-business-hours';
+import { BusinessHoursDialog } from '@/app/(admin)/business-hours/BusinessHoursDialog';
 
 const BusinessShow = () => {
   const router = useRouter();
   const { business, handleCancel, getBusinessTypeLabel } = useBusinessShow();
 
   const { services, handleCreateService } = useBusinessServices();
+  const { openBusinessHoursDialog } = useBusinessHours();
 
   return (
     <div className="space-y-6">
@@ -203,7 +206,7 @@ const BusinessShow = () => {
                   <Button
                     size="sm"
                     endIcon="edit"
-                    onClick={handleCreateService}
+                    onClick={openBusinessHoursDialog}
                     variant="outline"
                   >
                     Edit
@@ -252,6 +255,7 @@ const BusinessShow = () => {
       </div>
       <CreateBusinessServicesDialog />
       <EditBusinessServicesDialog />
+      <BusinessHoursDialog />
     </div>
   );
 };

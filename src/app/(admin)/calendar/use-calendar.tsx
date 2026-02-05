@@ -15,19 +15,40 @@ import { useForm } from 'react-hook-form';
 import { getServices } from '../business-services/actions/business-services.actions';
 import { getTeamMembers } from '../team-members/actions/teamMember.actions';
 import { TeamMemberWithUser } from '../team-members/teamMember.helper';
-import { createAppointment, getAppointments } from './actions/calendar.actions';
+import {
+  createAppointment,
+  getAppointments,
+  getFormSubmissions,
+} from './actions/calendar.actions';
 import { AppointmentSchema, CreateAppointment } from './calendar.helper';
+import { useParams } from 'next/navigation';
+import { useQueryState } from 'nuqs';
 
 type HookProp = {
   businesses: Business[];
-  formSubmissions: FormSubmission[];
 };
 
-const useHook = ({ businesses, formSubmissions }: HookProp) => {
+const useHook = ({ businesses }: HookProp) => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [services, setServices] = useState<Service[]>([]);
   const [teamMembers, setTeamMembers] = useState<TeamMemberWithUser[]>([]);
   const [isAppointmentDialogOpen, setIsAppointmentDialogOpen] = useState(false);
+  const [formSubmissions, setFormSubmissions] = useState<FormSubmission[]>([]);
+
+  const [businessIdUrl] = useQueryState('businessId');
+
+  useEffect(() => {
+    if (!businessIdUrl) {
+      return;
+    }
+
+    // TODO get the formSubmissions based on the businessId selected in the filter form in the url
+    const fetchFormSubmissions = async () => {
+      const rFormSubmissions = await getFormSubmissions(businessIdUrl);
+      setFormSubmissions(rFormSubmissions.data || []);
+    };
+    fetchFormSubmissions();
+  }, [businessIdUrl]);
 
   const filterForm = useForm({
     defaultValues: {

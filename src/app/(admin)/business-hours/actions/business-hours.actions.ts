@@ -54,6 +54,7 @@ export const upsertBusinessHours = async (
   });
 
   revalidatePath('/calendar');
+  revalidatePath(`/business/show/${businessId}`);
 
   return handleResponse<BusinessHours[]>({
     data: allBusinessHours,
@@ -105,6 +106,9 @@ export const upsertBreakTimes = async (
   const allBreakTimes = await prisma.breakTime.findMany({
     where: { businessId },
   });
+
+  revalidatePath(`/business/show/${businessId}`);
+  revalidatePath('/calendar');
 
   return handleResponse<BreakTime[]>({
     data: allBreakTimes,

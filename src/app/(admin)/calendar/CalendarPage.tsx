@@ -11,6 +11,7 @@ import listPlugin from '@fullcalendar/list';
 import multiMonthPlugin from '@fullcalendar/multimonth';
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
+import { useQueryState } from 'nuqs';
 
 import { useRef, useState } from 'react';
 import { Card } from '@/components/ui/card';
@@ -55,6 +56,7 @@ export function CalendarPage() {
   const [selectedEvent, setSelectedEvent] = useState<
     CalendarEvent | undefined
   >();
+  const [_, setBusinessId] = useQueryState('businessId');
 
   const [isDrag, setIsDrag] = useState(false);
 
@@ -146,6 +148,9 @@ export function CalendarPage() {
               control={filterForm.control}
               options={businessOptions}
               placeholder="Select a business"
+              onValueChange={(value) => {
+                setBusinessId(value);
+              }}
             />
           </FormWrapper>
         }

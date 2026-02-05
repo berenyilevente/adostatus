@@ -91,6 +91,9 @@ export const getBusinesses = async (): Promise<Response<Business[]>> => {
     where: {
       ownerId: session.user.id,
     },
+    include: {
+      appointments: true,
+    },
   });
 
   return handleResponse<Business[]>({

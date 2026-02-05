@@ -20,7 +20,7 @@ import {
 import { useBusinessHours } from './use-business-hours';
 import { daysOfWeek } from '../calendar/calendar.helper';
 
-export const BusinessHours = () => {
+export const BusinessHoursDialog = () => {
   const {
     businessHoursForm,
     breakTimesForm,

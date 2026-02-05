@@ -36,6 +36,7 @@ interface FormSelectProps<
   className?: string;
   actionButton?: ReactNode;
   disabled?: boolean;
+  onValueChange?: (value: string) => void;
 }
 
 export const FormSelect = <
@@ -51,6 +52,7 @@ export const FormSelect = <
   className,
   actionButton,
   disabled,
+  onValueChange,
 }: FormSelectProps<TField, TName>) => {
   return (
     <FormField
@@ -60,7 +62,7 @@ export const FormSelect = <
         <FormItem className={cn(className)}>
           {label && <FormLabel>{label}</FormLabel>}
           <Select
-            onValueChange={field.onChange}
+            onValueChange={onValueChange ? onValueChange : field.onChange}
             defaultValue={field.value}
             disabled={disabled}
           >
