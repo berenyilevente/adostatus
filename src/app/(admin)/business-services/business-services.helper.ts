@@ -13,6 +13,7 @@ export const ServicesSchema: z.ZodType<Services> = z.object({
   duration: z.string().nullable(),
   bufferTime: z.string().nullable(),
   color: z.string().nullable(),
+  userId: z.string(),
   formId: z.string().nullable(),
 });
 

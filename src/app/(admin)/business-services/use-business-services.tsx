@@ -14,6 +14,7 @@ import {
 } from './actions/business-services.actions';
 import { ServicesForm, ServicesSchema } from './business-services.helper';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 type HookProp = {
   business: Business;
@@ -21,6 +22,7 @@ type HookProp = {
 };
 
 const useHook = ({ business, services }: HookProp) => {
+  const { data: session } = useSession();
   const router = useRouter();
   const [isCreateServicesDialogOpen, setIsCreateServicesDialogOpen] =
     useState(false);
@@ -45,7 +47,8 @@ const useHook = ({ business, services }: HookProp) => {
     bufferTime: '',
     description: '',
     color: null,
-    formId: null,
+    formId: '',
+    userId: session?.user?.id,
   };
 
   const servicesForm = useForm<ServicesForm>({

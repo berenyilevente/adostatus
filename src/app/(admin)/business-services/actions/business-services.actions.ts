@@ -29,12 +29,17 @@ export const createService = async (
   service: ServicesForm
 ): Promise<Response<Service>> => {
   await isAuthenticated();
-
+  const { businessId, ...serviceData } = service;
   const serviceResult = await prisma.service.create({
-    data: service,
+    data: {
+      ...serviceData,
+      business: {
+        connect: { id: businessId },
+      },
+    },
   });
 
-  revalidatePath(`/business/${service.businessId}`);
+  revalidatePath(`/business/${businessId}`);
 
   return handleResponse<Service>({
     data: serviceResult,

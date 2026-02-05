@@ -185,7 +185,7 @@ model Service {
   price        String?
   currency     String?
   color        String?
-  formId       String
+  formId       String?
   isActive     Boolean       @default(true)
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
