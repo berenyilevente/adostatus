@@ -27,10 +27,7 @@ import { useRouter } from 'next/navigation';
 import { useBookingForms } from './use-booking-forms';
 import { cn } from '@/utils/combineClassNames';
 import { EmptyList } from '../components/ui/empty-list';
-import {
-  CreateBookingFormProvider,
-  useCreateBookingForm,
-} from './create/use-create-booking-form';
+import { CreateBookingFormProvider } from './create/use-create-booking-form';
 import { CreateBookingForm } from './create/CreateBookingForm';
 
 export const BookingFormList = (): ReactElement => {
@@ -82,9 +79,7 @@ export const BookingFormList = (): ReactElement => {
             options={statusOptions}
           />
         </FormWrapper>
-        <CreateBookingFormProvider>
-          <CreateBookingForm />
-        </CreateBookingFormProvider>
+        <CreateBookingForm />
       </div>
       {bookingForms.length === 0 ? (
         <EmptyList>

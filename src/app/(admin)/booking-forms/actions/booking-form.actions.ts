@@ -1,24 +1,35 @@
 'use server';
 
 import prisma from '@/lib/prisma/client';
+import { Response } from '@/types/action.types';
+
 import { isAuthenticated } from '@/lib/auth';
 import { handleResponse } from '@/utils/handleResponse';
 import { revalidatePath } from 'next/cache';
 import { CreateBookingForm } from '../booking-form.helper';
 import { config } from '@/config';
-import { FormStatus } from '@/generated/prisma';
+import { Business, Form, Service, FormStatus } from '@/generated/prisma';
 
-export const getBookingForms = async () => {
+export type BookingForm = Form & {
+  service: Service;
+  business: Business;
+};
+
+export const getBookingForms = async (): Promise<Response<BookingForm[]>> => {
   const { user } = await isAuthenticated();
 
-  const bookingForms = await prisma.form.findMany({
+  const bookingForms: BookingForm[] = await prisma.form.findMany({
     where: {
       userId: user.id,
     },
+    include: {
+      service: true,
+      business: true,
+    },
   });
 
-  return handleResponse({
-    data: bookingForms,
+  return handleResponse<BookingForm[]>({
+    data: bookingForms, 
     error: 'Booking forms not found',
     code: 404,
   });

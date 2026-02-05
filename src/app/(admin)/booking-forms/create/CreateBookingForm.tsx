@@ -12,6 +12,7 @@ import {
   SheetTitle,
   SheetTrigger,
   FormWrapper,
+  SheetClose,
 } from '@/components';
 import { useRouter } from 'next/navigation';
 import { useCreateBookingForm } from './use-create-booking-form';
@@ -20,7 +21,8 @@ import { useBookingForms } from '../use-booking-forms';
 export const CreateBookingForm = () => {
   const router = useRouter();
   const { createForm, onSubmitBookingForm } = useCreateBookingForm();
-  const { businessOptions } = useBookingForms();
+  const { businessOptions, serviceOptions, toggleCreateFormSheet } =
+    useBookingForms();
 
   return (
     <Sheet modal>
@@ -41,24 +43,51 @@ export const CreateBookingForm = () => {
           form={createForm}
           className="flex gap-4 flex-col w-full mt-6"
         >
+          <div className="flex items-center gap-2">
+            <FormSelect
+              control={createForm.control}
+              label="Business"
+              name="businessId"
+              placeholder="Select business..."
+              options={businessOptions}
+              className="w-full"
+            />
+            {/* <SheetClose asChild onClick={() => router.push('/business/create')}>
+              <Button
+                variant="outline"
+                fullWidth
+                endIcon="plus"
+                className="mt-8"
+              >
+                Add new business
+              </Button>
+            </SheetClose> */}
+          </div>
           <FormSelect
             control={createForm.control}
-            label="Business"
-            name="businessId"
-            placeholder="Select business..."
-            options={businessOptions}
+            label="Service"
+            name="serviceId"
+            placeholder="Select a service..."
+            options={serviceOptions}
+            className="w-full"
+            disabled={!createForm.watch('businessId')}
             actionButton={
-              <Button
-                variant="ghost"
-                size="sm"
-                fullWidth
-                onClick={() => router.push('/business/create')}
-                endIcon="plus"
+              <SheetClose
+                asChild
+                onClick={() => router.push('/business-services/create')}
               >
-                Create a new business
-              </Button>
+                <Button
+                  variant="outline"
+                  fullWidth
+                  endIcon="plus"
+                  className="mt-8"
+                >
+                  Add new service
+                </Button>
+              </SheetClose>
             }
           />
+
           <FormInput
             control={createForm.control}
             label="Name"

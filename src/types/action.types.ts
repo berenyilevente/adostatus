@@ -5,11 +5,11 @@ export type Response<T> =
       status: ResponseStatus;
       data: T;
       code: number;
-      error: undefined;
+      error: null;
     }
   | {
       status: ResponseStatus;
-      data: undefined | null;
+      data: null;
       code: number;
       error: string;
     };

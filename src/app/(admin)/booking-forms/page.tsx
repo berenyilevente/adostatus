@@ -1,48 +1,55 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import { Business, Form } from '@/generated/prisma';
-
-import { getBusinesses } from '../business/actions/business.actions';
 import { PageTitle } from '../components';
-import { getBookingForms } from './actions';
+import { BookingForm, getBookingForms } from './actions';
 import { BookingFormList } from './BookingFormList';
 import { BookingFormsProvider } from './use-booking-forms';
+import { Business, Service } from '@/generated/prisma';
+import { getBusinesses } from '../business/actions';
+import { getServices } from '../business-services/actions/business-services.actions';
+import { CreateBookingFormProvider } from './create/use-create-booking-form';
 
 export const metadata: Metadata = {
   title: 'Booking Forms',
 };
 
 const BookingForms = async () => {
-  let bookingForms: Form[] = [];
-  let businessData: Business[] = [];
-  const rBookingForms = await getBookingForms();
-  const rBusiness = await getBusinesses();
+  let bookingForms: BookingForm[] = [];
+  let businesses: Business[] = [];
+  let services: Service[] = [];
 
-  if (rBookingForms === null || rBusiness.data === null) {
+  const response = await Promise.all([
+    getBookingForms(),
+    getBusinesses(),
+    getServices(),
+  ]);
+
+  if (response.some((r) => r.data === null)) {
     return notFound();
   }
 
-  if (rBookingForms.status === 'success' && rBookingForms.data) {
-    bookingForms = rBookingForms.data;
-  }
-
-  if (rBusiness.status === 'success' && rBusiness.data) {
-    businessData = rBusiness.data;
+  if (response.every((r) => r.status === 'success' && r.data !== null)) {
+    bookingForms = response[0].data || [];
+    businesses = response[1].data || [];
+    services = response[2].data || [];
   }
 
   return (
     <BookingFormsProvider
       bookingForms={bookingForms}
-      businessData={businessData}
+      businesses={businesses}
+      services={services}
     >
-      <PageTitle
-        title={'Booking Forms'}
-        breadcrumbs={[{ label: 'Booking Forms', active: true }]}
-      />
-      <div className="mt-5">
-        <BookingFormList />
-      </div>
+      <CreateBookingFormProvider>
+        <PageTitle
+          title={'Booking Forms'}
+          breadcrumbs={[{ label: 'Booking Forms', active: true }]}
+        />
+        <div className="mt-5">
+          <BookingFormList />
+        </div>
+      </CreateBookingFormProvider>
     </BookingFormsProvider>
   );
 };

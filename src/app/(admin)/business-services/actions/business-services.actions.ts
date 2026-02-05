@@ -9,14 +9,12 @@ import { handleResponse } from '@/utils/handleResponse';
 import { ServicesForm } from '../business-services.helper';
 import { revalidatePath } from 'next/cache';
 
-export const getServices = async (
-  businessId: string
-): Promise<Response<Service[]>> => {
-  await isAuthenticated();
+export const getServices = async (): Promise<Response<Service[]>> => {
+  const { user } = await isAuthenticated();
 
   const services = await prisma.service.findMany({
     where: {
-      businessId: businessId,
+      userId: user?.id,
     },
   });
 

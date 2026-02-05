@@ -2,19 +2,20 @@
 
 import { useForm } from 'react-hook-form';
 
-import { Business, Form } from '@/generated/prisma';
+import { Business, Form, Service } from '@/generated/prisma';
 
 import { createAppContext } from '@/hooks/use-create-app-context';
 import { useState } from 'react';
-import { deleteBookingForm, updateBookingForm } from './actions';
+import { BookingForm, deleteBookingForm, updateBookingForm } from './actions';
 import { CreateBookingForm } from './booking-form.helper';
 
 type HookProp = {
-  bookingForms: Form[];
-  businessData: Business[];
+  bookingForms: BookingForm[];
+  businesses: Business[];
+  services: Service[];
 };
 
-const useHook = ({ bookingForms, businessData }: HookProp) => {
+const useHook = ({ bookingForms, businesses, services }: HookProp) => {
   const [isEditSheetOpen, setIsEditSheetOpen] = useState(false);
   const [editingForm, setEditingForm] = useState<Form | null>(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -51,9 +52,14 @@ const useHook = ({ bookingForms, businessData }: HookProp) => {
 
   const search = filterForm.watch('search');
 
-  const businessOptions = businessData.map((business) => ({
+  const businessOptions = businesses?.map((business) => ({
     label: business.name,
     value: business.id,
+  }));
+
+  const serviceOptions = services?.map((service) => ({
+    label: service.name,
+    value: service.id,
   }));
 
   const toggleCreateFormSheet = () => {
@@ -108,7 +114,6 @@ const useHook = ({ bookingForms, businessData }: HookProp) => {
     bookingForms,
     search,
     filterForm,
-    businessData,
     editForm,
     statusOptions,
     onSubmitEditForm,
@@ -123,6 +128,7 @@ const useHook = ({ bookingForms, businessData }: HookProp) => {
     confirmDelete,
     cancelDelete,
     businessOptions,
+    serviceOptions,
   };
 };
 
