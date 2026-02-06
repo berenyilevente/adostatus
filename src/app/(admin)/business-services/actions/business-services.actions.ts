@@ -3,20 +3,23 @@
 import { Response } from '@/types/action.types';
 
 import prisma from '@/lib/prisma/client';
-import { Service } from '@/generated/prisma';
+import { Form, Service } from '@/generated/prisma';
 import { isAuthenticated } from '@/utils/isAuthenticated';
 import { handleResponse } from '@/utils/handleResponse';
 import { ServicesForm } from '../business-services.helper';
 import { revalidatePath } from 'next/cache';
 
-export const getServices = async (): Promise<Response<Service[]>> => {
+export type ServiceWithForm = Service & { form: Form | null };
+
+export const getServices = async (): Promise<Response<ServiceWithForm[]>> => {
   const session = await isAuthenticated();
 
   const services = await prisma.service.findMany({
     where: { business: { ownerId: session.user.id } },
+    include: { form: true },
   });
 
-  return handleResponse<Service[]>({
+  return handleResponse<ServiceWithForm[]>({
     data: services,
     code: 404,
     error: 'Services not found',

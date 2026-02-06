@@ -2,17 +2,18 @@
 
 import { useForm } from 'react-hook-form';
 
-import { Business, Form, Service } from '@/generated/prisma';
+import { Business, Form } from '@/generated/prisma';
 
 import { createAppContext } from '@/hooks/use-create-app-context';
 import { useState } from 'react';
 import { BookingForm, deleteBookingForm, updateBookingForm } from './actions';
 import { CreateBookingForm } from './booking-form.helper';
+import { ServiceWithForm } from '../business-services/actions/business-services.actions';
 
 type HookProp = {
   bookingForms: BookingForm[];
   businesses: Business[];
-  services: Service[];
+  services: ServiceWithForm[];
 };
 
 const useHook = ({ bookingForms, businesses, services }: HookProp) => {
@@ -57,10 +58,12 @@ const useHook = ({ bookingForms, businesses, services }: HookProp) => {
     value: business.id,
   }));
 
-  const serviceOptions = services?.map((service) => ({
-    label: service.name,
-    value: service.id,
-  }));
+  const serviceOptions = services
+    ?.filter((service) => !service.form)
+    .map((service) => ({
+      label: service.name,
+      value: service.id,
+    }));
 
   const toggleCreateFormSheet = () => {
     document.getElementById('create-booking-form-trigger')?.click();

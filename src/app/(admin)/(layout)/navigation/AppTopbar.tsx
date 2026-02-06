@@ -1,6 +1,3 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { signOut } from 'next-auth/react';
 
@@ -19,6 +16,8 @@ import {
   SidebarTrigger,
 } from '@/components';
 import avatar from '@/assets/images/avatar/avatar.png';
+import { getBusinesses } from '../../business/actions';
+import { BusinessSelect } from './BusinessSelect';
 
 const UserDropdown = ({
   image,
@@ -82,12 +81,15 @@ export const AppTopbar = () => {
       </NavbarStart>
       <NavbarCenter />
       <NavbarEnd>
-        <UserDropdown
-          image={user?.image}
-          email={user?.email || ''}
-          status={status}
-          onLogout={onLogout}
-        />
+        <div className="flex items-center gap-6">
+          <BusinessSelect />
+          <UserDropdown
+            image={user?.image}
+            email={user?.email || ''}
+            status={status}
+            onLogout={onLogout}
+          />
+        </div>
       </NavbarEnd>
     </Navbar>
   );

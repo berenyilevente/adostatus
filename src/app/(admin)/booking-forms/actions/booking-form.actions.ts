@@ -57,6 +57,18 @@ export const createBookingForm = async (
 ): Promise<any> => {
   const { user } = await isAuthenticated();
 
+  const existingForm = await prisma.form.findUnique({
+    where: { serviceId: data.serviceId },
+  });
+
+  if (existingForm) {
+    return handleResponse({
+      data: null,
+      error: 'This service already has a booking form associated with it',
+      code: 400,
+    });
+  }
+
   const form = await prisma.form.create({
     data: {
       name: data.name,

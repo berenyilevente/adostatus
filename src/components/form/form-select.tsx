@@ -37,6 +37,7 @@ interface FormSelectProps<
   actionButton?: ReactNode;
   disabled?: boolean;
   onValueChange?: (value: string) => void;
+  noOptionsMessage?: string;
 }
 
 export const FormSelect = <
@@ -53,6 +54,7 @@ export const FormSelect = <
   actionButton,
   disabled,
   onValueChange,
+  noOptionsMessage = 'No options found',
 }: FormSelectProps<TField, TName>) => {
   return (
     <FormField
@@ -72,17 +74,23 @@ export const FormSelect = <
               </SelectTrigger>
             </FormControl>
             <SelectContent>
-              {options.map((option) => (
-                <SelectItem
-                  key={option.value}
-                  value={option.value}
-                  className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
-                >
-                  {option.label}
+              {options.length > 0 ? (
+                options.map((option) => (
+                  <SelectItem
+                    key={option.value}
+                    value={option.value}
+                    className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
+                  >
+                    {option.label}
+                  </SelectItem>
+                ))
+              ) : (
+                <SelectItem value="no-options" disabled>
+                  {noOptionsMessage}
                 </SelectItem>
-              ))}
-              {actionButton}
+              )}
             </SelectContent>
+            {actionButton}
           </Select>
           {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />

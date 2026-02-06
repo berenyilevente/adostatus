@@ -5,9 +5,9 @@ import { PageTitle } from '../components';
 import { BookingForm, getBookingForms } from './actions';
 import { BookingFormList } from './BookingFormList';
 import { BookingFormsProvider } from './use-booking-forms';
-import { Business, Service } from '@/generated/prisma';
+import { Business } from '@/generated/prisma';
 import { getBusinesses } from '../business/actions';
-import { getServices } from '../business-services/actions/business-services.actions';
+import { getServices, ServiceWithForm } from '../business-services/actions/business-services.actions';
 import { CreateBookingFormProvider } from './create/use-create-booking-form';
 
 export const metadata: Metadata = {
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 const BookingForms = async () => {
   let bookingForms: BookingForm[] = [];
   let businesses: Business[] = [];
-  let services: Service[] = [];
+  let services: ServiceWithForm[] = [];
 
   const response = await Promise.all([
     getBookingForms(),

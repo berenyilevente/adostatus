@@ -73,7 +73,11 @@ export const CreateBookingFormSheet = () => {
             actionButton={
               <SheetClose
                 asChild
-                onClick={() => router.push('/business-services/create')}
+                onClick={() =>
+                  router.push(
+                    `/business/show/${createForm.watch('businessId')}`
+                  )
+                }
               >
                 <Button
                   variant="outline"
@@ -85,6 +89,7 @@ export const CreateBookingFormSheet = () => {
                 </Button>
               </SheetClose>
             }
+            noOptionsMessage="No services found for this business yet. Create a new service to get started."
           />
 
           <FormInput
