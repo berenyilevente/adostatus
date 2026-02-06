@@ -141,17 +141,25 @@ const EditTeamMember = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <FormInput
                     control={form.control}
-                    label="Business ID"
-                    name="businessId"
-                    placeholder="Enter business ID"
-                    disabled
+                    label="First Name"
+                    name="firstName"
                   />
                   <FormInput
                     control={form.control}
-                    label="User ID"
-                    name="userId"
-                    placeholder="Enter user ID"
-                    disabled
+                    label="Last Name"
+                    name="lastName"
+                  />
+                  <FormInput
+                    control={form.control}
+                    label="Email"
+                    name="email"
+                    placeholder="Enter email"
+                  />
+                  <FormInput
+                    control={form.control}
+                    label="Phone"
+                    name="phone"
+                    placeholder="Enter phone number"
                   />
                 </div>
                 <FormSelect

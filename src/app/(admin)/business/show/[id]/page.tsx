@@ -27,7 +27,7 @@ const ShowBusinessPage = async (props: { params: Promise<{ id: string }> }) => {
   let teamMembers: TeamMemberWithUser[] = [];
 
   const rBusiness = await getBusiness(params.id);
-  const rServices = await getServices(params.id);
+  const rServices = await getServices();
   const rTeamMembers = await getTeamMembers([params.id]);
 
   if (rBusiness.status === 'success' && rBusiness.data) {

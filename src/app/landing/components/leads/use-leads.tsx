@@ -1,31 +1,28 @@
-"use client";
+'use client';
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-import { saveLead } from "./actions/lead.actions";
-import { leadsSchema, LeadsSchemaType } from "./schemas/lead.schemas";
-import { useState } from "react";
+import { leadsSchema, LeadsSchemaType } from './schemas/lead.schemas';
+import { useState } from 'react';
 
 export const useLeads = () => {
   const form = useForm<LeadsSchemaType>({
     defaultValues: {
-      email: "",
+      email: '',
     },
     resolver: zodResolver(leadsSchema),
   });
 
   const {
-    control,
     handleSubmit,
-    formState: { isValid, isSubmitSuccessful, errors },
+    formState: { isValid },
   } = form;
 
   const [submitted, setSubmitted] = useState<boolean>(false);
 
   const onSubmit = handleSubmit(async (data: any) => {
     setSubmitted(true);
-    await saveLead(data.email);
   });
 
   return { form, onSubmit, isValid, submitted };

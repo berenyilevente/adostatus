@@ -1,26 +1,26 @@
-"use client";
+'use client';
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { signIn } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { signIn } from 'next-auth/react';
+import { useRouter, useSearchParams } from 'next/navigation';
 
-import { routes } from "@/lib/routes";
-import { stripe } from "@/config/stripe.config";
-import { createCheckoutSession } from "@/app/actions/stripe/checkout.action";
+import { routes } from '@/lib/routes';
+import { stripe } from '@/config/stripe.config';
+import { createCheckoutSession } from '@/app/actions/stripe/checkout.action';
 
 export const usePurchase = () => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const priceId = searchParams.get("priceId");
-  console.log("use-purchase.ts at Line: 20", priceId);
+  const priceId = searchParams.get('priceId');
+  console.log('use-purchase.ts at Line: 20', priceId);
 
   const purchaseSchema = z.object({
-    email: z.string().email({ message: "Please enter a valid email address." }),
+    email: z.string().email({ message: 'Please enter a valid email address.' }),
     priceId: z.string(),
   });
 
@@ -29,7 +29,7 @@ export const usePurchase = () => {
   const form = useForm<PurchaseSchema>({
     resolver: zodResolver(purchaseSchema),
     defaultValues: {
-      email: "",
+      email: '',
       priceId: stripe.plans[0].priceId,
     },
   });
@@ -47,12 +47,12 @@ export const usePurchase = () => {
 
     try {
       if (!priceId) {
-        setErrors({ priceId: "Plan not found!" });
+        setErrors({ priceId: 'Plan not found!' });
         return;
       }
 
       const url = await createCheckoutSession({ priceId, email });
-      await signIn("email", { email, callbackUrl: routes.dashboard.index });
+      await signIn('email', { email, callbackUrl: routes.dashboard.index });
 
       if (url) {
         window.location.href = url;

@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { ReactElement } from "react";
+import { ReactElement } from 'react';
 
 import {
   Button,
@@ -9,10 +9,10 @@ import {
   Label,
   FormInput,
   FormWrapper,
-} from "@/components";
-import { config } from "@/config";
+} from '@/components';
+import { config } from '@/config';
 
-import { useLeads } from "./use-leads";
+import { useLeads } from './use-leads';
 
 export const Leads = (): ReactElement => {
   const { form, onSubmit, submitted } = useLeads();
@@ -23,8 +23,8 @@ export const Leads = (): ReactElement => {
         {!submitted ? (
           <>
             <h3 className="text-center text-sm text-base-content/70 min-w-3/4 mx-auto">
-              Sign up to get notified when {config.app.name} is ready with and
-              secure your discount at launch.
+              Sign up to get notified when {config.app.name} is ready and secure
+              your discount at launch.
             </h3>
 
             <div className="mt-1 flex flex-col gap-4 items-center w-full">

@@ -8,7 +8,7 @@ import { toast } from 'sonner';
 import { z } from 'zod';
 import { createBooking } from '../actions/booking.actions';
 import { FormElementInstance } from '@/app/(admin)/booking-forms/[id]/edit-form.helper';
-import { VwFormsPublic } from '@/generated/prisma';
+import { vw_forms_public } from '@/generated/prisma';
 import dayjs from 'dayjs';
 
 const createSchema = (formFields: FormElementInstance[]) => {
@@ -33,11 +33,11 @@ const createSchema = (formFields: FormElementInstance[]) => {
 };
 
 type HookProp = {
-  vwForm: VwFormsPublic;
+  vwForm: vw_forms_public;
 };
 
 const useHook = ({ vwForm }: HookProp) => {
-  const formFields = vwForm?.content as FormElementInstance[];
+  const formFields = vwForm?.content as unknown as FormElementInstance[];
   const schema = z.object(createSchema(formFields));
   type FormSchema = z.infer<typeof schema>;
 

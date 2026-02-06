@@ -123,7 +123,7 @@ const useHook = ({ businesses }: HookProp) => {
     };
 
     const fetchServices = async () => {
-      const rServices = await getServices(businessId);
+      const rServices = await getServices();
       setServices(rServices.data || []);
     };
 

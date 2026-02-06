@@ -14,7 +14,7 @@ export const handleResponse = <T>({
   if (!data) {
     return {
       status: 'error',
-      data: undefined,
+      data: null,
       code,
       error,
     };
@@ -24,6 +24,6 @@ export const handleResponse = <T>({
     status: 'success',
     data,
     code: 200,
-    error: undefined,
+    error: null,
   };
 };

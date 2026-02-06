@@ -1,7 +1,7 @@
 'use client';
 
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
-import { calendarRef } from '../calendar.helper';
+import { calendarRef } from '@/components/ui/full-calendar/utils';
 
 export function generateDaysInMonth(daysInMonth: number) {
   const daysArray = [];

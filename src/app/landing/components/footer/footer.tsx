@@ -1,8 +1,7 @@
-import Image from "next/image";
-import Link from "next/link";
+import Image from 'next/image';
+import Link from 'next/link';
 
-import { config } from "@/config";
-import { Leads } from "../leads/leads";
+import { config } from '@/config';
 
 export const Footer = () => {
   return (

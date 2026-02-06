@@ -1,13 +1,12 @@
 import { PublicBookingForm } from './PublicBookingForm';
 import { findBookingForm } from '../actions/booking.actions';
-import { PageTitle } from '@/app/(admin)/components';
 import { BookingProvider } from './use-booking';
-import { VwFormsPublic } from '@/generated/prisma';
+import { vw_forms_public } from '@/generated/prisma';
 
 export default async function Page({
   params,
 }: {
-  params: { name: string; id: string };
+  params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
   const rform = await findBookingForm(id);
@@ -17,7 +16,7 @@ export default async function Page({
   }
 
   return (
-    <BookingProvider vwForm={rform.data as VwFormsPublic}>
+    <BookingProvider vwForm={rform.data as vw_forms_public}>
       <div className="max-w-2xl mx-auto mt-16">
         <PublicBookingForm />
       </div>

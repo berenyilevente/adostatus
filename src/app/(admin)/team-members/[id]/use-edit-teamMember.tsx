@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useParams, useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { createAppContext } from '@/hooks/use-create-app-context';
@@ -12,25 +12,29 @@ import {
   TeamMemberSchemaType,
   TeamMemberSchema,
   teamMemberRoles,
+  TeamMemberWithUser,
 } from '../teamMember.helper';
 import { toast } from 'sonner';
 
 type HookProp = {
-  teamMember: any;
+  teamMember: TeamMemberWithUser;
 };
 
 const useHook = ({ teamMember }: HookProp) => {
   const router = useRouter();
   const { id: teamMemberId } = useParams();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, startTransition] = useTransition();
 
   const form = useForm<TeamMemberSchemaType>({
     resolver: zodResolver(TeamMemberSchema),
     defaultValues: {
-      businessId: teamMember.businessId || '',
-      userId: teamMember.userId || '',
-      role: teamMember.role || '',
-      isActive: teamMember.isActive ?? true,
+      businessId: teamMember.businessId,
+      role: teamMember.role,
+      isActive: teamMember.isActive,
+      firstName: teamMember.user.firstName || '',
+      lastName: teamMember.user.lastName || '',
+      email: teamMember.user.email,
+      phone: teamMember.user.phone || '',
     },
   });
 
@@ -39,21 +43,20 @@ const useHook = ({ teamMember }: HookProp) => {
       return;
     }
 
-    setIsLoading(true);
+    startTransition(async () => {
+      const response = await updateTeamMember(teamMemberId.toString(), data);
 
-    const response = await updateTeamMember(teamMemberId.toString(), data);
-
-    if (response.status === 'success') {
-      toast.success('Team member updated successfully');
-      setIsLoading(false);
-      return;
-    }
-
-    if (response.status === 'error') {
-      toast.error('Failed to update team member');
-      setIsLoading(false);
-      return;
-    }
+      if (response.status === 'success') {
+        toast.success('Team member updated successfully');
+        router.refresh();
+        return;
+      }
+      if (response.status === 'error') {
+        toast.error('Failed to update team member');
+        router.refresh();
+        return;
+      }
+    });
   });
 
   const handleCancel = () => {

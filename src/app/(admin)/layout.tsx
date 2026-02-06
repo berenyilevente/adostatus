@@ -8,7 +8,6 @@ import AdminLayout from './(layout)/AdminLayout';
 import { AppSidebar } from './(layout)/navigation/AppSidebar';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import NextTopLoader from 'nextjs-toploader';
 
 const EXCLUDED_PAGES = ['/onboard-user'];
 
@@ -28,7 +27,6 @@ const Layout = ({ children }: { children: any }) => {
 
   return (
     <SessionProvider>
-      <NextTopLoader color="#000" />
       <SidebarProvider open={open} onOpenChange={onOpenChange}>
         <AppSidebar />
         <AdminLayout>{children}</AdminLayout>

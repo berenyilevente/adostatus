@@ -10,7 +10,7 @@ export const getUsers = async (): Promise<Response<any[]>> => {
   if (!currentUserEmail) {
     return {
       status: 'error',
-      data: undefined,
+      data: null,
       code: 404,
       error: 'Current user not found',
     };
@@ -28,6 +28,6 @@ export const getUsers = async (): Promise<Response<any[]>> => {
     status: 'success',
     data: users,
     code: 200,
-    error: undefined,
+    error: null,
   };
 };

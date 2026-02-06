@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 
 import { Card, CardContent, Logo } from '@/components';
 import { config } from '@/config/main.config';
@@ -21,7 +22,9 @@ const LoginPage = () => {
           Provide your email address to get started.
         </h3>
         <div className="mt-6">
-          <Purchase />
+          <Suspense fallback={null}>
+            <Purchase />
+          </Suspense>
         </div>
       </CardContent>
     </Card>

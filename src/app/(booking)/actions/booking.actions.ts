@@ -1,25 +1,25 @@
 'use server';
 
-import { VwFormsPublic } from '@/generated/prisma';
+import { vw_forms_public } from '@/generated/prisma';
 import prisma from '@/lib/prisma/client';
 import { handleResponse } from '@/utils/handleResponse';
 import { Response } from '@/types/action.types';
 
 export const findBookingForm = async (
   id: string
-): Promise<Response<VwFormsPublic>> => {
-  const form = await prisma.vwFormsPublic.findUnique({
+): Promise<Response<vw_forms_public>> => {
+  const form = await prisma.vw_forms_public.findUnique({
     where: { id },
   });
   if (!form) {
-    return handleResponse<VwFormsPublic>({
+    return handleResponse<vw_forms_public>({
       data: null,
       code: 404,
       error: 'Form not found',
     });
   }
 
-  return handleResponse<VwFormsPublic>({
+  return handleResponse<vw_forms_public>({
     data: form,
     code: 200,
     error: undefined,
@@ -31,7 +31,7 @@ export const createBooking = async ({
   formValues,
   appointmentData,
 }: {
-  vwForm: VwFormsPublic;
+  vwForm: vw_forms_public;
   formValues: unknown;
   appointmentData: { title: string; start: string; end: string };
 }) => {
