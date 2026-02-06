@@ -38,14 +38,20 @@ const useHook = () => {
     });
   };
 
+  const toggleCreateBusinessSheet = () => {
+    document.getElementById('create-business-sheet-trigger')?.click();
+  };
+
   const onSubmit = form.handleSubmit(async (data) => {
     setIsLoading(true);
     const res = await createBusiness(data);
 
     if (res.status === 'success') {
       toast.success('Business created successfully');
-      router.push(`/business/show/${res.data?.id}`);
+      router.refresh();
       setIsLoading(false);
+      toggleCreateBusinessSheet();
+      form.reset();
       return;
     }
 

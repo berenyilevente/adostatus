@@ -18,6 +18,7 @@ import { useBusiness } from './use-business';
 import { useRouter } from 'next/navigation';
 import { EmptyList } from '../components/ui/empty-list';
 import { BusinessCard } from './components/BusinessCard';
+import { CreateBusinessSheet } from './create/CreateBusinessSheet';
 
 export const BusinessList = () => {
   const router = useRouter();
@@ -42,16 +43,7 @@ export const BusinessList = () => {
             placeholder="Search businesses..."
           />
         </FormWrapper>
-        <Button
-          startIcon="plus"
-          size="sm"
-          iconSize="xs"
-          variant="default"
-          color="primary"
-          onClick={() => router.push('/business/create')}
-        >
-          Add Business
-        </Button>
+        <CreateBusinessSheet />
       </div>
       {businesses.length === 0 ? (
         <EmptyList>

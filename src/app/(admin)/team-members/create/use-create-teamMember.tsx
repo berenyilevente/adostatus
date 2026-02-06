@@ -40,6 +40,8 @@ const useHook = () => {
       toast.success('Team member created successfully');
       setIsLoading(false);
       toggleCreateFormSheet();
+      form.reset();
+      router.refresh();
       return;
     }
     if (response.status === 'error') {

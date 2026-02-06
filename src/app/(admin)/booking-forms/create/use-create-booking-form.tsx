@@ -7,8 +7,10 @@ import { CreateBookingForm, FormSchemaType } from '../booking-form.helper';
 import { createBookingForm } from '../actions';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 const useHook = () => {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const createForm = useForm<FormSchemaType>({
     defaultValues: {
@@ -39,6 +41,8 @@ const useHook = () => {
         toast.success('Booking form created successfully');
         setIsLoading(false);
         toggleCreateFormSheet();
+        createForm.reset();
+        router.refresh();
         return;
       }
       if (response.status === 'error') {

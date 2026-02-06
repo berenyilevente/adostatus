@@ -7,6 +7,7 @@ import { BusinessList } from './BusinessList';
 import { BusinessProvider } from './use-business';
 import { getBusinesses } from './actions';
 import { PageTitle } from '../components';
+import { CreateBusinessProvider } from './create/use-create-business';
 
 export const metadata: Metadata = {
   title: 'Business',
@@ -26,13 +27,15 @@ const Business = async () => {
 
   return (
     <BusinessProvider businesses={businesses}>
-      <PageTitle
-        title={'Business'}
-        breadcrumbs={[{ label: 'Business', active: true }]}
-      />
-      <div className="mt-5">
-        <BusinessList />
-      </div>
+      <CreateBusinessProvider>
+        <PageTitle
+          title={'Business'}
+          breadcrumbs={[{ label: 'Business', active: true }]}
+        />
+        <div className="mt-5">
+          <BusinessList />
+        </div>
+      </CreateBusinessProvider>
     </BusinessProvider>
   );
 };
