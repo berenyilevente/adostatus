@@ -4,7 +4,7 @@ import { Appointment, Business, Service } from '@/generated/prisma';
 
 import { createAppContext } from '@/hooks/use-create-app-context';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { getServices } from '../business-services/actions/business-services.actions';
@@ -16,6 +16,8 @@ import {
   CreateAppointmentForm,
 } from './calendar.helper';
 import { useQueryState } from 'nuqs';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 type HookProp = {
   businesses: Business[];
@@ -23,9 +25,11 @@ type HookProp = {
 
 const useHook = ({ businesses }: HookProp) => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const router = useRouter();
   const [services, setServices] = useState<Service[]>([]);
   const [teamMembers, setTeamMembers] = useState<TeamMemberWithUser[]>([]);
   const [isAppointmentDialogOpen, setIsAppointmentDialogOpen] = useState(false);
+  const [isLoading, startTransition] = useTransition();
 
   const [businessIdUrl] = useQueryState('businessId');
 
@@ -79,7 +83,7 @@ const useHook = ({ businesses }: HookProp) => {
   }));
 
   const teamMemberOptions = teamMembers?.map((teamMember) => ({
-    label: teamMember.user.name ?? '',
+    label: `${teamMember.user.firstName} ${teamMember.user.lastName}`,
     value: teamMember.id,
   }));
 
@@ -92,7 +96,20 @@ const useHook = ({ businesses }: HookProp) => {
   ];
 
   const onAppointmentSubmit = appointmentForm.handleSubmit(async (data) => {
-    await createAppointment({ ...data, businessId });
+    startTransition(async () => {
+      const response = await createAppointment({ ...data, businessId });
+      if (response.status === 'success') {
+        toast.success('Appointment created successfully');
+        setIsAppointmentDialogOpen(false);
+        appointmentForm.reset();
+        router.refresh();
+        return;
+      }
+      if (response.status === 'error') {
+        toast.error('Failed to create appointment');
+        return;
+      }
+    });
   });
 
   useEffect(() => {
@@ -133,6 +150,7 @@ const useHook = ({ businesses }: HookProp) => {
     serviceOptions,
     statusOptions,
     businessName,
+    isLoading,
   };
 };
 

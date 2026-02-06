@@ -49,12 +49,8 @@ export const createAppointment = async (
 ): Promise<Response<Appointment>> => {
   await isAuthenticated();
 
-  const {
-    customerName,
-    customerEmail,
-    customerPhone,
-    ...appointmentData
-  } = data;
+  const { customerName, customerEmail, customerPhone, ...appointmentData } =
+    data;
 
   const nameParts = customerName.trim().split(/\s+/);
   const firstName = nameParts[0];
@@ -89,6 +85,7 @@ export const createAppointment = async (
     return appointment;
   });
 
+  revalidatePath('/calendar');
   revalidatePath(`/calendar?business=${data.businessId}`);
 
   return handleResponse<Appointment>({
@@ -104,12 +101,8 @@ export const updateAppointment = async (
 ): Promise<Response<Appointment>> => {
   await isAuthenticated();
 
-  const {
-    customerName,
-    customerEmail,
-    customerPhone,
-    ...appointmentData
-  } = data;
+  const { customerName, customerEmail, customerPhone, ...appointmentData } =
+    data;
 
   const updatedAppointment = await prisma.appointment.update({
     where: { id },

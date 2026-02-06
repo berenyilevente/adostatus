@@ -27,6 +27,7 @@ export const AppointmentDialog = () => {
     serviceOptions,
     statusOptions,
     businessName,
+    isLoading,
   } = useCalendar();
 
   const handleClose = () => {
@@ -154,6 +155,7 @@ export const AppointmentDialog = () => {
                 variant="outline"
                 onClick={handleClose}
                 className="flex-1"
+                disabled={isLoading}
               >
                 Cancel
               </Button>
@@ -161,6 +163,8 @@ export const AppointmentDialog = () => {
                 type="submit"
                 onClick={onAppointmentSubmit}
                 className="flex-1"
+                disabled={isLoading}
+                isLoading={isLoading}
               >
                 Create Appointment
               </Button>
