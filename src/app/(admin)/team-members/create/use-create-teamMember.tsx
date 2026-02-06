@@ -8,6 +8,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { createAppContext } from '@/hooks/use-create-app-context';
 
 import { TeamMemberSchemaType, TeamMemberSchema } from '../teamMember.helper';
+import { toast } from 'sonner';
+import { createTeamMember } from '../actions/teamMember.actions';
 
 const useHook = () => {
   const router = useRouter();
@@ -16,21 +18,38 @@ const useHook = () => {
   const form = useForm<TeamMemberSchemaType>({
     resolver: zodResolver(TeamMemberSchema),
     defaultValues: {
-      // Add default values here
+      businessId: '',
+      role: '',
+      isActive: false,
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
     },
   });
 
-  const { handleSubmit, setValue } = form;
+  const toggleCreateFormSheet = () => {
+    document.getElementById('create-team-member-trigger')?.click();
+  };
+  const { handleSubmit } = form;
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log(data);
+    setIsLoading(true);
+    const response = await createTeamMember(data);
+    if (response.status === 'success') {
+      toast.success('Team member created successfully');
+      setIsLoading(false);
+      toggleCreateFormSheet();
+      return;
+    }
+    if (response.status === 'error') {
+      toast.error('Failed to create team member');
+      setIsLoading(false);
+      return;
+    }
   });
 
-  const handleCancel = () => {
-    router.push('/team-members');
-  };
-
-  return { onSubmit, handleCancel, isLoading, form };
+  return { onSubmit, isLoading, form };
 };
 
 const [useCreateTeamMember, CreateTeamMemberProvider] =

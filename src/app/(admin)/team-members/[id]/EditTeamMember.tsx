@@ -68,53 +68,8 @@ const EditTeamMember = () => {
       </div>
 
       <FormWrapper form={form}>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Main Form */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Team Member Information */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <User className="h-5 w-5" />
-                  <span>Information</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <FormInput
-                    control={form.control}
-                    label="Business ID"
-                    name="businessId"
-                    placeholder="Enter business ID"
-                    disabled
-                  />
-                  <FormInput
-                    control={form.control}
-                    label="User ID"
-                    name="userId"
-                    placeholder="Enter user ID"
-                    disabled
-                  />
-                </div>
-
-                <FormSelect
-                  control={form.control}
-                  label="Role"
-                  name="role"
-                  placeholder="Select role"
-                  options={teamMemberRoles}
-                />
-
-                <FormSwitch
-                  control={form.control}
-                  label="Active Status"
-                  name="isActive"
-                  description="Enable or disable this team member's access"
-                />
-              </CardContent>
-            </Card>
-          </div>
-
           {/* Sidebar */}
           {/* Team Member Profile */}
           <Card>
@@ -173,6 +128,48 @@ const EditTeamMember = () => {
               </div>
             </CardContent>
           </Card>
+          <div className="space-y-6">
+            {/* Team Member Information */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <User className="h-5 w-5" />
+                  <span>Information</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <FormInput
+                    control={form.control}
+                    label="Business ID"
+                    name="businessId"
+                    placeholder="Enter business ID"
+                    disabled
+                  />
+                  <FormInput
+                    control={form.control}
+                    label="User ID"
+                    name="userId"
+                    placeholder="Enter user ID"
+                    disabled
+                  />
+                </div>
+                <FormSelect
+                  control={form.control}
+                  label="Role"
+                  name="role"
+                  placeholder="Select role"
+                  options={teamMemberRoles}
+                />
+                <FormSwitch
+                  control={form.control}
+                  label="Active Status"
+                  name="isActive"
+                  description="Enable or disable this team member's access"
+                />
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </FormWrapper>
     </div>

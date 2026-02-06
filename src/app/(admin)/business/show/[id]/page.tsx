@@ -12,6 +12,8 @@ import { Service } from '@/generated/prisma';
 import { BusinessServicesProvider } from '@/app/(admin)/business-services/use-business-services';
 import { BusinessHoursProvider } from '@/app/(admin)/business-hours/use-business-hours';
 import { getServices } from '@/app/(admin)/business-services/actions/business-services.actions';
+import { getTeamMembers } from '@/app/(admin)/team-members/actions/teamMember.actions';
+import { TeamMemberWithUser } from '@/app/(admin)/team-members/teamMember.helper';
 
 export const metadata: Metadata = {
   title: 'Show Business',
@@ -22,9 +24,11 @@ const ShowBusinessPage = async (props: { params: Promise<{ id: string }> }) => {
 
   let business: BusinessResponse | null = null;
   let services: Service[] | null = null;
+  let teamMembers: TeamMemberWithUser[] = [];
 
   const rBusiness = await getBusiness(params.id);
   const rServices = await getServices(params.id);
+  const rTeamMembers = await getTeamMembers([params.id]);
 
   if (rBusiness.status === 'success' && rBusiness.data) {
     business = rBusiness.data;
@@ -38,6 +42,10 @@ const ShowBusinessPage = async (props: { params: Promise<{ id: string }> }) => {
     notFound();
   }
 
+  if (rTeamMembers.status === 'success' && rTeamMembers.data) {
+    teamMembers = rTeamMembers.data;
+  }
+
   return (
     <div>
       <PageTitle
@@ -49,7 +57,11 @@ const ShowBusinessPage = async (props: { params: Promise<{ id: string }> }) => {
       />
       <div className="mt-5">
         <BusinessShowProvider business={business}>
-          <BusinessServicesProvider business={business} services={services}>
+          <BusinessServicesProvider
+            business={business}
+            services={services}
+            teamMembers={teamMembers}
+          >
             <BusinessHoursProvider businesses={[business]}>
               <BusinessShow />
             </BusinessHoursProvider>

@@ -29,7 +29,7 @@ export const getBookingForms = async (): Promise<Response<BookingForm[]>> => {
   });
 
   return handleResponse<BookingForm[]>({
-    data: bookingForms, 
+    data: bookingForms,
     error: 'Booking forms not found',
     code: 404,
   });
@@ -59,8 +59,18 @@ export const createBookingForm = async (
 
   const form = await prisma.form.create({
     data: {
-      ...data,
-      userId: user.id,
+      name: data.name,
+      description: data.description,
+      isTemplate: data.isTemplate,
+      templateType: data.templateType,
+      confirmationMessage: data.confirmationMessage,
+      allowCancellation: data.allowCancellation,
+      cancellationNoticeHours: data.cancellationNoticeHours,
+      status: data.status,
+      url: data.url,
+      service: { connect: { id: data.serviceId } },
+      business: { connect: { id: data.businessId } },
+      user: { connect: { id: user.id } },
     },
   });
 

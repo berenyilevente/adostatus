@@ -15,13 +15,15 @@ import {
 import { ServicesForm, ServicesSchema } from './business-services.helper';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import { TeamMemberWithUser } from '@/app/(admin)/team-members/teamMember.helper';
 
 type HookProp = {
   business: Business;
   services: Service[];
+  teamMembers?: TeamMemberWithUser[];
 };
 
-const useHook = ({ business, services }: HookProp) => {
+const useHook = ({ business, services, teamMembers = [] }: HookProp) => {
   const { data: session } = useSession();
   const router = useRouter();
   const [isCreateServicesDialogOpen, setIsCreateServicesDialogOpen] =
@@ -37,6 +39,11 @@ const useHook = ({ business, services }: HookProp) => {
 
   const businessName = business?.name;
 
+  const teamMemberOptions = teamMembers.map((team) => ({
+    label: `${team.user.firstName} ${team.user.lastName}`,
+    value: team.id,
+  }));
+
   const defaultValues = {
     businessId: business.id,
     name: '',
@@ -48,7 +55,8 @@ const useHook = ({ business, services }: HookProp) => {
     description: '',
     color: null,
     formId: '',
-    userId: session?.user?.id,
+    userId: session?.user?.id ?? '',
+    teamMemberId: teamMemberOptions[0]?.value ?? '',
   };
 
   const servicesForm = useForm<ServicesForm>({
@@ -116,6 +124,7 @@ const useHook = ({ business, services }: HookProp) => {
     selectedService,
     isEditServicesDialogOpen,
     isLoading,
+    teamMemberOptions,
     setIsEditServicesDialogOpen,
     onSubmitService,
     handleEditService,

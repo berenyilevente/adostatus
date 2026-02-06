@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { Edit, Trash2, User, Mail, Phone, Calendar } from 'lucide-react';
+import { Edit, Trash2, User, Mail, Phone, Calendar, Eye } from 'lucide-react';
 
 import {
   Button,
@@ -26,6 +26,7 @@ import { useTeamMembers } from './use-teamMembers';
 import { formatDate } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { EmptyList } from '../components/ui/empty-list';
+import { CreateTeamMemberSheet } from './create/CreateTeamMemberSheet';
 
 export const TeamMemberList = () => {
   const router = useRouter();
@@ -55,16 +56,7 @@ export const TeamMemberList = () => {
             placeholder="Search team members..."
           />
         </FormWrapper>
-        <Button
-          startIcon="plus"
-          size="sm"
-          iconSize="xs"
-          variant="default"
-          color="primary"
-          onClick={() => router.push('/team-members/create')}
-        >
-          Add Team Member
-        </Button>
+        <CreateTeamMemberSheet />
       </div>
       {teamMembers.length === 0 ? (
         <EmptyList>
@@ -85,14 +77,16 @@ export const TeamMemberList = () => {
                   <Avatar className="h-12 w-12">
                     <AvatarImage src={teamMember.user.image || undefined} />
                     <AvatarFallback className="bg-blue-100 text-blue-600">
-                      {getInitials(teamMember.user.name)}
+                      {getInitials(
+                        `${teamMember.user.firstName} ${teamMember.user.lastName}`
+                      )}
                     </AvatarFallback>
                   </Avatar>
-
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center space-x-2">
                       <h3 className="text-base font-semibold text-gray-900 truncate">
-                        {teamMember.user.name || 'Unnamed User'}
+                        {`${teamMember.user.firstName} ${teamMember.user.lastName}` ||
+                          'Unnamed User'}
                       </h3>
                       <Badge
                         variant="outline"
@@ -143,8 +137,8 @@ export const TeamMemberList = () => {
                     }
                     className="flex items-center space-x-1"
                   >
-                    <Edit className="h-4 w-4" />
-                    <span>Edit</span>
+                    <Eye className="h-4 w-4" />
+                    <span>Show Details</span>
                   </Button>
 
                   <Button

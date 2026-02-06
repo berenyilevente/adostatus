@@ -6,7 +6,7 @@ import { Response } from '@/types/action.types';
 import { handleResponse } from '@/utils/handleResponse';
 import { isAuthenticated } from '@/utils/isAuthenticated';
 import { revalidatePath } from 'next/cache';
-import { TeamMemberWithUser } from '../teamMember.helper';
+import { TeamMemberSchemaType, TeamMemberWithUser } from '../teamMember.helper';
 
 // TODO Explore an option to turn actions into a single class or function
 export async function getTeamMembers(
@@ -22,6 +22,7 @@ export async function getTeamMembers(
     },
     include: {
       user: true,
+      business: true,
     },
   });
 
@@ -38,12 +39,8 @@ export async function getTeamMember(
   await isAuthenticated();
 
   const teamMember = await prisma.teamMember.findUnique({
-    where: {
-      id,
-    },
-    include: {
-      user: true,
-    },
+    where: { id },
+    include: { user: true, business: true },
   });
 
   return handleResponse({
@@ -54,18 +51,32 @@ export async function getTeamMember(
 }
 
 export async function createTeamMember(
-  data: Partial<TeamMember>
-): Promise<Response<TeamMember>> {
+  data: TeamMemberSchemaType
+): Promise<Response<{ teamMember: TeamMember; user: User }>> {
   await isAuthenticated();
 
+  const newUser = await prisma.user.create({
+    data: {
+      email: data.email,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      phone: data.phone,
+    },
+  });
+
   const teamMember = await prisma.teamMember.create({
-    data: data as any,
+    data: {
+      role: data.role,
+      isActive: data.isActive,
+      user: { connect: { id: newUser.id } },
+      business: { connect: { id: data.businessId } },
+    },
   });
 
   revalidatePath('/team-members');
 
   return handleResponse({
-    data: teamMember,
+    data: { teamMember, user: newUser },
     error: 'Failed to create team member',
     code: 400,
   });

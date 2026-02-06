@@ -18,11 +18,10 @@ import { useRouter } from 'next/navigation';
 import { useCreateBookingForm } from './use-create-booking-form';
 import { useBookingForms } from '../use-booking-forms';
 
-export const CreateBookingForm = () => {
+export const CreateBookingFormSheet = () => {
   const router = useRouter();
-  const { createForm, onSubmitBookingForm } = useCreateBookingForm();
-  const { businessOptions, serviceOptions, toggleCreateFormSheet } =
-    useBookingForms();
+  const { createForm, onSubmitBookingForm, isLoading } = useCreateBookingForm();
+  const { businessOptions, serviceOptions } = useBookingForms();
 
   return (
     <Sheet modal>
@@ -100,7 +99,9 @@ export const CreateBookingForm = () => {
             name="description"
             placeholder="Enter form description"
           />
-          <Button onClick={onSubmitBookingForm}>Create form</Button>
+          <Button onClick={onSubmitBookingForm} isLoading={isLoading}>
+            Create form
+          </Button>
         </FormWrapper>
       </SheetContent>
     </Sheet>

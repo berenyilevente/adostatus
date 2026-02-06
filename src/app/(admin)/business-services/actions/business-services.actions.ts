@@ -9,13 +9,13 @@ import { handleResponse } from '@/utils/handleResponse';
 import { ServicesForm } from '../business-services.helper';
 import { revalidatePath } from 'next/cache';
 
-export const getServices = async (): Promise<Response<Service[]>> => {
-  const { user } = await isAuthenticated();
+export const getServices = async (
+  businessId: string
+): Promise<Response<Service[]>> => {
+  await isAuthenticated();
 
   const services = await prisma.service.findMany({
-    where: {
-      userId: user?.id,
-    },
+    where: { businessId },
   });
 
   return handleResponse<Service[]>({
@@ -28,14 +28,24 @@ export const getServices = async (): Promise<Response<Service[]>> => {
 export const createService = async (
   service: ServicesForm
 ): Promise<Response<Service>> => {
-  await isAuthenticated();
-  const { businessId, ...serviceData } = service;
+  const { user } = await isAuthenticated();
+
+  if (!user.id) {
+    return handleResponse<Service>({
+      data: null,
+      code: 404,
+      error: 'User not found',
+    });
+  }
+
+  const { businessId, teamMemberId, ...serviceData } = service;
+
   const serviceResult = await prisma.service.create({
     data: {
       ...serviceData,
-      business: {
-        connect: { id: businessId },
-      },
+      userId: user.id,
+      business: { connect: { id: businessId } },
+      teamMember: { connect: { id: teamMemberId } },
     },
   });
 
@@ -54,9 +64,14 @@ export const updateService = async (
 ): Promise<Response<Service>> => {
   await isAuthenticated();
 
+  const { formId, ...rest } = service;
+
   const serviceResult = await prisma.service.update({
     where: { id },
-    data: service,
+    data: {
+      ...rest,
+      formId: formId || null,
+    },
   });
 
   revalidatePath(`/business/${service.businessId}`);

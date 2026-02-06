@@ -8,6 +8,7 @@ import { TeamMembersProvider } from './use-teamMembers';
 import { getTeamMembers } from './actions/teamMember.actions';
 import { PageTitle } from '../components';
 import { getBusinesses } from '../business/actions';
+import { CreateTeamMemberProvider } from './create/use-create-teamMember';
 
 export const metadata: Metadata = {
   title: 'TeamMembers',
@@ -37,13 +38,15 @@ const TeamMembers = async () => {
 
   return (
     <TeamMembersProvider teamMembers={teamMembers} businesses={businesses}>
-      <PageTitle
-        title={'TeamMembers'}
-        breadcrumbs={[{ label: 'TeamMembers', active: true }]}
-      />
-      <div className="mt-5">
-        <TeamMemberList />
-      </div>
+      <CreateTeamMemberProvider>
+        <PageTitle
+          title={'TeamMembers'}
+          breadcrumbs={[{ label: 'TeamMembers', active: true }]}
+        />
+        <div className="mt-5">
+          <TeamMemberList />
+        </div>
+      </CreateTeamMemberProvider>
     </TeamMembersProvider>
   );
 };

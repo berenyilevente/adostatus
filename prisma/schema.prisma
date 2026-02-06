@@ -80,6 +80,7 @@ model TeamMember {
   business     Business      @relation(fields: [businessId], references: [id], onDelete: Cascade)
   user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   timeOffs     TimeOff[]
+  services     Service[]
 
   @@unique([businessId, userId])
   @@index([businessId])
@@ -189,12 +190,16 @@ model Service {
   isActive     Boolean       @default(true)
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
+  teamMemberId String
   userId       String
+
   appointments Appointment[]
   business     Business      @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  teamMember   TeamMember    @relation(fields: [teamMemberId], references: [id], onDelete: Cascade)
   form         Form?
 
   @@index([businessId])
+  @@index([teamMemberId])
   @@index([userId])
   @@map("services")
 }

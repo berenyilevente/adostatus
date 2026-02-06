@@ -5,9 +5,12 @@ export type TeamMemberWithUser = TeamMember & { user: User };
 
 export const TeamMemberSchema = z.object({
   businessId: z.string().min(1, 'Business ID is required'),
-  userId: z.string().min(1, 'User ID is required'),
   role: z.string().min(1, 'Role is required'),
-  isActive: z.boolean().default(true),
+  isActive: z.boolean().default(false),
+  email: z.string().email('Invalid email address'),
+  firstName: z.string().min(1, 'First name is required'),
+  lastName: z.string().min(1, 'Last name is required'),
+  phone: z.string().min(1, 'Phone number is required'),
 });
 
 export type TeamMemberSchemaType = z.infer<typeof TeamMemberSchema>;

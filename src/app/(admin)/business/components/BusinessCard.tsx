@@ -1,6 +1,13 @@
-import { Card, CardContent, Button, Badge } from '@/components';
+import {
+  Card,
+  CardContent,
+  Button,
+  Badge,
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from '@/components';
 import { cn } from '@/utils';
-import { Avatar, AvatarImage, AvatarFallback } from '@radix-ui/react-avatar';
 import { Edit, Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Business } from '@/generated/prisma';
@@ -8,7 +15,7 @@ import { useBusiness } from '../use-business';
 
 export const BusinessCard = ({ business }: { business: Business }) => {
   const router = useRouter();
-  const { openDeleteDialog } = useBusiness();
+  const { openDeleteDialog, getInitials } = useBusiness();
 
   return (
     <Card className="bg-white" key={business.id}>
@@ -18,10 +25,7 @@ export const BusinessCard = ({ business }: { business: Business }) => {
             <Avatar className="h-12 w-12">
               <AvatarImage src={business.logoUrl || undefined} />
               <AvatarFallback className="bg-blue-100 text-blue-600">
-                {business.name
-                  .split(' ')
-                  .map((n) => n[0])
-                  .join('')}
+                {getInitials(business.name)}
               </AvatarFallback>
             </Avatar>
 

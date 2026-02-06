@@ -11,7 +11,7 @@ import { useBusinessServices } from './use-business-services';
 import { currencies } from './business-services.helper';
 
 export const BusinessServiceForm = () => {
-  const { servicesForm } = useBusinessServices();
+  const { servicesForm, teamMemberOptions } = useBusinessServices();
 
   return (
     <FormWrapper form={servicesForm} className="space-y-6">
@@ -30,6 +30,13 @@ export const BusinessServiceForm = () => {
           type="number"
           className="w-full"
           placeholder="Enter your service price"
+        />
+        <FormSelect
+          control={servicesForm.control}
+          label="Team Member"
+          name="teamMemberId"
+          placeholder="Select your team member"
+          options={teamMemberOptions}
         />
       </div>
       <div className="grid grid-cols-2 gap-4">

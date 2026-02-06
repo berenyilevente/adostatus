@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
-import { signOut } from "next-auth/react";
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 
 import {
   NavbarEnd,
@@ -17,8 +17,8 @@ import {
   Navbar,
   NavbarCenter,
   SidebarTrigger,
-} from "@/components";
-import avatar from "@/assets/images/avatar/avatar.png";
+} from '@/components';
+import avatar from '@/assets/images/avatar/avatar.png';
 
 const UserDropdown = ({
   image,
@@ -28,13 +28,13 @@ const UserDropdown = ({
 }: {
   email: string;
   image?: string | null;
-  status: "loading" | "authenticated" | "unauthenticated";
+  status: 'loading' | 'authenticated' | 'unauthenticated';
   onLogout: () => void;
 }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        {status === "loading" ? (
+        {status === 'loading' ? (
           <Spinner />
         ) : (
           <div className="flex items-center gap-2">
@@ -84,7 +84,7 @@ export const AppTopbar = () => {
       <NavbarEnd>
         <UserDropdown
           image={user?.image}
-          email={user?.email || ""}
+          email={user?.email || ''}
           status={status}
           onLogout={onLogout}
         />
