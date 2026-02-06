@@ -28,22 +28,6 @@ import {
 import { CalendarEvent } from './calendar.helper';
 import { AppointmentDialog } from './components/AppointmentDialog';
 import { useBusinessHours } from '../business-hours/use-business-hours';
-import { FormSubmission } from '@/generated/prisma';
-
-type FormSubmissionValues = {
-  value: string;
-  type: string;
-  name: string;
-  label: string;
-};
-
-const getEvents = (formSubmissions: FormSubmission[]) => {
-  const submissionData: FormSubmissionValues[] = formSubmissions.flatMap(
-    (submission) => JSON.parse(submission.submissionData as string)
-  );
-
-  console.log(submissionData.map((submission) => submission));
-};
 
 export function CalendarPage() {
   const calendarRef = useRef<FullCalendar | null>(null);
@@ -65,7 +49,6 @@ export function CalendarPage() {
     filterForm,
     businessOptions,
     setIsAppointmentDialogOpen,
-    formSubmissions,
   } = useCalendar();
 
   const { openBusinessHoursDialog } = useBusinessHours();
@@ -78,8 +61,6 @@ export function CalendarPage() {
     end: Date;
     backgroundColor: string;
   };
-
-  getEvents(formSubmissions);
 
   const events: Event[] = appointments.map((appointment) => ({
     id: appointment.id,

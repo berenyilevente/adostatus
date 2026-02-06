@@ -1,11 +1,6 @@
 'use client';
 
-import {
-  Appointment,
-  Business,
-  FormSubmission,
-  Service,
-} from '@/generated/prisma';
+import { Appointment, Business, Service } from '@/generated/prisma';
 
 import { createAppContext } from '@/hooks/use-create-app-context';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -15,13 +10,11 @@ import { useForm } from 'react-hook-form';
 import { getServices } from '../business-services/actions/business-services.actions';
 import { getTeamMembers } from '../team-members/actions/teamMember.actions';
 import { TeamMemberWithUser } from '../team-members/teamMember.helper';
+import { createAppointment, getAppointments } from './actions/calendar.actions';
 import {
-  createAppointment,
-  getAppointments,
-  getFormSubmissions,
-} from './actions/calendar.actions';
-import { AppointmentSchema, CreateAppointment } from './calendar.helper';
-import { useParams } from 'next/navigation';
+  AppointmentFormSchema,
+  CreateAppointmentForm,
+} from './calendar.helper';
 import { useQueryState } from 'nuqs';
 
 type HookProp = {
@@ -33,7 +26,6 @@ const useHook = ({ businesses }: HookProp) => {
   const [services, setServices] = useState<Service[]>([]);
   const [teamMembers, setTeamMembers] = useState<TeamMemberWithUser[]>([]);
   const [isAppointmentDialogOpen, setIsAppointmentDialogOpen] = useState(false);
-  const [formSubmissions, setFormSubmissions] = useState<FormSubmission[]>([]);
 
   const [businessIdUrl] = useQueryState('businessId');
 
@@ -42,12 +34,12 @@ const useHook = ({ businesses }: HookProp) => {
       return;
     }
 
-    // TODO get the formSubmissions based on the businessId selected in the filter form in the url
-    const fetchFormSubmissions = async () => {
-      const rFormSubmissions = await getFormSubmissions(businessIdUrl);
-      setFormSubmissions(rFormSubmissions.data || []);
+    const fetchTeamMembers = async () => {
+      const rTeamMembers = await getTeamMembers([businessIdUrl]);
+      setTeamMembers(rTeamMembers.data || []);
     };
-    fetchFormSubmissions();
+
+    fetchTeamMembers();
   }, [businessIdUrl]);
 
   const filterForm = useForm({
@@ -60,21 +52,19 @@ const useHook = ({ businesses }: HookProp) => {
   const business = businesses.find((business) => business.id === businessId);
   const businessName = business?.name;
 
-  const appointmentForm = useForm<CreateAppointment>({
-    resolver: zodResolver(AppointmentSchema),
+  const appointmentForm = useForm<CreateAppointmentForm>({
+    resolver: zodResolver(AppointmentFormSchema),
     defaultValues: {
       businessId: '',
       serviceId: '',
       teamMemberId: '',
+      title: '',
+      description: '',
+      status: 'PENDING',
+      backgroundColor: '#000000',
       customerName: '',
       customerEmail: '',
       customerPhone: '',
-      title: '',
-      description: '',
-      status: '',
-      notes: '',
-      backgroundColor: '#000000',
-      formData: null,
     },
   });
 
@@ -89,15 +79,16 @@ const useHook = ({ businesses }: HookProp) => {
   }));
 
   const teamMemberOptions = teamMembers?.map((teamMember) => ({
-    // TODO: Handle case where user is null
     label: teamMember.user.name ?? '',
     value: teamMember.id,
   }));
 
   const statusOptions = [
-    { label: 'Pending', value: 'pending' },
-    { label: 'Confirmed', value: 'confirmed' },
-    { label: 'Cancelled', value: 'cancelled' },
+    { label: 'Pending', value: 'PENDING' },
+    { label: 'Confirmed', value: 'CONFIRMED' },
+    { label: 'Cancelled', value: 'CANCELLED' },
+    { label: 'Completed', value: 'COMPLETED' },
+    { label: 'No Show', value: 'NO_SHOW' },
   ];
 
   const onAppointmentSubmit = appointmentForm.handleSubmit(async (data) => {
@@ -142,7 +133,6 @@ const useHook = ({ businesses }: HookProp) => {
     serviceOptions,
     statusOptions,
     businessName,
-    formSubmissions,
   };
 };
 

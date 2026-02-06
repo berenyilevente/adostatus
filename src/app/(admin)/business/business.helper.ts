@@ -49,7 +49,7 @@ export const ServicesSchema: z.ZodType<Services> = z.object({
   duration: z.string().nullable(),
   bufferTime: z.string().nullable(),
   color: z.string().nullable(),
-  formId: z.string().nullable(),
+  teamMemberId: z.string().min(1, 'Team member is required'),
 });
 
 export type ServicesForm = z.infer<typeof ServicesSchema>;

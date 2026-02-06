@@ -20,7 +20,7 @@ import {
   BusinessHoursSchema,
 } from './business-hours.helper';
 import { toast } from 'sonner';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 type HookProp = {
   businesses: Business[];
@@ -33,6 +33,7 @@ const useHook = ({ businesses }: HookProp) => {
   const [breakTimes, setBreakTimes] = useState<BreakTime[]>([]);
   const [isLoading, startTransition] = useTransition();
   const { id: businessId } = useParams<{ readonly id: string }>();
+  const router = useRouter();
 
   // TODO: use react query to fetch business hours and break times
   useEffect(() => {
@@ -77,8 +78,10 @@ const useHook = ({ businesses }: HookProp) => {
     startTransition(async () => {
       const res = await upsertBusinessHours(businessId, data);
       if (res.status === 'success') {
+        router.refresh();
         closeBusinessHoursDialog();
         toast.success('Business hours updated');
+        setBusinessHours(res.data ?? []);
         return;
       }
       if (res.status === 'error') {
@@ -92,8 +95,10 @@ const useHook = ({ businesses }: HookProp) => {
     startTransition(async () => {
       const res = await upsertBreakTimes(businessId, data);
       if (res.status === 'success') {
+        router.refresh();
         closeBusinessHoursDialog();
         toast.success('Break times updated');
+        setBreakTimes(res.data ?? []);
         return;
       }
       if (res.status === 'error') {

@@ -54,7 +54,7 @@ export const EditServiceDialog = ({
       bufferTime: service.bufferTime || '',
       price: service.price || '',
       color: service.color || null,
-      formId: service.formId || null,
+      teamMemberId: service.teamMemberId,
     },
   });
 

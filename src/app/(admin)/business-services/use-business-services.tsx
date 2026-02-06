@@ -14,7 +14,6 @@ import {
 } from './actions/business-services.actions';
 import { ServicesForm, ServicesSchema } from './business-services.helper';
 import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
 import { TeamMemberWithUser } from '@/app/(admin)/team-members/teamMember.helper';
 
 type HookProp = {
@@ -24,7 +23,6 @@ type HookProp = {
 };
 
 const useHook = ({ business, services, teamMembers = [] }: HookProp) => {
-  const { data: session } = useSession();
   const router = useRouter();
   const [isCreateServicesDialogOpen, setIsCreateServicesDialogOpen] =
     useState(false);
@@ -54,8 +52,6 @@ const useHook = ({ business, services, teamMembers = [] }: HookProp) => {
     bufferTime: '',
     description: '',
     color: null,
-    formId: '',
-    userId: session?.user?.id ?? '',
     teamMemberId: teamMemberOptions[0]?.value ?? '',
   };
 
@@ -97,6 +93,7 @@ const useHook = ({ business, services, teamMembers = [] }: HookProp) => {
 
   const handleClose = () => {
     servicesForm.reset();
+    router.refresh();
     setIsCreateServicesDialogOpen(false);
     setIsEditServicesDialogOpen(false);
     setSelectedService(null);

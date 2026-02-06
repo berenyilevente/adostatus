@@ -44,7 +44,7 @@ export const upsertBusinessHours = async (
   }
 
   // Create new record with the updated days
-  const businessHours = await prisma.businessHours.create({
+  await prisma.businessHours.create({
     data: { ...hours, businessId },
   });
 

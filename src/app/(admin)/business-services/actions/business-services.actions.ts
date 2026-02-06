@@ -28,22 +28,13 @@ export const getServices = async (
 export const createService = async (
   service: ServicesForm
 ): Promise<Response<Service>> => {
-  const { user } = await isAuthenticated();
-
-  if (!user.id) {
-    return handleResponse<Service>({
-      data: null,
-      code: 404,
-      error: 'User not found',
-    });
-  }
+  await isAuthenticated();
 
   const { businessId, teamMemberId, ...serviceData } = service;
 
   const serviceResult = await prisma.service.create({
     data: {
       ...serviceData,
-      userId: user.id,
       business: { connect: { id: businessId } },
       teamMember: { connect: { id: teamMemberId } },
     },
@@ -53,7 +44,7 @@ export const createService = async (
 
   return handleResponse<Service>({
     data: serviceResult,
-    code: 404,
+    code: 201,
     error: 'Service creation failed',
   });
 };
@@ -64,21 +55,22 @@ export const updateService = async (
 ): Promise<Response<Service>> => {
   await isAuthenticated();
 
-  const { formId, ...rest } = service;
+  const { businessId, teamMemberId, ...serviceData } = service;
 
   const serviceResult = await prisma.service.update({
     where: { id },
     data: {
-      ...rest,
-      formId: formId || null,
+      ...serviceData,
+      business: { connect: { id: businessId } },
+      teamMember: { connect: { id: teamMemberId } },
     },
   });
 
-  revalidatePath(`/business/${service.businessId}`);
+  revalidatePath(`/business/${businessId}`);
 
   return handleResponse<Service>({
     data: serviceResult,
-    code: 404,
+    code: 200,
     error: 'Service update failed',
   });
 };

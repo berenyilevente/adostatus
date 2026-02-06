@@ -3,10 +3,13 @@
 import { Response } from '@/types/action.types';
 
 import prisma from '@/lib/prisma/client';
-import { Appointment, BusinessHours, FormSubmission } from '@/generated/prisma';
+import { Appointment, BusinessHours } from '@/generated/prisma';
 import { isAuthenticated } from '@/utils/isAuthenticated';
 import { handleResponse } from '@/utils/handleResponse';
-import { CreateAppointment, CreateBusinessHoursForm } from '../calendar.helper';
+import {
+  CreateAppointmentForm,
+  CreateBusinessHoursForm,
+} from '../calendar.helper';
 import { revalidatePath } from 'next/cache';
 
 export const getAppointments = async (
@@ -15,7 +18,7 @@ export const getAppointments = async (
   await isAuthenticated();
 
   const appointments = await prisma.appointment.findMany({
-    where: { businessId: { in: businessIds } },
+    where: { businessId: { in: businessIds }, deleted: false },
   });
 
   return handleResponse<Appointment[]>({
@@ -42,20 +45,54 @@ export const getAppointment = async (
 };
 
 export const createAppointment = async (
-  appointment: CreateAppointment
+  data: CreateAppointmentForm
 ): Promise<Response<Appointment>> => {
   await isAuthenticated();
 
-  const formData = JSON.stringify(appointment.formData);
+  const {
+    customerName,
+    customerEmail,
+    customerPhone,
+    ...appointmentData
+  } = data;
 
-  const newAppointment = await prisma.appointment.create({
-    data: { ...appointment, formData },
+  const nameParts = customerName.trim().split(/\s+/);
+  const firstName = nameParts[0];
+  const lastName = nameParts.slice(1).join(' ') || '';
+
+  const result = await prisma.$transaction(async (tx) => {
+    const customer = await tx.customer.create({
+      data: {
+        businessId: appointmentData.businessId,
+        firstName,
+        lastName,
+        email: customerEmail,
+        phone: customerPhone,
+      },
+    });
+
+    const appointment = await tx.appointment.create({
+      data: {
+        businessId: appointmentData.businessId,
+        serviceId: appointmentData.serviceId,
+        teamMemberId: appointmentData.teamMemberId,
+        title: appointmentData.title,
+        description: appointmentData.description,
+        start: appointmentData.start,
+        end: appointmentData.end,
+        status: appointmentData.status,
+        backgroundColor: appointmentData.backgroundColor,
+        customerId: customer.id,
+      },
+    });
+
+    return appointment;
   });
 
-  revalidatePath(`/calendar?business=${appointment.businessId}`);
+  revalidatePath(`/calendar?business=${data.businessId}`);
 
   return handleResponse<Appointment>({
-    data: newAppointment,
+    data: result,
     code: 201,
     error: 'Appointment creation failed',
   });
@@ -63,18 +100,32 @@ export const createAppointment = async (
 
 export const updateAppointment = async (
   id: string,
-  appointment: CreateAppointment
+  data: CreateAppointmentForm
 ): Promise<Response<Appointment>> => {
   await isAuthenticated();
 
-  const formData = JSON.stringify(appointment.formData);
+  const {
+    customerName,
+    customerEmail,
+    customerPhone,
+    ...appointmentData
+  } = data;
 
   const updatedAppointment = await prisma.appointment.update({
     where: { id },
-    data: { ...appointment, formData },
+    data: {
+      serviceId: appointmentData.serviceId,
+      teamMemberId: appointmentData.teamMemberId,
+      title: appointmentData.title,
+      description: appointmentData.description,
+      start: appointmentData.start,
+      end: appointmentData.end,
+      status: appointmentData.status,
+      backgroundColor: appointmentData.backgroundColor,
+    },
   });
 
-  revalidatePath(`/calendar?business=${appointment.businessId}`);
+  revalidatePath(`/calendar?business=${data.businessId}`);
 
   return handleResponse<Appointment>({
     data: updatedAppointment,
@@ -124,25 +175,5 @@ export const createBusinessHours = async (
     data: businessHours.businessHours,
     code: 201,
     error: 'Business hours creation failed',
-  });
-};
-
-export const getFormSubmissions = async (
-  businessId: string
-): Promise<Response<FormSubmission[]>> => {
-  await isAuthenticated();
-
-  const formSubmissions = await prisma.formSubmission.findMany({
-    where: {
-      form: {
-        businessId,
-      },
-    },
-  });
-
-  return handleResponse<FormSubmission[]>({
-    data: formSubmissions,
-    code: 200,
-    error: 'Form submissions not found',
   });
 };

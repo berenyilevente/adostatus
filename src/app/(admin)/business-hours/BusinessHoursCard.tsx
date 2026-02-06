@@ -33,9 +33,9 @@ BusinessHoursCard.Content = () => {
     </div>
   ) : (
     <div className="space-y-3">
-      {businessHours.map((hours, index) => (
+      {businessHours.map((hours) => (
         <div
-          key={index}
+          key={hours.id}
           className="flex items-center justify-between py-2 border-b last:border-b-0"
         >
           <div className="flex items-center space-x-4">

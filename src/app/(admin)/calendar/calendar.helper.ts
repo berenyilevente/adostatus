@@ -1,30 +1,27 @@
 import {
-  Appointment as AppointmentTable,
   BusinessHours as BusinessHoursTable,
   BreakTime as BreakTimeTable,
 } from '@/generated/prisma';
 import { z } from 'zod';
 
-type Appointment = Omit<AppointmentTable, 'id' | 'createdAt' | 'updatedAt'>;
-
-export const AppointmentSchema: z.ZodType<Appointment> = z.object({
+export const AppointmentFormSchema = z.object({
   businessId: z.string(),
   serviceId: z.string().min(1, 'Service is required'),
   teamMemberId: z.string().min(1, 'Team member is required'),
-  customerName: z.string().min(1, 'Customer name is required'),
-  customerEmail: z.string().email('Invalid email address'),
-  customerPhone: z.string().min(1, 'Customer phone is required'),
   title: z.string().min(2, 'Appointment title must be at least 2 characters'),
   description: z.string().nullable(),
   start: z.date(),
   end: z.date(),
-  status: z.string(),
-  notes: z.string().nullable(),
-  formData: z.string().nullable(),
+  status: z
+    .enum(['PENDING', 'CONFIRMED', 'CANCELLED', 'COMPLETED', 'NO_SHOW'])
+    .default('PENDING'),
   backgroundColor: z.string().nullable(),
+  customerName: z.string().min(1, 'Customer name is required'),
+  customerEmail: z.string().email('Invalid email address'),
+  customerPhone: z.string().min(1, 'Customer phone is required'),
 });
 
-export type CreateAppointment = z.infer<typeof AppointmentSchema>;
+export type CreateAppointmentForm = z.infer<typeof AppointmentFormSchema>;
 
 // TODO Replace this with the Appointment type
 export interface CalendarEvent {

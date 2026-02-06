@@ -1,4 +1,4 @@
-import { Appointment, Business, FormSubmission } from '@/generated/prisma';
+import { Business } from '@/generated/prisma';
 import { notFound } from 'next/navigation';
 import { BusinessHoursDialog } from '../business-hours/BusinessHoursDialog';
 import { BusinessHoursProvider } from '../business-hours/use-business-hours';

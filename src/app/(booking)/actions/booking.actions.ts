@@ -1,7 +1,6 @@
 'use server';
 
-import { CreateAppointment } from '@/app/(admin)/calendar/calendar.helper';
-import { FormSubmission, VwFormsPublic } from '@/generated/prisma';
+import { VwFormsPublic } from '@/generated/prisma';
 import prisma from '@/lib/prisma/client';
 import { handleResponse } from '@/utils/handleResponse';
 import { Response } from '@/types/action.types';
@@ -33,18 +32,59 @@ export const createBooking = async ({
   appointmentData,
 }: {
   vwForm: VwFormsPublic;
-  formValues: FormSubmission['submissionData'];
+  formValues: unknown;
   appointmentData: { title: string; start: string; end: string };
 }) => {
   const { id: formId, businessId } = vwForm;
+
+  if (!businessId) {
+    return handleResponse({
+      data: null,
+      code: 400,
+      error: 'Business ID is required',
+    });
+  }
+
+  // Look up the form to get the serviceId
+  const form = await prisma.form.findUnique({
+    where: { id: formId },
+    select: { serviceId: true },
+  });
+
+  if (!form) {
+    return handleResponse({
+      data: null,
+      code: 404,
+      error: 'Form not found',
+    });
+  }
+
+  // Look up the service to get the teamMemberId
+  const service = await prisma.service.findUnique({
+    where: { id: form.serviceId },
+    select: { teamMemberId: true },
+  });
+
+  if (!service) {
+    return handleResponse({
+      data: null,
+      code: 404,
+      error: 'Service not found',
+    });
+  }
+
   const submissionData = JSON.stringify(formValues);
 
   const booking = await prisma.appointment.create({
     data: {
       formId,
       businessId,
+      serviceId: form.serviceId,
+      teamMemberId: service.teamMemberId,
       content: submissionData,
-      ...appointmentData,
+      title: appointmentData.title,
+      start: appointmentData.start,
+      end: appointmentData.end,
     },
   });
 
