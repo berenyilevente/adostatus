@@ -1,15 +1,11 @@
-"use server";
+'use server';
 
-import Stripe from "stripe";
+import Stripe from 'stripe';
 
-import {
-  STRIPE_SECRET_KEY,
-  STRIPE_SUCCESS_URL,
-  STRIPE_CANCEL_URL,
-} from "@/config/env.config";
+const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY ?? 'stripe_secret_key';
 
 const stripe = new Stripe(STRIPE_SECRET_KEY, {
-  apiVersion: "2025-04-30.basil",
+  apiVersion: '2025-04-30.basil',
 });
 
 export async function createCheckoutSession({
@@ -32,16 +28,16 @@ export async function createCheckoutSession({
   }
 
   const session = await stripe.checkout.sessions.create({
-    mode: "subscription",
-    payment_method_types: ["card"],
+    mode: 'subscription',
+    payment_method_types: ['card'],
     line_items: [
       {
         price: priceId,
         quantity: 1,
       },
     ],
-    success_url: STRIPE_SUCCESS_URL,
-    cancel_url: STRIPE_CANCEL_URL,
+    success_url: process.env.STRIPE_SUCCESS_URL,
+    cancel_url: process.env.STRIPE_CANCEL_URL,
     customer: customer?.id,
   });
 
