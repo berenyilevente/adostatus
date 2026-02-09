@@ -15,7 +15,7 @@ export const NODE_ENV = assertEnvVar('NODE_ENV', 'development');
 export const BASE_URL = assertEnvVar('BASE_URL', '');
 
 // DATABASE
-export const PRISMA_DATABASE_URL = assertEnvVar('PRISMA_DATABASE_URL', '');
+export const DATABASE_URL = assertEnvVar('DATABASE_URL', '');
 
 // STRIPE
 export const STRIPE_PUBLISHABLE_KEY = assertEnvVar(
