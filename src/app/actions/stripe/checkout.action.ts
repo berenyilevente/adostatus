@@ -1,12 +1,6 @@
 'use server';
 
-import Stripe from 'stripe';
-
-const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY ?? 'stripe_secret_key';
-
-const stripe = new Stripe(STRIPE_SECRET_KEY, {
-  apiVersion: '2025-04-30.basil',
-});
+import { stripe } from '@/lib/stripe/stripe.lib';
 
 export async function createCheckoutSession({
   priceId,
