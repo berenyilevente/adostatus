@@ -1,4 +1,4 @@
-import { NODE_ENV } from "./env.config";
+import { NODE_ENV } from './env.config';
 
 export type Plan = {
   name: string;
@@ -18,34 +18,34 @@ export type StripeConfig = {
 
 const pirceId: Record<string, Record<string, string>> = {
   basic: {
-    development: "price_1RL87MPpJ1qNQtT58JGuEsfp",
-    production: "price_456",
+    development: 'prod_Tx6BAOk12W5irw',
+    production: 'prod_Tx6BAOk12W5irw',
   },
   advanced: {
-    development: "price_1RLGGDPpJ1qNQtT5g32E3m5h",
-    production: "price_457",
+    development: 'prod_Tx6BAOk12W5irw',
+    production: 'prod_Tx6BAOk12W5irw',
   },
 };
 
 const basic: Plan = {
-  name: "Timegrid Starter",
+  name: 'Timegrid Starter',
   description:
-    "Perfect for trying Timegrid with a single business or service type.",
+    'Perfect for trying Timegrid with a single business or service type.',
   priceId: pirceId.basic[NODE_ENV],
   included: [
     {
-      name: "1 booking form",
+      name: '1 booking form',
     },
     {
-      name: "Up to 20 bookings per month",
+      name: 'Up to 20 bookings per month',
     },
-    { name: "Basic email notifications" },
-    { name: "Website embedding" },
+    { name: 'Basic email notifications' },
+    { name: 'Website embedding' },
   ],
   excluded: [
-    { name: "Team access" },
-    { name: "Calendar integrations" },
-    { name: "Multiple forms" },
+    { name: 'Team access' },
+    { name: 'Calendar integrations' },
+    { name: 'Multiple forms' },
   ],
   price: 19,
   priceAnchor: 29,
@@ -53,28 +53,28 @@ const basic: Plan = {
 };
 
 const advanced: Plan = {
-  name: "Timegrid Business",
+  name: 'Timegrid Business',
   description:
-    "Everything you need for multiple businesses with a single subscription.",
+    'Everything you need for multiple businesses with a single subscription.',
   priceId: pirceId.advanced[NODE_ENV],
   included: [
     {
-      name: "Unlimited appointment bookings",
+      name: 'Unlimited appointment bookings',
     },
     {
-      name: "Up to 5 custom booking forms",
+      name: 'Up to 5 custom booking forms',
     },
     {
-      name: "Team access (up to 3 users)",
+      name: 'Team access (up to 3 users)',
     },
     {
-      name: "Advanced website embedding",
+      name: 'Advanced website embedding',
     },
     {
-      name: "Email notifications & reminders",
+      name: 'Email notifications & reminders',
     },
     {
-      name: "Calendar integrations",
+      name: 'Calendar integrations',
     },
   ],
   excluded: [],
@@ -85,5 +85,5 @@ const advanced: Plan = {
 
 export const stripe: StripeConfig = {
   plans: [basic, advanced],
-  currency: "€",
+  currency: '€',
 };
