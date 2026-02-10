@@ -18,12 +18,12 @@ export type StripeConfig = {
 
 const pirceId: Record<string, Record<string, string>> = {
   basic: {
-    development: 'prod_Tx6BAOk12W5irw',
-    production: 'prod_Tx6BAOk12W5irw',
+    development: 'price_1SzBzILKEwIG6ZEAGRzVQIuu',
+    production: 'price_1SzBzILKEwIG6ZEAGRzVQIuu',
   },
   advanced: {
-    development: 'prod_Tx6BAOk12W5irw',
-    production: 'prod_Tx6BAOk12W5irw',
+    development: 'price_1SzBzILKEwIG6ZEAGRzVQIuu',
+    production: 'price_1SzBzILKEwIG6ZEAGRzVQIuu',
   },
 };
 
