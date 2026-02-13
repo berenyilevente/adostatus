@@ -1,6 +1,6 @@
 export const resend = {
-  fromNoReply: `SwiftBlocks <noreply@swiftblocks.net>`,
-  fromAdmin: `SwiftBlocks - Admin <admin@swiftblocks.net>`,
-  supportEmail: "support@swiftblocks.net",
-  forwardRepliesTo: "berenyi.lev@gmail.com",
+  fromNoReply: `AppointIQ <noreply@appointiq.app>`,
+  fromAdmin: `AppointIQ - Admin <admin@appointiq.app>`,
+  supportEmail: 'support@appointiq.app',
+  forwardRepliesTo: 'berenyi.lev@gmail.com',
 };
