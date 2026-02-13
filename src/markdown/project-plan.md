@@ -1,4 +1,4 @@
-# TimeGrid Web Application – Project Plan
+# AppointIQ Web Application – Project Plan
 
 ## 🗂️ 1. Project Phases
 
@@ -9,11 +9,12 @@
 5. Notifications & Integrations
 6. Testing
 7. Deployment
-9. Post-MVP / Stretch Goals
+8. Post-MVP / Stretch Goals
 
 ## 📋 2. Tasks & Deliverables
 
 ### Phase: Database & Backend
+
 - Task: Define Prisma schema
   Description: Create models for `User`, `Form`, and `Appointment`.
   Dependencies: App design doc
@@ -35,6 +36,7 @@
   Priority: High
 
 ### Phase: UI Development
+
 - Task: Layout & navigation shell
   Description: Implement responsive layout (sidebar, top bar, main area).
   Dependencies: Tailwind, Shadcn
@@ -56,6 +58,7 @@
   Priority: Medium
 
 ### Phase: Feature Development
+
 - Task: Appointment booking API
   Description: Server action to submit and validate a booking.
   Dependencies: Prisma, form logic
@@ -77,6 +80,7 @@
   Priority: Medium
 
 ### Phase: Admin Dashboard
+
 - Task: Form management interface
   Description: Create, edit, and delete appointment forms.
   Dependencies: Form builder
@@ -93,6 +97,7 @@
   Priority: Medium
 
 ### Phase: Notifications & Integrations
+
 - Task: Setup Resend for emails
   Description: Configure Resend for transactional email delivery.
   Dependencies: Booking logic
@@ -109,6 +114,7 @@
   Priority: Medium
 
 ### Phase: Testing
+
 - Task: Manual testing of booking flow
   Description: Test public booking and email flow end-to-end.
   Dependencies: Booking form
@@ -120,6 +126,7 @@
   Priority: Medium
 
 ### Phase: Deployment
+
 - Task: Deploy to Vercel
   Description: Connect project to Vercel and configure environment variables.
   Dependencies: All core features
@@ -131,6 +138,7 @@
   Priority: High
 
 ### Phase: Post-MVP / Stretch Goals
+
 - Task: Native WordPress plugin
   Description: Build a plugin to easily embed scheduling forms.
   Dependencies: Embed system
@@ -149,6 +157,7 @@
 ## ⚙️ 3. Environment & DevOps Notes
 
 ### Environment Variables:
+
 - DATABASE_URL
 - NEXTAUTH_SECRET
 - NEXTAUTH_URL
@@ -157,27 +166,33 @@
 - STRIPE_WEBHOOK_SECRET
 
 ### Database:
+
 - Use Railway or Supabase
 - Seed dev data with dummy users/forms/bookings
 
 ### CI/CD:
+
 - Use Vercel’s GitHub integration for preview deployments
 - Protect main branch via PR reviews
 
 ## 🧠 4. Tips & Considerations
 
 ### Performance:
+
 - Use pagination on calendar and booking views
 - Load form JSON only when editing/viewing
 
 ### Developer Productivity:
+
 - Use Shadcn UI for fast UI dev
 - Co-locate server actions with components
 
 ### Code Structure:
+
 - Organize with `app/(auth)`, `app/(dashboard)`, `app/(public)`
 - Validate models using Zod
 
 ### Reuse:
+
 - Create <FormBuilder /> and <DynamicFormRenderer />
 - Make <CalendarView /> reusable by form ID

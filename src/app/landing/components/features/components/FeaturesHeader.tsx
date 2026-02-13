@@ -1,6 +1,7 @@
-import { ReactElement } from "react";
+import { ReactElement } from 'react';
 
-import { Icon } from "@/components";
+import { Icon } from '@/components';
+import { config } from '@/config';
 
 export const FeaturesHeader = (): ReactElement => {
   return (
@@ -13,7 +14,7 @@ export const FeaturesHeader = (): ReactElement => {
       </p>
       <p className="mt-3 inline-block max-w-md text-base-content/80">
         No more juggling multiple scheduling tools for different businesses.
-        TimeGrid handles it all with a flexible platform designed for
+        {config.app.name} handles it all with a flexible platform designed for
         multi-business owners.
       </p>
     </div>

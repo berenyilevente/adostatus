@@ -23,7 +23,7 @@ export async function middleware(request: NextRequest) {
   const { hasAccess } = await stripeSubscription.json();
 
   if (!hasAccess) {
-    // TODO redirect the user to a new choose pricing plan page (Please select a plan to start using timegrid, etc.)
+    // TODO redirect the user to a new choose pricing plan page (Please select a plan to start using appointiq, etc.)
     return NextResponse.redirect(new URL(`${BASE_URL}/#pricing`));
   }
 

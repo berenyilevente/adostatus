@@ -1,35 +1,32 @@
-import { Button } from "@/components";
-import { config } from "@/config";
-import Link from "next/link";
+import { Button } from '@/components';
+import { config } from '@/config';
+import Link from 'next/link';
 
 const features = [
   {
-    category: "Customization",
-    title: "Create booking experiences that feel like part of your brand",
-    details:
-      "We sweat the small stuff — form layout, branding options, mobile experience — so you don’t have to. With TimeGrid, your booking page doesn’t feel like a third-party tool. It feels like your business.",
-    tutorialLink: "#",
+    category: 'Customization',
+    title: 'Create booking experiences that feel like part of your brand',
+    details: `We sweat the small stuff — form layout, branding options, mobile experience — so you don’t have to. With ${config.app.name}, your booking page doesn’t feel like a third-party tool. It feels like your business.`,
+    tutorialLink: '#',
   },
   {
-    category: "Optimized Experience",
-    title: "Seamless on every device, embedded on any site",
-    details:
-      "Whether your customers book from mobile, tablet, or desktop, TimeGrid forms load fast and look sharp. Add your form to any website in seconds.",
-    tutorialLink: "#",
+    category: 'Optimized Experience',
+    title: 'Seamless on every device, embedded on any site',
+    details: `Whether your customers book from mobile, tablet, or desktop, ${config.app.name} forms load fast and look sharp. Add your form to any website in seconds.`,
+    tutorialLink: '#',
   },
   {
-    category: "Built for multi-business owners",
-    title: "One tool, multiple booking flows",
-    details:
-      "Whether you run a hair salon and a vet clinic — or five restaurants — TimeGrid keeps your operations separate but simple.",
-    tutorialLink: "#",
+    category: 'Built for multi-business owners',
+    title: 'One tool, multiple booking flows',
+    details: `Whether you run a hair salon and a vet clinic — or five restaurants — ${config.app.name} keeps your operations separate but simple.`,
+    tutorialLink: '#',
   },
   {
-    category: "Smart Features That Do the Work for You",
-    title: "Book faster. Look better. Stay in control.",
+    category: 'Smart Features That Do the Work for You',
+    title: 'Book faster. Look better. Stay in control.',
     details:
-      "Pre-filled fields for returning clients, automatic error detection in forms, smart scheduling to avoid overlaps, email notifications for you and your customers",
-    tutorialLink: "#",
+      'Pre-filled fields for returning clients, automatic error detection in forms, smart scheduling to avoid overlaps, email notifications for you and your customers',
+    tutorialLink: '#',
   },
 ];
 

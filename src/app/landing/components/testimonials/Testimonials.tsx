@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
   Carousel,
   CarouselApi,
@@ -8,66 +8,65 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components";
+} from '@/components';
 
-import { cn } from "@/lib/utils";
-import { StarIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { cn } from '@/lib/utils';
+import { StarIcon } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { config } from '@/config';
 
 const testimonials = [
   {
     id: 1,
-    name: "Laura M.",
-    designation: "Business Owner",
-    company: "Veterinary & Grooming",
+    name: 'Laura M.',
+    designation: 'Business Owner',
+    company: 'Veterinary & Grooming',
     testimonial:
-      "We run both a veterinary clinic and a grooming salon — finally having one tool to manage bookings for both has been a game-changer.",
-    avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+      'We run both a veterinary clinic and a grooming salon — finally having one tool to manage bookings for both has been a game-changer.',
+    avatar: 'https://randomuser.me/api/portraits/women/1.jpg',
   },
   {
     id: 2,
-    name: "Vanessa L.",
-    designation: "Hair Salon Owner",
-    company: "Beauty Services",
+    name: 'Vanessa L.',
+    designation: 'Hair Salon Owner',
+    company: 'Beauty Services',
     testimonial:
       "I loved how I could match the booking form to my salon's brand colors and even add my logo. Clients actually complimented the design!",
-    avatar: "https://randomuser.me/api/portraits/women/2.jpg",
+    avatar: 'https://randomuser.me/api/portraits/women/2.jpg',
   },
   {
     id: 3,
-    name: "Dr. Amir R.",
-    designation: "Dental Practice Admin",
-    company: "Healthcare",
-    testimonial:
-      "We used to juggle Google Forms and calendars — TimeGrid just makes everything smoother. My staff can log in and see their appointments with zero confusion.",
-    avatar: "https://randomuser.me/api/portraits/men/3.jpg",
+    name: 'Dr. Amir R.',
+    designation: 'Dental Practice Admin',
+    company: 'Healthcare',
+    testimonial: `We used to juggle Google Forms and calendars — ${config.app.name} just makes everything smoother. My staff can log in and see their appointments with zero confusion.`,
+    avatar: 'https://randomuser.me/api/portraits/men/3.jpg',
   },
   {
     id: 4,
-    name: "Marco D.",
-    designation: "Restaurant Manager",
-    company: "Food & Hospitality",
+    name: 'Marco D.',
+    designation: 'Restaurant Manager',
+    company: 'Food & Hospitality',
     testimonial:
       "Setting up my custom form took 15 minutes. The restaurant's now fully booked every weekend. Best part? No more playing phone tag.",
-    avatar: "https://randomuser.me/api/portraits/men/4.jpg",
+    avatar: 'https://randomuser.me/api/portraits/men/4.jpg',
   },
   {
     id: 5,
-    name: "Jenn K.",
-    designation: "Wellness Center Owner",
-    company: "Health & Wellness",
-    testimonial:
-      "We tested a few scheduling tools, but most didn't let us tweak the booking form. TimeGrid gave us control without needing to code.",
-    avatar: "https://randomuser.me/api/portraits/women/5.jpg",
+    name: 'Jenn K.',
+    designation: 'Wellness Center Owner',
+    company: 'Health & Wellness',
+    testimonial: `We tested a few scheduling tools, but most didn't let us tweak the booking form. ${config.app.name} gave us control without needing to code.`,
+    avatar: 'https://randomuser.me/api/portraits/women/5.jpg',
   },
   {
     id: 6,
-    name: "Ryan P.",
-    designation: "Clinic Coordinator",
-    company: "Healthcare Services",
+    name: 'Ryan P.',
+    designation: 'Clinic Coordinator',
+    company: 'Healthcare Services',
     testimonial:
       "As someone who's not super tech-savvy, I really appreciated how visual and intuitive the dashboard is. It just works.",
-    avatar: "https://randomuser.me/api/portraits/men/6.jpg",
+    avatar: 'https://randomuser.me/api/portraits/men/6.jpg',
   },
 ];
 
@@ -84,7 +83,7 @@ export const Testimonials = () => {
     setCount(carouselApi.scrollSnapList().length);
     setCurrent(carouselApi.selectedScrollSnap() + 1);
 
-    carouselApi.on("select", () => {
+    carouselApi.on('select', () => {
       setCurrent(carouselApi.selectedScrollSnap() + 1);
     });
   }, [carouselApi]);
@@ -115,8 +114,8 @@ export const Testimonials = () => {
               <button
                 key={index}
                 onClick={() => carouselApi?.scrollTo(index)}
-                className={cn("h-3.5 w-3.5 rounded-full border-2", {
-                  "bg-primary border-primary": current === index + 1,
+                className={cn('h-3.5 w-3.5 rounded-full border-2', {
+                  'bg-primary border-primary': current === index + 1,
                 })}
               />
             ))}

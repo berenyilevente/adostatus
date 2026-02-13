@@ -3,11 +3,8 @@
 import './calendar.css';
 import {
   CalendarOptions,
-  DateSelectArg,
   DayCellContentArg,
   DayHeaderContentArg,
-  EventChangeArg,
-  EventClickArg,
   EventContentArg,
 } from '@fullcalendar/core/index.js';
 import dayGridPlugin from '@fullcalendar/daygrid';

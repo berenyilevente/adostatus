@@ -18,8 +18,8 @@ export type StripeConfig = {
 
 const pirceId: Record<string, Record<string, string>> = {
   basic: {
-    development: 'price_1SzBzILKEwIG6ZEAGRzVQIuu',
-    production: 'price_1SzBzILKEwIG6ZEAGRzVQIuu',
+    development: 'basci_price_1SzBzILKEwIG6ZEAGRzVQIuu',
+    production: 'basic_price_1SzBzILKEwIG6ZEAGRzVQIuu',
   },
   advanced: {
     development: 'price_1SzBzILKEwIG6ZEAGRzVQIuu',
@@ -28,9 +28,9 @@ const pirceId: Record<string, Record<string, string>> = {
 };
 
 const basic: Plan = {
-  name: 'Timegrid Starter',
+  name: 'AppointIQ Starter',
   description:
-    'Perfect for trying Timegrid with a single business or service type.',
+    'Perfect for trying AppointIQ with a single business or service type.',
   priceId: pirceId.basic[NODE_ENV],
   included: [
     {
@@ -53,7 +53,7 @@ const basic: Plan = {
 };
 
 const advanced: Plan = {
-  name: 'Timegrid Business',
+  name: 'AppointIQ Business',
   description:
     'Everything you need for multiple businesses with a single subscription.',
   priceId: pirceId.advanced[NODE_ENV],

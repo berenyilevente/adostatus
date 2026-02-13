@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import React from "react";
+import React from 'react';
 
-import { Button, FormInput, FormWrapper } from "@/components";
+import { Button, FormInput, FormWrapper } from '@/components';
 
-import { useLogin } from "./use-login";
+import { useLogin } from './use-login';
 
 export const LoginAuth = () => {
   const { isLoading, form, onSubmit } = useLogin();
 
   return (
-    <FormWrapper form={form} className="flex flex-col items-center gap-2 mx-8">
+    <FormWrapper form={form} className="flex flex-col items-center gap-4">
       <FormInput
         startIcon="mail"
         control={form.control}
