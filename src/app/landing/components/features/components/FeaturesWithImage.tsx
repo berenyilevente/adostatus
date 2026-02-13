@@ -1,31 +1,27 @@
-"use client";
+'use client';
 
-import { Icon, IconType } from "@/components";
-import { config } from "@/config";
-import { ReactElement } from "react";
+import { Icon, IconType } from '@/components';
+import { config } from '@/config';
+import { ReactElement } from 'react';
 
-const features: {
-  name: string;
-  description: string;
-  icon: IconType;
-}[] = [
+const features: { name: string; description: string; icon: IconType }[] = [
   {
-    name: "Pre-configured features:",
+    name: 'Pre-configured features:',
     description:
-      "Stripe, user auth, backend, emails and more - all configured and ready to go in minutes.",
-    icon: "wand2",
+      'Stripe, user auth, backend, emails and more - all configured and ready to go in minutes.',
+    icon: 'wand2',
   },
   {
-    name: "Copy-pasteable modules:",
+    name: 'Copy-pasteable modules:',
     description:
-      "Use prebuilt fullstack modules for a calendar page, users page, task management, and much more.",
-    icon: "copy",
+      'Use prebuilt fullstack modules for a calendar page, users page, task management, and much more.',
+    icon: 'copy',
   },
   {
-    name: "Clear development guidelines:",
+    name: 'Clear development guidelines:',
     description:
-      "Developed with industry best practices to maximize speed and consistency.",
-    icon: "codeSquare",
+      'Developed with industry best practices to maximize speed and consistency.',
+    icon: 'codeSquare',
   },
 ];
 

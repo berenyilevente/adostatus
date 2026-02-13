@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   Body,
   Container,
@@ -11,13 +11,13 @@ import {
   Text,
   Row,
   Column,
-} from "@react-email/components";
+} from '@react-email/components';
 
-import { BASE_URL, config } from "@/config";
+import { BASE_URL, config } from '@/config';
 
 export const LoginEmail = ({ url, host }: { url: string; host: string }) => {
   const logoUrl =
-    "https://www.swiftblocks.net/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo.29d07749.png&w=48&q=75";
+    'https://appointiq.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo.29d07749.png&w=48&q=75';
 
   return (
     <Html>
@@ -30,11 +30,7 @@ export const LoginEmail = ({ url, host }: { url: string; host: string }) => {
           <Link
             href={url}
             target="_blank"
-            style={{
-              ...link,
-              display: "block",
-              marginBottom: "16px",
-            }}
+            style={{ ...link, display: 'block', marginBottom: '16px' }}
           >
             Click here to log in with this magic link
           </Link>
@@ -42,9 +38,9 @@ export const LoginEmail = ({ url, host }: { url: string; host: string }) => {
           <Text
             style={{
               ...text,
-              color: "#ababab",
-              marginTop: "14px",
-              marginBottom: "16px",
+              color: '#ababab',
+              marginTop: '14px',
+              marginBottom: '16px',
             }}
           >
             If you didn&apos;t try to login, you can safely ignore this email.
@@ -62,7 +58,7 @@ export const LoginEmail = ({ url, host }: { url: string; host: string }) => {
             <Link
               href={BASE_URL}
               target="_blank"
-              style={{ ...link, color: "#898989" }}
+              style={{ ...link, color: '#898989' }}
             >
               {config.app.name}
             </Link>
@@ -73,48 +69,46 @@ export const LoginEmail = ({ url, host }: { url: string; host: string }) => {
   );
 };
 
-const main = {
-  backgroundColor: "#ffffff",
-};
+const main = { backgroundColor: '#ffffff' };
 
 const container = {
-  paddingLeft: "12px",
-  paddingRight: "12px",
-  margin: "0 auto",
+  paddingLeft: '12px',
+  paddingRight: '12px',
+  margin: '0 auto',
 };
 
 const h1 = {
-  color: "#333",
+  color: '#333',
   fontFamily:
     "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
-  fontSize: "16px",
-  fontWeight: "bold",
-  margin: "32px 0",
-  padding: "0",
+  fontSize: '16px',
+  fontWeight: 'bold',
+  margin: '32px 0',
+  padding: '0',
 };
 
 const link = {
-  color: "#2754C5",
+  color: '#2754C5',
   fontFamily:
     "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
-  fontSize: "14px",
-  textDecoration: "underline",
+  fontSize: '14px',
+  textDecoration: 'underline',
 };
 
 const text = {
-  color: "#333",
+  color: '#333',
   fontFamily:
     "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
-  fontSize: "14px",
-  margin: "24px 0",
+  fontSize: '14px',
+  margin: '24px 0',
 };
 
 const footer = {
-  color: "#898989",
+  color: '#898989',
   fontFamily:
     "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
-  fontSize: "12px",
-  lineHeight: "22px",
-  marginTop: "12px",
-  marginBottom: "24px",
+  fontSize: '12px',
+  lineHeight: '22px',
+  marginTop: '12px',
+  marginBottom: '24px',
 };
