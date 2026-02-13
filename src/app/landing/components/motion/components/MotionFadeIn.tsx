@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import React from "react";
-import { motion } from "framer-motion";
+import React from 'react';
+import { motion } from 'framer-motion';
 
-import { fadeIn } from "@/lib/motion/motion";
+import { fadeIn } from '@/lib/motion/motion';
 
 export const MotionFadeIn = ({
   children,
@@ -13,7 +13,10 @@ export const MotionFadeIn = ({
   className?: string;
 }) => {
   return (
-    <motion.div variants={fadeIn("up", "tween", 0.2, 1)} className={className}>
+    <motion.div
+      variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }}
+      className={className}
+    >
       {children}
     </motion.div>
   );
