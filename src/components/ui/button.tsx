@@ -13,14 +13,11 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default:
-          'bg-primary text-primary-foreground shadow hover:bg-primary/90',
-        destructive:
-          'bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90',
+        default: 'bg-primary text-primary-foreground shadow hover:bg-primary/90',
+        destructive: 'bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90',
         outline:
           'border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground',
-        secondary:
-          'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80',
+        secondary: 'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
       },
@@ -39,8 +36,7 @@ const buttonVariants = cva(
 );
 
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
   asChild?: boolean;
   iconSize?: 'xs' | 'sm' | 'md' | 'lg';
   startIcon?: IconType;
@@ -70,24 +66,17 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const Comp = asChild ? Slot : 'button';
     return (
       <Comp
-        className={cn(
-          buttonVariants({ variant, size, className }),
-          fullWidth && 'w-full'
-        )}
+        className={cn(buttonVariants({ variant, size, className }), fullWidth && 'w-full')}
         ref={ref}
         {...props}
       >
-        {startIcon && (
-          <Icon className={iconClassName} icon={startIcon} size={iconSize} />
-        )}
+        {startIcon && <Icon className={iconClassName} icon={startIcon} size={iconSize} />}
         {isLoading ? (
           <LoadingSwap isLoading={isLoading}>{props.children}</LoadingSwap>
         ) : (
           props.children
         )}
-        {endIcon && (
-          <Icon className={iconClassName} icon={endIcon} size={iconSize} />
-        )}
+        {endIcon && <Icon className={iconClassName} icon={endIcon} size={iconSize} />}
       </Comp>
     );
   }

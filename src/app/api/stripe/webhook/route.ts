@@ -5,8 +5,7 @@ import { getOrCreateUser, createSubscription } from './queries';
 import { getCheckoutSessionData } from '@/lib/stripe/getCheckoutSessionData';
 import { stripe } from '@/lib/stripe/stripe.lib';
 
-const webhookSecret =
-  process.env.STRIPE_WEBHOOK_SECRET ?? 'stripe_webhook_secret';
+const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET ?? 'stripe_webhook_secret';
 
 export async function POST(req: NextRequest) {
   const signature = req.headers.get('stripe-signature')!;
@@ -20,9 +19,10 @@ export async function POST(req: NextRequest) {
     }
 
     event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
-  } catch (err: any) {
-    console.error(`Webhook signature verification failed. ${err.message}`);
-    return NextResponse.json({ error: err.message }, { status: 400 });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : 'Unknown error';
+    console.error(`Webhook signature verification failed. ${message}`);
+    return NextResponse.json({ error: message }, { status: 400 });
   }
 
   if (event.type === 'checkout.session.completed') {

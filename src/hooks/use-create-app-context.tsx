@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { ReactNode, createContext, useContext } from "react";
+import { ReactNode, createContext, useContext } from 'react';
 
 /**
  * Creates a React context along with a custom hook for consuming that context.
@@ -24,21 +24,17 @@ const createAppContext = <T, E>(callback: (props: E) => T) => {
    * @param other - Additional props of type E that will be passed to the function fn.
    * @returns A Context.Provider component that wraps the children.
    */
-  const ContextProvider = ({
-    children,
-    ...other
-  }: { children: ReactNode } & E) => (
-    // @ts-ignore
-    <Context.Provider value={callback(other)}>{children}</Context.Provider>
+  const ContextProvider = ({ children, ...other }: { children: ReactNode } & E) => (
+    <Context.Provider value={callback(other as E)}>{children}</Context.Provider>
   );
 
   /**
    * A custom hook for consuming the context value.
    * @returns The context value provided by the ContextProvider.
    */
-  const hook = () => useContext(Context);
+  const useHook = () => useContext(Context);
 
-  return [hook, ContextProvider] as const;
+  return [useHook, ContextProvider] as const;
 };
 
 export { createAppContext };

@@ -1,7 +1,7 @@
-import EmailProvider from "next-auth/providers/email";
+import EmailProvider from 'next-auth/providers/email';
 
-import { config, EMAIL_SERVER } from "@/config";
-import { sendVerificationRequest } from "./verification";
+import { config, EMAIL_SERVER } from '@/config';
+import { sendVerificationRequest } from './verification';
 
 export const emailProvider = EmailProvider({
   server: EMAIL_SERVER,

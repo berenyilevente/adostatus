@@ -1,0 +1,101 @@
+---
+description: Strict development guideline for the tax-tracker (AppointIQ) Next.js codebase. Enforced on ALL code generation and review.
+globs:
+  - "src/**/*.{ts,tsx}"
+  - "prisma/**"
+alwaysApply: true
+---
+
+# Architecture & Development Rules
+
+## Core Principles
+
+- **Server-first:** Default to React Server Components. Only add `"use client"` when the component requires browser APIs, event handlers, or hooks. Never make a `page.tsx` a client component.
+- **Single source of truth:** Every piece of logic, type, or configuration exists in exactly one place. No duplication.
+- **Explicit over implicit:** No `any` types. No untyped props. Explicit return types on all exported functions.
+- **Co-location:** Feature-specific code lives next to the feature page. Shared code lives in `src/lib/`, `src/hooks/`, `src/components/`, `src/types/`, or `src/utils/`.
+- **Thin pages:** `page.tsx` files are composition-only shells. Zero business logic, no hooks, no state.
+
+## Folder Structure
+
+```
+src/app/(admin)/[feature]/
+  page.tsx                  # Server component, composition only
+  [Feature].tsx             # Main client component (PascalCase)
+  use-[feature].ts          # Feature context hook (createAppContext)
+  actions/[feature].actions.ts   # Server actions ("use server" required)
+  types/[feature].types.ts       # Feature types
+  schemas/[feature].schemas.ts   # Zod schemas
+  components/[Sub].tsx           # Feature sub-components
+```
+
+- New admin features go under `src/app/(admin)/[feature-name]/`.
+- New UI primitives go in `src/components/ui/` and are registered in `src/components/index.ts`.
+- New form wrappers go in `src/components/form/` and are registered in `src/components/index.ts`.
+- Shared logic goes in `src/lib/[domain]/`.
+- NEVER put feature-specific logic in `src/lib/`, `src/hooks/`, or `src/utils/`.
+
+## Component Rules
+
+- **Dumb (presentational):** `src/components/ui/*`, `src/components/form/*`. Props in, UI out. No data fetching.
+- **Smart (feature):** `src/app/(admin)/[feature]/[Feature].tsx`. Consume context, call actions.
+- **Pages:** Composition only. No hooks, no state, no logic.
+- Components over 150 lines MUST be split into sub-components.
+- All props use named TypeScript types. Children: `React.ReactNode`, never `any`.
+
+## State Management
+
+- Server state: Fetch in Server Components or server actions. Pass as props.
+- Feature state: `createAppContext` factory. One provider per feature in `page.tsx`.
+- Local UI state: `useState`/`useReducer` in the owning component.
+- URL state: `nuqs` for persistent/shareable state (filters, pagination).
+- NEVER fetch server data in `useEffect`. Use server components or event-driven server actions.
+- If global client state is needed, use Zustand. No Redux, no Jotai.
+
+## Data & API Layer
+
+- Server actions (`*.actions.ts`): Must have `"use server"` directive, return `Response<T>`, call `isAuthenticated()` from `@/lib/auth/isAuthenticated` for protected features, use `handleResponse()`.
+- API routes: Reserved for external integrations (webhooks, OAuth). Internal data uses server actions.
+- Prisma: Always import from `@/lib/prisma/client`. Never instantiate new clients.
+
+## Naming Conventions
+
+| Entity | Convention | Example |
+|---|---|---|
+| Feature folder | kebab-case | `booking-forms/` |
+| Component file | PascalCase | `Dashboard.tsx` |
+| Hook file | `use-[name].ts` | `use-dashboard.ts` |
+| Action file | `[feature].actions.ts` | `dashboard.actions.ts` |
+| Type file | `[feature].types.ts` | `dashboard.types.ts` |
+| Schema file | `[feature].schemas.ts` | `lead.schemas.ts` |
+| Type/Interface | PascalCase, NO `I` prefix | `MenuItem` not `IMenuItem` |
+| Constants | UPPER_SNAKE_CASE | `EXCLUDED_PAGES` |
+| Booleans | `is`/`has`/`should` prefix | `isAuthenticated` |
+
+## Styling
+
+- Tailwind CSS only via `className`.
+- Use `cn()` from `@/lib/utils` for conditional classes.
+- Use `cva` for component variants.
+- NEVER use inline `style={{}}` (exception: truly dynamic computed values).
+- NEVER create `.module.css` files.
+- NEVER add component CSS classes in `globals.css`.
+
+## Error Handling
+
+- Server actions: `try/catch` around DB ops, return `Response<T>` with `status: 'error'`. Never throw.
+- Client: Check `response.status`, display via `toast.error()` from sonner. Forms use `form.setError()`.
+- Route groups MUST have `error.tsx` boundaries and `loading.tsx` fallbacks.
+- NEVER silently swallow errors or show raw error messages to users.
+
+## Anti-Patterns (FORBIDDEN)
+
+- `any` types on props, return values, or data
+- Fetching in `useEffect` + storing in `useState` for server data
+- Middleware calling its own API routes
+- Commented-out code checked in
+- Duplicate barrel re-exports
+- Copy-paste naming errors (component name must match purpose)
+- `@ts-ignore` without justification (use `@ts-expect-error` with comment)
+- Action files missing `"use server"` directive
+- Duplicate implementations of the same logic

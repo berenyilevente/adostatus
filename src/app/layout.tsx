@@ -1,15 +1,12 @@
-import { Inter } from "next/font/google";
-import { getSEOTags } from "@/lib/seo/seo";
-import { Analytics } from "@vercel/analytics/react";
+import { Inter } from 'next/font/google';
+import { getSEOTags } from '@/lib/seo/seo';
+import { Analytics } from '@vercel/analytics/react';
 
-import MainProvider from "./MainProvider";
-import "./globals.css";
+import MainProvider from './MainProvider';
+import './globals.css';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
-// todo rephrase and add to documentation
-// This adds default SEO tags to all pages in our app.
-// You can override them in each page passing params to getSOTags() function.
 export const metadata = getSEOTags();
 
 export default function RootLayout({
@@ -19,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className={inter.className}>
         <MainProvider>{children}</MainProvider>
         <Analytics />
       </body>

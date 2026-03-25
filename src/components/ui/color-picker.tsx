@@ -35,9 +35,7 @@ export const ColorPicker = ({
               key={color}
               type="button"
               className={`w-8 h-8 rounded-full border-2 transition-all ${
-                value === color
-                  ? 'border-gray-900 scale-110'
-                  : 'border-gray-200'
+                value === color ? 'border-gray-900 scale-110' : 'border-gray-200'
               }`}
               style={{ backgroundColor: color }}
               onClick={() => onChange(color)}

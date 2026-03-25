@@ -32,11 +32,7 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -91,38 +87,26 @@ const TabNavigation = ({
         <TabsTrigger
           value="timeGridDay"
           onClick={() => setView(calendarRef, 'timeGridDay', setCurrentView)}
-          className={`space-x-1 ${
-            currentView === 'timeGridDay' ? 'w-1/2' : 'w-1/4'
-          }`}
+          className={`space-x-1 ${currentView === 'timeGridDay' ? 'w-1/2' : 'w-1/4'}`}
         >
           <GalleryVertical className="h-5 w-5" />
-          {currentView === 'timeGridDay' && (
-            <p className="text-xs md:text-sm">Day</p>
-          )}
+          {currentView === 'timeGridDay' && <p className="text-xs md:text-sm">Day</p>}
         </TabsTrigger>
         <TabsTrigger
           value="timeGridWeek"
           onClick={() => setView(calendarRef, 'timeGridWeek', setCurrentView)}
-          className={`space-x-1 ${
-            currentView === 'timeGridWeek' ? 'w-1/2' : 'w-1/4'
-          }`}
+          className={`space-x-1 ${currentView === 'timeGridWeek' ? 'w-1/2' : 'w-1/4'}`}
         >
           <Tally3 className="h-5 w-5" />
-          {currentView === 'timeGridWeek' && (
-            <p className="text-xs md:text-sm">Week</p>
-          )}
+          {currentView === 'timeGridWeek' && <p className="text-xs md:text-sm">Week</p>}
         </TabsTrigger>
         <TabsTrigger
           value="dayGridMonth"
           onClick={() => setView(calendarRef, 'dayGridMonth', setCurrentView)}
-          className={`space-x-1 ${
-            currentView === 'dayGridMonth' ? 'w-1/2' : 'w-1/4'
-          }`}
+          className={`space-x-1 ${currentView === 'dayGridMonth' ? 'w-1/2' : 'w-1/4'}`}
         >
           <Table className="h-5 w-5 rotate-90" />
-          {currentView === 'dayGridMonth' && (
-            <p className="text-xs md:text-sm">Month</p>
-          )}
+          {currentView === 'dayGridMonth' && <p className="text-xs md:text-sm">Month</p>}
         </TabsTrigger>
       </TabsList>
     </Tabs>
@@ -210,9 +194,7 @@ const DaySelect = ({
                   <Check
                     className={cn(
                       'mr-2 h-4 w-4',
-                      String(selectedDay) === day.value
-                        ? 'opacity-100'
-                        : 'opacity-0'
+                      String(selectedDay) === day.value ? 'opacity-100' : 'opacity-0'
                     )}
                   />
                   {day.label}
@@ -250,8 +232,7 @@ const MonthSelect = ({
           className="flex w-[105px] justify-between overflow-hidden p-2 text-xs font-semibold md:text-sm md:w-[120px]"
         >
           {selectedMonth
-            ? months.find((month) => month.value === String(selectedMonth))
-                ?.label
+            ? months.find((month) => month.value === String(selectedMonth))?.label
             : 'Select month...'}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -275,9 +256,7 @@ const MonthSelect = ({
                   <Check
                     className={cn(
                       'mr-2 h-4 w-4',
-                      String(selectedMonth) === month.value
-                        ? 'opacity-100'
-                        : 'opacity-0'
+                      String(selectedMonth) === month.value ? 'opacity-100' : 'opacity-0'
                     )}
                   />
                   {month.label}
@@ -352,11 +331,7 @@ export const FullCalendarNav = ({
           selectedMonth={selectedMonth}
           monthOptions={months}
         />
-        <YearSelect
-          calendarRef={calendarRef}
-          viewedDate={viewedDate}
-          selectedYear={selectedYear}
-        />
+        <YearSelect calendarRef={calendarRef} viewedDate={viewedDate} selectedYear={selectedYear} />
         <NextDate calendarRef={calendarRef} />
       </div>
       <div className="flex flex-row items-center gap-2">

@@ -10,9 +10,5 @@ export const CurrencyField = ({ price, currency }: CurrencyFieldProps) => {
     return <p className="font-semibold text-gray-900">N/A</p>;
   }
 
-  return (
-    <p className="font-semibold text-gray-900">
-      {formatCurrency(price, currency)}
-    </p>
-  );
+  return <p className="font-semibold text-gray-900">{formatCurrency(price, currency)}</p>;
 };

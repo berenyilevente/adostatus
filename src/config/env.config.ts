@@ -18,10 +18,7 @@ export const BASE_URL = assertEnvVar('BASE_URL', '');
 export const DATABASE_URL = assertEnvVar('DATABASE_URL', '');
 
 // STRIPE
-export const STRIPE_PUBLISHABLE_KEY = assertEnvVar(
-  'STRIPE_PUBLISHABLE_KEY',
-  ''
-);
+export const STRIPE_PUBLISHABLE_KEY = assertEnvVar('STRIPE_PUBLISHABLE_KEY', '');
 export const STRIPE_SECRET_KEY = assertEnvVar('STRIPE_SECRET_KEY', '');
 export const STRIPE_WEBHOOK_SECRET = assertEnvVar('STRIPE_WEBHOOK_SECRET', '');
 export const STRIPE_SUCCESS_URL = assertEnvVar('STRIPE_SUCCESS_URL', '');

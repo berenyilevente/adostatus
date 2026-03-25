@@ -14,13 +14,7 @@ export interface StepProps extends OnboardingStep {
   isCompleted: boolean;
 }
 
-export function Step({
-  title,
-  description,
-  children,
-  isActive,
-  isCompleted,
-}: StepProps) {
+export function Step({ title, description, children, isActive, isCompleted }: StepProps) {
   return (
     <div className={`mb-4 ${!isActive && 'hidden'}`}>
       <div className="pt-6">
@@ -28,9 +22,7 @@ export function Step({
           <div className="flex-1">
             <div className="flex items-center gap-2">
               <h3 className="text-lg font-semibold">{title}</h3>
-              {isCompleted && (
-                <CheckCircle2 className="h-5 w-5 text-green-500" />
-              )}
+              {isCompleted && <CheckCircle2 className="h-5 w-5 text-green-500" />}
             </div>
             {isActive && (
               <>

@@ -1,8 +1,8 @@
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 
-import prisma from "@/lib/prisma/client";
-import { User } from "@/generated/prisma";
-import { CheckoutSession } from "@/lib/stripe/getCheckoutSessionData";
+import prisma from '@/lib/prisma/client';
+import { User } from '@/generated/prisma';
+import { CheckoutSession } from '@/lib/stripe/getCheckoutSessionData';
 
 export const getOrCreateUser = async (email: string) => {
   let user: User | null;
@@ -20,12 +20,9 @@ export const getOrCreateUser = async (email: string) => {
   return user;
 };
 
-export const createSubscription = async (
-  user: User,
-  checkoutSession: CheckoutSession
-) => {
+export const createSubscription = async (user: User, checkoutSession: CheckoutSession) => {
   if (!user) {
-    throw new Error("User not found, cannot create subscription");
+    throw new Error('User not found, cannot create subscription');
   }
 
   const { customerId, subscriptionId, priceId, plan } = checkoutSession;
@@ -37,9 +34,9 @@ export const createSubscription = async (
       stripeSubscriptionId: subscriptionId,
       stripePriceId: priceId,
       planName: plan,
-      status: "active",
+      status: 'active',
       currentPeriodStart: dayjs().toISOString(),
-      currentPeriodEnd: dayjs().add(1, "year").toISOString(),
+      currentPeriodEnd: dayjs().add(1, 'year').toISOString(),
       cancelAtPeriodEnd: false,
     },
   });

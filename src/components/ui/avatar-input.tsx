@@ -8,12 +8,7 @@ import { cn } from '@/lib/utils';
 
 registerPlugin(FilePondPluginImagePreview);
 
-export const AvatarInput = ({
-  className,
-  labelIdle,
-  credits,
-  ...props
-}: FilePondProps) => {
+export const AvatarInput = ({ className, labelIdle, credits, ...props }: FilePondProps) => {
   const label = labelIdle ? labelIdle : '';
   return (
     <div className={cn('w-1/4 !rounded-lg', className)}>

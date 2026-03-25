@@ -9,7 +9,7 @@ import {
   Footer,
   Motion,
   Testimonials,
-} from "./components";
+} from './components';
 
 const LandingPage = () => {
   return (

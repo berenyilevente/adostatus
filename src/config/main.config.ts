@@ -5,13 +5,13 @@ import { BASE_URL } from './env.config';
 
 export const config: Config = {
   app: {
-    name: 'AppointIQ',
-    description: 'AppointIQ is the best scheduling platform for your business.',
+    name: 'Tax Tracker',
+    description: 'Tax Tracker is the best tax tracking platform for your business.',
     domain: BASE_URL,
   },
   resend,
   db: {
-    name: 'appointiqdb',
+    name: 'taxTrackerDB',
   },
   stripe,
 };

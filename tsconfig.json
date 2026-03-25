@@ -31,9 +31,6 @@
       ],
       "@/components/*": [
         "./src/components/*"
-      ],
-      "@/components/admin/*": [
-        "./src/app/(admin-sample)/components/*"
       ]
     },
     "target": "ES2017"

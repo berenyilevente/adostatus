@@ -126,11 +126,7 @@ export const Testimonials = () => {
   );
 };
 
-const TestimonialCard = ({
-  testimonial,
-}: {
-  testimonial: (typeof testimonials)[number];
-}) => (
+const TestimonialCard = ({ testimonial }: { testimonial: (typeof testimonials)[number] }) => (
   <div className="mb-8 bg-accent rounded-xl py-8 px-6 sm:py-12 sm:px-24">
     <div className="flex items-center justify-between gap-20">
       <div className="flex flex-col justify-center">

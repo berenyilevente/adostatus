@@ -1,16 +1,13 @@
-import { config } from "@/config";
-import { resend } from "@/lib/email/resend";
-import { LoginEmail } from "../../components/email/login.email";
-import prisma from "../prisma/client";
+import { config } from '@/config';
+import { resend } from '@/lib/email/resend';
+import { LoginEmail } from '../../components/email/login.email';
 
 type SendVerificationRequestParams = {
   identifier: string;
   url: string;
 };
 
-export async function sendVerificationRequest(
-  params: SendVerificationRequestParams
-) {
+export async function sendVerificationRequest(params: SendVerificationRequestParams) {
   const { identifier, url } = params;
   const { host } = new URL(url);
 
@@ -25,7 +22,7 @@ export async function sendVerificationRequest(
 
     return { success: true, data };
   } catch (error) {
-    throw new Error("Failed to send the verification Email.", {
+    throw new Error('Failed to send the verification Email.', {
       cause: error,
     });
   }

@@ -19,13 +19,7 @@ import {
 
 const iconBaseClassNames = 'absolute top-[18px] -translate-y-1/2 text-gray-400';
 
-const StartIcon = ({
-  startIcon,
-  label,
-}: {
-  startIcon?: IconType;
-  label?: boolean;
-}) => {
+const StartIcon = ({ startIcon, label }: { startIcon?: IconType; label?: boolean }) => {
   if (!startIcon) {
     return null;
   }
@@ -39,13 +33,7 @@ const StartIcon = ({
   );
 };
 
-const EndIcon = ({
-  endIcon,
-  label,
-}: {
-  endIcon?: IconType;
-  label?: boolean;
-}) => {
+const EndIcon = ({ endIcon, label }: { endIcon?: IconType; label?: boolean }) => {
   if (!endIcon) {
     return null;
   }
@@ -99,9 +87,7 @@ export const FormTagInput = <
       control={control}
       name={name}
       render={({ field, fieldState }) => {
-        const tags = (
-          Array.isArray(field.value) ? field.value : []
-        ) as string[];
+        const tags = (Array.isArray(field.value) ? field.value : []) as string[];
 
         const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
           setInputValue(e.target.value);
@@ -109,11 +95,7 @@ export const FormTagInput = <
 
         const addTag = (tag: string) => {
           const trimmedTag = tag.trim();
-          if (
-            trimmedTag &&
-            !tags.includes(trimmedTag) &&
-            (!maxTags || tags.length < maxTags)
-          ) {
+          if (trimmedTag && !tags.includes(trimmedTag) && (!maxTags || tags.length < maxTags)) {
             const newTags = [...tags, trimmedTag];
             field.onChange(newTags);
             setInputValue('');

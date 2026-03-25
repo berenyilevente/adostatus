@@ -1,4 +1,3 @@
-// TODO: Add eslint rule to organize imports
 export * from './email/login.email';
 export * from './email/new-lead.email';
 export * from './email/welcome.email';
@@ -70,7 +69,6 @@ export * from './ui/color-field';
 export * from './ui/date-field';
 export * from './ui/avatar-input';
 export * from './ui/currency-field';
-export * from './ui/dialog';
 export * from './ui/extension/smart-datetime-input';
 export * from './form/form-date-timepicker';
 export * from './ui/full-calendar/full-calendar';

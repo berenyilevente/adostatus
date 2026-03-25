@@ -1,30 +1,25 @@
-"use client";
+'use client';
 
-import { Image } from "@/components";
+import { Image } from '@/components';
 
-import { cn } from "@/utils";
+import { cn } from '@/utils';
 
-import logo from "../../../public/logo.svg";
+import logo from '../../../public/logo.svg';
 
 type ILogoProps = {
   size?: number;
   className?: string;
   text?: string;
-  textPosition?: "left" | "right" | "top" | "bottom";
+  textPosition?: 'left' | 'right' | 'top' | 'bottom';
 };
 
-export const Logo = ({
-  size = 24,
-  className,
-  text,
-  textPosition = "right",
-}: ILogoProps) => {
-  const classNames = cn("inline", className, {
-    "flex items-center gap-2": text,
-    "flex-col": textPosition === "bottom",
-    "flex-col-reverse": textPosition === "top",
-    "flex-row": textPosition === "right",
-    "flex-row-reverse": textPosition === "left",
+export const Logo = ({ size = 24, className, text, textPosition = 'right' }: ILogoProps) => {
+  const classNames = cn('inline', className, {
+    'flex items-center gap-2': text,
+    'flex-col': textPosition === 'bottom',
+    'flex-col-reverse': textPosition === 'top',
+    'flex-row': textPosition === 'right',
+    'flex-row-reverse': textPosition === 'left',
   });
 
   return (
@@ -35,4 +30,4 @@ export const Logo = ({
   );
 };
 
-Logo.displayName = "Logo";
+Logo.displayName = 'Logo';

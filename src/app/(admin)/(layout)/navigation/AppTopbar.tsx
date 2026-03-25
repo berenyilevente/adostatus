@@ -16,8 +16,6 @@ import {
   SidebarTrigger,
 } from '@/components';
 import avatar from '@/assets/images/avatar/avatar.png';
-import { getBusinesses } from '../../business/actions';
-import { BusinessSelect } from './BusinessSelect';
 
 const UserDropdown = ({
   image,
@@ -51,13 +49,7 @@ const UserDropdown = ({
           My Profile
         </Button>
         <hr className="-mx-2 my-1 border-base-content/10" />
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={onLogout}
-          startIcon="logout"
-          fullWidth
-        >
+        <Button variant="ghost" size="sm" onClick={onLogout} startIcon="logout" fullWidth>
           Logout
         </Button>
       </DropdownMenuContent>
@@ -82,7 +74,6 @@ export const AppTopbar = () => {
       <NavbarCenter />
       <NavbarEnd>
         <div className="flex items-center gap-6">
-          <BusinessSelect />
           <UserDropdown
             image={user?.image}
             email={user?.email || ''}

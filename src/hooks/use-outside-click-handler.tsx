@@ -6,13 +6,13 @@ import {
   useEffect,
   useRef,
   useState,
-} from "react";
+} from 'react';
 
 interface UseOutsideClickHandler<T> {
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
   ref: RefObject<T | null>;
-  handleClickOutside: (event: any) => void;
+  handleClickOutside: (event: MouseEvent) => void;
 }
 
 export function useOutsideClickHandler<T extends HTMLElement>(
@@ -22,17 +22,17 @@ export function useOutsideClickHandler<T extends HTMLElement>(
   const [visible, setVisible] = useState(initialValue ?? false);
 
   const handleClickOutside = useCallback(
-    (event: any) => {
-      if (ref.current && !ref.current.contains(event.target)) setVisible(false);
+    (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) setVisible(false);
     },
     [ref, setVisible]
   );
 
   useEffect(() => {
-    document.addEventListener("click", handleClickOutside, true);
+    document.addEventListener('click', handleClickOutside, true);
 
     return () => {
-      document.removeEventListener("click", handleClickOutside, true);
+      document.removeEventListener('click', handleClickOutside, true);
     };
   }, [ref, handleClickOutside]);
 

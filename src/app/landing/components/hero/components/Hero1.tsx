@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import Link from "next/link";
+import Link from 'next/link';
 
-import { config } from "@/config";
-import { Button, Image } from "@/components";
-import hero from "@/assets/images/landing/hero.svg";
+import { config } from '@/config';
+import { Button, Image } from '@/components';
+import hero from '@/assets/images/landing/hero.svg';
 
 export const Hero1 = () => {
   return (
@@ -14,8 +14,7 @@ export const Hero1 = () => {
           Launch Your App Faster Than Ever
         </h1>
         <p className="text-lg opacity-80 leading-relaxed ">
-          Pre-configured, full-stack code blocks to build, deploy, and scale -
-          in record time!
+          Pre-configured, full-stack code blocks to build, deploy, and scale - in record time!
         </p>
         <div className="space-y-2">
           <Link href="#footer">
@@ -24,8 +23,7 @@ export const Hero1 = () => {
             </Button>
           </Link>
           <div className="text-sm text-base-content/70">
-            * Be the first to access {config.app.name} at launch and secure an
-            exclusive discount.
+            * Be the first to access {config.app.name} at launch and secure an exclusive discount.
           </div>
         </div>
       </div>

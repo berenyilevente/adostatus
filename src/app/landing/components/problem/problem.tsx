@@ -6,10 +6,9 @@ export const Problem = () => {
           Scheduling shouldn't feel this chaotic
         </h2>
         <p className="text-lg md:text-xl max-w-3xl mx-auto opacity-90 leading-relaxed">
-          Missed messages. Overlapping bookings. Endless back-and-forth just to
-          confirm a time. You're{" "}
-          <span className="text-primary font-semibold">wasting hours</span> on a
-          process that should take seconds—while potential clients move on.
+          Missed messages. Overlapping bookings. Endless back-and-forth just to confirm a time.
+          You're <span className="text-primary font-semibold">wasting hours</span> on a process that
+          should take seconds—while potential clients move on.
         </p>
       </div>
     </section>

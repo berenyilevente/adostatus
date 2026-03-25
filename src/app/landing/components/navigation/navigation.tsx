@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { FC } from "react";
-import Link from "next/link";
+import { FC } from 'react';
+import Link from 'next/link';
 
 import {
   Icon,
@@ -21,15 +21,15 @@ import {
   Navbar,
   NavbarStart,
   NavbarEnd,
-} from "@/components";
+} from '@/components';
 
-import { cn } from "@/utils";
-import { config } from "@/config/main.config";
+import { cn } from '@/utils';
+import { config } from '@/config/main.config';
 
 const menuItems = [
-  { label: "Home", href: "" },
-  { label: "Features", href: "#features" },
-  { label: "Pricing", href: "#pricing" },
+  { label: 'Home', href: '' },
+  { label: 'Features', href: '#features' },
+  { label: 'Pricing', href: '#pricing' },
 ];
 
 const MobileMenu = () => {
@@ -69,7 +69,7 @@ export const Navigation = () => {
     <>
       <div
         className={cn(
-          "fixed inset-x-0 top-0 z-[60] backdrop-blur-sm transition-all duration-500 border-b border-base-content/10 bg-base-100"
+          'fixed inset-x-0 top-0 z-[60] backdrop-blur-sm transition-all duration-500 border-b border-base-content/10 bg-base-100'
         )}
       >
         <div className="container">

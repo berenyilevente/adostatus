@@ -9,11 +9,7 @@ const MainProvider = async ({ children }: { children: ReactNode }) => {
     <>
       <NextTopLoader color="#2158e8" />
       <NuqsAdapter>
-        <Toaster
-          className="toaster-container"
-          richColors
-          position="top-right"
-        />
+        <Toaster className="toaster-container" richColors position="top-right" />
         {children}
       </NuqsAdapter>
     </>

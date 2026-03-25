@@ -16,11 +16,7 @@ type TBreadcrumbItem = {
   icon?: IconType;
 };
 
-const Breadcrumbs = ({
-  breadcrumbs,
-}: {
-  breadcrumbs: TBreadcrumbItem[];
-}): ReactElement => {
+const Breadcrumbs = ({ breadcrumbs }: { breadcrumbs: TBreadcrumbItem[] }): ReactElement => {
   return (
     <Breadcrumb>
       <BreadcrumbList>

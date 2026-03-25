@@ -66,10 +66,7 @@ export const FormMultiselect = <
               values={field.value || []}
               onValuesChange={field.onChange}
               loop
-              className={cn(
-                'w-full',
-                fieldState.error && 'ring-1 ring-red-500'
-              )}
+              className={cn('w-full', fieldState.error && 'ring-1 ring-red-500')}
             >
               <MultiSelectorTrigger>
                 <MultiSelectorInput placeholder={placeholder} />

@@ -18,13 +18,7 @@ EmptyList.Description = ({ description }: { description: string }) => (
   <p className="text-gray-500 mb-4">{description}</p>
 );
 
-EmptyList.Action = ({
-  label,
-  onClick,
-}: {
-  label: string;
-  onClick: () => void;
-}) => {
+EmptyList.Action = ({ label, onClick }: { label: string; onClick: () => void }) => {
   return (
     <Button
       onClick={onClick}

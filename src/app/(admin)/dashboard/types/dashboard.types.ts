@@ -1,2 +1,1 @@
-// placeholder type for dashboard data
-export type DashboardData = any;
+export type DashboardData = Record<string, unknown>[];

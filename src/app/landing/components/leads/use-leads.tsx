@@ -21,7 +21,7 @@ export const useLeads = () => {
 
   const [submitted, setSubmitted] = useState<boolean>(false);
 
-  const onSubmit = handleSubmit(async (data: any) => {
+  const onSubmit = handleSubmit(async (_data: LeadsSchemaType) => {
     setSubmitted(true);
   });
 

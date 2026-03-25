@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import React from "react";
-import { motion } from "framer-motion";
+import React from 'react';
+import { motion } from 'framer-motion';
 
-import { staggerContainer } from "@/lib/motion/motion";
+import { staggerContainer } from '@/lib/motion/motion';
 
 export const MotionContainer = ({
   children,

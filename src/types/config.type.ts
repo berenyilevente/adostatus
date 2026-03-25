@@ -1,4 +1,4 @@
-import { StripeConfig } from "@/config/stripe.config";
+import { StripeConfig } from '@/config/stripe.config';
 
 export type Config = {
   app: {

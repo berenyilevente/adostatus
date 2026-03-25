@@ -84,9 +84,7 @@ export const FormTimepicker = <
                         onClick={() => field.onChange(timeValue)}
                       >
                         {timeValue}
-                        {isSelected && (
-                          <CheckIcon className="ml-auto h-4 w-4" />
-                        )}
+                        {isSelected && <CheckIcon className="ml-auto h-4 w-4" />}
                       </DropdownMenuItem>
                     );
                   })}

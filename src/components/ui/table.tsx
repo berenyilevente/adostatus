@@ -1,6 +1,6 @@
-import * as React from "react";
-import { Control, UseFormReturn } from "react-hook-form";
-import { flexRender, Row, Table as TTable } from "@tanstack/react-table";
+import * as React from 'react';
+import { Control, UseFormReturn } from 'react-hook-form';
+import { flexRender, Row, Table as TTable } from '@tanstack/react-table';
 
 import {
   Checkbox,
@@ -12,8 +12,8 @@ import {
   FormInput,
   Form,
   FormWrapper,
-} from "@/components";
-import { cn } from "@/lib/utils";
+} from '@/components';
+import { cn } from '@/lib/utils';
 import {
   Pagination,
   PaginationContent,
@@ -21,27 +21,22 @@ import {
   PaginationPrevious,
   PaginationLink,
   PaginationNext,
-} from "./pagination";
+} from './pagination';
 
-const Table = React.forwardRef<
-  HTMLTableElement,
-  React.HTMLAttributes<HTMLTableElement>
->(({ className, ...props }, ref) => (
-  <div className="relative w-full overflow-auto">
-    <table
-      ref={ref}
-      className={cn("w-full caption-bottom text-sm", className)}
-      {...props}
-    />
-  </div>
-));
-Table.displayName = "Table";
+const Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableElement>>(
+  ({ className, ...props }, ref) => (
+    <div className="relative w-full overflow-auto">
+      <table ref={ref} className={cn('w-full caption-bottom text-sm', className)} {...props} />
+    </div>
+  )
+);
+Table.displayName = 'Table';
 
 const TableHeader = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement> & { table: TTable<any> }
 >(({ className, table, ...props }, ref) => (
-  <thead ref={ref} className={cn("[&_tr]:border-b", className)} {...props}>
+  <thead ref={ref} className={cn('[&_tr]:border-b', className)} {...props}>
     {table.getHeaderGroups().map((headerGroup) => (
       <TableRow key={headerGroup.id}>
         {headerGroup.headers.map((header) => {
@@ -49,10 +44,7 @@ const TableHeader = React.forwardRef<
             <TableHead key={header.id}>
               {header.isPlaceholder
                 ? null
-                : flexRender(
-                    header.column.columnDef.header,
-                    header.getContext()
-                  )}
+                : flexRender(header.column.columnDef.header, header.getContext())}
             </TableHead>
           );
         })}
@@ -60,20 +52,16 @@ const TableHeader = React.forwardRef<
     ))}
   </thead>
 ));
-TableHeader.displayName = "TableHeader";
+TableHeader.displayName = 'TableHeader';
 
 const TableBody = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement> & { table: TTable<any> }
 >(({ className, table, ...props }, ref) => (
-  <tbody
-    ref={ref}
-    className={cn("[&_tr:last-child]:border-0", className)}
-    {...props}
-  >
+  <tbody ref={ref} className={cn('[&_tr:last-child]:border-0', className)} {...props}>
     {table.getRowModel().rows?.length ? (
       table.getRowModel().rows.map((row) => (
-        <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+        <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
           {row.getVisibleCells().map((cell) => (
             <TableCell key={cell.id}>
               {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -83,17 +71,14 @@ const TableBody = React.forwardRef<
       ))
     ) : (
       <TableRow>
-        <TableCell
-          colSpan={table.getAllColumns().length}
-          className="h-24 text-center"
-        >
+        <TableCell colSpan={table.getAllColumns().length} className="h-24 text-center">
           No results.
         </TableCell>
       </TableRow>
     )}
   </tbody>
 ));
-TableBody.displayName = "TableBody";
+TableBody.displayName = 'TableBody';
 
 const TableFooter = React.forwardRef<
   HTMLTableSectionElement,
@@ -101,29 +86,25 @@ const TableFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <tfoot
     ref={ref}
-    className={cn(
-      "border-t bg-muted/50 font-medium [&>tr]:last:border-b-0",
-      className
-    )}
+    className={cn('border-t bg-muted/50 font-medium [&>tr]:last:border-b-0', className)}
     {...props}
   />
 ));
-TableFooter.displayName = "TableFooter";
+TableFooter.displayName = 'TableFooter';
 
-const TableRow = React.forwardRef<
-  HTMLTableRowElement,
-  React.HTMLAttributes<HTMLTableRowElement>
->(({ className, ...props }, ref) => (
-  <tr
-    ref={ref}
-    className={cn(
-      "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
-      className
-    )}
-    {...props}
-  />
-));
-TableRow.displayName = "TableRow";
+const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTMLTableRowElement>>(
+  ({ className, ...props }, ref) => (
+    <tr
+      ref={ref}
+      className={cn(
+        'border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted',
+        className
+      )}
+      {...props}
+    />
+  )
+);
+TableRow.displayName = 'TableRow';
 
 const TableHead = React.forwardRef<
   HTMLTableCellElement,
@@ -132,13 +113,13 @@ const TableHead = React.forwardRef<
   <th
     ref={ref}
     className={cn(
-      "h-10 px-2 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+      'h-10 px-2 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
       className
     )}
     {...props}
   />
 ));
-TableHead.displayName = "TableHead";
+TableHead.displayName = 'TableHead';
 
 const TableCell = React.forwardRef<
   HTMLTableCellElement,
@@ -147,33 +128,28 @@ const TableCell = React.forwardRef<
   <td
     ref={ref}
     className={cn(
-      "p-2 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+      'p-2 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
       className
     )}
     {...props}
   />
 ));
-TableCell.displayName = "TableCell";
+TableCell.displayName = 'TableCell';
 
 const TableCaption = React.forwardRef<
   HTMLTableCaptionElement,
   React.HTMLAttributes<HTMLTableCaptionElement>
 >(({ className, ...props }, ref) => (
-  <caption
-    ref={ref}
-    className={cn("mt-4 text-sm text-muted-foreground", className)}
-    {...props}
-  />
+  <caption ref={ref} className={cn('mt-4 text-sm text-muted-foreground', className)} {...props} />
 ));
-TableCaption.displayName = "TableCaption";
+TableCaption.displayName = 'TableCaption';
 
 const TableCheckbox = <T,>() => ({
-  id: "select",
+  id: 'select',
   header: ({ table }: { table: TTable<T> }) => (
     <Checkbox
       checked={
-        table.getIsAllPageRowsSelected() ||
-        (table.getIsSomePageRowsSelected() && "indeterminate")
+        table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')
       }
       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
       aria-label="Select all"
@@ -190,13 +166,9 @@ const TableCheckbox = <T,>() => ({
     />
   ),
 });
-TableCheckbox.displayName = "TableCheckbox";
+TableCheckbox.displayName = 'TableCheckbox';
 
-const TablePagination = <T,>({
-  table,
-}: {
-  table: TTable<T>;
-}): React.ReactElement => {
+const TablePagination = <T,>({ table }: { table: TTable<T> }): React.ReactElement => {
   return (
     <div className="flex items-center justify-between w-full p-4">
       <Pagination>
@@ -205,20 +177,15 @@ const TablePagination = <T,>({
             <PaginationPrevious
               onClick={() => table.previousPage()}
               className={cn(
-                "cursor-pointer select-none",
-                !table.getCanPreviousPage()
-                  ? "pointer-events-none opacity-50"
-                  : ""
+                'cursor-pointer select-none',
+                !table.getCanPreviousPage() ? 'pointer-events-none opacity-50' : ''
               )}
             />
           </PaginationItem>
 
           {table.getCanPreviousPage() && (
             <PaginationItem>
-              <PaginationLink
-                onClick={() => table.previousPage()}
-                className="cursor-pointer"
-              >
+              <PaginationLink onClick={() => table.previousPage()} className="cursor-pointer">
                 {table.getState().pagination.pageIndex}
               </PaginationLink>
             </PaginationItem>
@@ -230,10 +197,7 @@ const TablePagination = <T,>({
           </PaginationItem>
           {table.getCanNextPage() && (
             <PaginationItem>
-              <PaginationLink
-                onClick={() => table.nextPage()}
-                className="cursor-pointer"
-              >
+              <PaginationLink onClick={() => table.nextPage()} className="cursor-pointer">
                 {table.getState().pagination.pageIndex + 2}
               </PaginationLink>
             </PaginationItem>
@@ -242,8 +206,8 @@ const TablePagination = <T,>({
             <PaginationNext
               onClick={() => table.nextPage()}
               className={cn(
-                "cursor-pointer select-none",
-                !table.getCanNextPage() ? "pointer-events-none opacity-50" : ""
+                'cursor-pointer select-none',
+                !table.getCanNextPage() ? 'pointer-events-none opacity-50' : ''
               )}
             />
           </PaginationItem>
@@ -256,9 +220,7 @@ const TablePagination = <T,>({
           }}
         >
           <SelectTrigger>
-            <SelectValue
-              placeholder={`Show ${table.getState().pagination.pageSize}`}
-            />
+            <SelectValue placeholder={`Show ${table.getState().pagination.pageSize}`} />
           </SelectTrigger>
           <SelectContent>
             {[10, 20, 30, 40, 50, 100].map((pageSize) => (
@@ -272,7 +234,7 @@ const TablePagination = <T,>({
     </div>
   );
 };
-TablePagination.displayName = "TablePagination";
+TablePagination.displayName = 'TablePagination';
 
 const TableSearch = ({
   filterForm,
@@ -293,7 +255,7 @@ const TableSearch = ({
     </FormWrapper>
   );
 };
-TableSearch.displayName = "TableSearch";
+TableSearch.displayName = 'TableSearch';
 
 export {
   Table,

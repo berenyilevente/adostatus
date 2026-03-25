@@ -151,13 +151,7 @@ export const Icon = ({ size = 'sm', className, icon, ...props }: IconProps) => {
     xl: 'w-12 h-12',
   };
 
-  return (
-    <ReactIcon
-      {...props}
-      icon={iconMap[icon]}
-      className={cn(className, sizeMap[size])}
-    />
-  );
+  return <ReactIcon {...props} icon={iconMap[icon]} className={cn(className, sizeMap[size])} />;
 };
 
 Icon.displayName = 'Icon';

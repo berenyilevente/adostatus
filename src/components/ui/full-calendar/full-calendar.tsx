@@ -19,13 +19,7 @@ import { useRef } from 'react';
 import { CustomRendering } from '@fullcalendar/core/internal';
 import dayjs from 'dayjs';
 
-const plugins = [
-  dayGridPlugin,
-  timeGridPlugin,
-  multiMonthPlugin,
-  interactionPlugin,
-  listPlugin,
-];
+const plugins = [dayGridPlugin, timeGridPlugin, multiMonthPlugin, interactionPlugin, listPlugin];
 
 type EventItemProps = {
   info: EventContentArg;
@@ -42,18 +36,14 @@ const EventItem = ({ info }: EventItemProps) => {
           style={{ backgroundColor: info.backgroundColor }}
           className={`flex flex-col rounded-md w-full px-2 py-1 line-clamp-1 text-[0.5rem] sm:text-[0.6rem] md:text-xs`}
         >
-          <p className="font-semibold text-gray-950 line-clamp-1 w-11/12">
-            {event.title}
-          </p>
+          <p className="font-semibold text-gray-950 line-clamp-1 w-11/12">{event.title}</p>
 
           <p className="text-gray-800">{left}</p>
           <p className="text-gray-800">{right}</p>
         </div>
       ) : (
         <div className="flex flex-col space-y-0 text-[0.5rem] sm:text-[0.6rem] md:text-xs">
-          <p className="font-semibold w-full text-gray-950 line-clamp-1">
-            {event.title}
-          </p>
+          <p className="font-semibold w-full text-gray-950 line-clamp-1">{event.title}</p>
           <p className="text-gray-800 line-clamp-1">{`${left} - ${right}`}</p>
         </div>
       )}
@@ -85,9 +75,7 @@ const DayHeader = ({ info }: DayHeaderProps) => {
           <p className="flex font-semibold">{weekday}</p>
           {info.isToday ? (
             <div className="flex bg-black dark:bg-white h-6 w-6 rounded-full items-center justify-center text-xs sm:text-sm md:text-md">
-              <p className="font-light dark:text-black text-white">
-                {info.date.getDate()}
-              </p>
+              <p className="font-light dark:text-black text-white">{info.date.getDate()}</p>
             </div>
           ) : (
             <div className="h-6 w-6 rounded-full items-center justify-center">
@@ -130,9 +118,7 @@ interface CalendarState {
   customRenderingMap: Map<string, CustomRendering<any>>;
 }
 
-const FullCalendarComponent = ({
-  ...props
-}: CalendarOptions & CalendarState) => {
+const FullCalendarComponent = ({ ...props }: CalendarOptions & CalendarState) => {
   const calendarRef = useRef<FullCalendar | null>(null);
 
   const earliestHour = dayjs(props.earliestTime).format('HH');
@@ -180,10 +166,4 @@ const FullCalendarComponent = ({
   );
 };
 
-export {
-  FullCalendarComponent,
-  EventItem,
-  DayHeader,
-  DayRender,
-  FullCalendarNav,
-};
+export { FullCalendarComponent, EventItem, DayHeader, DayRender, FullCalendarNav };

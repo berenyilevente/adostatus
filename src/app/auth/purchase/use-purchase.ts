@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { signIn } from 'next-auth/react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 import { routes } from '@/lib/routes';
 import { stripe } from '@/config/stripe.config';
@@ -13,11 +13,9 @@ import { createCheckoutSession } from '@/app/actions/stripe/checkout.action';
 
 export const usePurchase = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
   const searchParams = useSearchParams();
 
   const priceId = searchParams.get('priceId');
-  console.log('use-purchase.ts at Line: 20', priceId);
 
   const purchaseSchema = z.object({
     email: z.string().email({ message: 'Please enter a valid email address.' }),
@@ -36,9 +34,9 @@ export const usePurchase = () => {
 
   const { handleSubmit, setError } = form;
 
-  const setErrors = (errors: Record<string, any>) => {
-    Object.entries(errors).forEach(([key, value]: any[]) =>
-      setError(key, { message: value })
+  const setErrors = (errors: Record<string, string>) => {
+    Object.entries(errors).forEach(([key, value]) =>
+      setError(key as keyof PurchaseSchema, { message: value })
     );
   };
 
@@ -58,8 +56,9 @@ export const usePurchase = () => {
         window.location.href = url;
       }
       setIsLoading(false);
-    } catch (e: any) {
-      setErrors({ email: e.message });
+    } catch (e: unknown) {
+      const message = e instanceof Error ? e.message : 'Purchase failed';
+      setErrors({ email: message });
       setIsLoading(false);
     }
   });

@@ -8,12 +8,7 @@ import { cn } from '@/lib/utils';
 
 registerPlugin(FilePondPluginImagePreview);
 
-export const FileInput = ({
-  className,
-  labelIdle,
-  credits,
-  ...props
-}: FilePondProps) => {
+export const FileInput = ({ className, labelIdle, credits, ...props }: FilePondProps) => {
   return (
     <div className={cn('filepond-file-upload w-full', className)}>
       <FilePond

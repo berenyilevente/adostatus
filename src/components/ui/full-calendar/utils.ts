@@ -34,21 +34,13 @@ export function goToday(calendarRef: calendarRef) {
   calendarApi.today();
 }
 
-export function handleDayChange(
-  calendarRef: calendarRef,
-  currentDate: Date,
-  day: string
-) {
+export function handleDayChange(calendarRef: calendarRef, currentDate: Date, day: string) {
   const calendarApi = calendarRef.current!.getApi();
   const newDate = currentDate.setDate(Number(day));
   calendarApi.gotoDate(newDate);
 }
 
-export function handleMonthChange(
-  calendarRef: calendarRef,
-  currentDate: Date,
-  month: string
-) {
+export function handleMonthChange(calendarRef: calendarRef, currentDate: Date, month: string) {
   const calendarApi = calendarRef.current!.getApi();
   const newDate = new Date(currentDate);
   newDate.setMonth(Number(month) - 1);

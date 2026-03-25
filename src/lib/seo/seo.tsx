@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
-import { config } from "@/config";
+import type { Metadata } from 'next';
+import { config } from '@/config';
 
 //TODO refactor this and rephrase, put in documentation
 // These are all the SEO tags you can add to your pages.
@@ -28,8 +28,8 @@ export const getSEOTags = ({
     applicationName: config.app.name,
     // set a base URL prefix for other fields that require a fully qualified URL (.e.g og:image: og:image: 'https://yourdomain.com/share.png' => '/share.png')
     metadataBase: new URL(
-      process.env.NODE_ENV === "development"
-        ? "http://localhost:3000/"
+      process.env.NODE_ENV === 'development'
+        ? 'http://localhost:3000/'
         : `https://${config.app.domain}/`
     ),
 
@@ -46,8 +46,8 @@ export const getSEOTags = ({
       //     height: 660,
       //   },
       // ],
-      locale: "en_US",
-      type: "website",
+      locale: 'en_US',
+      type: 'website',
     },
 
     twitter: {
@@ -55,8 +55,8 @@ export const getSEOTags = ({
       description: openGraph?.description || config.app.description,
       // If you add an twitter-image.(jpg|jpeg|png|gif) image to the /app folder, you don't need the code below
       // images: [openGraph?.image || defaults.og.image],
-      card: "summary_large_image",
-      creator: "@marc_louvion",
+      card: 'summary_large_image',
+      creator: '@marc_louvion',
     },
 
     // If a canonical URL is given, we add it. The metadataBase will turn the relative URL into a fully qualified URL
@@ -82,28 +82,28 @@ export const renderSchemaTags = () => {
       type="application/ld+json"
       dangerouslySetInnerHTML={{
         __html: JSON.stringify({
-          "@context": "http://schema.org",
-          "@type": "SoftwareApplication",
+          '@context': 'http://schema.org',
+          '@type': 'SoftwareApplication',
           name: config.app.name,
           description: config.app.description,
           image: `https://${config.app.domain}/icon.png`,
           url: `https://${config.app.domain}/`,
           author: {
-            "@type": "Person",
-            name: "Marc Lou",
+            '@type': 'Person',
+            name: 'Marc Lou',
           },
-          datePublished: "2023-08-01",
-          applicationCategory: "EducationalApplication",
+          datePublished: '2023-08-01',
+          applicationCategory: 'EducationalApplication',
           aggregateRating: {
-            "@type": "AggregateRating",
-            ratingValue: "4.8",
-            ratingCount: "12",
+            '@type': 'AggregateRating',
+            ratingValue: '4.8',
+            ratingCount: '12',
           },
           offers: [
             {
-              "@type": "Offer",
-              price: "9.00",
-              priceCurrency: "USD",
+              '@type': 'Offer',
+              price: '9.00',
+              priceCurrency: 'USD',
             },
           ],
         }),

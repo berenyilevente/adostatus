@@ -1,12 +1,6 @@
-import {
-  Icon,
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components";
+import { Icon, Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components';
 
-import { faqs } from "./faq.helper";
+import { faqs } from './faq.helper';
 
 export const FAQ = () => {
   return (
@@ -15,15 +9,9 @@ export const FAQ = () => {
         <div className="col-span-3">
           <div className="flex items-center gap-3">
             <div className="inline-block rounded border border-purple-500/5 bg-purple-500/5 p-2.5">
-              <Icon
-                icon="messagesSquare"
-                fontSize={20}
-                className="text-primary"
-              />
+              <Icon icon="messagesSquare" fontSize={20} className="text-primary" />
             </div>
-            <p className="mt-3 text-3xl font-semibold">
-              Any Questions in Mind?
-            </p>
+            <p className="mt-3 text-3xl font-semibold">Any Questions in Mind?</p>
           </div>
           {/* <p className="mt-3 text-base-content/70">
             If you have still question, don&apos;t worry. Just contact us with
@@ -36,11 +24,7 @@ export const FAQ = () => {
         <div className="col-span-4">
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <Accordion
-                key={`${faq.title}-${index}`}
-                type="single"
-                collapsible
-              >
+              <Accordion key={`${faq.title}-${index}`} type="single" collapsible>
                 <AccordionItem value={faq.title}>
                   <AccordionTrigger className="text-xl font-medium hover:no-underline">
                     {faq.title}

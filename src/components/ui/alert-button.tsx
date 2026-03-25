@@ -38,9 +38,7 @@ export const AlertButton = ({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>
-          <AlertDialogDescription>
-            {confirmActionDescription}
-          </AlertDialogDescription>
+          <AlertDialogDescription>{confirmActionDescription}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>

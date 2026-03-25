@@ -1,12 +1,11 @@
-import { FC, forwardRef } from "react";
+import { FC, forwardRef } from 'react';
 
 interface NavItemProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-interface NavbarProps
-  extends React.DetailedHTMLProps<
-    React.HTMLAttributes<HTMLElement>,
-    HTMLElement
-  > {}
+interface NavbarProps extends React.DetailedHTMLProps<
+  React.HTMLAttributes<HTMLElement>,
+  HTMLElement
+> {}
 
 const NavbarStart = forwardRef<HTMLDivElement, NavItemProps>(
   ({ children, className, ...props }, ref) => (
@@ -15,7 +14,7 @@ const NavbarStart = forwardRef<HTMLDivElement, NavItemProps>(
     </div>
   )
 );
-NavbarStart.displayName = "NavbarStart";
+NavbarStart.displayName = 'NavbarStart';
 
 const NavbarCenter = forwardRef<HTMLDivElement, NavItemProps>(
   ({ children, className, ...props }, ref) => (
@@ -24,7 +23,7 @@ const NavbarCenter = forwardRef<HTMLDivElement, NavItemProps>(
     </div>
   )
 );
-NavbarCenter.displayName = "NavbarCenter";
+NavbarCenter.displayName = 'NavbarCenter';
 
 const NavbarEnd = forwardRef<HTMLDivElement, NavItemProps>(
   ({ children, className, ...props }, ref) => (
@@ -33,19 +32,17 @@ const NavbarEnd = forwardRef<HTMLDivElement, NavItemProps>(
     </div>
   )
 );
-NavbarEnd.displayName = "NavbarEnd";
+NavbarEnd.displayName = 'NavbarEnd';
 
-const Navbar = forwardRef<HTMLElement, NavbarProps>(
-  ({ children, className, ...props }, ref) => (
-    <nav
-      ref={ref}
-      className={`grid grid-flow-col py-3 px-0 place-items-center ${className}`}
-      {...props}
-    >
-      {children}
-    </nav>
-  )
-);
-Navbar.displayName = "Navbar";
+const Navbar = forwardRef<HTMLElement, NavbarProps>(({ children, className, ...props }, ref) => (
+  <nav
+    ref={ref}
+    className={`grid grid-flow-col py-3 px-0 place-items-center ${className}`}
+    {...props}
+  >
+    {children}
+  </nav>
+));
+Navbar.displayName = 'Navbar';
 
 export { NavbarStart, NavbarCenter, NavbarEnd, Navbar };

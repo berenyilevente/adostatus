@@ -13,10 +13,7 @@ export const MotionFadeIn = ({
   className?: string;
 }) => {
   return (
-    <motion.div
-      variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }}
-      className={className}
-    >
+    <motion.div variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }} className={className}>
       {children}
     </motion.div>
   );

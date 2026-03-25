@@ -46,20 +46,10 @@ export const LoginEmail = ({ url, host }: { url: string; host: string }) => {
             If you didn&apos;t try to login, you can safely ignore this email.
           </Text>
 
-          <Img
-            className="rounded-full"
-            src={logoUrl}
-            width="48"
-            height="48"
-            alt="logo"
-          />
+          <Img className="rounded-full" src={logoUrl} width="48" height="48" alt="logo" />
 
           <Text style={footer}>
-            <Link
-              href={BASE_URL}
-              target="_blank"
-              style={{ ...link, color: '#898989' }}
-            >
+            <Link href={BASE_URL} target="_blank" style={{ ...link, color: '#898989' }}>
               {config.app.name}
             </Link>
           </Text>

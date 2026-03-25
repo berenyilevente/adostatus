@@ -10,10 +10,9 @@ export const Footer = () => {
         <div className="relative grid items-center overflow-hidden rounded-xl lg:grid-cols-3">
           <div className="col-span-2 p-4 text-center md:p-8">
             <div className="text-md font-medium md:text-xl">
-              {config.app.name} is a flexible appointment scheduling software
-              for businesses that want booking forms that feel like part of
-              their brand. One dashboard. Unlimited forms. For every business
-              you run.
+              {config.app.name} is a flexible appointment scheduling software for businesses that
+              want booking forms that feel like part of their brand. One dashboard. Unlimited forms.
+              For every business you run.
             </div>
           </div>
         </div>

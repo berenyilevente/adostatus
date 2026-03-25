@@ -45,12 +45,7 @@ export const FormTextarea = <
         <FormItem>
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <Textarea
-              {...field}
-              {...props}
-              rows={rows}
-              placeholder={placeholder}
-            />
+            <Textarea {...field} {...props} rows={rows} placeholder={placeholder} />
           </FormControl>
           {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />

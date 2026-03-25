@@ -70,8 +70,7 @@ export const FormCombobox = <
                   )}
                 >
                   {field.value
-                    ? options.find((option) => option.value === field.value)
-                        ?.label
+                    ? options.find((option) => option.value === field.value)?.label
                     : placeholder}
                   <ChevronsUpDown className="ml-auto opacity-50" />
                 </Button>
@@ -97,9 +96,7 @@ export const FormCombobox = <
                         <Check
                           className={cn(
                             'ml-auto',
-                            option.value === field.value
-                              ? 'opacity-100'
-                              : 'opacity-0'
+                            option.value === field.value ? 'opacity-100' : 'opacity-0'
                           )}
                         />
                       </CommandItem>

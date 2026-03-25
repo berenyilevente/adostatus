@@ -1,11 +1,11 @@
-import Link from "next/link";
+import Link from 'next/link';
 
-import { getSEOTags } from "@/lib/seo/seo";
-import { config } from "@/config";
+import { getSEOTags } from '@/lib/seo/seo';
+import { config } from '@/config';
 
 export const metadata = getSEOTags({
   title: `Privacy Policy | ${config.app.name}`,
-  canonicalUrlRelative: "/privacy-policy",
+  canonicalUrlRelative: '/privacy-policy',
 });
 
 const PrivacyPolicy = () => {
@@ -24,17 +24,12 @@ const PrivacyPolicy = () => {
               d="M15 10a.75.75 0 01-.75.75H7.612l2.158 1.96a.75.75 0 11-1.04 1.08l-3.5-3.25a.75.75 0 010-1.08l3.5-3.25a.75.75 0 111.04 1.08L7.612 9.25h6.638A.75.75 0 0115 10z"
               clipRule="evenodd"
             />
-          </svg>{" "}
+          </svg>{' '}
           Back
         </Link>
-        <h1 className="text-3xl font-extrabold pb-6">
-          Privacy Policy for {config.app.name}
-        </h1>
+        <h1 className="text-3xl font-extrabold pb-6">Privacy Policy for {config.app.name}</h1>
 
-        <pre
-          className="leading-relaxed whitespace-pre-wrap"
-          style={{ fontFamily: "sans-serif" }}
-        >
+        <pre className="leading-relaxed whitespace-pre-wrap" style={{ fontFamily: 'sans-serif' }}>
           {`Last Updated: January 29, 2025
 
 Welcome to SwiftBlocks! Your privacy is important to us. Below is an outline of how we collect, use, and protect your information.

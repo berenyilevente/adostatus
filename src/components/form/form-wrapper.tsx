@@ -1,26 +1,18 @@
 import { ReactElement } from 'react';
-import { SubmitHandler, UseFormReturn } from 'react-hook-form';
+import { FieldValues, SubmitHandler, UseFormReturn } from 'react-hook-form';
 import { Form } from '../ui/form';
 
-interface FormWrapperProps {
+interface FormWrapperProps<T extends FieldValues = FieldValues> {
   children: ReactElement | ReactElement[];
-  form: UseFormReturn<any>;
+  form: UseFormReturn<T>;
   className?: string;
-  onSubmit?: SubmitHandler<any>;
+  onSubmit?: SubmitHandler<T>;
 }
 
-export const FormWrapper = ({
-  children,
-  form,
-  className,
-  onSubmit,
-}: FormWrapperProps) => {
+export const FormWrapper = ({ children, form, className, onSubmit }: FormWrapperProps) => {
   return (
     <Form {...form}>
-      <form
-        className={className}
-        onSubmit={onSubmit ? form.handleSubmit(onSubmit) : undefined}
-      >
+      <form className={className} onSubmit={onSubmit ? form.handleSubmit(onSubmit) : undefined}>
         {children}
       </form>
     </Form>

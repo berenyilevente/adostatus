@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { ReactElement, useState } from "react";
-import { Control, FieldPath, FieldValues } from "react-hook-form";
+import { ReactElement, useState } from 'react';
+import { Control, FieldPath, FieldValues } from 'react-hook-form';
 
-import { Icon, Button, FormInput } from "@/components";
+import { Icon, Button, FormInput } from '@/components';
 
 interface FormPasswordInputProps<
   TField extends FieldValues = FieldValues,
@@ -28,7 +28,7 @@ export const FormPasswordInput = <
       {...props}
       control={control}
       name={name}
-      type={showPassword ? "text" : "password"}
+      type={showPassword ? 'text' : 'password'}
       endIconComponent={
         <Button
           onClick={() => setShowPassword(!showPassword)}
@@ -38,14 +38,10 @@ export const FormPasswordInput = <
           variant="ghost"
           className="hover:bg-base-content/10"
         >
-          <Icon
-            icon={showPassword ? "eyeOff" : "eye"}
-            className="text-base-content/80"
-            size="xs"
-          />
+          <Icon icon={showPassword ? 'eyeOff' : 'eye'} className="text-base-content/80" size="xs" />
         </Button>
       }
     />
   );
 };
-FormPasswordInput.displayName = "FormPasswordInput";
+FormPasswordInput.displayName = 'FormPasswordInput';

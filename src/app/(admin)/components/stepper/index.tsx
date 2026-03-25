@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { ReactNode } from "react";
-import { Card } from "@/components/ui/card";
+import { ReactNode } from 'react';
+import { Card } from '@/components/ui/card';
 
 interface OnboardingStep {
   title: string;
@@ -39,20 +39,20 @@ export const Onboarding = ({
                 key={index}
                 className={`p-4 rounded-lg border ${
                   currentStep === index
-                    ? "bg-primary text-primary-foreground"
+                    ? 'bg-primary text-primary-foreground'
                     : index < currentStep
-                      ? "bg-muted"
-                      : "bg-background"
+                      ? 'bg-muted'
+                      : 'bg-background'
                 }`}
               >
                 <div className="flex items-center gap-3">
                   <div
                     className={`flex items-center justify-center w-6 h-6 rounded-full text-sm font-medium ${
                       currentStep === index
-                        ? "bg-primary-foreground text-primary"
+                        ? 'bg-primary-foreground text-primary'
                         : index < currentStep
-                          ? "bg-primary text-primary-foreground"
-                          : "bg-muted text-muted-foreground"
+                          ? 'bg-primary text-primary-foreground'
+                          : 'bg-muted text-muted-foreground'
                     }`}
                   >
                     {index + 1}
@@ -66,12 +66,8 @@ export const Onboarding = ({
           <Card className="flex-1 p-6">
             <div className="space-y-4">
               <div className="space-y-2">
-                <h2 className="text-2xl font-bold tracking-tight">
-                  {steps[currentStep].title}
-                </h2>
-                <p className="text-muted-foreground">
-                  {steps[currentStep].description}
-                </p>
+                <h2 className="text-2xl font-bold tracking-tight">{steps[currentStep].title}</h2>
+                <p className="text-muted-foreground">{steps[currentStep].description}</p>
               </div>
               {steps[currentStep].children}
             </div>

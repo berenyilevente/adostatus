@@ -2,13 +2,7 @@
 
 import React from 'react';
 
-import {
-  Button,
-  FormInput,
-  FormRadioGroup,
-  FormWrapper,
-  Label,
-} from '@/components';
+import { Button, FormInput, FormRadioGroup, FormWrapper, Label } from '@/components';
 
 import { usePurchase } from './use-purchase';
 import Link from 'next/link';
@@ -28,12 +22,7 @@ export const Purchase = () => {
         label="Email Address"
         className="w-full"
       />
-      <Button
-        color="primary"
-        isLoading={isLoading}
-        onClick={onSubmit}
-        fullWidth
-      >
+      <Button color="primary" isLoading={isLoading} onClick={onSubmit} fullWidth>
         Continue
       </Button>
       <div className="text-sm text-base-content/70 space-x-1">

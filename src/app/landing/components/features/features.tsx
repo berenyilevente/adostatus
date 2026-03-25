@@ -51,12 +51,8 @@ export const Features = () => {
                 <span className="uppercase font-semibold text-sm text-muted-foreground">
                   {feature.category}
                 </span>
-                <h4 className="my-3 text-3xl font-semibold tracking-tight">
-                  {feature.title}
-                </h4>
-                <p className="text-muted-foreground text-[17px]">
-                  {feature.details}
-                </p>
+                <h4 className="my-3 text-3xl font-semibold tracking-tight">{feature.title}</h4>
+                <p className="text-muted-foreground text-[17px]">{feature.details}</p>
               </div>
             </div>
           ))}

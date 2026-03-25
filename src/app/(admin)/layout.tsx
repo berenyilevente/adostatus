@@ -7,11 +7,11 @@ import { SidebarProvider } from '@/components';
 import AdminLayout from './(layout)/AdminLayout';
 import { AppSidebar } from './(layout)/navigation/AppSidebar';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 const EXCLUDED_PAGES = ['/onboard-user'];
 
-const Layout = ({ children }: { children: any }) => {
+const Layout = ({ children }: { children: React.ReactNode }) => {
   const [open, setOpen] = useState(true);
 
   const pathname = usePathname();

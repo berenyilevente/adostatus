@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { Card, CardContent, CardHeader, CardTitle, Icon } from "@/components";
-import { config } from "@/config";
+import { Card, CardContent, CardHeader, CardTitle, Icon } from '@/components';
+import { config } from '@/config';
 
 // todo rephrase and move to docs
 // A useful component when your product is challenging the status quo.
@@ -9,22 +9,22 @@ import { config } from "@/config";
 // Try to match the lines from left to right, so the user can easily compare the two columns
 export const Compare = () => {
   const withoutProduct = [
-    "Hours wasted configuring basic features like user auth, payments, and emails.",
-    "Inconsistent codebase",
-    "Prolonged launch of projects",
-    "Frustration from getting stuck on repetitive tasks",
-    "Not being able to focus on the core product",
-    "Debugging issues with basic features like Stripe, Auth, Emails, and more.",
+    'Hours wasted configuring basic features like user auth, payments, and emails.',
+    'Inconsistent codebase',
+    'Prolonged launch of projects',
+    'Frustration from getting stuck on repetitive tasks',
+    'Not being able to focus on the core product',
+    'Debugging issues with basic features like Stripe, Auth, Emails, and more.',
   ];
 
   const withProduct = [
-    "Hours saved with pre-configured, ready-to-use components and integrations.",
-    "Consistent codebase thanks to pre-built modules.",
-    "App launches in days, not months",
-    "Maximized speed and consistency.",
-    "Focus on the core product",
-    "No more repetitive coding",
-    "Everything in one place - Stripe, Auth, Emails, and more.",
+    'Hours saved with pre-configured, ready-to-use components and integrations.',
+    'Consistent codebase thanks to pre-built modules.',
+    'App launches in days, not months',
+    'Maximized speed and consistency.',
+    'Focus on the core product',
+    'No more repetitive coding',
+    'Everything in one place - Stripe, Auth, Emails, and more.',
   ];
 
   return (
@@ -45,11 +45,7 @@ export const Compare = () => {
               <ul className="list-disc list-inside space-y-2">
                 {withoutProduct.map((item, index) => (
                   <li key={index} className="flex gap-2 items-center text-base">
-                    <Icon
-                      icon="xCircle"
-                      className="shrink-0 opacity-75 text-red-500"
-                      size="xs"
-                    />
+                    <Icon icon="xCircle" className="shrink-0 opacity-75 text-red-500" size="xs" />
                     {item}
                   </li>
                 ))}

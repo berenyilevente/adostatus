@@ -1,8 +1,10 @@
-"use client";
+'use client';
 
-import { AppTopbar } from "./navigation/AppTopbar";
+import { AppTopbar } from './navigation/AppTopbar';
 
-const AdminLayout = ({ children }: { children: any }) => {
+import React from 'react';
+
+const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="size-full">
       <div className="flex overflow-hidden">

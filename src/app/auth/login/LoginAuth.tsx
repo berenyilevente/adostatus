@@ -21,12 +21,7 @@ export const LoginAuth = () => {
         label="Email Address"
         className="w-full"
       />
-      <Button
-        color="primary"
-        isLoading={isLoading}
-        onClick={onSubmit}
-        fullWidth
-      >
+      <Button color="primary" isLoading={isLoading} onClick={onSubmit} fullWidth>
         Send login link
       </Button>
     </FormWrapper>

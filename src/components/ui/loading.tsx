@@ -1,4 +1,4 @@
-import { Skeleton } from "./skeleton";
+import { Skeleton } from './skeleton';
 
 export const Loading: React.FC = () => {
   return (
@@ -11,4 +11,4 @@ export const Loading: React.FC = () => {
     </div>
   );
 };
-Loading.displayName = "Loading";
+Loading.displayName = 'Loading';

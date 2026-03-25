@@ -1,22 +1,19 @@
+'use server';
+
 import prisma from '@/lib/prisma/client';
 import { isAuthenticated } from '@/lib/auth/isAuthenticated';
-import { Response } from '@/types/action.types';
+import { handleResponse } from '@/utils/handleResponse';
 
-export const getUsers = async (): Promise<Response<any[]>> => {
+export const getUsers = async () => {
   const session = await isAuthenticated();
 
   const currentUserEmail = session?.user?.email;
 
   if (!currentUserEmail) {
-    return {
-      status: 'error',
-      data: null,
-      code: 404,
-      error: 'Current user not found',
-    };
+    return handleResponse({ data: null, error: 'Current user not found', code: 404 });
   }
 
-  const users: any[] = await prisma.user.findMany({
+  const users = await prisma.user.findMany({
     where: {
       email: {
         not: currentUserEmail,
@@ -24,10 +21,5 @@ export const getUsers = async (): Promise<Response<any[]>> => {
     },
   });
 
-  return {
-    status: 'success',
-    data: users,
-    code: 200,
-    error: null,
-  };
+  return handleResponse({ data: users });
 };

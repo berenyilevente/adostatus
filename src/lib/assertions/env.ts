@@ -1,7 +1,4 @@
-export const assertEnvVar = (
-  envVarKey: string,
-  fallbackValue?: string
-): string => {
+export const assertEnvVar = (envVarKey: string, fallbackValue?: string): string => {
   const envVar = process.env[envVarKey] || fallbackValue;
 
   if (envVar === undefined) {

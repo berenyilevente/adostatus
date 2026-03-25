@@ -7,10 +7,7 @@ import { Dashboard } from './Dashboard';
 const DashboardPage = (): ReactElement => {
   return (
     <div>
-      <PageTitle
-        title="Dashboard"
-        breadcrumbs={[{ label: 'Dashboard', active: true }]}
-      />
+      <PageTitle title="Dashboard" breadcrumbs={[{ label: 'Dashboard', active: true }]} />
       <DashboardProvider data={[]}>
         <Dashboard />
       </DashboardProvider>

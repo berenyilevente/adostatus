@@ -18,13 +18,7 @@ import {
 
 const iconBaseClassNames = 'absolute top-[26px] -translate-y-1/2 text-gray-400';
 
-const StartIcon = ({
-  startIcon,
-  label,
-}: {
-  startIcon?: IconType;
-  label?: boolean;
-}) => {
+const StartIcon = ({ startIcon, label }: { startIcon?: IconType; label?: boolean }) => {
   if (!startIcon) {
     return null;
   }
@@ -38,13 +32,7 @@ const StartIcon = ({
   );
 };
 
-const EndIcon = ({
-  endIcon,
-  label,
-}: {
-  endIcon?: IconType;
-  label?: boolean;
-}) => {
+const EndIcon = ({ endIcon, label }: { endIcon?: IconType; label?: boolean }) => {
   if (!endIcon) {
     return null;
   }
@@ -96,9 +84,7 @@ export const FormInput = <
           {label && (
             <FormLabel>
               {label}
-              <span className="text-red-500 pl-1">
-                {props.required ? '*' : ''}
-              </span>
+              <span className="text-red-500 pl-1">{props.required ? '*' : ''}</span>
             </FormLabel>
           )}
           <StartIcon startIcon={startIcon} label={!!label} />

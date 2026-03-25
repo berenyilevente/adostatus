@@ -1,8 +1,8 @@
-import { config } from "@/config";
-import { Button, Icon } from "@/components";
+import { config } from '@/config';
+import { Button, Icon } from '@/components';
 
-import { PriceCard } from "./components/PriceCard";
-import Link from "next/link";
+import { PriceCard } from './components/PriceCard';
+import Link from 'next/link';
 
 // todo: rephrase and move to documentation
 // <Pricing/> displays the pricing plans for your app
@@ -13,7 +13,7 @@ export const Pricing = () => {
     <div className="container pt-24" id="pricing">
       <div className="text-center">
         <div className="inline-block rounded border border-green-500/5 bg-green-500/5 p-2.5">
-          <Icon icon={"dollarSign"} fontSize={20} className="text-green-600" />
+          <Icon icon={'dollarSign'} fontSize={20} className="text-green-600" />
         </div>
         <p className="mt-1 text-3xl font-semibold">Pricing</p>
         <p className="mt-3 inline-block max-w-sm text-base-content/70">

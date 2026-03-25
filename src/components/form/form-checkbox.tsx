@@ -51,16 +51,10 @@ export const FormCheckbox = <
           )}
         >
           <FormControl>
-            <Checkbox
-              checked={field.value}
-              onCheckedChange={field.onChange}
-              {...props}
-            />
+            <Checkbox checked={field.value} onCheckedChange={field.onChange} {...props} />
           </FormControl>
           <div className="space-y-1 leading-none">
-            {label && (
-              <FormLabel className="!cursor-pointer">{label}</FormLabel>
-            )}
+            {label && <FormLabel className="!cursor-pointer">{label}</FormLabel>}
             {description && <FormDescription>{description}</FormDescription>}
             <FormMessage />
           </div>

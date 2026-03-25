@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { Logo } from "@/components";
+import Link from 'next/link';
+import { Logo } from '@/components';
 
 export default function NotFound() {
   return (
@@ -7,9 +7,7 @@ export default function NotFound() {
       <div className="w-full space-y-6 text-center">
         <div className="space-y-3">
           <Logo size={48} />
-          <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl">
-            404 Page Not Found
-          </h1>
+          <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl">404 Page Not Found</h1>
           <p className="text-gray-500">
             Sorry, we couldn&apos;t find the page you&apos;re looking for.
           </p>

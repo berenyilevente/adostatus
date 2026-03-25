@@ -26,8 +26,7 @@ const pirceId: Record<string, Record<string, string>> = {
 
 const basic: Plan = {
   name: 'AppointIQ Starter',
-  description:
-    'Perfect for trying AppointIQ with a single business or service type.',
+  description: 'Perfect for trying AppointIQ with a single business or service type.',
   priceId: pirceId.basic[NODE_ENV],
   included: [
     { name: '1 booking form' },
@@ -47,8 +46,7 @@ const basic: Plan = {
 
 const advanced: Plan = {
   name: 'AppointIQ Business',
-  description:
-    'Everything you need for multiple businesses with a single subscription.',
+  description: 'Everything you need for multiple businesses with a single subscription.',
   priceId: pirceId.advanced[NODE_ENV],
   included: [
     { name: 'Unlimited appointment bookings' },

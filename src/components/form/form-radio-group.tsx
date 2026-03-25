@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { Control, FieldPath, FieldValues } from "react-hook-form";
-import { RadioGroupItemProps } from "@radix-ui/react-radio-group";
+import { Control, FieldPath, FieldValues } from 'react-hook-form';
+import { RadioGroupItemProps } from '@radix-ui/react-radio-group';
 
 import {
   FormControl,
@@ -12,12 +12,12 @@ import {
   FormMessage,
   RadioGroup,
   RadioGroupItem,
-} from "@/components";
+} from '@/components';
 
 type FormRadioGroupProps<
   TField extends FieldValues = FieldValues,
   TName extends FieldPath<TField> = FieldPath<TField>,
-> = Omit<RadioGroupItemProps, "name"> & {
+> = Omit<RadioGroupItemProps, 'name'> & {
   control: Control<TField>;
   name: TName;
   items: {
@@ -74,4 +74,4 @@ export const FormRadioGroup = <
     />
   );
 };
-FormRadioGroup.displayName = "FormRadioGroup";
+FormRadioGroup.displayName = 'FormRadioGroup';
