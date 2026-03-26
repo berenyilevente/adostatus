@@ -15,17 +15,29 @@ export const authOptions: NextAuthOptions = {
     verifyRequest: '/auth/verify-request',
   },
   callbacks: {
-    async jwt({ token, user }) {
-      // Add userId to the token when user signs in
+    async jwt({ token, user, trigger }) {
       if (user) {
         token.userId = user.id;
+        token.role = user.role;
       }
+
+      if (trigger === 'update' || !token.role) {
+        const dbUser = await client.user.findUnique({
+          where: { email: token.email! },
+          select: { id: true, role: true },
+        });
+        if (dbUser) {
+          token.userId = dbUser.id;
+          token.role = dbUser.role;
+        }
+      }
+
       return token;
     },
     async session({ session, token }) {
-      // Add userId to the session
-      if (token.userId && session.user) {
+      if (session.user) {
         session.user.id = token.userId;
+        session.user.role = token.role;
       }
       return session;
     },

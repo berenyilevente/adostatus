@@ -1,9 +1,11 @@
 import { NextResponse, NextRequest } from 'next/server';
-import { getToken, JWT } from 'next-auth/jwt';
+import { getToken } from 'next-auth/jwt';
 import { BASE_URL } from './config/env.config';
 
+const ACCOUNTANT_ONLY_ROUTES = ['/clients', '/bank-details'];
+const CLIENT_ONLY_ROUTES = ['/tax-records'];
+
 export async function middleware(request: NextRequest) {
-  // check if user is authenticated
   const token = await getToken({
     req: request,
     secret: process.env.NEXTAUTH_SECRET,
@@ -13,23 +15,39 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/auth/login', request.url));
   }
 
-  // stripe subscription
-  const stripeSubscriptionUrl = `${BASE_URL}/api/stripe/subscription?email=${token.email}`;
+  const pathname = request.nextUrl.pathname;
+  const role = token.role as string | undefined;
 
-  const stripeSubscription = await fetch(stripeSubscriptionUrl, {
-    headers: { Authorization: `Bearer ${token.jwt || token.sub}` },
-  });
+  if (role === 'CLIENT') {
+    const isAccountantRoute = ACCOUNTANT_ONLY_ROUTES.some((route) => pathname.startsWith(route));
+    if (isAccountantRoute) {
+      return NextResponse.redirect(new URL('/dashboard', request.url));
+    }
+    return NextResponse.next();
+  }
 
-  const { hasAccess } = await stripeSubscription.json();
+  if (role === 'ACCOUNTANT') {
+    const isClientRoute = CLIENT_ONLY_ROUTES.some((route) => pathname.startsWith(route));
+    if (isClientRoute) {
+      return NextResponse.redirect(new URL('/dashboard', request.url));
+    }
 
-  if (!hasAccess) {
-    // TODO redirect the user to a new choose pricing plan page (Please select a plan to start using appointiq, etc.)
-    return NextResponse.redirect(new URL(`${BASE_URL}/#pricing`));
+    const stripeSubscriptionUrl = `${BASE_URL}/api/stripe/subscription?email=${token.email}`;
+    const stripeSubscription = await fetch(stripeSubscriptionUrl, {
+      headers: { Authorization: `Bearer ${token.jwt || token.sub}` },
+    });
+    const { hasAccess } = await stripeSubscription.json();
+
+    if (!hasAccess) {
+      return NextResponse.redirect(new URL(`${BASE_URL}/#pricing`));
+    }
+
+    return NextResponse.next();
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/dashboard', '/users'],
+  matcher: ['/dashboard', '/tax-records/:path*', '/clients/:path*', '/bank-details/:path*'],
 };

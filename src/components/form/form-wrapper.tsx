@@ -9,7 +9,7 @@ interface FormWrapperProps<T extends FieldValues = FieldValues> {
   onSubmit?: SubmitHandler<T>;
 }
 
-export const FormWrapper = ({ children, form, className, onSubmit }: FormWrapperProps) => {
+export const FormWrapper = <T extends FieldValues>({ children, form, className, onSubmit }: FormWrapperProps<T>) => {
   return (
     <Form {...form}>
       <form className={className} onSubmit={onSubmit ? form.handleSubmit(onSubmit) : undefined}>

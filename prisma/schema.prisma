@@ -9,22 +9,39 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  CLIENT
+  ACCOUNTANT
+}
 
+enum TaxStatus {
+  NOT_PAID
+  PENDING
+  PAID
+}
 
 model User {
-  id                   String                 @id @default(cuid())
-  email                String                 @unique
-  isActive             Boolean                @default(false)
-  createdAt            DateTime               @default(now())
-  updatedAt            DateTime               @updatedAt
-  emailVerified        DateTime?
-  firstName            String?
-  lastName             String?
-  phone                String?
-  lastLoginAt          DateTime?
-  image                String?
-  name                 String?
-  subscriptions        Subscription[]
+  id            String    @id @default(cuid())
+  email         String    @unique
+  role          Role      @default(CLIENT)
+  isActive      Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  emailVerified DateTime?
+  firstName     String?
+  lastName      String?
+  phone         String?
+  lastLoginAt   DateTime?
+  image         String?
+  name          String?
+
+  accountantId String?
+  accountant   User?  @relation("AccountantClients", fields: [accountantId], references: [id])
+  clients      User[] @relation("AccountantClients")
+
+  subscriptions     Subscription[]
+  taxRecords        TaxRecord[]
+  taxPaymentDetails UserTaxPaymentDetail[]
 
   @@map("users")
 }
@@ -71,4 +88,86 @@ model VerificationToken {
 
   @@id([identifier, token])
   @@map("verification_token")
+}
+
+model TaxType {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  code      String   @unique
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  bankDetails        BankDetails?
+  taxItems           TaxItem[]
+  userPaymentDetails UserTaxPaymentDetail[]
+
+  @@map("tax_types")
+}
+
+model BankDetails {
+  id            String   @id @default(cuid())
+  taxTypeId     String   @unique
+  accountNumber String
+  accountName   String
+  bankName      String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  taxType TaxType @relation(fields: [taxTypeId], references: [id], onDelete: Cascade)
+
+  @@map("bank_details")
+}
+
+model UserTaxPaymentDetail {
+  id               String   @id @default(cuid())
+  userId           String
+  taxTypeId        String
+  paymentReference String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  taxType TaxType @relation(fields: [taxTypeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, taxTypeId])
+  @@map("user_tax_payment_details")
+}
+
+model TaxRecord {
+  id        String    @id @default(cuid())
+  userId    String
+  year      Int
+  month     Int
+  notes     String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  taxItems TaxItem[]
+
+  @@unique([userId, year, month])
+  @@index([userId])
+  @@map("tax_records")
+}
+
+model TaxItem {
+  id          String    @id @default(cuid())
+  taxRecordId String
+  taxTypeId   String
+  amount      Int       @default(0)
+  status      TaxStatus @default(NOT_PAID)
+  dueDate     DateTime
+  paidDate    DateTime?
+  notes       String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  taxRecord TaxRecord @relation(fields: [taxRecordId], references: [id], onDelete: Cascade)
+  taxType   TaxType   @relation(fields: [taxTypeId], references: [id])
+
+  @@unique([taxRecordId, taxTypeId])
+  @@index([taxRecordId])
+  @@index([status])
+  @@map("tax_items")
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import { ReactElement } from 'react';
+import { useSession } from 'next-auth/react';
 
 import {
   Logo,
@@ -21,7 +22,7 @@ import {
 } from '@/components';
 import { config } from '@/config';
 
-import { adminMenuItems as menuItems } from './menu-items';
+import { clientMenuItems, accountantMenuItems } from './menu-items';
 import { IMenuItem } from '../types/menu.types';
 import { ChevronDownIcon } from 'lucide-react';
 
@@ -65,8 +66,11 @@ const SidebarItem = ({ item }: { item: IMenuItem }) => {
   );
 };
 
-// TODO store sidebar state in local storage
 export const AppSidebar = (): ReactElement => {
+  const { data: session } = useSession();
+  const role = session?.user?.role;
+  const menuItems = role === 'ACCOUNTANT' ? accountantMenuItems : clientMenuItems;
+
   return (
     <Sidebar>
       <SidebarContent>

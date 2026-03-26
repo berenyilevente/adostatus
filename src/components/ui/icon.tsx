@@ -67,6 +67,8 @@ import seperator from '@iconify/icons-lucide/minus';
 import spacer from '@iconify/icons-lucide/unfold-vertical';
 import number from '@iconify/icons-lucide/list-ordered';
 import textarea from '@iconify/icons-lucide/text-quote';
+import receipt from '@iconify/icons-lucide/receipt';
+import landmark from '@iconify/icons-lucide/landmark';
 
 export const iconMap = {
   mail,
@@ -133,6 +135,8 @@ export const iconMap = {
   spacer,
   number,
   textarea,
+  receipt,
+  landmark,
 };
 
 export type IconType = keyof typeof iconMap;
