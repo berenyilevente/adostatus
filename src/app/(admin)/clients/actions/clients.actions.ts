@@ -39,7 +39,10 @@ export const getClients = async () => {
 
     return handleResponse({ data });
   } catch {
-    return handleResponse<ClientListItem[]>({ data: null, error: 'Nem sikerült betölteni az ügyfeleket' });
+    return handleResponse<ClientListItem[]>({
+      data: null,
+      error: 'Nem sikerült betölteni az ügyfeleket',
+    });
   }
 };
 
@@ -52,18 +55,25 @@ export const getClientDetail = async (clientId: string) => {
       include: {
         taxRecords: {
           include: { taxItems: { include: { taxType: true } } },
-          orderBy: [{ year: 'desc' }, { month: 'desc' }],
+          orderBy: [{ year: 'desc' }, { month: 'asc' }],
         },
       },
     });
 
     if (!client) {
-      return handleResponse<ClientDetail>({ data: null, error: 'Az ügyfél nem található', code: 404 });
+      return handleResponse<ClientDetail>({
+        data: null,
+        error: 'Az ügyfél nem található',
+        code: 404,
+      });
     }
 
     return handleResponse({ data: client as ClientDetail });
   } catch {
-    return handleResponse<ClientDetail>({ data: null, error: 'Nem sikerült betölteni az ügyfél adatait' });
+    return handleResponse<ClientDetail>({
+      data: null,
+      error: 'Nem sikerült betölteni az ügyfél adatait',
+    });
   }
 };
 
@@ -75,7 +85,10 @@ export const inviteClient = async (input: InviteClientInput) => {
 
     if (existing) {
       if (existing.accountantId) {
-        return handleResponse({ data: null, error: 'Ez az e-mail cím már egy másik könyvelőhöz tartozik' });
+        return handleResponse({
+          data: null,
+          error: 'Ez az e-mail cím már egy másik könyvelőhöz tartozik',
+        });
       }
 
       const updated = await prisma.user.update({

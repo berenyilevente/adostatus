@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 import { PageTitle } from '@/app/(admin)/components';
 import { EditMonthProvider } from './use-edit-month';
 import { EditMonthDetail } from './EditMonthDetail';
-import { getTaxRecordDetail, createMonthlyRecord } from '@/app/(admin)/tax-records/actions/tax-records.actions';
+import { getTaxRecordDetail } from '@/app/(admin)/tax-records/actions/tax-records.actions';
 
 const MONTH_NAMES = [
   '', 'Január', 'Február', 'Március', 'Április', 'Május', 'Június',
@@ -24,14 +24,7 @@ const EditMonthPage = async ({ params }: PageProps): Promise<ReactElement> => {
     redirect(`/clients/${clientId}`);
   }
 
-  let response = await getTaxRecordDetail(clientId, year, month);
-
-  if (response.status === 'error' && response.code === 404) {
-    const createResult = await createMonthlyRecord({ userId: clientId, year, month });
-    if (createResult.status === 'success') {
-      response = await getTaxRecordDetail(clientId, year, month);
-    }
-  }
+  const response = await getTaxRecordDetail(clientId, year, month);
 
   if (response.status === 'error' || !response.data) {
     redirect(`/clients/${clientId}`);
@@ -48,7 +41,7 @@ const EditMonthPage = async ({ params }: PageProps): Promise<ReactElement> => {
           { label: `${year}. ${MONTH_NAMES[month]}`, active: true },
         ]}
       />
-      <EditMonthProvider data={response.data}>
+      <EditMonthProvider data={response.data} clientId={clientId}>
         <EditMonthDetail />
       </EditMonthProvider>
     </div>

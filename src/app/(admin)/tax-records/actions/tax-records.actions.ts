@@ -155,6 +155,35 @@ export const updateTaxItem = async (input: UpdateTaxItemInput) => {
   }
 };
 
+export const deleteMonthlyRecord = async (recordId: string) => {
+  const { user } = await requireAccountant();
+
+  try {
+    const record = await prisma.taxRecord.findUnique({
+      where: { id: recordId },
+      select: { userId: true },
+    });
+
+    if (!record) {
+      return handleResponse({ data: null, error: 'Az adóbevallás nem található', code: 404 });
+    }
+
+    const client = await prisma.user.findFirst({
+      where: { id: record.userId, accountantId: user.id },
+    });
+
+    if (!client) {
+      return handleResponse({ data: null, error: 'Nincs jogosultság a törléshez', code: 403 });
+    }
+
+    await prisma.taxRecord.delete({ where: { id: recordId } });
+
+    return handleResponse({ data: { success: true } });
+  } catch {
+    return handleResponse({ data: null, error: 'Nem sikerült törölni az adóbevallást' });
+  }
+};
+
 export const updateTaxItemStatus = async (input: UpdateTaxItemStatusInput) => {
   await isAuthenticated();
 

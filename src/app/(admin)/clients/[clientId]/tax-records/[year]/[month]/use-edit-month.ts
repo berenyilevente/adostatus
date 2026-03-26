@@ -1,25 +1,28 @@
 'use client';
 
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import { createAppContext } from '@/hooks/use-create-app-context';
+import {
+  MonthDetailData,
+  TaxItemWithDetails,
+} from '@/app/(admin)/tax-records/types/tax-records.types';
 import {
   updateTaxItem,
   updateTaxItemStatus,
+  deleteMonthlyRecord,
 } from '@/app/(admin)/tax-records/actions/tax-records.actions';
 import {
   UpdateTaxItemInput,
   UpdateTaxItemStatusInput,
 } from '@/app/(admin)/tax-records/schemas/tax-records.schemas';
-import {
-  MonthDetailData,
-  TaxItemWithDetails,
-} from '@/app/(admin)/tax-records/types/tax-records.types';
-import { createAppContext } from '@/hooks/use-create-app-context';
-import { useState } from 'react';
-import { toast } from 'sonner';
 
-const useHook = ({ data }: { data: MonthDetailData }) => {
+const useHook = ({ data, clientId }: { data: MonthDetailData; clientId: string }) => {
   const [record, setRecord] = useState(data.record);
   const [userPaymentDetails] = useState(data.userPaymentDetails);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const onUpdateTaxItem = async (input: UpdateTaxItemInput) => {
     setIsLoading(true);
@@ -36,7 +39,7 @@ const useHook = ({ data }: { data: MonthDetailData }) => {
                   dueDate: result.data!.dueDate,
                   notes: result.data!.notes,
                 }
-              : item
+              : item,
           ) as TaxItemWithDetails[],
         }));
         toast.success('Adótétel frissítve');
@@ -58,10 +61,25 @@ const useHook = ({ data }: { data: MonthDetailData }) => {
           taxItems: prev.taxItems.map((item) =>
             item.id === input.taxItemId
               ? { ...item, status: result.data!.status, paidDate: result.data!.paidDate }
-              : item
+              : item,
           ) as TaxItemWithDetails[],
         }));
         toast.success('Állapot frissítve');
+      } else {
+        toast.error(result.error || 'Hiba történt');
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const onDeleteRecord = async () => {
+    setIsLoading(true);
+    try {
+      const result = await deleteMonthlyRecord(record.id);
+      if (result.status === 'success') {
+        toast.success('Adóbevallás törölve');
+        router.push(`/clients/${clientId}`);
       } else {
         toast.error(result.error || 'Hiba történt');
       }
@@ -76,6 +94,7 @@ const useHook = ({ data }: { data: MonthDetailData }) => {
     isLoading,
     onUpdateTaxItem,
     onUpdateTaxItemStatus,
+    onDeleteRecord,
   };
 };
 

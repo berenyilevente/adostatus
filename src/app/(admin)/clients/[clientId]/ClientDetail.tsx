@@ -3,6 +3,7 @@
 import { ReactElement } from 'react';
 import { Card, CardContent, Button, Icon } from '@/components';
 import { useClientDetail } from './use-client-detail';
+import { CreateTaxRecordDialog } from './components/CreateTaxRecordDialog';
 import { TaxStatus } from '@/generated/prisma';
 
 const STATUS_COLORS: Record<TaxStatus, string> = {
@@ -23,7 +24,7 @@ const MONTH_NAMES = [
 ];
 
 export const ClientDetail = (): ReactElement => {
-  const { client, onRemoveClient, onNavigateToMonth, isLoading } = useClientDetail();
+  const { client, onRemoveClient, onNavigateToMonth, setIsCreateOpen, isLoading } = useClientDetail();
 
   return (
     <div className="mt-6 space-y-6">
@@ -54,7 +55,12 @@ export const ClientDetail = (): ReactElement => {
       </Card>
 
       <div>
-        <h4 className="font-medium mb-3">Adóbevallások</h4>
+        <div className="flex items-center justify-between mb-3">
+          <h4 className="font-medium">Adóbevallások</h4>
+          <Button size="sm" startIcon="plus" onClick={() => setIsCreateOpen(true)}>
+            Bevallás létrehozása
+          </Button>
+        </div>
         {client.taxRecords.length === 0 ? (
           <p className="text-sm text-muted-foreground">Nincsenek még adóbevallások ehhez az ügyfélhez.</p>
         ) : (
@@ -101,6 +107,8 @@ export const ClientDetail = (): ReactElement => {
           </div>
         )}
       </div>
+
+      <CreateTaxRecordDialog />
     </div>
   );
 };
