@@ -10,21 +10,35 @@ const STATUS_COLORS: Record<TaxStatus, string> = {
   NOT_PAID: 'bg-red-100 text-red-800',
   PENDING: 'bg-yellow-100 text-yellow-800',
   PAID: 'bg-green-100 text-green-800',
+  DISMISSED: 'bg-gray-100 text-gray-800',
 };
 
 const STATUS_LABELS: Record<TaxStatus, string> = {
   NOT_PAID: 'Nincs fizetve',
   PENDING: 'Folyamatban',
   PAID: 'Fizetve',
+  DISMISSED: 'Elvetett',
 };
 
 const MONTH_NAMES = [
-  '', 'Január', 'Február', 'Március', 'Április', 'Május', 'Június',
-  'Július', 'Augusztus', 'Szeptember', 'Október', 'November', 'December',
+  '',
+  'Január',
+  'Február',
+  'Március',
+  'Április',
+  'Május',
+  'Június',
+  'Július',
+  'Augusztus',
+  'Szeptember',
+  'Október',
+  'November',
+  'December',
 ];
 
 export const ClientDetail = (): ReactElement => {
-  const { client, onRemoveClient, onNavigateToMonth, setIsCreateOpen, isLoading } = useClientDetail();
+  const { client, onRemoveClient, onNavigateToMonth, setIsCreateOpen, isLoading } =
+    useClientDetail();
 
   return (
     <div className="mt-6 space-y-6">
@@ -36,9 +50,7 @@ export const ClientDetail = (): ReactElement => {
                 {client.lastName} {client.firstName}
               </h3>
               <p className="text-sm text-muted-foreground">{client.email}</p>
-              {client.phone && (
-                <p className="text-sm text-muted-foreground">{client.phone}</p>
-              )}
+              {client.phone && <p className="text-sm text-muted-foreground">{client.phone}</p>}
             </div>
             <Button
               variant="outline"
@@ -62,7 +74,9 @@ export const ClientDetail = (): ReactElement => {
           </Button>
         </div>
         {client.taxRecords.length === 0 ? (
-          <p className="text-sm text-muted-foreground">Nincsenek még adóbevallások ehhez az ügyfélhez.</p>
+          <p className="text-sm text-muted-foreground">
+            Nincsenek még adóbevallások ehhez az ügyfélhez.
+          </p>
         ) : (
           <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
             {client.taxRecords.map((record) => {

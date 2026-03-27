@@ -54,19 +54,24 @@ async function getClientDashboard(userId: string, year: number, month: number): 
             status: item.status,
             dueDate: item.dueDate,
           })),
-          totalDue: currentRecord.taxItems.reduce((sum, i) => sum + i.amount, 0),
+          totalDue: currentRecord.taxItems
+            .filter((i) => i.status !== 'DISMISSED')
+            .reduce((sum, i) => sum + i.amount, 0),
           totalPaid: currentRecord.taxItems
             .filter((i) => i.status === 'PAID')
             .reduce((sum, i) => sum + i.amount, 0),
         }
       : null,
-    recentMonths: recentRecords.map((r) => ({
-      year: r.year,
-      month: r.month,
-      totalDue: r.taxItems.reduce((sum, i) => sum + i.amount, 0),
-      paidCount: r.taxItems.filter((i) => i.status === 'PAID').length,
-      totalItems: r.taxItems.length,
-    })),
+    recentMonths: recentRecords.map((r) => {
+      const activeItems = r.taxItems.filter((i) => i.status !== 'DISMISSED');
+      return {
+        year: r.year,
+        month: r.month,
+        totalDue: activeItems.reduce((sum, i) => sum + i.amount, 0),
+        paidCount: activeItems.filter((i) => i.status === 'PAID').length,
+        totalItems: activeItems.length,
+      };
+    }),
   };
 }
 
@@ -124,6 +129,7 @@ async function getAccountantDashboard(accountantId: string, year: number, month:
       paidCount: allItems.filter((i) => i.status === 'PAID').length,
       pendingCount: allItems.filter((i) => i.status === 'PENDING').length,
       unpaidCount: allItems.filter((i) => i.status === 'NOT_PAID').length,
+      dismissedCount: allItems.filter((i) => i.status === 'DISMISSED').length,
     },
   };
 }

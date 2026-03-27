@@ -11,6 +11,7 @@ const STATUS_CONFIG: Record<TaxStatus, { label: string; color: string }> = {
   NOT_PAID: { label: 'Nincs fizetve', color: 'bg-red-100 text-red-800 border-red-200' },
   PENDING: { label: 'Folyamatban', color: 'bg-yellow-100 text-yellow-800 border-yellow-200' },
   PAID: { label: 'Fizetve', color: 'bg-green-100 text-green-800 border-green-200' },
+  DISMISSED: { label: 'Elvetett', color: 'bg-gray-100 text-gray-800 border-gray-200' },
 };
 
 type EditTaxItemFormProps = {
@@ -43,11 +44,14 @@ export const EditTaxItemForm = ({ item, paymentDetail }: EditTaxItemFormProps) =
       taxItemId: item.id,
       status,
       paidDate: status === 'PAID' ? new Date() : null,
+      previousStatus: item.status,
     });
   };
 
+  const isDismissed = item.status === 'DISMISSED';
+
   return (
-    <Card>
+    <Card className={isDismissed ? 'opacity-60' : ''}>
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="text-base">{item.taxType.name}</CardTitle>
@@ -57,7 +61,21 @@ export const EditTaxItemForm = ({ item, paymentDetail }: EditTaxItemFormProps) =
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        {isEditing ? (
+        {isDismissed ? (
+          <div className="space-y-2 text-sm">
+            <p className="text-muted-foreground italic">Ez a tétel el lett vetve – nem szükséges fizetni.</p>
+            <div className="flex gap-1 pt-1">
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => onUpdateTaxItemStatus({ taxItemId: item.id, status: 'NOT_PAID', previousStatus: 'DISMISSED' })}
+                disabled={isLoading}
+              >
+                Visszaállítás
+              </Button>
+            </div>
+          </div>
+        ) : isEditing ? (
           <div className="space-y-3">
             <div>
               <label className="text-sm font-medium">Összeg (Ft)</label>
@@ -145,6 +163,15 @@ export const EditTaxItemForm = ({ item, paymentDetail }: EditTaxItemFormProps) =
                     Fizetve
                   </Button>
                 )}
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => handleStatusChange('DISMISSED')}
+                  disabled={isLoading}
+                  className="text-muted-foreground"
+                >
+                  Elvetés
+                </Button>
               </div>
             </div>
           </div>

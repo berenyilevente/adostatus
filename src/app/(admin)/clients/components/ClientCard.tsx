@@ -9,12 +9,14 @@ const STATUS_COLORS: Record<TaxStatus, string> = {
   NOT_PAID: 'bg-red-100 text-red-800',
   PENDING: 'bg-yellow-100 text-yellow-800',
   PAID: 'bg-green-100 text-green-800',
+  DISMISSED: 'bg-gray-100 text-gray-800',
 };
 
 const STATUS_LABELS: Record<TaxStatus, string> = {
   NOT_PAID: 'Nincs fizetve',
   PENDING: 'Folyamatban',
   PAID: 'Fizetve',
+  DISMISSED: 'Elvetett',
 };
 
 export const ClientCard = ({ client }: { client: ClientListItem }) => {

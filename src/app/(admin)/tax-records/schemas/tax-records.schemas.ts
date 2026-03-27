@@ -11,8 +11,9 @@ export type UpdateTaxItemInput = z.infer<typeof updateTaxItemSchema>;
 
 export const updateTaxItemStatusSchema = z.object({
   taxItemId: z.string().min(1),
-  status: z.enum(['NOT_PAID', 'PENDING', 'PAID']),
+  status: z.enum(['NOT_PAID', 'PENDING', 'PAID', 'DISMISSED']),
   paidDate: z.coerce.date().optional().nullable(),
+  previousStatus: z.enum(['NOT_PAID', 'PENDING', 'PAID', 'DISMISSED']).optional(),
 });
 
 export type UpdateTaxItemStatusInput = z.infer<typeof updateTaxItemStatusSchema>;

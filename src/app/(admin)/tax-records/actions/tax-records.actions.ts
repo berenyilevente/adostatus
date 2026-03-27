@@ -5,7 +5,11 @@ import { isAuthenticated } from '@/lib/auth/isAuthenticated';
 import { requireAccountant } from '@/lib/auth/role-guard';
 import { handleResponse } from '@/utils/handleResponse';
 import { Role, TaxStatus } from '@/generated/prisma';
-import { UpdateTaxItemInput, UpdateTaxItemStatusInput, CreateMonthlyRecordInput } from '../schemas/tax-records.schemas';
+import {
+  UpdateTaxItemInput,
+  UpdateTaxItemStatusInput,
+  CreateMonthlyRecordInput,
+} from '../schemas/tax-records.schemas';
 import { MonthDetailData, TaxRecordListItem } from '../types/tax-records.types';
 
 export const getTaxRecords = async (userId?: string, year?: number) => {
@@ -18,7 +22,11 @@ export const getTaxRecords = async (userId?: string, year?: number) => {
       where: { id: userId, accountantId: user.id },
     });
     if (!client) {
-      return handleResponse<TaxRecordListItem[]>({ data: null, error: 'Az ügyfél nem található', code: 404 });
+      return handleResponse<TaxRecordListItem[]>({
+        data: null,
+        error: 'Az ügyfél nem található',
+        code: 404,
+      });
     }
   }
 
@@ -34,12 +42,15 @@ export const getTaxRecords = async (userId?: string, year?: number) => {
           orderBy: { taxType: { order: 'asc' } },
         },
       },
-      orderBy: [{ year: 'desc' }, { month: 'desc' }],
+      orderBy: [{ year: 'desc' }, { month: 'asc' }],
     });
 
     return handleResponse({ data: records as TaxRecordListItem[] });
   } catch {
-    return handleResponse<TaxRecordListItem[]>({ data: null, error: 'Nem sikerült betölteni az adóbevallásokat' });
+    return handleResponse<TaxRecordListItem[]>({
+      data: null,
+      error: 'Nem sikerült betölteni az adóbevallásokat',
+    });
   }
 };
 
@@ -53,7 +64,11 @@ export const getTaxRecordDetail = async (userId: string, year: number, month: nu
       where: { id: userId, accountantId: user.id },
     });
     if (!client) {
-      return handleResponse<MonthDetailData>({ data: null, error: 'Az ügyfél nem található', code: 404 });
+      return handleResponse<MonthDetailData>({
+        data: null,
+        error: 'Az ügyfél nem található',
+        code: 404,
+      });
     }
   }
 
@@ -71,7 +86,11 @@ export const getTaxRecordDetail = async (userId: string, year: number, month: nu
     });
 
     if (!record) {
-      return handleResponse<MonthDetailData>({ data: null, error: 'Az adóbevallás nem található', code: 404 });
+      return handleResponse<MonthDetailData>({
+        data: null,
+        error: 'Az adóbevallás nem található',
+        code: 404,
+      });
     }
 
     const userPaymentDetails = await prisma.userTaxPaymentDetail.findMany({
@@ -80,7 +99,10 @@ export const getTaxRecordDetail = async (userId: string, year: number, month: nu
 
     return handleResponse({ data: { record, userPaymentDetails } as MonthDetailData });
   } catch {
-    return handleResponse<MonthDetailData>({ data: null, error: 'Nem sikerült betölteni az adóbevallást' });
+    return handleResponse<MonthDetailData>({
+      data: null,
+      error: 'Nem sikerült betölteni az adóbevallást',
+    });
   }
 };
 
@@ -185,7 +207,18 @@ export const deleteMonthlyRecord = async (recordId: string) => {
 };
 
 export const updateTaxItemStatus = async (input: UpdateTaxItemStatusInput) => {
-  await isAuthenticated();
+  const { user } = await isAuthenticated();
+
+  if (
+    (input.status === 'DISMISSED' || input.previousStatus === 'DISMISSED') &&
+    user.role !== Role.ACCOUNTANT
+  ) {
+    return handleResponse({
+      data: null,
+      error: 'Csak könyvelő módosíthatja az elvetett állapotot',
+      code: 403,
+    });
+  }
 
   try {
     const result = await prisma.taxItem.update({

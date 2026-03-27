@@ -18,6 +18,7 @@ enum TaxStatus {
   NOT_PAID
   PENDING
   PAID
+  DISMISSED
 }
 
 model User {

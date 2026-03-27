@@ -45,6 +45,7 @@ export type AccountantDashboardData = {
     paidCount: number;
     pendingCount: number;
     unpaidCount: number;
+    dismissedCount: number;
   };
 };
 

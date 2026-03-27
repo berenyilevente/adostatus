@@ -10,6 +10,7 @@ const STATUS_COLORS: Record<TaxStatus, string> = {
   NOT_PAID: 'bg-red-100 text-red-800',
   PENDING: 'bg-yellow-100 text-yellow-800',
   PAID: 'bg-green-100 text-green-800',
+  DISMISSED: 'bg-gray-100 text-gray-800',
 };
 
 const MONTH_NAMES = [
@@ -48,6 +49,14 @@ export const AccountantDashboard = ({ data }: { data: AccountantDashboardData })
             <p className="text-2xl font-bold mt-1 text-red-600">{data.statusOverview.unpaidCount}</p>
           </CardContent>
         </Card>
+        {data.statusOverview.dismissedCount > 0 && (
+          <Card>
+            <CardContent className="p-4">
+              <p className="text-sm text-muted-foreground">Elvetett</p>
+              <p className="text-2xl font-bold mt-1 text-gray-500">{data.statusOverview.dismissedCount}</p>
+            </CardContent>
+          </Card>
+        )}
       </div>
 
       <Card>
